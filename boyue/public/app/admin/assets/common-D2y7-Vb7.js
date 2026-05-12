@@ -1,0 +1,1 @@
+import{aR as a}from"./index-CyUgAjQc.js";function e(e){const n=new FormData;return n.append("file",e),a.post({url:"/app/admin/upload/image",data:n,headers:{"Content-Type":"multipart/form-data"}}).then(a=>{var n;return(null==(n=a.data)?void 0:n.url)?{url:a.data.url,name:a.data.name||e.name}:a.url?{url:a.url,name:e.name}:{url:"",name:e.name}})}export{e as u};

@@ -1,0 +1,187 @@
+/* 统计概况页面样式 */
+
+/* 欢迎卡片 */
+.welcome-panel {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 4px;
+  padding: 20px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.welcome-panel .welcome-info {
+  display: flex;
+  align-items: center;
+}
+
+.welcome-panel .welcome-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.3);
+  margin-right: 16px;
+}
+
+.welcome-panel .welcome-text h3 {
+  font-size: 20px;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.welcome-panel .welcome-text p {
+  font-size: 13px;
+  opacity: 0.85;
+  margin: 0;
+}
+
+.welcome-panel .welcome-stats {
+  display: flex;
+  justify-content: flex-end;
+  gap: 40px;
+}
+
+.welcome-panel .stat-item {
+  text-align: center;
+}
+
+.welcome-panel .stat-item .label {
+  font-size: 12px;
+  opacity: 0.85;
+  margin-bottom: 4px;
+}
+
+.welcome-panel .stat-item .value {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.welcome-panel .stat-item .unit {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-left: 2px;
+}
+
+/* 数据卡片 */
+.data-card {
+  background: #fff;
+  border-radius: 4px;
+  padding: 16px;
+  text-align: center;
+  transition: all 0.3s;
+  height: 100%;
+}
+
+.data-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.data-card .card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+  font-size: 22px;
+}
+
+.data-card .card-icon.blue { background: #e6f7ff; color: #1890ff; }
+.data-card .card-icon.green { background: #f6ffed; color: #52c41a; }
+.data-card .card-icon.orange { background: #fff7e6; color: #fa8c16; }
+.data-card .card-icon.purple { background: #f9f0ff; color: #722ed1; }
+.data-card .card-icon.yellow { background: #fffbe6; color: #faad14; }
+.data-card .card-icon.cyan { background: #e6fffb; color: #13c2c2; }
+.data-card .card-icon.pink { background: #fff0f6; color: #eb2f96; }
+.data-card .card-icon.red { background: #fff1f0; color: #f5222d; }
+
+.data-card .card-label {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.data-card .card-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* 图表工具栏 */
+.chart-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chart-toolbar .filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chart-toolbar .filter-btn {
+  padding: 5px 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #666;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chart-toolbar .filter-btn:hover {
+  border-color: #1890ff;
+  color: #1890ff;
+}
+
+.chart-toolbar .filter-btn.active {
+  background: #1890ff;
+  border-color: #1890ff;
+  color: #fff;
+}
+
+/* 图表容器 */
+.chart-container {
+  display: flex;
+  gap: 20px;
+  min-height: 350px;
+}
+
+.chart-container .chart-main {
+  flex: 3;
+  min-height: 350px;
+}
+
+.chart-container .chart-side {
+  flex: 1;
+  min-height: 350px;
+}
+
+/* 响应式 */
+@media (max-width: 992px) {
+  .welcome-panel .welcome-stats {
+    gap: 20px;
+  }
+  .chart-container {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .welcome-panel {
+    padding: 15px;
+  }
+  .welcome-panel .layui-col-md6 {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  .welcome-panel .welcome-stats {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,641 @@
+
+
+@import './variables.scss';
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-align-center {
+  display: flex;
+  align-items: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin page-container {
+  min-height: 100vh;
+  background: $color-bg-page;
+  font-family: $font-family-base;
+}
+
+@mixin scroll-container {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@mixin safe-area-bottom($extra: 0px) {
+  padding-bottom: calc(#{$extra} + env(safe-area-inset-bottom));
+}
+
+@mixin fixed-bottom {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  @include safe-area-bottom;
+}
+
+@mixin text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin text-ellipsis-lines($lines: 2) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin btn-base {
+  @include flex-center;
+  border-radius: $radius-md;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: all $transition-normal;
+  user-select: none;
+  
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+@mixin btn-primary($height: $btn-height-lg) {
+  @include btn-base;
+  height: $height;
+  background: $color-primary;
+  color: $color-text-white;
+  font-size: $font-size-md;
+  border: none;
+  
+  &:active {
+    background: $color-primary-dark;
+  }
+  
+  &.disabled, &:disabled {
+    background: $color-bg-disabled;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+@mixin btn-secondary($height: $btn-height-md) {
+  @include btn-base;
+  height: $height;
+  background: $color-bg-white;
+  color: $color-primary;
+  font-size: $font-size-md;
+  border: 1px solid $color-primary;
+}
+
+@mixin btn-text {
+  color: $color-primary;
+  font-size: $font-size-md;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+@mixin card-base {
+  background: $color-bg-white;
+  border-radius: $radius-lg;
+}
+
+@mixin card-shadow {
+  @include card-base;
+  box-shadow: $shadow-sm;
+}
+
+@mixin card-bordered {
+  @include card-base;
+  border: 1px solid $color-border;
+}
+
+@mixin input-container($height: $input-height-md) {
+  @include flex-align-center;
+  height: $height;
+  background: $color-bg-input;
+  border-radius: $radius-md;
+  padding: 0 $spacing-lg;
+}
+
+@mixin input-field {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  
+  &::placeholder {
+    color: $color-text-placeholder;
+  }
+}
+
+@mixin list-item($height: auto) {
+  @include flex-align-center;
+  padding: $spacing-md $spacing-lg;
+  background: $color-bg-white;
+  @if $height != auto {
+    min-height: $height;
+  }
+}
+
+@mixin list-divider {
+  border-bottom: 1px solid $color-border-light;
+}
+
+@mixin popup-header($height: $navbar-height-lg) {
+  @include flex-between;
+  height: $height;
+  padding: 0 $spacing-lg;
+  background: $color-bg-white;
+  border-bottom: 1px solid $color-border-light;
+}
+
+@mixin popup-title {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+@mixin navbar($height: $navbar-height) {
+  @include flex-between;
+  height: $height;
+  padding: 0 $spacing-md;
+  background: $color-bg-white;
+}
+
+@mixin navbar-sticky {
+  position: sticky;
+  top: 0;
+  z-index: $z-index-sticky;
+}
+
+@mixin grid-4cols($gap: $spacing-sm) {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $gap;
+}
+
+@mixin grid-cols($cols: 4, $gap: $spacing-sm) {
+  display: grid;
+  grid-template-columns: repeat($cols, 1fr);
+  gap: $gap;
+}
+
+@mixin custom-scrollbar($width: 4px, $color: rgba(0, 0, 0, 0.1)) {
+  &::-webkit-scrollbar {
+    width: $width;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $color;
+    border-radius: $width / 2;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@mixin hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@mixin clickable {
+  cursor: pointer;
+  transition: opacity $transition-fast;
+  
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+@mixin no-select {
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@mixin hairline-bottom($color: $color-border-light) {
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: $color;
+    transform: scaleY(0.5);
+  }
+}
+
+@mixin icon-circle($size: 40px, $bg: $color-primary) {
+  @include flex-center;
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  background: $bg;
+}
+
+@mixin red-dot($size: 8px) {
+  width: $size;
+  height: $size;
+  background: $color-danger;
+  border-radius: 50%;
+}
+
+@mixin badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  font-size: $font-size-xs;
+  color: $color-text-white;
+  background: $color-danger;
+  border-radius: $radius-pill;
+}
+
+@mixin page-header($height: $navbar-height-lg) {
+  @include flex-between;
+  height: $height;
+  padding: 0 $spacing-lg;
+  background: $color-bg-white;
+  position: sticky;
+  top: 0;
+  z-index: $z-index-sticky;
+  border-bottom: 1px solid $color-border-light;
+}
+
+@mixin header-back {
+  width: 40px;
+  @include flex-align-center;
+  font-size: $icon-size-md;
+  color: $color-text-primary;
+  cursor: pointer;
+}
+
+@mixin header-title {
+  flex: 1;
+  text-align: center;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+@mixin filter-btn {
+  @include flex-align-center;
+  gap: $spacing-xs;
+  padding: 6px $spacing-md;
+  background: $color-bg-input;
+  border-radius: $radius-pill;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  border: 1px solid transparent;
+  cursor: pointer;
+  
+  &.active {
+    background: $color-primary;
+    color: $color-text-white;
+    border-color: $color-primary;
+  }
+}
+
+@mixin dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 120px;
+  background: $color-bg-white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+  z-index: $z-index-dropdown;
+  margin-top: $spacing-xs;
+  overflow: hidden;
+}
+
+@mixin dropdown-item {
+  padding: $spacing-md $spacing-lg;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  cursor: pointer;
+  
+  &:active {
+    background: $color-bg-hover;
+  }
+  
+  &.active {
+    color: $color-primary;
+    background: $color-primary-light;
+  }
+}
+
+@mixin record-item {
+  @include flex-between;
+  padding: $spacing-lg;
+  background: $color-bg-white;
+  border-bottom: 1px solid $color-border-light;
+  
+  &:active {
+    background: $color-bg-hover;
+  }
+}
+
+@mixin amount-color {
+  &.plus { color: $color-success; }
+  &.minus { color: $color-danger; }
+}
+
+@mixin status-tag {
+  font-size: $font-size-sm;
+  padding: 2px $spacing-sm;
+  border-radius: $radius-sm;
+  
+  &.green { color: $color-success; background: rgba(7, 193, 96, 0.1); }
+  &.red { color: $color-danger; background: rgba(255, 77, 79, 0.1); }
+  &.gray { color: $color-text-tertiary; background: $color-bg-input; }
+  &.orange { color: $color-warning; background: rgba(255, 170, 9, 0.1); }
+}
+
+@mixin stats-bar {
+  @include flex-between;
+  padding: $spacing-lg;
+  background: $color-bg-white;
+  border-top: 1px solid $color-border-light;
+}
+
+@mixin stat-item {
+  text-align: center;
+  
+  .label {
+    display: block;
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    margin-bottom: $spacing-xs;
+  }
+  
+  .value {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+  }
+}
+
+@mixin tab-item {
+  position: relative;
+  padding: $spacing-md $spacing-lg;
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+  cursor: pointer;
+  flex-shrink: 0;
+  white-space: nowrap;
+  
+  &.active {
+    color: $color-primary;
+    font-weight: $font-weight-semibold;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 3px;
+      background: $color-primary;
+      border-radius: 2px;
+    }
+  }
+}
+
+@mixin grid-2cols($gap: $spacing-md) {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $gap;
+}
+
+@mixin grid-3cols($gap: $spacing-md) {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $gap;
+}
+
+@mixin avatar($size: 50px, $radius: $radius-xl) {
+  width: $size;
+  height: $size;
+  border-radius: $radius;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+@mixin avatar-with-edit($size: 50px) {
+  position: relative;
+  width: $size;
+  height: $size;
+  
+  img {
+    @include avatar($size);
+  }
+  
+  .edit-icon {
+    position: absolute;
+    bottom: 0;
+    right: -2px;
+    background: $color-bg-white;
+    color: $color-primary;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: $font-size-sm;
+    @include flex-center;
+    border: 1px solid $color-border-light;
+  }
+}
+
+@mixin option-item($height: 40px) {
+  @include flex-center;
+  height: $height;
+  background: $color-bg-input;
+  border-radius: $radius-md;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  cursor: pointer;
+  transition: all $transition-normal;
+  
+  &.active, &--active {
+    background: $color-bg-white;
+    color: $color-primary;
+    border: 2px solid $color-primary;
+  }
+}
+
+@mixin amount-input-container {
+  @include flex-align-center;
+  height: $input-height-md;
+  padding: 0 $spacing-lg;
+}
+
+@mixin currency-symbol {
+  font-size: $font-size-xxl;
+  color: $color-text-primary;
+  margin-right: $spacing-md;
+  font-weight: $font-weight-medium;
+}
+
+@mixin detail-modal {
+  width: 100%;
+  background: $color-bg-white;
+  border-radius: $radius-xl;
+  overflow: hidden;
+  box-shadow: $shadow-xl;
+}
+
+@mixin detail-header {
+  @include flex-center;
+  padding: 18px $spacing-xl;
+  background: linear-gradient(to right, #f9f9f9, $color-bg-white);
+  border-bottom: 1px solid $color-border-light;
+}
+
+@mixin detail-row {
+  @include flex-between;
+  padding: $spacing-md 0;
+  border-bottom: 1px dashed $color-border-light;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+@mixin icon-filter-primary {
+  filter: invert(48%) sepia(79%) saturate(374%) hue-rotate(115deg) brightness(93%) contrast(88%);
+}
+
+@mixin icon-filter-gray {
+  filter: brightness(0) saturate(100%) invert(70%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%);
+}
+
+@mixin safe-area-top($extra: 0px) {
+  padding-top: calc(#{$extra} + env(safe-area-inset-top));
+}
+
+@mixin gradient-primary($direction: to right) {
+  background: linear-gradient($direction, $color-primary, $color-primary-dark);
+}
+
+@mixin gradient-danger($direction: to right) {
+  background: linear-gradient($direction, #ff6b6b, #ff8e53);
+}
+
+@mixin fixed-header($height: $navbar-height-lg) {
+  height: $height;
+  background: $color-bg-white;
+  @include flex-between;
+  padding: 0 $spacing-md;
+  border-bottom: 1px solid $color-border-light;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: $z-index-fixed;
+}
+
+@mixin fixed-footer($height: 71px) {
+  height: $height;
+  background: $color-bg-white;
+  border-top: 1px solid $color-border-light;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  @include safe-area-bottom;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: $z-index-fixed;
+}
+
+@mixin game-card($img-size: 74px) {
+  width: 100%;
+  max-width: 100px;
+  @include flex-column;
+  align-items: center;
+  position: relative;
+  
+  .img-box {
+    width: $img-size;
+    height: $img-size;
+    border-radius: 18px;
+    overflow: hidden;
+    margin-bottom: $spacing-sm;
+    box-shadow: $shadow-sm;
+    background: $color-bg-white;
+  }
+}
+
+@mixin platform-card {
+  position: relative;
+  border-radius: $radius-xl;
+  overflow: hidden;
+  box-shadow: $shadow-md;
+  cursor: pointer;
+  transition: all $transition-normal;
+  
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+@mixin sidebar-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-xs;
+  cursor: pointer;
+  transition: all $transition-normal;
+  
+  &.active {
+    background: $color-bg-white;
+    box-shadow: $shadow-sm;
+  }
+}
+
+@mixin form-item-bordered {
+  @include flex-align-center;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  padding: 0 $spacing-md;
+  height: $input-height-lg;
+  transition: border-color $transition-normal;
+  
+  &:focus-within {
+    border-color: $color-primary;
+  }
+}
+

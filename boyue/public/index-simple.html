@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OKWINK6 - Chọn Giao Diện</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 14px;
+        }
+        
+        .options {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .option-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 30px;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .option-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .option-card.admin {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .option-card.api {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .option-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .option-desc {
+            font-size: 14px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .option-url {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: 10px;
+            font-family: monospace;
+        }
+        
+        .status {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        
+        .status-title {
+            color: #2e7d32;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .status-item {
+            color: #555;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        
+        .status-item::before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .option-title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 OKWINK6</h1>
+        <p class="subtitle">Chọn giao diện bạn muốn truy cập</p>
+        
+        <div class="options">
+            <a href="/home-new" class="option-card">
+                <div class="option-title">📱 Giao Diện Người Dùng</div>
+                <div class="option-desc">
+                    Truy cập trang chủ, xổ số, trò chơi và các tính năng dành cho người dùng
+                </div>
+                <div class="option-url">/home-new</div>
+            </a>
+            
+            <a href="/app/admin" class="option-card admin">
+                <div class="option-title">🔧 Quản Trị Hệ Thống</div>
+                <div class="option-desc">
+                    Đăng nhập vào bảng điều khiển quản trị để quản lý hệ thống
+                </div>
+                <div class="option-url">/app/admin</div>
+            </a>
+            
+            <a href="/api/v1/config" class="option-card api">
+                <div class="option-title">🔌 API Endpoint</div>
+                <div class="option-desc">
+                    Xem cấu hình API và kiểm tra kết nối backend
+                </div>
+                <div class="option-url">/api/v1/*</div>
+            </a>
+        </div>
+        
+        <div class="status">
+            <div class="status-title">Trạng Thái Hệ Thống</div>
+            <div class="status-item">HTTPS: Đã kích hoạt (Let's Encrypt)</div>
+            <div class="status-item">Database: Kết nối thành công (by)</div>
+            <div class="status-item">Backend: 32 processes đang chạy</div>
+            <div class="status-item">API: Hoạt động bình thường</div>
+        </div>
+    </div>
+</body>
+</html>

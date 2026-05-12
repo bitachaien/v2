@@ -1,0 +1,262 @@
+
+
+@import './variables.scss';
+
+@import './mixins.scss';
+
+@import './animations.scss';
+
+@import './components.scss';
+
+@import './utilities.scss';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-md;
+  line-height: $line-height-normal;
+  color: $color-text-primary;
+  background: $color-bg-page;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
+button,
+input,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input,
+textarea {
+  outline: none;
+  border: none;
+  background: none;
+  
+  &::placeholder {
+    color: $color-text-placeholder;
+  }
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+.van-nav-bar {
+  background: $color-bg-white;
+  
+  .van-nav-bar__title {
+    font-weight: $font-weight-medium;
+    font-size: $font-size-xl;
+    color: $color-text-primary;
+  }
+  
+  .van-icon-arrow-left {
+    color: $color-text-primary;
+    font-size: $icon-size-md;
+  }
+}
+
+.van-cell {
+  padding: $spacing-md $spacing-lg;
+  font-size: $font-size-md;
+  
+  &__title {
+    color: $color-text-primary;
+    font-size: $font-size-lg;
+  }
+  
+  &__value {
+    color: $color-text-secondary;
+    font-size: $font-size-md;
+  }
+  
+  &__right-icon {
+    color: $color-text-tertiary;
+  }
+}
+
+.van-cell-group--inset {
+  margin: 0 $spacing-md;
+  border-radius: $radius-lg;
+  overflow: hidden;
+}
+
+.van-button--primary {
+  background: $color-primary;
+  border-color: $color-primary;
+  
+  &:active {
+    background: $color-primary-dark;
+    border-color: $color-primary-dark;
+  }
+}
+
+.van-button--default {
+  border-color: $color-border;
+}
+
+.van-toast {
+  padding: $spacing-md $spacing-xl;
+  font-size: $font-size-md;
+  border-radius: $radius-lg;
+}
+
+.van-popup--bottom {
+  border-radius: $radius-xl $radius-xl 0 0;
+}
+
+.van-popup--center {
+  border-radius: $radius-xl;
+}
+
+.van-field {
+  .van-field__control {
+    color: $color-text-primary;
+    
+    &::placeholder {
+      color: $color-text-placeholder;
+    }
+  }
+  
+  .van-field__left-icon {
+    color: $color-text-tertiary;
+  }
+}
+
+.van-tabs__line {
+  background: $color-primary;
+}
+
+.van-tab--active {
+  color: $color-primary;
+}
+
+.van-dialog {
+  border-radius: $radius-xl;
+  overflow: hidden;
+  
+  &__header {
+    padding-top: $spacing-xxl;
+    padding-bottom: $spacing-md;
+    font-size: $font-size-xxl;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+  }
+  
+  &__message {
+    padding: $spacing-md $spacing-xxl 28px;
+    font-size: $font-size-lg;
+    color: $color-text-secondary;
+    line-height: $line-height-relaxed;
+  }
+  
+  &__footer {
+    padding: 0 $spacing-xl $spacing-xl;
+    gap: $spacing-lg;
+  }
+  
+  &__cancel,
+  &__confirm {
+    flex: 1;
+    height: $btn-height-md;
+    border-radius: $radius-md;
+    font-size: $font-size-lg;
+  }
+  
+  &__cancel {
+    background: $color-bg-white;
+    border: 1px solid $color-primary;
+    color: $color-primary;
+  }
+  
+  &__confirm {
+    background: $color-primary;
+    border: none;
+    color: $color-text-white;
+  }
+}
+
+.van-pull-refresh__head {
+  color: $color-text-tertiary;
+}
+
+.van-loading__spinner {
+  color: $color-primary;
+}
+
+.van-empty__description {
+  color: $color-text-tertiary;
+  font-size: $font-size-md;
+}
+
+.van-switch--on {
+  background: $color-primary;
+}
+
+.van-picker {
+  &__confirm {
+    color: $color-primary;
+  }
+  
+  &__cancel {
+    color: $color-text-secondary;
+  }
+}
+
+.cancel-dialog {
+  width: 340px !important;
+  
+  .van-dialog__header {
+    padding-top: $spacing-xxl;
+    padding-bottom: $spacing-md;
+  }
+  
+  .van-dialog__message {
+    padding: $spacing-md $spacing-xxl 28px;
+  }
+  
+  .van-dialog__footer {
+    padding: 0 $spacing-xl $spacing-xl;
+  }
+  
+  .van-dialog__cancel,
+  .van-dialog__confirm {
+    width: 147px !important;
+    flex: none !important;
+  }
+}
+

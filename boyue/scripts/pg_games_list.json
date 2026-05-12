@@ -1,0 +1,2292 @@
+[
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Mỹ Nhân Kế Của Diao Chan",
+            "ko": "초선의 미인계",
+            "th": "เสน่ห์เย้ายวนของ Diao Chan",
+            "zh-hant": "夜戲貂蟬",
+            "zh-hans": "夜戏貂蝉",
+            "ja": "貂蝉の甘い罠",
+            "en": "Honey Trap of Diao Chan",
+            "id": "Jebakan Madu Diao Chan"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "3",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Thần May Mắn",
+            "ko": "포츈 갓",
+            "th": "เทพแห่งโชคลาภ",
+            "zh-hant": "橫財來啦",
+            "zh-hans": "横财来啦",
+            "ja": "財神",
+            "en": "Fortune Gods",
+            "id": "Dewa Keberuntungan"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "24",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Win Win Won",
+            "ko": "윈 윈 원",
+            "th": "ชนะชนะชนะ",
+            "zh-hant": "旺旺旺",
+            "zh-hans": "旺旺旺",
+            "ja": "ウィンウィン勝利",
+            "en": "Win Win Won",
+            "id": "Menang, Menang, Menang"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "6",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Medusa 2: Sứ mệnh Perseus",
+            "ko": "메두사2:페르세우스의모험",
+            "th": "เมดูซ่า 2: การเสาะหาของเพอร์ซิอุส",
+            "zh-hant": "美杜莎 II",
+            "zh-hans": "美杜莎 II",
+            "ja": "メデューサ2:ペルセウスのクエスト",
+            "en": "Medusa II",
+            "id": "Medusa 2: Petualangan Perseus"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "26",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Cây Tài Lộc",
+            "ko": "행운의 나무",
+            "th": "ต้นไม้แห่งโชคลาภ",
+            "zh-hant": "搖錢樹",
+            "zh-hans": "摇钱树",
+            "ja": "幸運の木",
+            "en": "Tree of Fortune",
+            "id": "Pohon Keberuntungan"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "7",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Medusa 1: Lời nguyền của Athena",
+            "ko": "메두사1:아테나의저주",
+            "th": "เมดูซ่า 1: คำสาปแห่งอาธีน่า",
+            "zh-hant": "美杜莎",
+            "zh-hans": "美杜莎",
+            "ja": "メデューサ1:アテナの呪い",
+            "en": "Medusa",
+            "id": "Medusa 1: Kutukan Athena"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "25",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Plushie Frenzy",
+            "ko": "플러시 프렌지",
+            "th": "คลั่งไคล้ตุ๊กตาขนฟู",
+            "zh-hant": "抓抓樂",
+            "zh-hans": "抓抓乐",
+            "ja": "ぬいぐるみフレンジー",
+            "en": "Plushie Frenzy",
+            "id": "Kegirangan Boneka"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "2",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Vị Cứu Tinh",
+            "ko": "젬 세이버",
+            "th": "อัญมณีผู้พิชิต",
+            "zh-hant": "寶石俠",
+            "zh-hans": "宝石侠",
+            "ja": "宝石の救世主",
+            "en": "Gem Saviour",
+            "id": "Penyelamat Permata"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "18",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Cô Bé Quàng Khăn Đỏ",
+            "ko": "빨간망토 대 늑대",
+            "th": "หนูน้อยปะทะหมาป่า",
+            "zh-hant": "逆襲的小紅帽",
+            "zh-hans": "逆袭的小红帽",
+            "ja": "リトルレッド vs ビッグウルフ \nワイルド争奪戦",
+            "en": "Hood vs Wolf",
+            "id": "Si Kerudung Merah vs Serigala"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "28",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Hotpot",
+            "ko": "핫팟",
+            "th": "หม้อไฟร้อน",
+            "zh-hant": "麻辣火鍋",
+            "zh-hans": "麻辣火锅",
+            "ja": "ホットポット",
+            "en": "Hotpot",
+            "id": "Hotpot"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "29",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Truyền Thuyết Rồng",
+            "ko": "드래곤 레전드",
+            "th": "ตำนานมังกร",
+            "zh-hant": "魚躍龍門",
+            "zh-hans": "鱼跃龙门",
+            "ja": "ドラゴンの伝説",
+            "en": "Dragon Legend",
+            "id": "Legenda Naga"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "35",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Ông Hallow-Win!",
+            "ko": "미스터 할로-윈!",
+            "th": "คุณฮาโล-วิน!",
+            "zh-hant": "萬勝狂歡夜",
+            "zh-hans": "万胜狂欢夜",
+            "ja": "Mrハローウィーン！",
+            "en": "Mr Hallow-Jackpot!",
+            "id": "Mr Hallow-Jackpot!"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "34",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Huyền thoại Hou Yi",
+            "ko": "예의 전설",
+            "th": "ตำนานแห่ง Hou Yi",
+            "zh-hant": "後羿射日",
+            "zh-hans": "后羿射日",
+            "ja": "羿の伝説",
+            "en": "Legend of Hou Yi",
+            "id": "Legenda Hou Yi"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "36",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Sư Tử Vương Giả",
+            "ko": "부귀의 사자",
+            "th": "ราชสีห์แห่งความมั่งคั่ง",
+            "zh-hant": "舞獅進寶",
+            "zh-hans": "舞狮进宝",
+            "ja": "繁栄の獅子",
+            "en": "Prosperity Lion",
+            "id": "Singa Kesejahteraan"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "33",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Gấu Trúc Hip Hop",
+            "ko": "힙합팬더",
+            "th": "ฮิปฮอปแพนด้า",
+            "zh-hant": "嘻哈熊貓",
+            "zh-hans": "嘻哈熊猫",
+            "ja": "ヒップホップパンダ",
+            "en": "Hip Hop Panda",
+            "id": "Panda Hip Hop"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "37",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Quà Của Ông Già Noel",
+            "ko": "산타의 기프트러시",
+            "th": "ของขวัญด่วนพิเศษซานต้า",
+            "zh-hant": "聖誕歡樂送",
+            "zh-hans": "圣诞欢乐送",
+            "ja": "サンタのギフトラッシュ",
+            "en": "Santa's Gift Rush",
+            "id": "Limpahan Kado Santa"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "31",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Baccarat Deluxe",
+            "ko": "바카라 디럭스",
+            "th": "บาคาร่าดีลักซ์",
+            "zh-hant": "至尊百家樂",
+            "zh-hans": "至尊百家乐",
+            "ja": "バカラデラックス",
+            "en": "Baccarat Deluxe",
+            "id": "Baccarat Mewah"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "38",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Vị Cứu Tinh - Thanh Kiếm",
+            "ko": "젬 세이버 – 검",
+            "th": "อัญมณีผู้พิชิต - ดาบ",
+            "zh-hant": "寶石俠-大寶劍",
+            "zh-hans": "宝石侠-大宝剑",
+            "ja": "宝石の救世主 - ソード",
+            "en": "Gem Saviour Sword",
+            "id": "Penyelamat Permata - Pedang"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "39",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Heo Vàng",
+            "ko": "피기 골드",
+            "th": "ทองของลูกหมู",
+            "zh-hant": "金豬報財",
+            "zh-hans": "金猪报财",
+            "ja": "子ブタゴールド",
+            "en": "Piggy Gold",
+            "id": "Babi Emas"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "41",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Biểu Tượng Ai Cập",
+            "ko": "이집트의 심볼",
+            "th": "ตราไอยคุปต์",
+            "zh-hant": "埃及尋寶",
+            "zh-hans": "埃及寻宝",
+            "ja": "エジプトのシンボル",
+            "en": "Symbols of Egypt",
+            "id": "Simbol-simbol Mesir"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "44",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Ân Sủng Của Hoàng Đế",
+            "ko": "황제의 호의",
+            "th": "ที่โปรดปรานของจักรพรรดิ",
+            "zh-hant": "皇上吉祥",
+            "zh-hans": "皇上吉祥",
+            "ja": "皇帝の寵愛",
+            "en": "Emperor's Favour",
+            "id": "Kebaikan Kaisar"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "42",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Ganesha Vàng",
+            "ko": "가네샤 골드",
+            "th": "ทองแห่งคเณศ",
+            "zh-hant": "象財神",
+            "zh-hans": "象财神",
+            "ja": "ガネーシャゴールド",
+            "en": "Ganesha Gold",
+            "id": "Emas Ganesha"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "40",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Khu Rừng Vui Nhộn",
+            "ko": "정글 딜라이트",
+            "th": "ป่าแห่งความปิติ",
+            "zh-hant": "水果叢林",
+            "zh-hans": "水果丛林",
+            "ja": "ジャングルの喜び",
+            "en": "Jungle Delight",
+            "id": "Hutan yang Menyenangkan"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "48",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Kho Báu Khổng Lồ",
+            "ko": "더블 포츈",
+            "th": "โชคลาภคูณสอง",
+            "zh-hant": "雙囍臨門",
+            "zh-hans": "双囍临门",
+            "ja": "ダブルフォーチュン",
+            "en": "Double Fortune",
+            "id": "Keberuntungan Ganda"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "53",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Băng Giá Vui Nhộn",
+            "ko": "그레이트 아이스케이프",
+            "th": "หนีฝ่าแดนน้ำแข็ง",
+            "zh-hant": "冰雪大沖關",
+            "zh-hans": "冰雪大冲关",
+            "ja": "ザ・グレート・アイススケープ",
+            "en": "The Great Icescape",
+            "id": "Pelarian Es yang Hebat"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "50",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Cuộc Phiêu Lưu Đến Kho Báu",
+            "ko": "부로 향하는 여정",
+            "th": "การเดินทางสู่ความมั่งคั่ง",
+            "zh-hant": "嘻遊記",
+            "zh-hans": "嘻游记",
+            "ja": "富への旅",
+            "en": "Journey to the Wealth",
+            "id": "Perjalanan Menuju Kekayaan"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "54",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Kho Báu Của Thuyền Trưởng",
+            "ko": "캡틴의 현상금",
+            "th": "ค่าหัวของกัปตัน",
+            "zh-hant": "賞金船長",
+            "zh-hans": "赏金船长",
+            "ja": "船長の懸賞金",
+            "en": "Captain's Bounty",
+            "id": "Hadiah Kapten"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "60",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Kho Báu Của Yêu Tinh",
+            "ko": "레프리콘 부귀",
+            "th": "สมบัติของภูติจิ๋ว",
+            "zh-hant": "愛爾蘭精靈",
+            "zh-hans": "爱尔兰精灵",
+            "ja": "レプラコーンのお宝",
+            "en": "Leprechaun Riches",
+            "id": "Kekayaan Leprechaun"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "61",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Bá Hổ Thu Hương",
+            "ko": "당백호 점추향",
+            "th": "นักวิชาการขี้หลี",
+            "zh-hant": "唐伯虎點秋香",
+            "zh-hans": "唐伯虎点秋香",
+            "ja": "詩人の大冒険",
+            "en": "Flirting Scholar",
+            "id": "Sarjana Penggoda"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "59",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Ninja đối đầu Samurai",
+            "ko": "닌자 대 사무라이",
+            "th": "นินจาปะทะซามูไร",
+            "zh-hant": "忍者vs武侍",
+            "zh-hans": "忍者vs武侍",
+            "ja": "ニンジャvsサムライ",
+            "en": "Ninja vs Samurai",
+            "id": "Ninja vs Samurai"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "64",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Nhà Vô Địch Muay Thái",
+            "ko": "무에타이 챔피언",
+            "th": "แชมป์มวยไทย",
+            "zh-hant": "拳霸",
+            "zh-hans": "拳霸",
+            "ja": "ムエタイチャンピオン",
+            "en": "Muay Thai Champion",
+            "id": "Juara Muay Thai"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "63",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Rồng Hổ May Mắn",
+            "ko": "드래곤 타이거 행운",
+            "th": "โชคมังกรพยัคฆ์",
+            "zh-hant": "龍虎爭霸",
+            "zh-hans": "龙虎争霸",
+            "ja": "ドラゴンタイガーラック",
+            "en": "Dragon Tiger Luck",
+            "id": "Keberuntungan Harimau Naga"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "65",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Đường Mạt Chược",
+            "ko": "마작 방법",
+            "th": "เส้นทางมาจอง",
+            "zh-hant": "麻將胡了",
+            "zh-hans": "麻将胡了",
+            "ja": "麻雀ウェイズ",
+            "en": "Mahjong Ways",
+            "id": "Cara Mahyong"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "57",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Long Sinh",
+            "ko": "드래곤 해치",
+            "th": "ดราก้อนแฮตช์",
+            "zh-hant": "尋龍探寶",
+            "zh-hans": "寻龙探宝",
+            "ja": "ドラゴンハッチ",
+            "en": "Dragon Hatch",
+            "id": "Naga Menetas"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "68",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Chú Chuột May Mắn",
+            "ko": "재물 쥐",
+            "th": "หนูโชคลาภ",
+            "zh-hant": "鼠鼠福福",
+            "zh-hans": "鼠鼠福福",
+            "ja": "幸運のネズミ",
+            "en": "Fortune Mouse",
+            "id": "Tikus Keberuntungan"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "20",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Guồng Quay Tình Yêu",
+            "ko": "릴 러브",
+            "th": "เพลารัก",
+            "zh-hant": "親愛的",
+            "zh-hans": "亲爱的",
+            "ja": "リールラブ",
+            "en": "Reel Love",
+            "id": "Rol Cinta"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "62",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Vị Cứu Tinh - Hành Trình",
+            "ko": "젬 세이버 – 콘퀘스트",
+            "th": "อัญมณีผู้พิชิต - ยึดครอง",
+            "zh-hant": "寶石俠 - 寶藏征途",
+            "zh-hans": "宝石侠 - 宝藏征途",
+            "ja": "宝石の救世主 - 征服",
+            "en": "Gem Saviour Conquest",
+            "id": "Penyelamat Permata - Penaklukan"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "67",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Bóng Đá Thiếu Lâm",
+            "ko": "소림 축구",
+            "th": "เส้าหลินซ็อกเกอร์",
+            "zh-hant": "少林足球",
+            "zh-hans": "少林足球",
+            "ja": "少林サッカー",
+            "en": "Shaolin Soccer",
+            "id": "Sepak Bola Shaolin"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "71",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Chiến Thắng CaiShen",
+            "ko": "CaiShen 승리",
+            "th": "ชนะรางวัล CaiShen",
+            "zh-hant": "贏財神",
+            "zh-hans": "赢财神",
+            "ja": "CaiShenウィン",
+            "en": "Caishen Wins",
+            "id": "Kemenangan Caishen"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "70",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Kẹo Ngọt Bùng Nổ",
+            "ko": "캔디 버스트",
+            "th": "แคนดี้เบิร์ส",
+            "zh-hant": "糖果連連爆",
+            "zh-hans": "糖果连连爆",
+            "ja": "キャンディバースト",
+            "en": "Candy Burst",
+            "id": "Semburan Permen"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "69",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Thiên Đường Bikini",
+            "ko": "비키니 파라다이스",
+            "th": "บิกินี่พาราไดส์",
+            "zh-hant": "比基尼天堂",
+            "zh-hans": "比基尼天堂",
+            "ja": "ビキニパラダイス",
+            "en": "Bikini Paradise",
+            "id": "Surga Bikini"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "74",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Đường Mạt Chược 2",
+            "ko": "마작 방법 2",
+            "th": "เส้นทางมาจอง 2",
+            "zh-hant": "麻將胡了2",
+            "zh-hans": "麻将胡了2",
+            "ja": "麻雀ウェイズ 2",
+            "en": "Mahjong Ways 2",
+            "id": "Cara Mahyong 2"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "73",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Quyển Sách Bí Ẩn Ai Cập",
+            "ko": "이집트의 미스터리의 책",
+            "th": "หนังสือปริศนาของอียิปต์",
+            "zh-hant": "埃及探秘寶典",
+            "zh-hans": "埃及探秘宝典",
+            "ja": "エジプトの神秘の書",
+            "en": "Egypt's Book of Mystery",
+            "id": "Buku Misteri Mesir"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "75",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Kho Báu Ganesha",
+            "ko": "가네샤 포춘",
+            "th": "โชคลาภแห่งคเณศ",
+            "zh-hant": "福運象財神",
+            "zh-hans": "福运象财神",
+            "ja": "運命のガネーシャ",
+            "en": "Ganesha Fortune",
+            "id": "Keberuntungan Ganesha"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "82",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Phượng Hoàng Nổi Dậy",
+            "ko": "피닉스의 부활",
+            "th": "ฟีนิกซ์ทะยาน",
+            "zh-hant": "鳳凰傳奇",
+            "zh-hans": "凤凰传奇",
+            "ja": "フェニックス・ライズ",
+            "en": "Phoenix Rises",
+            "id": "Phoenix Bangkit"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "79",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Giấc Mơ Ma Cao",
+            "ko": "마카오의 꿈",
+            "th": "ความใฝ่ฝันของมาเก๊า",
+            "zh-hant": "澳門壕夢",
+            "zh-hans": "澳门壕梦",
+            "ja": "マカオの夢",
+            "en": "Dreams of Macau",
+            "id": "Mimpi Macau"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "83",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Pháo hoa Wild",
+            "ko": "와일드 불꽃놀이",
+            "th": "ดอกไม้ไฟไวลด์",
+            "zh-hant": "火樹贏花",
+            "zh-hans": "火树赢花",
+            "ja": "ワイルドファイヤーワークス",
+            "en": "Wild Fireworks",
+            "id": "Kembang Api Wild"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "85",
+        "ingress": "3",
+        "gameName": {
+            "vi": "3 Điều Ước Của Thần Đèn",
+            "ko": "지니의 소원 3개",
+            "th": "พร 3 ข้อของจินนี่",
+            "zh-hant": "阿拉丁神燈",
+            "zh-hans": "阿拉丁神灯",
+            "ja": "ジーニーの3つの願い",
+            "en": "Genie's 3 Wishes",
+            "id": "Jin 3 Keinginan"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "87",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Kho Báu Aztec",
+            "ko": "아즈텍의 보물",
+            "th": "ขุมทรัพย์แห่งแอซเท็ค",
+            "zh-hant": "尋寶黃金城",
+            "zh-hans": "寻宝黄金城",
+            "ja": "アズテックの財宝",
+            "en": "Treasures of Aztec",
+            "id": "Harta Karun Aztek"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "80",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Rạp Xiếc Nhiệm Màu",
+            "ko": "서커스 딜라이트",
+            "th": "เซอร์คัสดีไลท์",
+            "zh-hant": "歡樂嘉年華",
+            "zh-hans": "欢乐嘉年华",
+            "ja": "楽しいサーカス",
+            "en": "Circus Delight",
+            "id": "Kegembiraan Sirkus"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "92",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Kỳ Quan Sông Thái Lan",
+            "ko": "태국의 강 불가사의",
+            "th": "มหัศจรรย์แม่น้ำไทย",
+            "zh-hant": "水上泰神奇",
+            "zh-hans": "水上泰神奇",
+            "ja": "タイ・リバー・ワンダーズ",
+            "en": "Thai River Wonders",
+            "id": "Keajaiban Sungai Thailand"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "90",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Bí Mật Của Cleopatra",
+            "ko": "클레오파트라의 비밀",
+            "th": "ความลับคลีโอพัตรา",
+            "zh-hant": "豔後之謎",
+            "zh-hans": "艳后之谜",
+            "ja": "クレオパトラの秘密",
+            "en": "Secrets of Cleopatra",
+            "id": "Rahasia Cleopatra"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "58",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Bùa Ma Cà Rồng",
+            "ko": "뱀파이어의 매혹",
+            "th": "เสน่ห์ของแวมไพร์",
+            "zh-hant": "德古拉女爵",
+            "zh-hans": "德古拉女爵",
+            "ja": "ヴァンパイアの魔力",
+            "en": "Vampires Charm",
+            "id": "Pesona Vampir"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "84",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Nữ Hoàng Tiền Thưởng",
+            "ko": "풍요의 여왕",
+            "th": "ราชินีแห่งเงินค่าหัว",
+            "zh-hant": "賞金女王",
+            "zh-hans": "赏金女王",
+            "ja": "バウンティの女王",
+            "en": "Queen of Bounty",
+            "id": "Ratu Hadiah"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "88",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Trang Sức Vương Giả",
+            "ko": "번영의 보석",
+            "th": "อัญมณีแห่งความรุ่งเรือง",
+            "zh-hant": "金玉滿堂",
+            "zh-hans": "金玉满堂",
+            "ja": "ジュエルズ・オフ・プロスペリティ",
+            "en": "Jewels of Prosperity",
+            "id": "Permata Kemakmuran"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "89",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Neko May Mắn",
+            "ko": "행운의 네코",
+            "th": "เนโกะนำโชค",
+            "zh-hant": "招財喵",
+            "zh-hans": "招财喵",
+            "ja": "ラッキーネコ",
+            "en": "Lucky Neko",
+            "id": "Neko yang Beruntung"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "97",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Mùa Đông Của Jack Frost",
+            "ko": "잭 프로스트의 겨울",
+            "th": "ฤดูหนาวของแจ็คฟรอสต์",
+            "zh-hant": "冰鋒奇俠",
+            "zh-hans": "冰锋奇侠",
+            "ja": "ジャックフロストの冬",
+            "en": "Jack Frost's Winter",
+            "id": "Salju Jack Frost"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "86",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Đá Quý Dải Ngân Hà",
+            "ko": "은하계의 보석",
+            "th": "อัญมณีห้วงกาแล็กซี",
+            "zh-hant": "星旅淘金",
+            "zh-hans": "星旅淘金",
+            "ja": "銀河の宝石",
+            "en": "Galactic Gems",
+            "id": "Permata Galaksi"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "91",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Vệ Binh Băng & Lửa",
+            "ko": "얼음과 불의 수호자",
+            "th": "ผู้พิทักษ์แห่งไฟและน้ำแข็ง",
+            "zh-hant": "冰火雙嬌",
+            "zh-hans": "冰火双娇",
+            "ja": "火と水の守護神",
+            "en": "Guardians of Ice and Fire",
+            "id": "Penjaga Es & Api"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "93",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Triều Đại Opera",
+            "ko": "오페라 제국",
+            "th": "ราชวงศ์โอเปร่า",
+            "zh-hant": "新國粹",
+            "zh-hans": "新国粹",
+            "ja": "オペラ・ダイナスティ",
+            "en": "Opera Dynasty",
+            "id": "Dinasti Opera"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "98",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Chú Bò May Mắn",
+            "ko": "행운의 황소",
+            "th": "วัวแห่งโชคลาภ",
+            "zh-hant": "十倍金牛",
+            "zh-hans": "十倍金牛",
+            "ja": "フォーチュンオックス",
+            "en": "Fortune Ox",
+            "id": "Lembu Keberuntungan"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "94",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Kỳ Nghỉ Bali",
+            "ko": "발리 휴가",
+            "th": "วันหยุดพักผ่อนของบาหลี",
+            "zh-hant": "巴厘之旅",
+            "zh-hans": "巴厘之旅",
+            "ja": "バリ・バケーション",
+            "en": "Bali Vacation",
+            "id": "Liburan di Bali"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "103",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Kripto Altın",
+            "ko": "암호화폐 골드",
+            "th": "คริปโตโกลด์",
+            "zh-hant": "比特淘金",
+            "zh-hans": "比特淘金",
+            "ja": "クリプトゴールド",
+            "en": "Crypto Gold",
+            "id": "Emas Mata Uang Virtual"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "95",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Kho Báu Hùng Vĩ",
+            "ko": "마제스틱 보물",
+            "th": "สมบัติอันสง่างาม",
+            "zh-hant": "寶石傳奇",
+            "zh-hans": "宝石传奇",
+            "ja": "威厳ある宝",
+            "en": "Majestic Treasures",
+            "id": "Harta Karun Megah"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "100",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Kẹo Bonanza",
+            "ko": "사탕 노다지",
+            "th": "ขุมทรัพย์ขนมหวาน",
+            "zh-hant": "糖心風暴",
+            "zh-hans": "糖心风暴",
+            "ja": "キャンディーボナンザ",
+            "en": "Candy Bonanza",
+            "id": "Bonanza Permen"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "104",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Wild Đạo Tặc",
+            "ko": "와일드 반디토",
+            "th": "ไวลด์แบนดิโต",
+            "zh-hant": "亡靈大盜",
+            "zh-hans": "亡灵大盗",
+            "ja": "ワイルドバンディート",
+            "en": "Wild Bandito",
+            "id": "Bandit yang Liar"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "106",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Kỳ Lân Mách Nước",
+            "ko": "기린의 길",
+            "th": "วิถีแห่งกิเลน",
+            "zh-hant": "麒麟送寶",
+            "zh-hans": "麒麟送宝",
+            "ja": "麒麟ウェイズ",
+            "en": "Ways of the Qilin",
+            "id": "Cara Qilin"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "105",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Tiền Cược Vụ Cướp",
+            "ko": "강도 판돈",
+            "th": "เงินจากการปล้น",
+            "zh-hant": "霹靂神偷",
+            "zh-hans": "霹雳神偷",
+            "ja": "強盗ステークス",
+            "en": "Heist  Stakes",
+            "id": "Taruhan Perampokan"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "101",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Thần Apollo Trỗi Dậy",
+            "ko": "아폴로의 부활",
+            "th": "ไรส์ออฟอพอลโล",
+            "zh-hant": "太陽神傳說",
+            "zh-hans": "太阳神传说",
+            "ja": "アポロの覚醒",
+            "en": "Rise of the Sun God",
+            "id": "Rise of the Sun God"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "110",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Vương quốc kỷ Jura",
+            "ko": "쥐라기 왕국",
+            "th": "อาณาจักรจูราสสิค",
+            "zh-hant": "恐龍帝國",
+            "zh-hans": "恐龙帝国",
+            "ja": "ジュラシック王国",
+            "en": "Jurassic Kingdom",
+            "id": "Kerajaan Jurassic"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "102",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Kho Báu Của Nàng Tiên Cá",
+            "ko": "인어 부귀",
+            "th": "สมบัตินางเงือก",
+            "zh-hant": "人魚公主",
+            "zh-hans": "人鱼公主",
+            "ja": "人魚のお宝",
+            "en": "Mermaid Riches",
+            "id": "Kekayaan Putri Duyung"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "113",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Hầm Mộ May Mắn của Jane Kẻ Trộm Mộ",
+            "ko": "레이더 제인의 행운의 묘지",
+            "th": "ห้องสุสานใต้ดินแห่งโชคลาภของเรเดอร์ เจน",
+            "zh-hant": "麗影奇兵之探秘埃及",
+            "zh-hans": "丽影奇兵之探秘埃及",
+            "ja": "レイダー・ジェーンの地下室の財宝",
+            "en": "Raider Jane's Crypt of Fortune",
+            "id": "Harta Ruang Bawah Tanah Raider Jane"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "115",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Mua Sắm Thả Ga",
+            "ko": "슈퍼마켓 스프리",
+            "th": "มหกรรมซูเปอร์มาร์เก็ต",
+            "zh-hant": "超市大血拼",
+            "zh-hans": "超市大血拼",
+            "ja": "爆買いスーパーマーケット",
+            "en": "Supermarket Spree",
+            "id": "Kesenangan Supermarket"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "108",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Ngưu Đại Chiến",
+            "ko": "버팔로 승리",
+            "th": "เงินรางวัลกระทิง",
+            "zh-hant": "美洲野牛",
+            "zh-hans": "美洲野牛",
+            "ja": "バッファロー賞金",
+            "en": "Buffalo Win",
+            "id": "Kemenangan Kerbau"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "107",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Hầu Vương Huyền Thoại",
+            "ko": "전설 원숭이 왕",
+            "th": "ราชาวานรในตำนาน",
+            "zh-hant": "美猴王傳奇",
+            "zh-hans": "美猴王传奇",
+            "ja": "伝説のモンキーキング",
+            "en": "Legendary Monkey King",
+            "id": "Raja Monyet yang Legendaris"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "119",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Kỳ Quan Thần Bí",
+            "ko": "영혼의 신기",
+            "th": "สิ่งมหัศจรรย์ที่มีชีวิตชีวา",
+            "zh-hant": "百鬼夜行",
+            "zh-hans": "百鬼夜行",
+            "ja": "スピリット・ワンダーズ",
+            "en": "Spirited Wonders",
+            "id": "Keajaiban Membara"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "114",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Kho Báu Cảm Xúc",
+            "ko": "이모지 부자",
+            "th": "ทรัพย์สมบัติอีโมจิ",
+            "zh-hant": "鈔級表情包",
+            "zh-hans": "钞级表情包",
+            "ja": "絵文字のお宝",
+            "en": "Emoji Riches",
+            "id": "Kekayaan Emoji"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "117",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Đêm Cocktail",
+            "ko": "칵테일 나이트",
+            "th": "ค่ำคืนค็อกเทล",
+            "zh-hant": "夜醉佳人",
+            "zh-hans": "夜醉佳人",
+            "ja": "カクテルナイト",
+            "en": "Cocktail Nights",
+            "id": "Malam Koktail"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "118",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Lễ Hội Mặt Nạ",
+            "ko": "가면 축제",
+            "th": "เทศกาลหน้ากาก",
+            "zh-hant": "假面嘉年華",
+            "zh-hans": "假面嘉年华",
+            "ja": "マスクカーニバル",
+            "en": "Mask Carnival",
+            "id": "Karnaval Topeng"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "112",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Phương Đông Phồn Thịnh",
+            "ko": "오리엔탈 번영",
+            "th": "ความรุ่งเรืองแบบตะวันออก",
+            "zh-hant": "江山美景圖",
+            "zh-hans": "江山美景图",
+            "ja": "オリエンタル・プロスペリティ",
+            "en": "Oriental Prosperity",
+            "id": "Kemakmuran Oriental"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "126",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Hổ May Mắn",
+            "ko": "행운의 호랑이",
+            "th": "พยัคฆ์แห่งโชคลาภ",
+            "zh-hant": "虎虎生財",
+            "zh-hans": "虎虎生财",
+            "ja": "フォーチュン・タイガー",
+            "en": "Fortune Tiger",
+            "id": "Harimau Keberuntungan"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "122",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Đá Quý Garuda",
+            "ko": "가루다의 보석",
+            "th": "อัญมณีการูด้า",
+            "zh-hant": "神鷹寶石",
+            "zh-hans": "神鹰宝石",
+            "ja": "ガルーダの宝石",
+            "en": "Garuda Gems",
+            "id": "Permata Garuda"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "121",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Định Mệnh Của Mặt Trăng & Mặt Trời",
+            "ko": "해와 달의 운명",
+            "th": "โชคชะตาแห่งตะวันและจันทรา",
+            "zh-hant": "日月星辰",
+            "zh-hans": "日月星辰",
+            "ja": "太陽と月の運命",
+            "en": "Destiny of Sun & Moon",
+            "id": "Takdir Matahari & Bulan"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "125",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Hoa Bướm",
+            "ko": "나비의 꽃",
+            "th": "ดอกซากุระผีเสื้อ",
+            "zh-hant": "蝶戀花",
+            "zh-hans": "蝶恋花",
+            "ja": "バタフライ・ブロッサム",
+            "en": "Butterfly Blossom",
+            "id": "Kupu-Kupu Mekar"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "123",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Gà Gáy",
+            "ko": "루스터 럼블",
+            "th": "ไก่แจ้คึกคะนอง",
+            "zh-hant": "鬥雞",
+            "zh-hans": "斗鸡",
+            "ja": "ルースターランブル",
+            "en": "Rooster Rumble",
+            "id": "Pertarungan Ayam"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "120",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Yến Tiệc Của Hoàng Hậu",
+            "ko": "왕비의 연회",
+            "th": "งานเลี้ยงของราชินี",
+            "zh-hant": "韓宮御宴",
+            "zh-hans": "韩宫御宴",
+            "ja": "女王の宴会",
+            "en": "The Queen's Banquet",
+            "id": "Perjamuan Ratu"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "124",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Cuộc Chiến Hoàng Gia",
+            "ko": "배틀그라운드 로얄",
+            "th": "แบทเทิลกราวด์รอแยล",
+            "zh-hant": "絕地大逃殺",
+            "zh-hans": "绝地大逃杀",
+            "ja": "バトルグラウンド・ロイヤル",
+            "en": "Battleground Royale",
+            "id": "Medan Tempur Mewah"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "129",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Thắng Bầu Cua Tôm Cá",
+            "ko": "윈 윈 피시 프론 크랩",
+            "th": "วินวินน้ำเต้าปูปลา",
+            "zh-hant": "發財魚蝦蟹",
+            "zh-hans": "发财鱼虾蟹",
+            "ja": "ウィンウィンフー・ヘイ・ハウ",
+            "en": "Win Win Fish Prawn Crab",
+            "id": "Menang Terus di Permainan Ikan Udang Kepiting"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "130",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Heo may mắn",
+            "ko": "행운의 피기",
+            "th": "หมูนำโชค",
+            "zh-hant": "電玩金豬",
+            "zh-hans": "电玩金猪",
+            "ja": "ラッキーピッグ",
+            "en": "Lucky Piggy",
+            "id": "Babi Beruntung"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "127",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Nhà Vô Địch Tốc Độ",
+            "ko": "스피드 승자",
+            "th": "ผู้ชนะแห่งความเร็ว",
+            "zh-hant": "極速贏家",
+            "zh-hans": "极速赢家",
+            "ja": "スピードチャンピオン",
+            "en": "Speed Winner",
+            "id": "Pemenang Adu Cepat"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "128",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Truyền thuyết về Perseus",
+            "ko": "페르세우스의 전설",
+            "th": "ตำนานแห่งเพอร์ซีอุส",
+            "zh-hant": "珀爾修斯傳奇",
+            "zh-hans": "珀尔修斯传奇",
+            "ja": "ペルセウスの伝説",
+            "en": "Legend of Perseus",
+            "id": "Legenda Perseus"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "132",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Tàu Lượn Hoang Dã",
+            "ko": "와일드 코스터",
+            "th": "ไวลด์โคสเตอร์",
+            "zh-hant": "瘋賺過山車",
+            "zh-hans": "疯赚过山车",
+            "ja": "ワイルドコースター",
+            "en": "Wild Coaster",
+            "id": "Wild Coaster"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "135",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Quyết Chiến Giành Tiền Thưởng",
+            "ko": "와일드 바운티 쇼다운",
+            "th": "การดวลล่าค่าหัวสุดไวลด์",
+            "zh-hant": "賞金大對決",
+            "zh-hans": "赏金大对决",
+            "ja": "ワイルドバウンティショーダウン",
+            "en": "Wild Bounty Showdown",
+            "id": "Perebutan Hadiah Wild"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1312883",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Cây Tài Vượng",
+            "ko": "부귀의 행운 나무",
+            "th": "ต้นไม้แห่งโชคลาภอันมั่งคั่ง",
+            "zh-hant": "黃金搖錢樹",
+            "zh-hans": "黄金摇钱树",
+            "ja": "繁栄の幸福の木",
+            "en": "Prosperity Fortune Tree",
+            "id": "Pohon Keberuntungan Kemakmuran"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1338274",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Kỳ Quan Cổ Vật",
+            "ko": "토템 원더",
+            "th": "อัศจรรย์โทเท็ม",
+            "zh-hant": "圖騰奇蹟",
+            "zh-hans": "图腾奇迹",
+            "ja": "トーテム・ワンダーズ",
+            "en": "Totem Wonders",
+            "id": "Keajaiban Totem"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1368367",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Vàng Giả Kim",
+            "ko": "연금술 골드",
+            "th": "ทองแปรธาตุ",
+            "zh-hant": "煉金工坊",
+            "zh-hans": "炼金工坊",
+            "ja": "錬金術のゴールド",
+            "en": "Alchemy Gold",
+            "id": "Alkimia Emas"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1372643",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Bữa Tối Hân Hoan",
+            "ko": "디너 딜라이트",
+            "th": "ร้านอาหารเลิศรส",
+            "zh-hant": "美食美刻",
+            "zh-hans": "美食美刻",
+            "ja": "ダイナー・デライト",
+            "en": "Diner Delights",
+            "id": "Makan Malam yang Menyenangkan"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1340277",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Asgard Trỗi Dậy",
+            "ko": "아스가르디언 라이징",
+            "th": "ชาวแอสการ์ดผงาด",
+            "zh-hant": "維京紀元",
+            "zh-hans": "维京纪元",
+            "ja": "アスガルド・ライジング",
+            "en": "Asgardian Rising",
+            "id": "Kebangkitan Asgardian"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1402846",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Kho Báu Midas",
+            "ko": "마이다스 포춘",
+            "th": "โชคลาภแห่งไมดัส",
+            "zh-hant": "點石成金",
+            "zh-hans": "点石成金",
+            "ja": "ミダスの幸運",
+            "en": "Midas Fortune",
+            "id": "Keberuntungan Midas"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1543462",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Thỏ May Mắn",
+            "ko": "행운 토끼",
+            "th": "กระต่ายแห่งโชคลาภ",
+            "zh-hant": "金錢兔",
+            "zh-hans": "金钱兔",
+            "ja": "幸運のウサギ",
+            "en": "Fortune Rabbit",
+            "id": "Kelinci Keberuntungan"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1420892",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Tiệc Tùng Say Sưa",
+            "ko": "레이브 파티 열광",
+            "th": "ปาร์ตี้ร้อนแรงสุดเหวี่ยง",
+            "zh-hant": "電音派對",
+            "zh-hans": "电音派对",
+            "ja": "レイブパーティーフィーバー",
+            "en": "Rave Party Fever",
+            "id": "Demam Pesta Meriah"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1381200",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Tiki Hawaii",
+            "ko": "하와이 티키",
+            "th": "ฮาวายเอี้ยนทิกิ",
+            "zh-hant": "夏威夷探奇",
+            "zh-hans": "夏威夷探奇",
+            "ja": "ハワイアンティキ",
+            "en": "Hawaiian Tiki",
+            "id": "Tiki Hawaii"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1418544",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Tiệm Bánh Phát Đạt",
+            "ko": "베이커리 보난자",
+            "th": "เบเกอรี่โบนันซ่า",
+            "zh-hant": "烘焙總動員",
+            "zh-hans": "烘焙总动员",
+            "ja": "ベーカリーボナンザ",
+            "en": "Bakery Bonanza",
+            "id": "Toko Roti Bonanza"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1448762",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Lễ Hội Té Nước",
+            "ko": "송크란 스플래시",
+            "th": "สาดน้ำสงกรานต์",
+            "zh-hant": "泰嗨潑水節",
+            "zh-hans": "泰嗨泼水节",
+            "ja": "ソンクラーンスプラッシュ",
+            "en": "Songkran Splash",
+            "id": "Percikan Songkran"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1432733",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Linh Hồn Thần Bí",
+            "ko": "신비로운 영혼",
+            "th": "วิญญาณลี้ลับ",
+            "zh-hant": "元素精靈",
+            "zh-hans": "元素精灵",
+            "ja": "神秘的な精霊",
+            "en": "Mystical Spirits",
+            "id": "Roh Mistis"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1513328",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Cú Phát Bóng Uy Lực",
+            "ko": "슈퍼 골프 드라이브",
+            "th": "ซุปเปอร์กอล์ฟไดรฟ์",
+            "zh-hant": "超級高爾夫",
+            "zh-hans": "超级高尔夫",
+            "ja": "スーパーゴルフドライブ",
+            "en": "Super Golf Drive",
+            "id": "Drive Golf Super"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1601012",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Quý Cô Cỏ Ba Lá May Mắn",
+            "ko": "행운의 클로버 레이디",
+            "th": "สตรีใบโคลเวอร์นำโชค",
+            "zh-hant": "幸運草之戀",
+            "zh-hans": "幸运草之恋",
+            "ja": "ラッキークローバーレディ",
+            "en": "Lucky Clover Riches",
+            "id": "Perempuan Daun Semanggi Keberuntungan"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1397455",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Kẹo Trái Cây",
+            "ko": "과일 캔디",
+            "th": "ลูกกวาดผลไม้",
+            "zh-hant": "水果甜心",
+            "zh-hans": "水果甜心",
+            "ja": "フルーティーキャンディー",
+            "en": "Fruity Candy",
+            "id": "Permen Buah"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1473388",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Du Thuyền Hoàng Gia",
+            "ko": "크루즈 로얄",
+            "th": "ครูซรอแยล",
+            "zh-hant": "皇家遊輪",
+            "zh-hans": "皇家游轮",
+            "ja": "クルーズロワイヤル",
+            "en": "Cruise Royale",
+            "id": "Pesiar Mewah"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1594259",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Safari Hoang Dã",
+            "ko": "사파리 와일드",
+            "th": "ซาฟารีไวลด์",
+            "zh-hant": "非洲大冒險",
+            "zh-hans": "非洲大冒险",
+            "ja": "サファリワイルド",
+            "en": "Safari Wilds",
+            "id": "Wild Safari"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1572362",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Vinh Quang Của Đấu Sĩ",
+            "ko": "검투사의 영광",
+            "th": "ความรุ่งโรจน์ของกลาดิเอเตอร์",
+            "zh-hant": "角鬥士榮耀",
+            "zh-hans": "角斗士荣耀",
+            "ja": "剣闘士の栄光",
+            "en": "Gladiator's Glory",
+            "id": "Kejayaan Gladiator"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1529867",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Ninja Gấu Mèo Điên Cuồng",
+            "ko": "닌자 라콘 프렌지",
+            "th": "แรคคูนนินจาคลั่ง",
+            "zh-hant": "忍者小浣熊",
+            "zh-hans": "忍者小浣熊",
+            "ja": "激アツ！ニンジャ・ラクーン！",
+            "en": "Ninja Raccoon Frenzy",
+            "id": "Kegilaan Ninja Rakun"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1489936",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Tiền Đạo Đỉnh Cao",
+            "ko": "얼티밋 스트라이커",
+            "th": "สุดยอดกองหน้า",
+            "zh-hant": "金球射手",
+            "zh-hans": "金球射手",
+            "ja": "究極のストライカー",
+            "en": "Ultimate Striker",
+            "id": "Penyerang Terbaik"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1568554",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Phi Vụ Cướp Tiền Táo Bạo",
+            "ko": "와일드 하이스트 캐시아웃",
+            "th": "โกยเงินการปล้นสุดไวลด์",
+            "zh-hant": "怪盜神偷",
+            "zh-hans": "怪盗神偷",
+            "ja": "ワイルドハイスト・キャッシュアウト",
+            "en": "Wild Heist Cashout",
+            "id": "Penarikan Uang Perampokan Wild"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1555350",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Lò Rèn Giàu Có",
+            "ko": "부의 대장간",
+            "th": "โรงตีเหล็กแห่งความมั่งคั่ง",
+            "zh-hant": "鑄造大師",
+            "zh-hans": "铸造大师",
+            "ja": "富の鍛冶場",
+            "en": "Forge of Wealth",
+            "id": "Penempa Kekayaan"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1580541",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Băng Nhóm Mafia",
+            "ko": " 마피아 메이헴",
+            "th": "หายนะมาเฟีย",
+            "zh-hant": "黑幫風雲",
+            "zh-hans": "黑帮风云",
+            "ja": "マフィアの騒乱",
+            "en": "Mafia Mayhem",
+            "id": "Kekacauan Mafia"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1655268",
+        "ingress": "3",
+        "gameName": {
+            "vi": "Kho Báu Của Sa Hoàng",
+            "ko": "차르의 보물",
+            "th": "สมบัติพระเจ้าซาร์",
+            "zh-hant": "沙皇寶藏",
+            "zh-hans": "沙皇宝藏",
+            "ja": "ツァーリの宝物",
+            "en": "Tsar Treasures",
+            "id": "Harta Karun Tsar"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1615454",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "狼人傳奇",
+            "zh-hans": "狼人传奇",
+            "en": "Werewolf's Hunt"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1451122",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "尋龍探寶2",
+            "zh-hans": "寻龙探宝2",
+            "en": "Dragon Hatch 2"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1695365",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "金龍送寶",
+            "zh-hans": "金龙送宝",
+            "en": "Fortune Dragon"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1671262",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "寶石礦工",
+            "zh-hans": "宝石矿工",
+            "en": "Gemstones Gold"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1682240",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "快錢來了",
+            "zh-hans": "快钱来了",
+            "en": "Cash Mania"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1508783",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "猿宇宙#3258",
+            "zh-hans": "猿宇宙#3258",
+            "en": "Wild Ape #3258"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1492288",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "墨西哥狂歡",
+            "zh-hans": "墨西哥狂欢",
+            "en": "Pinata Wins"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1717688",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "魔法藥水",
+            "zh-hans": "魔法药水",
+            "en": "Mystic Potion"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1623475",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "阿努比斯",
+            "zh-hans": "阿努比斯",
+            "en": "Anubis Wrath"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1635221",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "喪屍危機",
+            "zh-hans": "丧尸危机",
+            "en": "Zombie Outbreak"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1738001",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "小雞跑酷",
+            "zh-hans": "小鸡跑酷",
+            "en": "Chicky Run"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1778752",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "熱血足球",
+            "zh-hans": "热血足球",
+            "en": "Futebol Fever"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1648578",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "鯊魚獵手",
+            "zh-hans": "鲨鱼猎手",
+            "en": "Shark Hunter"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1760238",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "極道榮耀",
+            "zh-hans": "极道荣耀",
+            "en": "Yakuza Honor"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1747549",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "南美之翼",
+            "zh-hans": "南美之翼",
+            "en": "Wings of Iguazu"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1727711",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "三隻瘋狂小豬",
+            "zh-hans": "三只疯狂小猪",
+            "en": "Three Crazy Piggies"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1815268",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "美食夏日祭",
+            "zh-hans": "美食夏日祭",
+            "en": "Oishi Delights"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1755623",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "世界珍寶館",
+            "zh-hans": "世界珍宝馆",
+            "en": "Museum Wonders"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1786529",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "裡約嘉年華",
+            "zh-hans": "里约嘉年华",
+            "en": "Rio Fantasia"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1666445",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "真愛巧克力",
+            "zh-hans": "真爱巧克力",
+            "en": "Chocolate Deluxe"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1702123",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "藝伎之刃",
+            "zh-hans": "艺伎之刃",
+            "en": "Geisha's Revenge"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1879752",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "金蛇招財",
+            "zh-hans": "金蛇招财",
+            "en": "Fortune Snake"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1850016",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "印加奇蹟",
+            "zh-hans": "印加奇迹",
+            "en": "Incan Wonders"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1799745",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "寶藏大冒險",
+            "zh-hans": "宝藏大冒险",
+            "en": "Mr. Treasure’s Fortune"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1804577",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "街頭塗鴉",
+            "zh-hans": "街头涂鸦",
+            "en": "Graffiti Rush"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1827457",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "狂暴少女",
+            "zh-hans": "狂暴少女",
+            "en": "Doomsday Rampage"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1881268",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "拳擊玫瑰",
+            "zh-hans": "拳击玫瑰",
+            "en": "Knockout Riches"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1865521",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "寶藏船說",
+            "zh-hans": "宝藏船说",
+            "en": "Dead Man's Riches"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1834850",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "魔豆傳奇",
+            "zh-hans": "魔豆传奇",
+            "en": "Jack the Giant Hunter"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1935269",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "漢堡大升級",
+            "zh-hans": "汉堡大升级",
+            "en": "Diner Frenzy Spins"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1897678",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "尋龍寶藏",
+            "zh-hans": "寻龙宝藏",
+            "en": "Dragon's Treasure Quest"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1918451",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "銀河寶藏",
+            "zh-hans": "银河宝藏",
+            "en": "Galaxy Miner"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1903012",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "格林賞金：糖果巫",
+            "zh-hans": "格林赏金：糖果巫",
+            "en": "Grimms' Bounty: Hansel & Gretel"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1971587",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "天竺王朝",
+            "zh-hans": "天竺王朝",
+            "en": "Majestic Empire"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1929177",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "海怪傳說",
+            "zh-hans": "海怪传说",
+            "en": "Kraken Gold Rush"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1964781",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "法老牌",
+            "zh-hans": "法老牌",
+            "en": "Pharaoh Royals"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "2012025",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "寶石熱氣球",
+            "zh-hans": "宝石热气球",
+            "en": "Skylight Wonders"
+        }
+    },
+    {
+        "platType": "pg",
+        "gameType": "2",
+        "gameCode": "1940257",
+        "ingress": "3",
+        "gameName": {
+            "zh-hant": "芝麻開門",
+            "zh-hans": "芝麻开门",
+            "en": "Alibaba's Cave of Fortune"
+        }
+    }
+]

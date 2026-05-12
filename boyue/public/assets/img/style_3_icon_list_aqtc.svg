@@ -1,0 +1,10 @@
+<svg id="8ef676a5cdeb1719ab796eb12add2f5e-style_3_icon_list_aqtc" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="40" viewBox="0 0 40 40">
+  <defs>
+    <linearGradient id="8ef676a5cdeb1719ab796eb12add2f5e-linear-gradient" x1="0.302" x2="0.68" y2="0.913" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#3593fe"/>
+      <stop offset="1" stop-color="#1d73f3"/>
+    </linearGradient>
+  </defs>
+  <rect id="8ef676a5cdeb1719ab796eb12add2f5e-bg" width="40" height="40" fill="#fff" opacity="0"/>
+  <path id="8ef676a5cdeb1719ab796eb12add2f5e-&#x8def;&#x5f84;_16919" data-name="&#x8def;&#x5f84; 16919" d="M18,36A18,18,0,0,1,10.993,1.414,18,18,0,0,1,25.007,34.586,17.888,17.888,0,0,1,18,36ZM11.938,10.511a1.414,1.414,0,0,0-1.033.443A10.091,10.091,0,0,0,8,18a10,10,0,0,0,20,0,10.08,10.08,0,0,0-.813-3.983A9.411,9.411,0,0,0,25.043,10.9a1.427,1.427,0,1,0-1.963,2.072A7,7,0,0,1,25.146,18a7.146,7.146,0,1,1-14.292,0,7.292,7.292,0,0,1,2.117-5.078,1.427,1.427,0,0,0-1.034-2.411ZM18,8a1.428,1.428,0,0,0-1.427,1.427v9.99a1.427,1.427,0,0,0,2.854,0V9.427A1.429,1.429,0,0,0,18,8Z" transform="translate(2 2)" fill="#009688"/>
+</svg>

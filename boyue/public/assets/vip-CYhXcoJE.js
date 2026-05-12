@@ -1,0 +1,1 @@
+import{r as e}from"./index-CHxJdtE3.js";const r={getLevelConfigs:()=>e({url:"/v1/level-rewards/configs",method:"get"}),getRewardInfo:()=>e({url:"/v1/level-rewards",method:"get"}),claimReward:()=>e({url:"/v1/level-rewards",method:"post"}),getRecords:r=>e({url:"/v1/level-rewards/records",method:"get",params:r})};export{r as v};

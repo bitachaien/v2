@@ -1,0 +1,322 @@
+{
+  "info": {
+    "name": "合买大厅 API",
+    "description": "彩票系统合买大厅接口测试集合",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8787",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "核心接口",
+      "item": [
+        {
+          "name": "1. 获取合买列表",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/hemai/list?status=all&lottery=all&page=1&pageSize=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "hemai", "list"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "all",
+                  "description": "all=全部, soon=即将截止, hot=热门, mine=我的"
+                },
+                {
+                  "key": "lottery",
+                  "value": "all",
+                  "description": "all=全部彩种, 或具体彩种code"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "pageSize",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "2. 获取合买详情",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/hemai/detail/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "hemai", "detail", "1"]
+            }
+          }
+        },
+        {
+          "name": "3. 获取参与用户列表",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/hemai/users/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "hemai", "users", "1"]
+            }
+          }
+        },
+        {
+          "name": "4. 认购合买（跟单）",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1,\n  \"num\": 5\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/hemai/buy",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "hemai", "buy"]
+            }
+          }
+        },
+        {
+          "name": "5. 获取彩种列表",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/lottery/list",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "lottery", "list"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "扩展接口",
+      "item": [
+        {
+          "name": "6. 发起合买",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lottery\": \"cqssc\",\n  \"expect\": \"20250124001\",\n  \"playid\": \"5star\",\n  \"playtitle\": \"五星直选\",\n  \"totalAmount\": \"5000.00\",\n  \"perShare\": \"10.00\",\n  \"totalShares\": 500,\n  \"baodi\": 30,\n  \"tzcode\": \"1,2,3,4,5|6,7,8,9,0\",\n  \"content\": \"稳定盈利方案\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/hemai/create",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "hemai", "create"]
+            }
+          }
+        },
+        {
+          "name": "7. 我的合买记录（发起的）",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/hemai/my-records?type=create&page=1&pageSize=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "hemai", "my-records"],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "create"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "pageSize",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "7. 我的合买记录（参与的）",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/hemai/my-records?type=join&page=1&pageSize=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "hemai", "my-records"],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "join"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "pageSize",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "8. 取消合买方案",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/hemai/cancel/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "hemai", "cancel", "1"]
+            }
+          }
+        },
+        {
+          "name": "9. 分享合买",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/hemai/share/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "hemai", "share", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "认证接口",
+      "item": [
+        {
+          "name": "登录获取Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// 自动保存 token 到环境变量",
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.code === 0 && jsonData.data.token) {",
+                  "        pm.collectionVariables.set('token', jsonData.data.token);",
+                  "        console.log('Token saved:', jsonData.data.token);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"testuser\",\n  \"password\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "login"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

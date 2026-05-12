@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="40" viewBox="0 0 40 40">
+  <defs>
+    <clipPath id="204248bfa1350ad0c26986735e6ba42c-clip-path">
+      <rect id="204248bfa1350ad0c26986735e6ba42c-&#x77e9;&#x5f62;_3843" data-name="&#x77e9;&#x5f62; 3843" width="40" height="40" transform="translate(959 -5699)" fill="#ff5050" opacity="0.22"/>
+    </clipPath>
+    <linearGradient id="204248bfa1350ad0c26986735e6ba42c-linear-gradient" x1="0.302" x2="0.68" y2="0.913" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#3593fe"/>
+      <stop offset="1" stop-color="#1d73f3"/>
+    </linearGradient>
+  </defs>
+  <g id="204248bfa1350ad0c26986735e6ba42c-style_3_icon_list_dlsb" transform="translate(-959 5699)" clip-path="url(#204248bfa1350ad0c26986735e6ba42c-clip-path)">
+    <path id="204248bfa1350ad0c26986735e6ba42c-&#x8def;&#x5f84;_17051" data-name="&#x8def;&#x5f84; 17051" d="M23.667,27A2.669,2.669,0,0,1,21,24.333v-16a2.669,2.669,0,0,1,2.666-2.666H33a2.67,2.67,0,0,1,2.666,2.666v16A2.67,2.67,0,0,1,33,27ZM25,22.667a1,1,0,0,0,1,1h4.667a1,1,0,1,0,0-2H26A1,1,0,0,0,25,22.667Zm-16.334,3a1,1,0,1,1,0-2H11V20.334H1.667A2.669,2.669,0,0,1-1,17.667v-16A2.669,2.669,0,0,1,1.667-1H24.333A2.669,2.669,0,0,1,27,1.667V3H21.667a3.337,3.337,0,0,0-3.334,3.333v14h-4v3.333h2.333a1,1,0,1,1,0,2Zm2.667-10.333A1.667,1.667,0,1,0,13,13.667,1.668,1.668,0,0,0,11.334,15.333Z" transform="translate(961.333 -5692)" fill="#009688"/>
+  </g>
+</svg>
