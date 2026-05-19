@@ -1,0 +1,8 @@
+{
+  "bankId": "vietcombank",
+  "bankName": "Vietcombank",
+  "accountNumber": "1234567890",
+  "accountHolder": "TEN KA",
+  "transferNote": "UNG HO HIEP",
+  "template": "compact"
+ }
