@@ -1,0 +1,511 @@
+================================================================================
+DETAILED COLOR PALETTE ANALYSIS REPORT
+Project: /www/wwwroot/okwink6/wap
+================================================================================
+
+Total files scanned: 575
+Total unique colors: 846
+Text colors found: 303
+Background colors found: 491
+Border colors found: 136
+
+================================================================================
+TOP TEXT COLORS (color property)
+================================================================================
+
+1. #333
+   Used 1258 times as text color
+
+2. #fff
+   Used 1199 times as text color
+
+3. #999
+   Used 846 times as text color
+
+4. #666
+   Used 609 times as text color
+
+5. #26a17b
+   Used 428 times as text color
+
+6. #00ff9a
+   Used 340 times as text color
+
+7. #eac26e
+   Used 214 times as text color
+
+8. #e1251b
+   Used 147 times as text color
+
+9. #000
+   Used 144 times as text color
+
+10. #5691fe
+   Used 123 times as text color
+
+11. #1890ff
+   Used 117 times as text color
+
+12. #ff4d4f
+   Used 98 times as text color
+
+13. #64748b
+   Used 84 times as text color
+
+14. #94a3b8
+   Used 81 times as text color
+
+15. #ccc
+   Used 80 times as text color
+
+16. #009688
+   Used 77 times as text color
+
+17. rgba(255, 255, 255, 0.5)
+   Used 68 times as text color
+
+18. rgba(255, 255, 255, 0.6)
+   Used 64 times as text color
+
+19. #f5222d
+   Used 51 times as text color
+
+20. rgba(255, 255, 255, 0.4)
+   Used 50 times as text color
+
+21. rgba(255, 255, 255, 0.8)
+   Used 46 times as text color
+
+22. #ef4444
+   Used 45 times as text color
+
+23. #ff4757
+   Used 43 times as text color
+
+24. #888
+   Used 41 times as text color
+
+25. #cbd5e1
+   Used 39 times as text color
+
+26. #ffaa09
+   Used 36 times as text color
+
+27. #ffffff80
+   Used 35 times as text color
+
+28. #ff9800
+   Used 33 times as text color
+
+29. #ee0a24
+   Used 32 times as text color
+
+30. #fff9
+   Used 32 times as text color
+
+================================================================================
+TOP BACKGROUND COLORS (background/background-color property)
+================================================================================
+
+1. #fff
+   Used 1276 times as background
+
+2. #f5f5f5
+   Used 292 times as background
+
+3. #f7f8fa
+   Used 191 times as background
+
+4. #26a17b
+   Used 177 times as background
+
+5. #5691fe
+   Used 60 times as background
+
+6. #e1251b
+   Used 57 times as background
+
+7. #f9f9f9
+   Used 54 times as background
+
+8. rgba(255, 255, 255, 0.1)
+   Used 50 times as background
+
+9. rgba(255, 255, 255, 0.05)
+   Used 47 times as background
+
+10. #ccc
+   Used 46 times as background
+
+11. #171e2e
+   Used 45 times as background
+
+12. rgba(255, 255, 255, 0.08)
+   Used 44 times as background
+
+13. rgba(255, 255, 255, 0.03)
+   Used 42 times as background
+
+14. #e6f7ff
+   Used 41 times as background
+
+15. rgba(0, 255, 154, 0.1)
+   Used 40 times as background
+
+16. rgba(23, 30, 46, 0.6)
+   Used 40 times as background
+
+17. #eac26e
+   Used 39 times as background
+
+18. #ffffff1a
+   Used 35 times as background
+
+19. #fff1f0
+   Used 35 times as background
+
+20. #f5222d
+   Used 35 times as background
+
+21. #eee
+   Used 34 times as background
+
+22. #e0e0e0
+   Used 33 times as background
+
+23. #f2f3f5
+   Used 33 times as background
+
+24. #f0f0f0
+   Used 32 times as background
+
+25. #ffffff0d
+   Used 30 times as background
+
+26. #00ff9a
+   Used 30 times as background
+
+27. #000
+   Used 28 times as background
+
+28. #0c0f17
+   Used 27 times as background
+
+29. #1890ff
+   Used 27 times as background
+
+30. rgba(255,255,255,0.1)
+   Used 26 times as background
+
+================================================================================
+TOP BORDER COLORS (border/border-color property)
+================================================================================
+
+1. #ddd
+   Used 88 times as border
+
+2. #26a17b
+   Used 81 times as border
+
+3. #e0e0e0
+   Used 75 times as border
+
+4. #eee
+   Used 72 times as border
+
+5. #ebedf0
+   Used 69 times as border
+
+6. #00ff9a
+   Used 69 times as border
+
+7. #fff
+   Used 62 times as border
+
+8. rgba(255, 255, 255, 0.1)
+   Used 61 times as border
+
+9. rgba(255, 255, 255, 0.08)
+   Used 50 times as border
+
+10. #5691fe
+   Used 48 times as border
+
+11. rgba(255, 255, 255, 0.05)
+   Used 44 times as border
+
+12. rgba(255,255,255,.1)
+   Used 35 times as border
+
+13. #f0f0f0
+   Used 33 times as border
+
+14. rgba(255,255,255,.05)
+   Used 28 times as border
+
+15. #e1251b
+   Used 27 times as border
+
+16. rgba(255, 255, 255, 0.15)
+   Used 26 times as border
+
+17. rgba(255,255,255,.08)
+   Used 25 times as border
+
+18. rgba(0, 255, 154, 0.2)
+   Used 24 times as border
+
+19. #eac26e
+   Used 20 times as border
+
+20. #1890ff
+   Used 18 times as border
+
+21. rgba(255,255,255,0.05)
+   Used 18 times as border
+
+22. rgba(255,255,255,0.1)
+   Used 18 times as border
+
+23. rgba(255, 255, 255, 0.06)
+   Used 16 times as border
+
+24. rgba(255, 255, 255, 0.2)
+   Used 16 times as border
+
+25. #eaeaea
+   Used 15 times as border
+
+26. #e8e8e8
+   Used 15 times as border
+
+27. #ffe0b2
+   Used 15 times as border
+
+28. rgba(0,255,154,.2)
+   Used 13 times as border
+
+29. #ee0a24
+   Used 12 times as border
+
+30. rgba(255,255,255,.15)
+   Used 12 times as border
+
+================================================================================
+COLOR USAGE SUMMARY BY TYPE
+================================================================================
+
+Most versatile colors (used in multiple contexts):
+
+1. #fff
+   Total usage: 2541 times
+   Used as: text-color, background, border, shadow
+   - text-color: 1199 times
+   - background: 1276 times
+   - border: 62 times
+   - shadow: 4 times
+
+2. #00ff9a
+   Total usage: 460 times
+   Used as: text-color, background, shadow, border
+   - text-color: 340 times
+   - background: 30 times
+   - shadow: 21 times
+   - border: 69 times
+
+3. #eac26e
+   Total usage: 280 times
+   Used as: text-color, border, background, shadow
+   - text-color: 214 times
+   - border: 20 times
+   - background: 39 times
+   - shadow: 7 times
+
+4. rgba(255, 255, 255, 0.1)
+   Total usage: 117 times
+   Used as: border, background, shadow, text-color
+   - border: 61 times
+   - background: 50 times
+   - shadow: 4 times
+   - text-color: 2 times
+
+5. #009688
+   Total usage: 101 times
+   Used as: text-color, background, border, shadow
+   - text-color: 77 times
+   - background: 12 times
+   - border: 9 times
+   - shadow: 3 times
+
+6. rgba(0, 255, 154, 0.1)
+   Total usage: 54 times
+   Used as: background, shadow, border, text-color
+   - background: 40 times
+   - shadow: 8 times
+   - border: 4 times
+   - text-color: 2 times
+
+7. #ffffff1a
+   Total usage: 40 times
+   Used as: background, shadow, text-color, border
+   - background: 35 times
+   - shadow: 2 times
+   - text-color: 2 times
+   - border: 1 times
+
+8. #26a17b
+   Total usage: 686 times
+   Used as: text-color, background, border
+   - text-color: 428 times
+   - background: 177 times
+   - border: 81 times
+
+9. #5691fe
+   Total usage: 231 times
+   Used as: text-color, background, border
+   - text-color: 123 times
+   - background: 60 times
+   - border: 48 times
+
+10. #e1251b
+   Total usage: 231 times
+   Used as: text-color, background, border
+   - text-color: 147 times
+   - background: 57 times
+   - border: 27 times
+
+11. #000
+   Total usage: 181 times
+   Used as: text-color, border, background
+   - text-color: 144 times
+   - border: 9 times
+   - background: 28 times
+
+12. #1890ff
+   Total usage: 162 times
+   Used as: text-color, border, background
+   - text-color: 117 times
+   - border: 18 times
+   - background: 27 times
+
+13. #ccc
+   Total usage: 132 times
+   Used as: text-color, background, border
+   - text-color: 80 times
+   - background: 46 times
+   - border: 6 times
+
+14. #ddd
+   Total usage: 130 times
+   Used as: border, text-color, background
+   - border: 88 times
+   - text-color: 30 times
+   - background: 12 times
+
+15. #ff4d4f
+   Total usage: 119 times
+   Used as: text-color, background, border
+   - text-color: 98 times
+   - background: 18 times
+   - border: 3 times
+
+16. #eee
+   Total usage: 112 times
+   Used as: background, border, text-color
+   - background: 34 times
+   - border: 72 times
+   - text-color: 6 times
+
+17. #e0e0e0
+   Total usage: 111 times
+   Used as: border, background, text-color
+   - border: 75 times
+   - background: 33 times
+   - text-color: 3 times
+
+18. rgba(255, 255, 255, 0.05)
+   Total usage: 95 times
+   Used as: background, border, text-color
+   - background: 47 times
+   - border: 44 times
+   - text-color: 4 times
+
+19. #64748b
+   Total usage: 90 times
+   Used as: text-color, background, border
+   - text-color: 84 times
+   - background: 3 times
+   - border: 3 times
+
+20. #f5222d
+   Total usage: 89 times
+   Used as: text-color, background, border
+   - text-color: 51 times
+   - background: 35 times
+   - border: 3 times
+
+================================================================================
+PRIMARY COLOR SCHEME IDENTIFICATION
+================================================================================
+
+Main Brand Colors (non-grayscale, used 20+ times):
+
+1. #26a17b
+   Total usage: 686 times
+   Usage: text-color(428), background(177), border(81)
+
+2. #00ff9a
+   Total usage: 460 times
+   Usage: text-color(340), background(30), shadow(21), border(69)
+
+3. #eac26e
+   Total usage: 280 times
+   Usage: text-color(214), border(20), background(39), shadow(7)
+
+4. #5691fe
+   Total usage: 231 times
+   Usage: text-color(123), background(60), border(48)
+
+5. #e1251b
+   Total usage: 231 times
+   Usage: text-color(147), background(57), border(27)
+
+6. #1890ff
+   Total usage: 162 times
+   Usage: text-color(117), border(18), background(27)
+
+7. #ff4d4f
+   Total usage: 119 times
+   Usage: text-color(98), background(18), border(3)
+
+8. rgba(255, 255, 255, 0.1)
+   Total usage: 117 times
+   Usage: border(61), background(50), shadow(4), text-color(2)
+
+9. #009688
+   Total usage: 101 times
+   Usage: text-color(77), background(12), border(9), shadow(3)
+
+10. rgba(255, 255, 255, 0.05)
+   Total usage: 95 times
+   Usage: background(47), border(44), text-color(4)
+
+11. rgba(255, 255, 255, 0.08)
+   Total usage: 94 times
+   Usage: border(50), background(44)
+
+12. #64748b
+   Total usage: 90 times
+   Usage: text-color(84), background(3), border(3)
+
+13. #f5222d
+   Total usage: 89 times
+   Usage: text-color(51), background(35), border(3)
+
+14. #94a3b8
+   Total usage: 87 times
+   Usage: text-color(81), background(3), shadow(3)
+
+15. #ebedf0
+   Total usage: 81 times
+   Usage: border(69), background(9), text-color(3)
