@@ -2,7 +2,7 @@
   <div class="trend-page">
     <div class="trend-header">
       <van-icon name="arrow-left" class="back-icon" @click="$router.back()" />
-      <span class="page-title">投注趋势</span>
+      <span class="page-title">Xu hướng đặt cược</span>
       <van-icon name="filter-o" class="filter-icon" @click="showFilter = true" />
     </div>
 
@@ -20,14 +20,14 @@
     <div class="scroll-content">
       <div class="chart-card">
         <div class="card-title">
-          <span class="t-icon">🔥</span> 彩种人气排行
+          <span class="t-icon">🔥</span> Xếp hạng xổ số phổ biến
         </div>
         <div class="chart-box" ref="lotteryRankChart"></div>
       </div>
 
       <div class="chart-card">
         <div class="card-title">
-          <span class="t-icon">🎱</span> 本期热门号码
+          <span class="t-icon">🎱</span> Số hot kỳ này
         </div>
         <div class="hot-balls-grid">
           <div class="hot-ball-item" v-for="(item, i) in hotNumbers" :key="i">
@@ -42,33 +42,33 @@
 
       <div class="chart-row">
         <div class="chart-card half">
-          <div class="card-title small">大小分布</div>
+          <div class="card-title small">Phân bố Lớn/Nhỏ</div>
           <div class="chart-box-sm" ref="sizeRatioChart"></div>
           <div class="ratio-legend">
-            <span class="l-item big">大 63%</span>
-            <span class="l-item small">小 37%</span>
+            <span class="l-item big">Lớn 63%</span>
+            <span class="l-item small">Nhỏ 37%</span>
           </div>
         </div>
         <div class="chart-card half">
-          <div class="card-title small">单双分布</div>
+          <div class="card-title small">Phân bố Lẻ/Chẵn</div>
           <div class="chart-box-sm" ref="oddEvenChart"></div>
           <div class="ratio-legend">
-            <span class="l-item odd">单 45%</span>
-            <span class="l-item even">双 55%</span>
+            <span class="l-item odd">Lẻ 45%</span>
+            <span class="l-item even">Chẵn 55%</span>
           </div>
         </div>
       </div>
 
       <div class="chart-card">
         <div class="card-title">
-          <span class="t-icon">📈</span> 投注金额走势
+          <span class="t-icon">📈</span> Xu hướng số tiền đặt cược
         </div>
         <div class="chart-box" ref="amountTrendChart"></div>
       </div>
 
       <div class="chart-card">
         <div class="card-title">
-          <span class="t-icon">🏆</span> 本期号码热度
+          <span class="t-icon">🏆</span> Độ hot số kỳ này
         </div>
         <div class="issue-heat-list">
           <div class="heat-row" v-for="(item, i) in issueHeat" :key="i">
@@ -83,14 +83,14 @@
 
       <div class="chart-card">
         <div class="card-title">
-          <span class="t-icon">🎮</span> 热门玩法 (10min)
+          <span class="t-icon">🎮</span> Cách chơi hot (10 phút)
         </div>
         <div class="play-list">
           <div class="play-item" v-for="(p, i) in hotPlays" :key="i">
             <div class="p-rank">{{ i + 1 }}</div>
             <div class="p-info">
-              <div class="p-name">{{ p.name }} <span class="tag-hot" v-if="i===0">爆</span></div>
-              <div class="p-sub">笔数 {{ p.betCount }}</div>
+              <div class="p-name">{{ p.name }} <span class="tag-hot" v-if="i===0">HOT</span></div>
+              <div class="p-sub">Số lượt {{ p.betCount }}</div>
             </div>
             <div class="p-amt">¥{{ p.amount }}</div>
           </div>
@@ -114,7 +114,7 @@
     </div>
 
     <van-popup v-model:show="showFilter" position="bottom" round>
-      <div style="padding: 20px; text-align: center; color: #000;">筛选功能开发中...</div>
+      <div style="padding: 20px; text-align: center; color: #000;">Chức năng lọc đang phát triển...</div>
     </van-popup>
   </div>
 </template>
@@ -127,7 +127,7 @@ import * as echarts from 'echarts'
 const route = useRoute()
 const type = route.params.type || 'ssc'
 const showFilter = ref(false)
-const currentLotteryName = ref('重庆时时彩')
+const currentLotteryName = ref('Thời thời thái Trùng Khánh')
 
 const lotteryRankChart = ref(null)
 const sizeRatioChart = ref(null)
@@ -152,21 +152,21 @@ const issueHeat = [
 ]
 
 const hotPlays = [
-  { name: '定位胆-个位', betCount: 452, amount: 56000 },
-  { name: '前三直选', betCount: 320, amount: 42000 },
-  { name: '后三直选', betCount: 280, amount: 38000 },
-  { name: '大小单双', betCount: 210, amount: 25000 },
-  { name: '龙虎和', betCount: 150, amount: 18000 },
+  { name: 'Định vị đơn - Hàng đơn vị', betCount: 452, amount: 56000 },
+  { name: 'Ba số đầu chọn thẳng', betCount: 320, amount: 42000 },
+  { name: 'Ba số cuối chọn thẳng', betCount: 280, amount: 38000 },
+  { name: 'Lớn/Nhỏ Lẻ/Chẵn', betCount: 210, amount: 25000 },
+  { name: 'Rồng Hổ Hòa', betCount: 150, amount: 18000 },
 ]
 
 const liveTicker = [
-  { time: '10:02', userMask: '王**', actionType: 'bet', lotteryName: '重庆时时彩', amount: 300 },
-  { time: '10:03', userMask: '李**', actionType: 'win', lotteryName: '极速赛车', amount: 1200 },
-  { time: '10:03', userMask: '张**', actionType: 'chase', lotteryName: '快3', amount: 500 },
-  { time: '10:04', userMask: '赵**', actionType: 'bet', lotteryName: '六合彩', amount: 2000 },
+  { time: '10:02', userMask: 'Nguyễn**', actionType: 'bet', lotteryName: 'Thời thời thái CK', amount: 300 },
+  { time: '10:03', userMask: 'Trần**', actionType: 'win', lotteryName: 'Đua xe tốc độ', amount: 1200 },
+  { time: '10:03', userMask: 'Lê**', actionType: 'chase', lotteryName: 'Kuai 3', amount: 500 },
+  { time: '10:04', userMask: 'Phạm**', actionType: 'bet', lotteryName: 'Lục hợp', amount: 2000 },
 ]
 
-const actionMap = { bet: '投注', win: '中奖', chase: '追号' }
+const actionMap = { bet: 'Đặt cược', win: 'Trúng thưởng', chase: 'Đuổi số' }
 
 const formatAmt = (n) => (n > 10000 ? (n/10000).toFixed(1)+'w' : n)
 
@@ -177,7 +177,7 @@ const initCharts = () => {
     xAxis: { show: false },
     yAxis: { 
       type: 'category', 
-      data: ['极速赛车', '澳洲幸运5', '重庆时时彩', '1分快3', '香港六合彩'],
+      data: ['Đua xe tốc độ', 'Úc may mắn 5', 'Thời thời thái CK', 'Kuai 3 1 phút', 'Lục hợp HK'],
       axisLine: { show: false },
       axisTick: { show: false },
       axisLabel: { color: '#fff' }
@@ -205,8 +205,8 @@ const initCharts = () => {
       avoidLabelOverlap: false,
       label: { show: false },
       data: [
-        { value: 630, name: '大' },
-        { value: 370, name: '小' }
+        { value: 630, name: 'Lớn' },
+        { value: 370, name: 'Nhỏ' }
       ]
     }]
   })
@@ -220,8 +220,8 @@ const initCharts = () => {
       avoidLabelOverlap: false,
       label: { show: false },
       data: [
-        { value: 450, name: '单' },
-        { value: 550, name: '双' }
+        { value: 450, name: 'Lẻ' },
+        { value: 550, name: 'Chẵn' }
       ]
     }]
   })

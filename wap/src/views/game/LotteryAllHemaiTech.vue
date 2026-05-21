@@ -8,7 +8,7 @@
         <div class="h-left" @click="goBack">
           <van-icon name="arrow-left" />
         </div>
-        <div class="h-title">合买大厅</div>
+        <div class="h-title">Sảnh hợp mãi</div>
           <div class="h-right">
           <div class="icon-btn" @click="showFilter = true">
             <van-icon name="filter-o" />
@@ -46,12 +46,12 @@
           v-show="list.length > 0 || !loading"
           v-model:loading="loading"
           :finished="finished"
-          finished-text="没有更多了"
+          finished-text="Không còn nữa"
           @load="onLoad"
           class="tech-list"
           :immediate-check="false"
         >
-          <van-empty v-if="list.length === 0 && !loading" description="暂无合买方案" />
+          <van-empty v-if="list.length === 0 && !loading" description="Chưa có phương án hợp mãi" />
 
           <div 
             v-for="item in list" 
@@ -73,13 +73,13 @@
 
             <div class="card-center" v-if="viewMode === 'list'">
               <div class="row-1">
-                <span class="label">剩余</span>
-                <span class="val-red">{{ item.buyhave }}份</span>
+                <span class="label">Còn lại</span>
+                <span class="val-red">{{ item.buyhave }} phần</span>
               </div>
               <div class="row-2">
-                <span>总额 {{ item.amount }}</span>
+                <span>Tổng {{ item.amount }}</span>
                 <span class="divider">|</span>
-                <span>单价 {{ item.hemaipic }}</span>
+                <span>Đơn giá {{ item.hemaipic }}</span>
               </div>
               <div class="row-3">
                 <div class="avatar-tiny">
@@ -101,7 +101,7 @@
               <div class="countdown-capsule" v-if="item.remainingTime > 0">
                 <van-count-down :time="item.remainingTime" format="HH:mm:ss" />
               </div>
-              <div class="status-text" v-else>已截止</div>
+              <div class="status-text" v-else>Đã hết hạn</div>
 
               <div class="progress-circle-box">
                 <van-circle
@@ -113,7 +113,7 @@
                   size="56px"
                   :text="item.progress + '%'"
                 />
-                <div class="baodi-mini" v-if="item.baodi > 0">保{{ calcBaodiRate(item) }}%</div>
+                <div class="baodi-mini" v-if="item.baodi > 0">Bảo {{ calcBaodiRate(item) }}%</div>
               </div>
 
               <van-button 
@@ -123,7 +123,7 @@
                 @click.stop="quickJoin(item)"
                 :disabled="item.status !== 0"
               >
-                {{ item.status === 0 ? '立即跟单' : '已截止' }}
+                {{ item.status === 0 ? 'Theo ngay' : 'Đã hết hạn' }}
               </van-button>
             </div>
           </div>
@@ -137,13 +137,13 @@
       round 
       class="tech-popup-bottom"
     >
-      <div class="popup-header">选择彩种</div>
+      <div class="popup-header">Chọn loại xổ số</div>
       <div class="lottery-grid">
         <div 
           class="lottery-tag" 
           :class="{ active: selectedLottery === 'all' }"
           @click="selectLottery('all')"
-        >全部彩种</div>
+        >Tất cả</div>
         <div 
           v-for="cp in lotteryList" 
           :key="cp.name"
@@ -184,11 +184,11 @@ const selectedLottery = ref('all')
 const lotteryList = ref([])
 
 const tabs = [
-  { key: 'all', name: '全部' },
-  { key: 'soon', name: '即将截止' },
-  { key: 'hot', name: '热门方案' },
-  { key: 'mine', name: '我发起的' },
-  { key: 'joined', name: '我参与的' }
+  { key: 'all', name: 'Tất cả' },
+  { key: 'soon', name: 'Sắp hết hạn' },
+  { key: 'hot', name: 'Phương án hot' },
+  { key: 'mine', name: 'Tôi phát hành' },
+  { key: 'joined', name: 'Tôi tham gia' }
 ]
 
 const progressGradient = {

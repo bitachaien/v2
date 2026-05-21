@@ -2,9 +2,9 @@
   <div class="share-tab">
     <div class="invite-section">
       <div class="section-header">
-        <span class="title">邀请好友</span>
+        <span class="title">Mời Bạn Bè</span>
         <span class="invite-code">
-          我的邀请码 <em>{{ inviteInfo.inviteCode }}</em>
+          Mã mời của tôi <em>{{ inviteInfo.inviteCode }}</em>
           <van-icon name="description-o" class="copy-icon" @click="$emit('copy', inviteInfo.inviteCode)" />
         </span>
       </div>
@@ -12,16 +12,16 @@
       <div class="invite-content">
         <div class="qrcode-area">
           <div class="qrcode-box">
-            <img v-if="inviteInfo.qrcodeUrl" :src="inviteInfo.qrcodeUrl" alt="邀请二维码" />
+            <img v-if="inviteInfo.qrcodeUrl" :src="inviteInfo.qrcodeUrl" alt="Mã QR mời" />
             <div v-else class="qr-placeholder">
               <van-icon name="qr" />
             </div>
           </div>
-          <button class="save-qr-btn" @click="$emit('saveQrcode')">保存邀请码</button>
+          <button class="save-qr-btn" @click="$emit('saveQrcode')">Lưu mã mời</button>
         </div>
 
         <div class="link-area">
-          <div class="link-label">邀请链接</div>
+          <div class="link-label">Link mời</div>
           <div class="link-input">
             <van-field 
               v-model="inviteInfo.inviteLink" 
@@ -39,7 +39,7 @@
               <div class="share-icon system-icon">
                 <van-icon name="share-o" />
               </div>
-              <span>分享</span>
+              <span>Chia sẻ</span>
             </div>
           </div>
         </div>

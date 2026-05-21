@@ -8,14 +8,14 @@
       @click-left="goBack"
     >
       <template #right>
-        <span class="nav-right-link" @click="goToRecords">领取记录</span>
+        <span class="nav-right-link" @click="goToRecords">Lịch sử nhận</span>
       </template>
     </van-nav-bar>
 
     <div class="top-bar">
       <div class="task-info">
-        <span class="task-title">每周投注任务</span>
-        <span class="task-tip">每档奖励都可领取</span>
+        <span class="task-title">Nhiệm vụ cược hàng tuần</span>
+        <span class="task-tip">Mỗi mốc đều có thể nhận thưởng</span>
       </div>
       <div class="refresh-area">
         <van-button 
@@ -26,27 +26,27 @@
           @click="refreshReward"
         >
           <van-icon name="replay" v-if="!isRefreshing" />
-          刷新奖励
+          Làm mới
         </van-button>
       </div>
     </div>
 
     <div class="countdown-bar" v-if="countdown">
       <van-count-down :time="countdown" format="DD天HH:mm:ss" />
-      <span class="countdown-text">后重置</span>
+      <span class="countdown-text">sau sẽ reset</span>
     </div>
     
     <div class="content">
       <div class="activity-info">
         <h3 class="title">{{ activityTitle }}</h3>
         <p class="desc">{{ activityDesc }}</p>
-        <p class="time">活动时间：{{ activityTime }}</p>
+        <p class="time">Thời gian: {{ activityTime }}</p>
       </div>
 
       <div v-if="rewardType === 'lucky_order'" class="reward-section">
         <div class="section-header">
-          <span>今日累计中奖注数：{{ todayOrders }}次</span>
-          <van-button type="primary" size="small" @click="refreshReward">刷新</van-button>
+          <span>Số lần trúng hôm nay: {{ todayOrders }} lần</span>
+          <van-button type="primary" size="small" @click="refreshReward">Làm mới</van-button>
         </div>
         
         <div class="reward-levels">
@@ -65,9 +65,9 @@
               size="small"
               @click="handleClaim(item)"
             >
-              领取
+              Nhận
             </van-button>
-            <span v-else class="level-status">{{ item.orderNo ? '已领取' : '-' }}</span>
+            <span v-else class="level-status">{{ item.orderNo ? 'Đã nhận' : '-' }}</span>
           </div>
         </div>
       </div>
@@ -75,15 +75,15 @@
       <div v-if="rewardType === 'loss_rescue'" class="reward-section">
         <div class="stats-card">
           <div class="stat-item">
-            <span class="label">今日投注</span>
+            <span class="label">Cược hôm nay</span>
             <span class="value">{{ todayBet }}</span>
           </div>
           <div class="stat-item">
-            <span class="label">今日中奖</span>
+            <span class="label">Trúng hôm nay</span>
             <span class="value">{{ todayWin }}</span>
           </div>
           <div class="stat-item loss">
-            <span class="label">今日亏损</span>
+            <span class="label">Lỗ hôm nay</span>
             <span class="value">{{ todayLoss }}</span>
           </div>
         </div>
@@ -105,10 +105,10 @@
               size="small"
               @click="handleClaim(item)"
             >
-              领取
+              Nhận
             </van-button>
             <span v-else class="level-status">
-              {{ item.isMatched ? '已领取' : '-' }}
+              {{ item.isMatched ? 'Đã nhận' : '-' }}
             </span>
           </div>
         </div>
@@ -144,14 +144,14 @@
               round
               @click="goToBet"
             >
-              去投注
+              Đi cược
             </van-button>
           </div>
         </div>
       </div>
 
       <div class="rules-section">
-        <h4>活动说明</h4>
+        <h4>Hướng dẫn hoạt động</h4>
         <div class="rules-content" v-html="activityRules"></div>
       </div>
 
@@ -170,32 +170,32 @@
     </div>
 
     <div class="bottom-bar">
-      <van-button class="btn-back" plain @click="goBack">返回</van-button>
+      <van-button class="btn-back" plain @click="goBack">Quay lại</van-button>
       <van-button 
         class="btn-claim-all" 
         type="primary"
         :disabled="!hasClaimableRewards"
         @click="handleClaimAll"
       >
-        一键领取
+        Nhận tất cả
       </van-button>
     </div>
 
     <van-dialog
       v-model:show="showClaimDialog"
-      title="领取奖励"
+      title="Nhận thưởng"
       show-cancel-button
       :before-close="beforeClose"
       @confirm="confirmClaim"
     >
       <div class="claim-info">
-        <p>档位：{{ currentReward?.levelName }}</p>
-        <p>奖励：<strong style="color: #ee0a24;">{{ currentReward?.rewardAmount }}</strong></p>
+        <p>Mốc: {{ currentReward?.levelName }}</p>
+        <p>Thưởng: <strong style="color: #ee0a24;">{{ currentReward?.rewardAmount }}</strong></p>
         <van-field
           v-if="needOrderNo"
           v-model="claimForm.orderNo"
-          label="注单号"
-          placeholder="请输入注单号"
+          label="Mã đơn"
+          placeholder="Nhập mã đơn cược"
         />
       </div>
     </van-dialog>
@@ -212,7 +212,7 @@ const router = useRouter()
 const route = useRoute()
 
 const activityId = computed(() => Number(route.params.id))
-const activityTitle = ref('活动详情')
+const activityTitle = ref('Chi tiết hoạt động')
 const activityDesc = ref('')
 const activityTime = ref('')
 const activityRules = ref('')
@@ -302,7 +302,7 @@ const loadRewardData = async () => {
       }
     }
   } catch (error) {
-    showToast('加载失败')
+    showToast('Tải thất bại')
   } finally {
     loading.value = false
   }
@@ -313,9 +313,9 @@ const refreshReward = async () => {
   isRefreshing.value = true
   try {
     await loadRewardData()
-    showToast('刷新成功')
+    showToast('Làm mới thành công')
   } catch (error) {
-    showToast('刷新失败')
+    showToast('Làm mới thất bại')
   } finally {
     isRefreshing.value = false
   }
@@ -383,7 +383,7 @@ const handleClaimAll = async () => {
   )
   
   if (claimableRewards.length === 0) {
-    showToast('暂无可领取的奖励')
+    showToast('Chưa có thưởng để nhận')
     return
   }
   
@@ -393,8 +393,8 @@ const handleClaimAll = async () => {
   }
   
   showConfirmDialog({
-    title: '一键领取',
-    message: `确定领取${claimableRewards.length}个奖励吗？`,
+    title: 'Nhận tất cả',
+    message: `Xác nhận nhận ${claimableRewards.length} phần thưởng?`,
   }).then(async () => {
     let successCount = 0
     for (const reward of claimableRewards) {
@@ -414,12 +414,12 @@ const handleClaimAll = async () => {
     }
     
     if (successCount > 0) {
-      showToast(`成功领取${successCount}个奖励`)
+      showToast(`Đã nhận thành công ${successCount} phần thưởng`)
       setTimeout(() => {
         loadRewardData()
       }, 1000)
     } else {
-      showToast('领取失败')
+      showToast('Nhận thất bại')
     }
   }).catch(() => {
   })
@@ -427,7 +427,7 @@ const handleClaimAll = async () => {
 
 const confirmClaim = async () => {
   if (needOrderNo.value && !claimForm.orderNo) {
-    showToast('请输入注单号')
+    showToast('Vui lòng nhập mã đơn cược')
     return false
   }
   
@@ -441,16 +441,16 @@ const confirmClaim = async () => {
     const res = await activityApi.claimReward(data)
     
     if (res.code === 0) {
-      showToast(res.message || '领取成功')
+      showToast(res.message || 'Nhận thành công')
       showClaimDialog.value = false
       setTimeout(() => {
         loadRewardData()
       }, 1000)
     } else {
-      showToast(res.message || '领取失败')
+      showToast(res.message || 'Nhận thất bại')
     }
   } catch (error) {
-    showToast('领取失败')
+    showToast('Nhận thất bại')
   }
 }
 

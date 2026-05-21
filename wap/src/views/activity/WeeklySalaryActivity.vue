@@ -9,7 +9,7 @@
       class="custom-nav"
     >
       <template #right>
-        <span class="nav-right-link" @click="goToRecords">领取记录</span>
+        <span class="nav-right-link" @click="goToRecords">Lịch sử nhận</span>
       </template>
     </van-nav-bar>
 
@@ -17,17 +17,17 @@
       <div class="task-header-card">
         <div class="task-header-top">
           <div class="header-left">
-            <div class="title">每周投注任务</div>
-            <div class="subtitle">每档奖励都可领取</div>
+            <div class="title">Nhiệm vụ cược hàng tuần</div>
+            <div class="subtitle">Mỗi mốc đều có thể nhận thưởng</div>
           </div>
           <div class="header-right">
             <div class="refresh-row" @click="loadData">
               <van-icon name="replay" class="refresh-icon" />
-              <span class="refresh-text">刷新奖励</span>
+              <span class="refresh-text">Làm mới</span>
             </div>
             <div class="countdown-row">
               <van-count-down :time="countdown" format="DD天HH:mm:ss" class="countdown-timer" />
-              <span class="countdown-suffix">后重置</span>
+              <span class="countdown-suffix">sau sẽ reset</span>
             </div>
           </div>
         </div>
@@ -40,13 +40,13 @@
           >
             <div class="reward-icon-wrapper">
               <div class="reward-icon-box">
-                <img src="/assets/img/dm_icon_dm.avif" class="reward-icon-img" alt="奖励图标" />
+                <img src="/assets/img/dm_icon_dm.avif" class="reward-icon-img" alt="Icon thưởng" />
               </div>
             </div>
             
             <div class="reward-content">
               <div class="reward-condition">
-                累计有效投注 ≥ {{ formatNumber(item.conditionMin) }}，奖励 <span class="amount">{{ item.rewardAmount }}</span>
+                Tổng cược hợp lệ ≥ {{ formatNumber(item.conditionMin) }}, thưởng <span class="amount">{{ item.rewardAmount }}</span>
               </div>
               <div class="progress-box">
                 <div class="progress-bg">
@@ -62,7 +62,7 @@
               size="small"
               @click="item.isMatched ? handleClaim(item) : goToBet()"
             >
-              {{ item.isMatched ? '领取' : '去投注' }}
+              {{ item.isMatched ? 'Nhận' : 'Đi cược' }}
             </van-button>
           </div>
         </div>
@@ -70,7 +70,7 @@
 
       <div class="info-card">
         <div class="ribbon-title">
-          <span>活动时间 (UTC+8)</span>
+          <span>Thời gian hoạt động (UTC+8)</span>
           <div class="ribbon-arrow"></div>
         </div>
         <div class="time-content">
@@ -80,7 +80,7 @@
 
       <div class="info-card">
         <div class="ribbon-title">
-          <span>活动说明</span>
+          <span>Hướng dẫn hoạt động</span>
           <div class="ribbon-arrow"></div>
         </div>
         <div class="rules-content" v-html="activityContent">
@@ -102,13 +102,13 @@
     </div>
 
     <div class="bottom-bar">
-      <div class="btn-back" @click="goBack">返回</div>
+      <div class="btn-back" @click="goBack">Quay lại</div>
       <div 
         class="btn-claim-all" 
         :class="{ disabled: !hasClaimableRewards }"
         @click="handleClaimAll"
       >
-        一键领取
+        Nhận tất cả
       </div>
     </div>
   </div>
@@ -124,8 +124,8 @@ const router = useRouter()
 const route = useRoute()
 
 const activityId = computed(() => Number(route.params.id) || 1)
-const activityTitle = ref('加载中...')
-const activityContent = ref('<p>加载中...</p>')
+const activityTitle = ref('Đang tải...')
+const activityContent = ref('<p>Đang tải...</p>')
 const countdown = ref(259200000)
 const weekBetAmount = ref('0.00')
 
@@ -194,21 +194,21 @@ const loadData = async () => {
     try {
       const detailRes = await activityApi.getActivityDetail(activityId.value)
       if (detailRes.code === 0 && detailRes.data) {
-        activityTitle.value = detailRes.data.title || '活动详情'
-        activityContent.value = detailRes.data.content || '<p>暂无活动说明</p>'
+        activityTitle.value = detailRes.data.title || 'Chi tiết hoạt động'
+        activityContent.value = detailRes.data.content || '<p>Chưa có mô tả hoạt động</p>'
       } else if (detailRes.code === 404) {
-        showToast('活动不存在或已下架')
+        showToast('Hoạt động không tồn tại hoặc đã gỡ')
         setTimeout(() => router.push('/activity'), 1500)
         return
       }
     } catch (error) {
       if (error?.message?.includes('404')) {
-        showToast('活动不存在或已下架')
+        showToast('Hoạt động không tồn tại hoặc đã gỡ')
         setTimeout(() => router.push('/activity'), 1500)
         return
       }
-      activityTitle.value = '活动详情'
-      activityContent.value = '<p>加载失败</p>'
+      activityTitle.value = 'Chi tiết hoạt động'
+      activityContent.value = '<p>Tải thất bại</p>'
     }
     
     try {
@@ -258,13 +258,13 @@ const handleClaimAll = async () => {
   const claimableRewards = rewards.value.filter(item => item.isMatched)
   
   if (claimableRewards.length === 0) {
-    showToast('暂无可领取的奖励')
+    showToast('Chưa có thưởng để nhận')
     return
   }
   
   showConfirmDialog({
-    title: '一键领取',
-    message: `确定领取${claimableRewards.length}个奖励吗？`,
+    title: 'Nhận tất cả',
+    message: `Xác nhận nhận ${claimableRewards.length} phần thưởng?`,
   }).then(async () => {
     let successCount = 0
     for (const reward of claimableRewards) {
@@ -284,10 +284,10 @@ const handleClaimAll = async () => {
     }
     
     if (successCount > 0) {
-      showToast(`成功领取${successCount}个奖励`)
+      showToast(`Đã nhận thành công ${successCount} phần thưởng`)
       setTimeout(() => loadData(), 1000)
     } else {
-      showToast('领取失败')
+      showToast('Nhận thất bại')
     }
   }).catch(() => {
   })

@@ -27,12 +27,12 @@ const router = useRouter()
 const route = useRoute()
 
 const topTabs = [
-  { name: '活动', path: '/activity' },
+  { name: 'Sự kiện', path: '/activity' },
   { name: 'VIP', path: '/vip' },
-  { name: '返水', path: '/cashback' },
-  { name: '待领取', path: '/pending' },
-  { name: '利息宝', path: '/interest' },
-  { name: '领取记录', path: '/reward-record' },
+  { name: 'Hoàn trả', path: '/cashback' },
+  { name: 'Chờ nhận', path: '/pending' },
+  { name: 'Lãi suất', path: '/interest' },
+  { name: 'Lịch sử nhận', path: '/reward-record' },
 ]
 
 const activeTopTab = computed(() => {

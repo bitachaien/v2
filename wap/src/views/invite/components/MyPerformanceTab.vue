@@ -22,7 +22,7 @@
       v-if="list.length > 0"
       v-model:loading="loading"
       :finished="finished"
-      finished-text="没有更多了"
+      finished-text="Không còn nữa"
       @load="onLoad"
       class="performance-list"
     >
@@ -33,11 +33,11 @@
         </div>
         <div class="item-body">
           <div class="detail-row">
-            <span class="label">有效投注：</span>
+            <span class="label">Cược hợp lệ:</span>
             <span class="value">{{ formatNumber(item.validBet) }}</span>
           </div>
           <div class="detail-row">
-            <span class="label">输赢金额：</span>
+            <span class="label">Số tiền thắng thua:</span>
             <span class="value" :class="item.winLoss >= 0 ? 'green' : 'red'">
               {{ item.winLoss >= 0 ? '+' : '' }}{{ formatNumber(item.winLoss) }}
             </span>
@@ -48,7 +48,7 @@
 
     <div class="empty-state" v-if="!loading && list.length === 0">
       <img src="/assets/img/img_none_sj.avif" class="empty-icon" />
-      <p>暂无记录</p>
+      <p>Chưa có bản ghi</p>
     </div>
   </div>
 </template>
@@ -68,7 +68,7 @@ const page = ref(1)
 
 const currentTimeLabel = computed(() => {
   const item = timeOptions.find(t => t.value === currentTime.value)
-  return item ? item.label : '今日'
+  return item ? item.label : 'Hôm nay'
 })
 
 const selectTime = (value) => {

@@ -3,21 +3,21 @@
     <div class="agent-card">
       <div class="agent-row">
         <div class="agent-item">
-          <span class="label">代理账号</span>
+          <span class="label">Tài khoản đại lý</span>
           <span class="value">{{ agentInfo.agentId }}</span>
         </div>
         <div class="agent-item">
-          <span class="label">代理模式</span>
+          <span class="label">Chế độ đại lý</span>
           <span class="value mode-link">{{ agentInfo.agentMode }}</span>
         </div>
       </div>
       <div class="agent-row">
         <div class="agent-item">
-          <span class="label">稽核倍数</span>
+          <span class="label">Bội số kiểm tra</span>
           <span class="value">{{ agentInfo.auditMultiple }}</span>
         </div>
         <div class="agent-item">
-          <span class="label">结算日期</span>
+          <span class="label">Ngày thanh toán</span>
           <span class="value">{{ agentInfo.settlementDate }}</span>
         </div>
       </div>
@@ -25,9 +25,9 @@
 
     <div class="invite-section">
       <div class="section-header">
-        <span class="title">邀请好友</span>
+        <span class="title">Mời bạn bè</span>
         <span class="invite-code">
-          我的邀请码 <em>{{ inviteInfo.inviteCode }}</em>
+          Mã mời của tôi <em>{{ inviteInfo.inviteCode }}</em>
           <van-icon name="description-o" class="copy-icon" @click="$emit('copy', inviteInfo.inviteCode)" />
         </span>
       </div>
@@ -35,16 +35,16 @@
       <div class="invite-content">
         <div class="qrcode-area">
           <div class="qrcode-box">
-            <img v-if="inviteInfo.qrcodeUrl" :src="inviteInfo.qrcodeUrl" alt="邀请二维码" />
+            <img v-if="inviteInfo.qrcodeUrl" :src="inviteInfo.qrcodeUrl" alt="Mã QR mời" />
             <div v-else class="qr-placeholder">
               <van-icon name="qr" />
             </div>
           </div>
-          <button class="save-qr-btn" @click="$emit('copy', inviteInfo.inviteCode)">保存邀请码</button>
+          <button class="save-qr-btn" @click="$emit('copy', inviteInfo.inviteCode)">Lưu mã mời</button>
         </div>
 
         <div class="link-area">
-          <div class="link-label">邀请链接</div>
+          <div class="link-label">Link mời</div>
           <div class="link-input">
             <van-field 
               v-model="inviteInfo.inviteLink" 
@@ -62,7 +62,7 @@
               <div class="share-icon system-icon">
                 <van-icon name="share-o" />
               </div>
-              <span>分享</span>
+              <span>Chia sẻ</span>
             </div>
           </div>
         </div>
@@ -71,37 +71,37 @@
 
     <div class="stats-row">
       <div class="stat-item">
-        <span class="label">累计获得</span>
+        <span class="label">Tổng thu nhập</span>
         <span class="value orange">{{ formatNumber(overview.totalEarned) }}</span>
       </div>
       <div class="stat-item">
-        <span class="label">累计邀请人数</span>
+        <span class="label">Tổng số người mời</span>
         <span class="value">{{ overview.totalInvited }}</span>
       </div>
     </div>
 
     <div class="commission-card">
       <div class="commission-header">
-        <span class="title">我的佣金</span>
-        <span class="countdown">(距离下次结算 {{ overview.nextSettlement }})</span>
+        <span class="title">Hoa hồng của tôi</span>
+        <span class="countdown">(Thanh toán tiếp theo {{ overview.nextSettlement }})</span>
         <van-icon name="arrow" class="arrow-icon" />
       </div>
       <div class="commission-body">
         <div class="commission-grid">
           <div class="commission-item">
-            <span class="label">昨日直属业绩</span>
+            <span class="label">Thành tích trực thuộc hôm qua</span>
             <span class="value">{{ formatNumber(overview.yesterdayPerformance) }}</span>
           </div>
           <div class="commission-item">
-            <span class="label">累计佣金</span>
+            <span class="label">Tổng hoa hồng</span>
             <span class="value">{{ formatNumber(overview.totalCommission) }}</span>
           </div>
           <div class="commission-item">
-            <span class="label">已领取</span>
+            <span class="label">Đã nhận</span>
             <span class="value">{{ formatNumber(overview.claimed) }}</span>
           </div>
           <div class="commission-item">
-            <span class="label">待领取</span>
+            <span class="label">Chờ nhận</span>
             <span class="value orange">{{ formatNumber(overview.pending) }}</span>
           </div>
         </div>
@@ -109,7 +109,7 @@
           class="claim-btn" 
           :class="{ disabled: !overview.pending || overview.pending <= 0 }"
           @click="$emit('claim')"
-        >领取</button>
+        >Nhận</button>
       </div>
     </div>
   </div>

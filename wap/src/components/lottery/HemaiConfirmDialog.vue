@@ -2,11 +2,11 @@
   <teleport to="body">
     <div v-if="show" class="hsycms-model-mask" @click="$emit('close')"></div>
     <div v-if="show" class="hsycms-model hsycms-model-confirm" id="confirm">
-      <div class="hscysm-model-title">确认投注</div>
+      <div class="hscysm-model-title">Xác nhận đặt cược</div>
       <div class="hsycms-model-text1" v-safe-html="message"></div>
       <div class="hsycms-model-btn confirm">
-        <button type="button" @click="$emit('close')">取消</button>
-        <button type="button" @click="$emit('confirm')">确定</button>
+        <button type="button" @click="$emit('close')">Hủy</button>
+        <button type="button" @click="$emit('confirm')">Xác nhận</button>
       </div>
     </div>
   </teleport>

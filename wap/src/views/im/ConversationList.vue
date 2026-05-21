@@ -4,19 +4,19 @@
       <div class="header-left" @click="goBack">
         <van-icon name="arrow-left" />
       </div>
-      <div class="header-title">消息</div>
+      <div class="header-title">Tin nhắn</div>
       <div class="header-right">
         <van-icon name="add-o" size="24" @click="showActions = true" />
       </div>
     </div>
 
-    <van-search v-model="searchKey" placeholder="搜索" shape="round" background="#ededed" />
+    <van-search v-model="searchKey" placeholder="Tìm kiếm" shape="round" background="#ededed" />
 
     <van-tabs v-model:active="activeTab" class="im-tabs" sticky animated swipeable>
-      <van-tab title="会话" name="chat">
+      <van-tab title="Hội thoại" name="chat">
         <div class="list-content">
           <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-            <van-empty v-if="filteredConversations.length === 0 && !loading" description="暂无消息" />
+            <van-empty v-if="filteredConversations.length === 0 && !loading" description="Chưa có tin nhắn" />
             
             <van-swipe-cell v-for="conv in filteredConversations" :key="`${conv.targetType}_${conv.targetId}`">
               <div class="conversation-item" @click="openChat(conv)">
@@ -34,7 +34,7 @@
                 </div>
                 <div class="conv-content">
                   <div class="conv-top">
-                    <span class="conv-name">{{ conv.targetName || conv.nickname || conv.name || '未知用户' }}</span>
+                    <span class="conv-name">{{ conv.targetName || conv.nickname || conv.name || 'Người dùng không xác định' }}</span>
                     <span class="conv-time">{{ formatTime(conv.lastTime) }}</span>
                   </div>
                   <div class="conv-bottom">
@@ -46,17 +46,17 @@
                 </div>
               </div>
               <template #right>
-                <van-button square type="primary" :text="conv.isTop ? '取消' : '置顶'" @click.stop="toggleTop(conv)" />
-                <van-button square type="danger" text="删除" @click.stop="deleteConv(conv)" />
+                <van-button square type="primary" :text="conv.isTop ? 'Hủy' : 'Ghim'" @click.stop="toggleTop(conv)" />
+                <van-button square type="danger" text="Xóa" @click.stop="deleteConv(conv)" />
               </template>
             </van-swipe-cell>
           </van-pull-refresh>
         </div>
       </van-tab>
 
-      <van-tab title="通知" name="notify" :badge="notifyUnread || ''">
+      <van-tab title="Thông báo" name="notify" :badge="notifyUnread || ''">
         <div class="list-content">
-          <van-empty v-if="notifications.length === 0" description="暂无通知" />
+          <van-empty v-if="notifications.length === 0" description="Chưa có thông báo" />
           
           <div 
             v-for="notify in notifications" 
@@ -81,14 +81,14 @@
     <van-action-sheet 
       v-model:show="showActions" 
       :actions="actions" 
-      cancel-text="取消"
+      cancel-text="Hủy"
       @select="onActionSelect"
     />
 
     <van-popup v-model:show="showGroupCreate" position="bottom" round :style="{ height: '80%' }">
       <div class="group-create">
-        <van-nav-bar title="发起群聊" left-arrow @click-left="showGroupCreate = false" />
-        <van-search v-model="userSearchKey" placeholder="搜索联系人" />
+        <van-nav-bar title="Tạo nhóm chat" left-arrow @click-left="showGroupCreate = false" />
+        <van-search v-model="userSearchKey" placeholder="Tìm liên hệ" />
         <div class="user-select-list">
           <van-checkbox-group v-model="selectedUsers">
             <van-cell-group inset>
@@ -113,7 +113,7 @@
         </div>
         <div class="popup-footer">
           <van-button type="primary" block round :disabled="selectedUsers.length < 2" @click="createGroup">
-            创建群聊 ({{ selectedUsers.length }})
+            Tạo nhóm ({{ selectedUsers.length }})
           </van-button>
         </div>
       </div>
@@ -183,10 +183,10 @@ const filteredUsers = computed(() => {
 })
 
 const actions = [
-  { name: '发起私聊', value: 'private' },
-  { name: '发起群聊', value: 'group' },
-  { name: '添加朋友', value: 'add_friend' },
-  { name: '加入群聊', value: 'join' }
+  { name: 'Trò chuyện riêng', value: 'private' },
+  { name: 'Tạo nhóm chat', value: 'group' },
+  { name: 'Thêm bạn', value: 'add_friend' },
+  { name: 'Tham gia nhóm', value: 'join' }
 ]
 
 const goBack = () => {
@@ -206,14 +206,14 @@ const formatTime = (timestamp) => {
     return time.format('HH:mm')
   }
   if (now.subtract(1, 'day').isSame(time, 'day')) {
-    return '昨天'
+    return 'Hôm qua'
   }
   if (now.isSame(time, 'week')) {
-    const weekDays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+    const weekDays = ['Chủ nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7']
     return weekDays[time.day()]
   }
   if (now.isSame(time, 'year')) {
-    return time.format('M月D日')
+    return time.format('D/M')
   }
   return time.format('YYYY/M/D')
 }
@@ -238,15 +238,15 @@ const toggleTop = async (conv) => {
   const chatId = `${conv.targetType}_${conv.targetId}`
   const wasTop = conv.isTop
   await imStore.toggleTopConversation(chatId)
-  showToast(wasTop ? '已取消置顶' : '已置顶')
+  showToast(wasTop ? 'Đã bỏ ghim' : 'Đã ghim')
 }
 
 const deleteConv = async (conv) => {
   try {
-    await showConfirmDialog({ title: '确认删除该会话？' })
+    await showConfirmDialog({ title: 'Xác nhận xóa hội thoại?' })
     const chatId = `${conv.targetType}_${conv.targetId}`
     imStore.deleteConversation(chatId)
-    showToast('已删除')
+    showToast('Đã xóa')
   } catch {}
 }
 
@@ -259,11 +259,11 @@ const onActionSelect = (action) => {
   if (action.value === 'private') {
     router.push('/im/contacts')
   } else if (action.value === 'group') {
-    showToast('功能未开放')
+    showToast('Chức năng chưa mở')
   } else if (action.value === 'add_friend') {
     router.push('/im/add-friend')
   } else {
-    showToast('功能未开放')
+    showToast('Chức năng chưa mở')
   }
 }
 
@@ -283,21 +283,21 @@ const toggleUser = (userId) => {
 }
 
 const createGroup = async () => {
-  if (selectedUsers.value.length < 2) return showToast('请至少选择2人')
+  if (selectedUsers.value.length < 2) return showToast('Vui lòng chọn ít nhất 2 người')
   try {
-    const res = await apiCreateGroup({ name: '新建群聊', members: selectedUsers.value })
+    const res = await apiCreateGroup({ name: 'Nhóm mới', members: selectedUsers.value })
     const groupId = res.data?.groupId
-    showToast('群聊创建成功')
+    showToast('Tạo nhóm thành công')
     showGroupCreate.value = false
     if (groupId) {
       router.push({
         name: 'ImChat',
         params: { chatId: `group_${groupId}` },
-        query: { name: '新建群聊' }
+        query: { name: 'Nhóm mới' }
       })
     }
   } catch (e) {
-    showToast('创建失败')
+    showToast('Tạo nhóm thất bại')
   }
 }
 

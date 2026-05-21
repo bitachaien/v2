@@ -2,11 +2,11 @@
   <div class="my-commission-tab">
     <div class="settlement-bar">
       <div class="info-item">
-        <span class="label">结算周期</span>
-        <span class="value">月结</span>
+        <span class="label">Chu kỳ thanh toán</span>
+        <span class="value">Tháng</span>
       </div>
       <div class="countdown">
-        距离下次结算 <em>{{ countdown }}</em>
+        Đến lần thanh toán tiếp theo <em>{{ countdown }}</em>
       </div>
     </div>
 
@@ -32,7 +32,7 @@
       v-if="list.length > 0"
       v-model:loading="loading"
       :finished="finished"
-      finished-text="没有更多了"
+      finished-text="Không còn nữa"
       @load="onLoad"
       class="commission-list"
     >
@@ -43,27 +43,27 @@
         </div>
         <div class="item-body">
           <div class="detail-row">
-            <span class="label">业绩金额：</span>
+            <span class="label">Số tiền thành tích:</span>
             <span class="value">{{ formatNumber(item.performance) }}</span>
           </div>
           <div class="detail-row">
-            <span class="label">佣金比例：</span>
+            <span class="label">Tỷ lệ hoa hồng:</span>
             <span class="value">{{ item.rate }}%</span>
           </div>
           <div class="detail-row">
-            <span class="label">佣金金额：</span>
+            <span class="label">Số tiền hoa hồng:</span>
             <span class="value green">{{ formatNumber(item.commission) }}</span>
           </div>
         </div>
         <div class="item-footer" v-if="item.status === 'pending'">
-          <button class="claim-btn" @click="$emit('claim')">领取</button>
+          <button class="claim-btn" @click="$emit('claim')">Nhận</button>
         </div>
       </div>
     </van-list>
 
     <div class="empty-state" v-if="!loading && list.length === 0">
       <img src="/assets/img/img_none_sj.avif" class="empty-icon" />
-      <p>暂无记录</p>
+      <p>Chưa có bản ghi</p>
     </div>
   </div>
 </template>
@@ -86,7 +86,7 @@ const countdown = ref('')
 
 const currentTimeLabel = computed(() => {
   const item = timeOptions.find(t => t.value === currentTime.value)
-  return item ? item.label : '今日'
+  return item ? item.label : 'Hôm nay'
 })
 
 const selectTime = (value) => {

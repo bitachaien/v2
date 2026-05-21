@@ -18,9 +18,9 @@
               <div class="clearfix titleBox">
                 <h1>{{ detailData.cptitle }}</h1>
                 <div class="abstract">
-                  <span>发起时间：{{ formatDate(detailData.oddtime) }}</span>
-                  <span>编号：{{ detailData.trano }}</span>
-                  <strong class="gameperiod">期号：{{ detailData.expect }}</strong>
+                  <span>Thời gian phát hành: {{ formatDate(detailData.oddtime) }}</span>
+                  <span>Mã số: {{ detailData.trano }}</span>
+                  <strong class="gameperiod">Kỳ số: {{ detailData.expect }}</strong>
                 </div>
               </div>
             </div>
@@ -32,22 +32,22 @@
             <div class="clearfix userInfo">
               <img :src="userFace" style="display:inline;float:left;margin:0 15px 0 10px;border:1px solid #C2C2C2;height:60px;width:60px;">
               <div class="userName">
-                发起人<strong id="username">{{ maskUsername(detailData.username) }}</strong>
+                Người phát hành <strong id="username">{{ maskUsername(detailData.username) }}</strong>
               </div>
             </div>
             <ul class="list clearfix">
-              <li><span class="textL">中奖宣言：</span><strong id="word">{{ winningWords }}</strong></li>
+              <li><span class="textL">Tuyên ngôn trúng thưởng: </span><strong id="word">{{ winningWords }}</strong></li>
             </ul>
           </div>
           
           <div class="scheme">
             <ul class="list">
-              <li class="caseStatus" style="font-weight:900">方案状态：
+              <li class="caseStatus" style="font-weight:900">Trạng thái phương án:
                 <strong id="status">
                   <font :color="getStatusColor(detailData.isdraw)">{{ getStatusText(detailData.isdraw) }}</font>
                 </strong>
               </li>
-              <li>方案进度：
+              <li>Tiến độ phương án:
                 <div class="progressBox baodi">
                   <div class="progressBar">
                     <span :style="{width: (detailData.jindu * 100) + '%'}" class="progress">
@@ -55,27 +55,27 @@
                     </span>
                     <i :style="{right: (detailData.bdjindu * 100) + '%'}"></i>
                   </div>
-                  <em v-if="detailData.isbaodi === 1" class="icoBaodi">保底
+                  <em v-if="detailData.isbaodi === 1" class="icoBaodi">Bảo đảm
                     <strong>{{ (detailData.bdjindu * 100).toFixed(0) }}%</strong>
                   </em>
                 </div>
               </li>
-              <li>中奖金额：<strong id="winmoney"><font color="#FE5400">{{ detailData.okamount }}</font> 元</strong></li>
+              <li>Số tiền trúng thưởng: <strong id="winmoney"><font color="#FE5400">{{ detailData.okamount }}</font> đ</strong></li>
             </ul>
             
             <ul id="centerh" class="ulTable clearfix">
-              <li><span>总金额</span><strong>{{ detailData.amount }} 元</strong></li>
-              <li><span>剩余份数</span><strong>{{ detailData.isfull }} 份</strong></li>
-              <li><span>保底金额</span><strong>{{ getBaodiAmount() }}</strong></li>
-              <li><span>总份数</span><strong>{{ detailData.fenshu }}份</strong></li>
-              <li style="border-right:0;"><span>每份金额</span><strong>{{ detailData.hemaipic }} 元</strong></li>
+              <li><span>Tổng tiền</span><strong>{{ detailData.amount }} đ</strong></li>
+              <li><span>Số phần còn lại</span><strong>{{ detailData.isfull }} phần</strong></li>
+              <li><span>Tiền bảo đảm</span><strong>{{ getBaodiAmount() }}</strong></li>
+              <li><span>Tổng số phần</span><strong>{{ detailData.fenshu }} phần</strong></li>
+              <li style="border-right:0;"><span>Tiền mỗi phần</span><strong>{{ detailData.hemaipic }} đ</strong></li>
             </ul>
           </div>
           
           <div id="tzot" style="padding:10px">
             <table id="gaopinNumberTable" class="user_table" style="height:100px" width="100%" cellspacing="0" cellpadding="0" border="0">
               <thead>
-                <tr><td>投注号码</td></tr>
+                <tr><td>Số đặt cược</td></tr>
                 <tr v-if="canShowCode">
                   <td style="background:#FFFFFF; padding:15px; text-align:center;">
                     [{{ detailData.playtitle }}]{{ detailData.tzcode }}
@@ -91,23 +91,23 @@
           <div id="paybox" class="paybox">
             <div v-if="canBuy" id="touzhu">
               <p>
-                剩余 <strong class="c_ba2636" id="buyhave">{{ detailData.isfull }}</strong> 份 我要买 
-                <input style="ime-mode: disabled;" size="5" id="buynum" name="buynum" v-model="buynum" :max="detailData.isfull" :placeholder="'剩余' + detailData.isfull + '份'" class="input" @input="formatNumber" autocomplete="off"> 份。
+                Còn lại <strong class="c_ba2636" id="buyhave">{{ detailData.isfull }}</strong> phần Tôi muốn mua
+                <input style="ime-mode: disabled;" size="5" id="buynum" name="buynum" v-model="buynum" :max="detailData.isfull" :placeholder="'Còn ' + detailData.isfull + ' phần'" class="input" @input="formatNumber" autocomplete="off"> phần.
               </p>
-              <a id="addproject" href="javascript:;" rel="nofollow" class="betting_Btn" title="立即投注" style="background: #a68f4c;" @click="checkProject">立即投注</a>
+              <a id="addproject" href="javascript:;" rel="nofollow" class="betting_Btn" title="Đặt cược ngay" style="background: #a68f4c;" @click="checkProject">Đặt cược ngay</a>
               <input name="senumber" id="senumber" :value="detailData.isfull" type="hidden">
               <input name="onemoney" id="onemoney" :value="detailData.hemaipic" type="hidden">
               <input name="pid" id="pid" :value="detailData.id" type="hidden">
             </div>
             
             <div v-else-if="isStopped" id="jiezhi">
-              <a class="end_Btn" href="javascript:;" rel="nofollow" title="方案已截止">方案已截止</a>
-              <a target="_blank" href="/activity">您可以选择参加其他合买>></a>
+              <a class="end_Btn" href="javascript:;" rel="nofollow" title="Phương án đã hết hạn">Phương án đã hết hạn</a>
+              <a target="_blank" href="/activity">Bạn có thể chọn tham gia hợp mãi khác >></a>
             </div>
             
             <div v-else id="manyuan">
-              <a class="full_Btn" href="javascript:;" rel="nofollow" title="方案已满员">方案已满员</a>
-              <a target="_blank" href="/activity">您可以选择参加其他合买>></a>
+              <a class="full_Btn" href="javascript:;" rel="nofollow" title="Phương án đã đủ người">Phương án đã đủ người</a>
+              <a target="_blank" href="/activity">Bạn có thể chọn tham gia hợp mãi khác >></a>
             </div>
           </div>
         </div>
@@ -115,10 +115,10 @@
         <div class="number_user_wrap">
           <ul class="number_user_tab clearfix" id="joinTab">
             <li :class="{'an_cur': activeTab === 'details'}" @click="activeTab = 'details'">
-              <a href="javascript:void(0);">期号详情</a>
+              <a href="javascript:void(0);">Chi tiết kỳ</a>
             </li>
             <li :class="{'an_cur': activeTab === 'users'}" @click="activeTab = 'users'">
-              <a href="javascript:void(0);">参与用户</a>
+              <a href="javascript:void(0);">Người tham gia</a>
             </li>
           </ul>
           
@@ -127,21 +127,21 @@
             <table class="user_table hmxq" style="display: table;" width="100%" cellspacing="0" cellpadding="0" border="0">
               <thead>
                 <tr>
-                  <td width="10%">期号</td>
-                  <td width="10%">金额</td>
-                  <td width="10%">倍数</td>
-                  <td width="10%">开奖号码</td>
-                  <td width="15%">开奖时间</td>
-                  <td width="10%">奖金</td>
-                  <td width="10%">状态</td>
-                  <td width="10%">操作</td>
+                  <td width="10%">Kỳ số</td>
+                  <td width="10%">Số tiền</td>
+                  <td width="10%">Bội số</td>
+                  <td width="10%">Số mở thưởng</td>
+                  <td width="15%">Thời gian mở thưởng</td>
+                  <td width="10%">Tiền thưởng</td>
+                  <td width="10%">Trạng thái</td>
+                  <td width="10%">Thao tác</td>
                 </tr>
               </thead>
               <tbody class="testtest">
                 <tr>
                   <td>{{ detailData.expect }}</td>
                   <td>￥{{ detailData.amount }}</td>
-                  <td>{{ detailData.beishu }} 倍</td>
+                  <td>{{ detailData.beishu }} bội</td>
                   <td>{{ detailData.opencode || '--' }}</td>
                   <td>{{ detailData.opentime ? formatDate(detailData.opentime) : '--' }}</td>
                   <td>{{ detailData.okamount }}</td>
@@ -159,11 +159,11 @@
             <table class="user_table" style="display: table;" width="100%" cellspacing="0" cellpadding="0" border="0">
               <thead>
                 <tr>
-                  <th width="15%" style="text-align:center;">序号</th>
-                  <th width="20%" style="text-align:center;">用户名</th>
-                  <th width="20%" style="text-align:center;">认购金额（元）</th>
-                  <th width="20%" style="text-align:center;">中奖金额（元）</th>
-                  <th width="25%" style="text-align:center;">参与时间</th>
+                  <th width="15%" style="text-align:center;">STT</th>
+                  <th width="20%" style="text-align:center;">Tên người dùng</th>
+                  <th width="20%" style="text-align:center;">Số tiền mua (đ)</th>
+                  <th width="20%" style="text-align:center;">Tiền trúng thưởng (đ)</th>
+                  <th width="25%" style="text-align:center;">Thời gian tham gia</th>
                 </tr>
               </thead>
               <tbody>
@@ -183,19 +183,19 @@
     
     <div v-if="showConfirmDialog" class="dialog-mask" @click="showConfirmDialog = false">
       <div class="dialog-content" @click.stop>
-        <div class="dialog-title">我要合买</div>
+        <div class="dialog-title">Tôi muốn hợp mãi</div>
         <div class="dialog-body">
-          <p style="margin: 0 0 -5px;font-weight: 600; font-size:14px;padding:.2em;">您好，请您确认</p>
+          <p style="margin: 0 0 -5px;font-weight: 600; font-size:14px;padding:.2em;">Xin chào, vui lòng xác nhận</p>
           <p style="margin: 0 0 -5px;text-align:left;text-indent:2em;font-weight: 400;font-size:14px;padding:.2em;">
-            认购份数：<font color="red" style="font-weight:bold">{{ buynum }}</font>份
+            Số phần mua: <font color="red" style="font-weight:bold">{{ buynum }}</font> phần
           </p>
           <p style="margin: 0 0 -5px;text-align:left;text-indent:2em;font-weight: 400;font-size:14px;padding:.2em;">
-            认购金额：<font color="red" style="font-weight:bold">{{ (buynum * parseFloat(detailData.hemaipic)).toFixed(2) }}元</font>
+            Số tiền mua: <font color="red" style="font-weight:bold">{{ (buynum * parseFloat(detailData.hemaipic)).toFixed(2) }}đ</font>
           </p>
         </div>
         <div class="dialog-footer">
-          <button @click="showConfirmDialog = false">取消</button>
-          <button @click="submitBuy" class="primary">确定</button>
+          <button @click="showConfirmDialog = false">Hủy</button>
+          <button @click="submitBuy" class="primary">Xác nhận</button>
         </div>
       </div>
     </div>
@@ -213,7 +213,7 @@ const route = useRoute()
 const cpTypeid = ref('k3')
 const cpName = ref('k3')
 const userFace = ref('/assets/images/common/rui-face.png')
-const winningWords = ref('简单号码成就巨奖梦想')
+const winningWords = ref('Số đơn giản tạo nên giấc mơ giải lớn')
 const activeTab = ref('details')
 const buynum = ref(1)
 const showConfirmDialog = ref(false)
@@ -294,25 +294,25 @@ const getCodeHiddenText = () => {
   const { showtype } = detailData.value
   
   if (showtype === 1) {
-    return "该方案选择开奖后公开"
+    return "Phương án này chọn công khai sau khi mở thưởng"
   }
   if (showtype === 2) {
-    return "该方案选择参与可见（仅对加入方案人公开）"
+    return "Phương án này chọn hiển thị khi tham gia (chỉ công khai cho người tham gia)"
   }
   if (showtype === 3) {
-    return "该方案选择永久保密（仅方案发起人可见）"
+    return "Phương án này chọn bảo mật vĩnh viễn (chỉ người phát hành mới thấy)"
   }
-  return "号码已隐藏"
+  return "Số đã bị ẩn"
 }
 
 const getStatusText = (isdraw) => {
   const statusMap = {
-    0: '未开奖',
-    1: '已中奖',
-    '-1': '未中奖',
-    '-2': '已撤单'
+    0: 'Chưa mở thưởng',
+    1: 'Đã trúng thưởng',
+    '-1': 'Không trúng',
+    '-2': 'Đã hủy'
   }
-  return statusMap[isdraw] || '未知'
+  return statusMap[isdraw] || 'Không rõ'
 }
 
 const getStatusColor = (isdraw) => {
@@ -327,9 +327,9 @@ const getStatusColor = (isdraw) => {
 
 const getBaodiAmount = () => {
   if (detailData.value.isbaodi === 1) {
-    return (detailData.value.baodi * detailData.value.hemaipic).toFixed(2) + '元'
+    return (detailData.value.baodi * detailData.value.hemaipic).toFixed(2) + 'đ'
   }
-  return '未保底'
+  return 'Không bảo đảm'
 }
 
 const formatDate = (timestamp) => {
@@ -357,17 +357,17 @@ const checkProject = () => {
   const num = parseInt(buynum.value)
   
   if (!buynum.value) {
-    window.alert('认购份数不能为空！')
+    window.alert('Số phần mua không được để trống!')
     return
   }
   
   if (num <= 0) {
-    window.alert('认购份数不能小于1！')
+    window.alert('Số phần mua không được nhỏ hơn 1!')
     return
   }
   
   if (num > detailData.value.isfull) {
-    window.alert('您认购份数不能大于剩余份数！')
+    window.alert('Số phần mua không được lớn hơn số phần còn lại!')
     return
   }
   
@@ -379,13 +379,13 @@ const submitBuy = async () => {
   
   try {
     await new Promise(resolve => setTimeout(resolve, 1000))
-    window.alert('发起合买成功')
+    window.alert('Phát hành hợp mãi thành công')
 
     detailData.value.isfull -= parseInt(buynum.value)
     detailData.value.jindu = (detailData.value.fenshu - detailData.value.isfull) / detailData.value.fenshu
     buynum.value = 1
   } catch (error) {
-    window.alert('交易失败,请重新提交！')
+    window.alert('Giao dịch thất bại, vui lòng thử lại!')
   }
 }
 

@@ -4,7 +4,7 @@
     <div class="tech-bg-grid"></div>
 
     <van-nav-bar
-      title="我的合买"
+      title="Hợp mãi của tôi"
       left-arrow
       fixed
       placeholder
@@ -23,8 +23,8 @@
         line-height="3px"
         :border="false"
       >
-        <van-tab title="我发起的" name="create"></van-tab>
-        <van-tab title="我参与的" name="join"></van-tab>
+        <van-tab title="Tôi phát hành" name="create"></van-tab>
+        <van-tab title="Tôi tham gia" name="join"></van-tab>
       </van-tabs>
     </div>
 
@@ -33,13 +33,13 @@
         <van-list
           v-model:loading="loading"
           :finished="finished"
-          finished-text="没有更多了"
+          finished-text="Không còn nữa"
           @load="onLoad"
         >
           <div v-if="list.length === 0 && !loading" class="empty-box">
             <van-empty 
               image="search" 
-              description="暂无相关记录" 
+              description="Chưa có bản ghi liên quan"
             />
           </div>
 
@@ -54,7 +54,7 @@
                 <img :src="getGameIconPath(item.cpname)" class="cp-icon" />
                 <div class="cp-info">
                   <div class="cp-title">{{ item.cptitle }}</div>
-                  <div class="cp-expect">第 {{ item.expect }} 期</div>
+                  <div class="cp-expect">Kỳ {{ item.expect }}</div>
                 </div>
               </div>
               <div class="status-badge" :class="getStatusClass(item.status)">
@@ -67,22 +67,22 @@
             <div class="rc-body">
               <div class="data-row">
                 <div class="data-col">
-                  <span class="lbl">玩法类型</span>
-                  <span class="val">{{ item.playtitle || '复式投注' }}</span>
+                  <span class="lbl">Loại chơi</span>
+                  <span class="val">{{ item.playtitle || 'Đặt cược phức hợp' }}</span>
                 </div>
                 <div class="data-col text-right">
-                  <span class="lbl">方案金额</span>
+                  <span class="lbl">Tiền phương án</span>
                   <span class="val gold">{{ item.amount }}</span>
                 </div>
               </div>
               
               <div class="data-row mt-10">
                 <div class="data-col">
-                  <span class="lbl">{{ activeTab === 'join' ? '认购份数' : '总份数' }}</span>
+                  <span class="lbl">{{ activeTab === 'join' ? 'Số phần mua' : 'Tổng số phần' }}</span>
                   <span class="val">{{ activeTab === 'join' ? (item.my_buy_num || item.num) : item.buytotal }}</span>
                 </div>
                 <div class="data-col text-right">
-                  <span class="lbl">参与时间</span>
+                  <span class="lbl">Thời gian tham gia</span>
                   <span class="val time">{{ formatTime(item.createtime) }}</span>
                 </div>
               </div>
@@ -91,8 +91,8 @@
             <div class="rc-footer" v-if="item.is_win == 1 || item.win_amount > 0">
               <div class="win-bar">
                 <van-icon name="gift" color="#ef4444" />
-                <span class="win-text">恭喜中奖</span>
-                <span class="win-money">{{ item.win_amount }}元</span>
+                <span class="win-text">Chúc mừng trúng thưởng</span>
+                <span class="win-money">{{ item.win_amount }}đ</span>
               </div>
             </div>
 
@@ -101,21 +101,21 @@
                  v-if="activeTab === 'create' && item.status === 0"
                  size="mini" plain class="btn-action" 
                  @click="handleCancel(item)"
-               >撤单</van-button>
+               >Hủy đơn</van-button>
 
                <van-button 
                  v-if="activeTab === 'join' && item.status === 0"
                  size="mini" plain class="btn-action" 
                  @click="handleCancelJoin(item)"
-               >撤资</van-button>
+               >Rút vốn</van-button>
                
                <van-button 
                  v-if="item.status === 3 || item.is_win == 1"
                  size="mini" plain class="btn-action" 
                  @click="handleCopy(item)"
-               >再来一单</van-button>
+               >Đặt lại</van-button>
 
-               <van-button size="mini" plain class="btn-action highlight" @click="showDetail(item)">查看详情</van-button>
+               <van-button size="mini" plain class="btn-action highlight" @click="showDetail(item)">Xem chi tiết</van-button>
             </div>
           </div>
         </van-list>
@@ -208,32 +208,32 @@ const onBuySuccess = () => {
 
 const handleCancel = (item) => {
   showDialog({
-    title: '确认撤单',
-    message: '确定要撤销该合买方案吗？撤销后资金将原路退回。',
+    title: 'Xác nhận hủy đơn',
+    message: 'Bạn có chắc muốn hủy phương án hợp mãi này? Sau khi hủy, tiền sẽ được hoàn trả.',
     showCancelButton: true
   }).then(async () => {
     const res = await hemaiApi.cancel(item.id)
     if (res.code === 0) {
-      showToast('撤单成功')
+      showToast('Hủy đơn thành công')
       onRefresh()
     } else {
-      showToast(res.message || '撤单失败')
+      showToast(res.message || 'Hủy đơn thất bại')
     }
   }).catch(() => {})
 }
 
 const handleCancelJoin = (item) => {
   showDialog({
-    title: '确认撤资',
-    message: '确定要撤销该认购吗？距离截止10分钟内不可撤资。',
+    title: 'Xác nhận rút vốn',
+    message: 'Bạn có chắc muốn hủy mua này? Không thể rút vốn trong vòng 10 phút trước khi hết hạn.',
     showCancelButton: true
   }).then(async () => {
     const res = await hemaiApi.cancelJoin({ id: item.id })
     if (res.code === 0) {
-      showToast('撤资成功')
+      showToast('Rút vốn thành công')
       onRefresh()
     } else {
-      showToast(res.message || '撤资失败')
+      showToast(res.message || 'Rút vốn thất bại')
     }
   }).catch(() => {})
 }
@@ -258,8 +258,8 @@ const getStatusClass = (status) => {
 }
 
 const getStatusText = (status) => {
-  const map = { 0: '跟单中', 1: '已满员', 2: '已撤单', 3: '已截止' }
-  return map[status] || '未知'
+  const map = { 0: 'Đang theo', 1: 'Đã đủ người', 2: 'Đã hủy', 3: 'Đã hết hạn' }
+  return map[status] || 'Không rõ'
 }
 
 const formatTime = (ts) => {

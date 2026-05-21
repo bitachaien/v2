@@ -4,7 +4,7 @@
       <div class="back" @click="router.back()">
         <van-icon name="arrow-left" size="20" color="#333" />
       </div>
-      <div class="title">搜索游戏</div>
+      <div class="title">Tìm kiếm trò chơi</div>
       <div class="right-action"></div>
     </header>
 
@@ -13,7 +13,7 @@
         <input 
           v-model="keyword" 
           type="text" 
-          placeholder="搜索游戏" 
+          placeholder="Tìm kiếm trò chơi"
           class="search-input"
           @input="onSearchInput"
         >
@@ -64,7 +64,7 @@
         </div>
 
         <div v-else-if="!loading" class="empty-state">
-          <van-empty description="暂无游戏" image="/assets/img/img_none_sj.avif" />
+          <van-empty description="Chưa có trò chơi" image="/assets/img/img_none_sj.avif" />
         </div>
       </van-skeleton>
     </div>
@@ -91,10 +91,10 @@ const recentGames = ref([])
 let searchTimer = null
 
 const tabs = [
-  { key: 'result', name: '搜索结果', icon: '/assets/img/icon_dtfl_2ss_1.avif' },
-  { key: 'all', name: '全部热门', icon: '/assets/img/icon_dtfl_2rm_1.avif' },
-  { key: 'recent', name: '最近游戏', icon: '/assets/img/icon_dtfl_2zj_1.avif' },
-  { key: 'fav', name: '我的收藏', icon: '/assets/img/icon_dtfl_2sc_1.avif' }
+  { key: 'result', name: 'Kết quả', icon: '/assets/img/icon_dtfl_2ss_1.avif' },
+  { key: 'all', name: 'Tất cả Hot', icon: '/assets/img/icon_dtfl_2rm_1.avif' },
+  { key: 'recent', name: 'Gần đây', icon: '/assets/img/icon_dtfl_2zj_1.avif' },
+  { key: 'fav', name: 'Yêu thích', icon: '/assets/img/icon_dtfl_2sc_1.avif' }
 ]
 
 const visibleGames = computed(() => {
@@ -148,7 +148,7 @@ const doSearch = async () => {
       }))
     }
   } catch (e) {
-    showToast('搜索失败')
+    showToast('Tìm kiếm thất bại')
   } finally {
     loading.value = false
   }
@@ -177,7 +177,7 @@ const loadInitialData = async () => {
       loadRecent()
     }
   } catch (e) {
-    showToast('加载失败')
+    showToast('Tải thất bại')
   } finally {
     loading.value = false
   }
@@ -219,7 +219,7 @@ const loadRecent = async () => {
 
 const enter = async (game) => {
   if (!isLoggedIn()) {
-    showToast('请先登录')
+    showToast('Vui lòng đăng nhập trước')
     return
   }
   
@@ -243,10 +243,10 @@ const enter = async (game) => {
         window.location.href = res.data.url
       }
     } else {
-      showToast(res.message || '进入游戏失败')
+      showToast(res.message || 'Vào game thất bại')
     }
   } catch (e) {
-    showToast('进入游戏失败')
+    showToast('Vào game thất bại')
   }
 }
 
@@ -257,7 +257,7 @@ const getPlatformIcon = (code) => {
 const onImgError = (e) => {
   if (e.target.dataset.errorHandled) return
   e.target.dataset.errorHandled = 'true'
-  e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect fill="%23f0f0f0" width="100" height="100"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="%23999" font-size="12"%3E暂无图片%3C/text%3E%3C/svg%3E'
+  e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect fill="%23f0f0f0" width="100" height="100"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="%23999" font-size="12"%3EChưa có ảnh%3C/text%3E%3C/svg%3E'
 }
 
 const isFav = (game) => {
@@ -266,7 +266,7 @@ const isFav = (game) => {
 
 const toggleFav = async (game) => {
   if (!isLoggedIn()) {
-    showToast('请先登录')
+    showToast('Vui lòng đăng nhập trước')
     return
   }
   
@@ -279,7 +279,7 @@ const toggleFav = async (game) => {
         gameId: game.gameId
       })
       favorites.value.splice(idx, 1)
-      showToast('已取消收藏')
+      showToast('Đã hủy yêu thích')
     } else {
       await gameApi.addFavorite({
         platform: game.platformCode,
@@ -294,10 +294,10 @@ const toggleFav = async (game) => {
         platformCode: game.platformCode,
         cover: game.cover
       })
-      showToast('已收藏')
+      showToast('Đã thêm yêu thích')
     }
   } catch (err) {
-    showToast('操作失败')
+    showToast('Thao tác thất bại')
   }
 }
 

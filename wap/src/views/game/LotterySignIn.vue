@@ -10,7 +10,7 @@
 
     <div class="fixed-header">
       <van-nav-bar
-        title="每日签到"
+        title="Điểm danh hàng ngày"
         left-arrow
         @click-left="goBack"
         class="signin-nav"
@@ -19,7 +19,7 @@
       <div class="header-content">
         <div class="balance-card">
           <div class="bc-row">
-            <div class="bc-label">当前余额</div>
+            <div class="bc-label">Số dư hiện tại</div>
             <div class="bc-user">
               <div class="u-avatar">{{ username[0] }}</div>
               <span class="u-name">{{ username }}</span>
@@ -44,8 +44,8 @@
         
         <div class="streak-card-premium">
           <div class="scp-header">
-            <span class="title">已连续签到 <span class="gold-num">{{ consecutiveDays }}</span> 天</span>
-            <span class="sub">目标 7 天</span>
+            <span class="title">Đã điểm danh liên tục <span class="gold-num">{{ consecutiveDays }}</span> ngày</span>
+            <span class="sub">Mục tiêu 7 ngày</span>
           </div>
           
           <div class="streak-track-3d">
@@ -67,8 +67,8 @@
                 <div class="node-dot">
                   <van-icon name="success" v-if="i <= consecutiveDays" />
                 </div>
-                <div class="node-label" v-if="i === 7">大礼包</div>
-                <div class="node-label" v-else-if="i === consecutiveDays + 1">明天</div>
+                <div class="node-label" v-if="i === 7">Quà lớn</div>
+                <div class="node-label" v-else-if="i === consecutiveDays + 1">Ngày mai</div>
               </div>
             </div>
             
@@ -81,7 +81,7 @@
           </div>
           
           <div class="scp-tip">
-            再签 <span class="gold">{{ 7 - consecutiveDays }}</span> 天即可领取 <span class="cyan">神秘大礼包</span>
+            Điểm danh thêm <span class="gold">{{ 7 - consecutiveDays }}</span> ngày nữa để nhận <span class="cyan">Quà bí ẩn lớn</span>
           </div>
         </div>
 
@@ -92,7 +92,7 @@
               <span class="ms-text">{{ currentDateStr }}</span>
             </div>
             <div class="signed-stat">
-              本月已签 <span class="gold">{{ totalSignedDays }}</span> 次
+              Tháng này đã điểm danh <span class="gold">{{ totalSignedDays }}</span> lần
             </div>
           </div>
 
@@ -141,12 +141,12 @@
         @click="handleSignIn"
       >
         <template v-if="!signedIn">
-          <div class="btn-main-text">立即签到</div>
-          <div class="btn-sub-text">领取今日奖励</div>
+          <div class="btn-main-text">Điểm danh ngay</div>
+          <div class="btn-sub-text">Nhận thưởng hôm nay</div>
         </template>
         <template v-else>
-          <div class="btn-main-text">今日已签到</div>
-          <div class="btn-sub-text">明日继续加油</div>
+          <div class="btn-main-text">Hôm nay đã điểm danh</div>
+          <div class="btn-sub-text">Ngày mai tiếp tục nhé</div>
         </template>
         
         <div class="btn-shine"></div>
@@ -166,14 +166,14 @@
             </div>
             <div class="medal-shine"></div>
           </div>
-          <div class="sm-title">签到成功</div>
+          <div class="sm-title">Điểm danh thành công</div>
           <div class="sm-reward">
             <span class="plus">+</span>
             <span class="val">{{ todayRewardPoints }}</span>
-            <span class="unit">积分</span>
+            <span class="unit">điểm</span>
           </div>
-          <div class="sm-balance">当前余额: {{ (parseFloat(balance.replace(/,/g, '')) + todayRewardPoints).toFixed(2) }}</div>
-          <button class="sm-btn" @click="showSuccessModal = false">收入囊中</button>
+          <div class="sm-balance">Số dư hiện tại: {{ (parseFloat(balance.replace(/,/g, '')) + todayRewardPoints).toFixed(2) }}</div>
+          <button class="sm-btn" @click="showSuccessModal = false">Nhận ngay</button>
         </div>
       </div>
     </van-overlay>
@@ -257,7 +257,7 @@ const handleDateClick = (item) => {
   if (item.day === todayDay && !signedIn.value) {
     handleSignIn()
   } else if (item.status === 'missed') {
-    showToast({ message: '补签功能即将上线', icon: 'clock-o' })
+    showToast({ message: 'Chức năng điểm danh bù sắp ra mắt', icon: 'clock-o' })
   }
 }
 

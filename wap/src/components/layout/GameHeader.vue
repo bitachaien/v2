@@ -38,7 +38,7 @@
 
         <a class="button button-link button-nav pull-right" @click="lianxikefu(kefuUrl)">
           <span class="icon icon-message"></span>
-          联系客服
+          Liên hệ CSKH
         </a>
 
         <template v-if="isGameK3Page && nowcpinfo">
@@ -53,19 +53,19 @@
 
       
       <em class="gameInfo" style="font-size: 12px;display: inline-block;line-height: 13px;text-align: left;margin-top: 13px;">
-        玩<br>法
+        Cách<br>chơi
       </em>
       <div class="choice_lottery_playdetail_left">
-        <a class="choice_playName" href="#">和值</a>
+        <a class="choice_playName" href="#">Tổng điểm</a>
         <i class="iconfont icon-sanjiaoxing" style="color: #f0c930;transform: rotate(180deg);transition: .6s;"></i>
       </div>
       
       <div data-v-048b2a82="" id="choseTab" class="choseTab forCtcpRecord" style="line-height: 2.45em;height: 2.45em;box-sizing: border-box;z-index:5;">
         <div data-v-048b2a82="" class="tabInner tabActive">
-          <em data-v-048b2a82="">我要投注</em>
+          <em data-v-048b2a82="">Đặt cược</em>
         </div>
         <a href="/userCenter/betRecord" data-v-048b2a82="" class="tabInner">
-          <em data-v-048b2a82="">投注记录</em>
+          <em data-v-048b2a82="">Lịch sử cược</em>
         </a>
         <span data-v-048b2a82="" class="wrapRefreshEye" style="color: #fff;">
           ￥<font class="wrapRefreshShow">{{ balance }}</font>
@@ -128,7 +128,7 @@ const refreshMoney = async () => {
     const data = await response.text()
     balance.value = data
   } catch (error) {
-    console.error('刷新余额失败:', error)
+    console.error('Làm mới số dư thất bại:', error)
   }
 }
 

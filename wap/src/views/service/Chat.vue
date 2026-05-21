@@ -7,10 +7,10 @@
       </template>
       <template #title>
         <div class="nav-title">
-          <span class="service-name">在线客服</span>
+          <span class="service-name">Hỗ Trợ Trực Tuyến</span>
           <div class="service-status">
             <span class="status-dot"></span>
-            <span class="status-text">在线</span>
+            <span class="status-text">Trực tuyến</span>
           </div>
         </div>
       </template>
@@ -104,10 +104,10 @@
 
         
         <div v-if="sessionEnded" class="session-ended">
-          <div class="ended-notice">客服已下线，本次会话结束</div>
+          <div class="ended-notice">CSKH đã offline, phiên trò chuyện kết thúc</div>
           <div class="ended-actions">
-            <van-button round size="small" class="ended-btn" @click="restartChat">重新发起</van-button>
-            <van-button round size="small" class="ended-btn" @click="$router.push('/userCenter/help')">帮助中心</van-button>
+            <van-button round size="small" class="ended-btn" @click="restartChat">Bắt đầu lại</van-button>
+            <van-button round size="small" class="ended-btn" @click="$router.push('/userCenter/help')">Trung tâm trợ giúp</van-button>
           </div>
         </div>
       </div>
@@ -120,7 +120,7 @@
           <van-icon name="plus" />
         </div>
         <div class="input-box">
-          <input type="text" v-model="inputText" placeholder="请输入您的问题..." @keyup.enter="sendMessage" />
+          <input type="text" v-model="inputText" placeholder="Vui lòng nhập câu hỏi của bạn..." @keyup.enter="sendMessage" />
         </div>
         <div class="send-btn" @click="sendMessage" :class="{ 'active': inputText.length > 0 }">
           <van-icon name="guide-o" />
@@ -158,52 +158,52 @@ const isTyping = ref(false);
 const sessionEnded = ref(false);
 
 const moreActions = [
-  { text: '清空记录', icon: 'delete-o', action: 'clear' },
-  { text: '复制会话ID', icon: 'records', action: 'copyId' },
-  { text: '投诉客服', icon: 'warn-o', action: 'complain' },
+  { text: 'Xóa lịch sử', icon: 'delete-o', action: 'clear' },
+  { text: 'Sao chép ID phiên', icon: 'records', action: 'copyId' },
+  { text: 'Khiếu nại CSKH', icon: 'warn-o', action: 'complain' },
 ];
 
 const quickActions = [
-  { text: '我的订单', action: 'order' },
-  { text: '提款帮助', action: 'withdraw_help' },
-  { text: '存款帮助', action: 'deposit_help' },
-  { text: '转人工', action: 'human' },
-  { text: '常见问题', action: 'faq' },
+  { text: 'Đơn hàng của tôi', action: 'order' },
+  { text: 'Trợ giúp rút tiền', action: 'withdraw_help' },
+  { text: 'Trợ giúp nạp tiền', action: 'deposit_help' },
+  { text: 'Chuyển nhân viên', action: 'human' },
+  { text: 'Câu hỏi thường gặp', action: 'faq' },
 ];
 
 const panelTools = [
-  { text: '相册', icon: 'photo-o', action: 'upload_img' },
-  { text: '截图', icon: 'photograph', action: 'screenshot' },
-  { text: '订单号', icon: 'bill-o', action: 'send_order' },
-  { text: '常见问题', icon: 'question-o', action: 'faq_list' },
+  { text: 'Thư viện ảnh', icon: 'photo-o', action: 'upload_img' },
+  { text: 'Chụp màn hình', icon: 'photograph', action: 'screenshot' },
+  { text: 'Mã đơn hàng', icon: 'bill-o', action: 'send_order' },
+  { text: 'Câu hỏi thường gặp', icon: 'question-o', action: 'faq_list' },
 ];
 
 const messageGroups = reactive([
   {
-    time: '昨天',
+    time: 'Hôm qua',
     messages: [
-      { id: 1, type: 'system', content: '系统提示：您已进入人工客服队列，请稍候...' },
-      { id: 2, type: 'service', contentType: 'text', content: '您好，请问有什么可以帮您？' }
+      { id: 1, type: 'system', content: 'Thông báo hệ thống: Bạn đã vào hàng đợi CSKH, vui lòng chờ...' },
+      { id: 2, type: 'service', contentType: 'text', content: 'Xin chào, tôi có thể giúp gì cho bạn?' }
     ]
   },
   {
-    time: '今天',
+    time: 'Hôm nay',
     messages: [
-      { id: 3, type: 'user', contentType: 'text', content: '我刚才提现了一笔款项，还没有到账。' },
-      { 
-        id: 4, 
-        type: 'service', 
-        contentType: 'card', 
-        title: '提现状态查询', 
-        content: '请提供您的订单号，或者点击下方按钮直接查询最近一笔提现记录。',
-        actions: [{ text: '查询最近提现', action: 'check_last_withdraw' }]
+      { id: 3, type: 'user', contentType: 'text', content: 'Tôi vừa rút một khoản tiền nhưng chưa nhận được.' },
+      {
+        id: 4,
+        type: 'service',
+        contentType: 'card',
+        title: 'Tra cứu trạng thái rút tiền',
+        content: 'Vui lòng cung cấp mã đơn hàng hoặc nhấn nút bên dưới để tra cứu giao dịch rút tiền gần nhất.',
+        actions: [{ text: 'Tra cứu rút tiền gần nhất', action: 'check_last_withdraw' }]
       },
       {
          id: 5,
          type: 'service',
          contentType: 'text',
-         content: '通常提现会在 5-10 分钟内处理完毕，请耐心等待。',
-         embedded: { type: 'risk', text: '请勿向陌生人透露您的支付密码' }
+         content: 'Thông thường rút tiền sẽ được xử lý trong vòng 5-10 phút, vui lòng kiên nhẫn chờ đợi.',
+         embedded: { type: 'risk', text: 'Không tiết lộ mật khẩu thanh toán cho người lạ' }
       }
     ]
   }
@@ -240,7 +240,7 @@ const sendMessage = () => {
       id: Date.now() + 1,
       type: 'service',
       contentType: 'text',
-      content: '收到，我正在为您查询，请稍候。'
+      content: 'Đã nhận, tôi đang tra cứu cho bạn, vui lòng chờ.'
     });
     scrollToBottom();
   }, 2000);
@@ -254,11 +254,11 @@ const togglePanel = () => {
 const onSelectMore = (action) => {
   if (action.action === 'clear') {
     messageGroups.length = 0; 
-    showToast('记录已清空');
+    showToast('Đã xóa lịch sử');
   } else if (action.action === 'copyId') {
-    showToast('会话ID已复制');
+    showToast('Đã sao chép ID phiên');
   } else if (action.action === 'complain') {
-    showToast('投诉页面开发中');
+    showToast('Trang khiếu nại đang phát triển');
   }
 };
 
@@ -268,11 +268,11 @@ const handleQuickAction = (item) => {
 };
 
 const handleTool = (tool) => {
-  showToast(`点击了${tool.text}`);
+  showToast(`Đã nhấn ${tool.text}`);
 };
 
 const handleCardAction = (action) => {
-    showToast(`执行操作: ${action.text}`);
+    showToast(`Thực hiện: ${action.text}`);
 };
 
 const previewImage = (url) => {
@@ -283,7 +283,7 @@ const restartChat = () => {
   sessionEnded.value = false;
   messageGroups.push({
     time: '刚刚',
-    messages: [{ id: Date.now(), type: 'service', contentType: 'text', content: '欢迎回来，请问有什么可以帮您？' }]
+    messages: [{ id: Date.now(), type: 'service', contentType: 'text', content: 'Chào mừng trở lại, tôi có thể giúp gì cho bạn?' }]
   });
   scrollToBottom();
 };

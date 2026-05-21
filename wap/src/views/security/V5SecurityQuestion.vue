@@ -1,20 +1,20 @@
 <template>
   <div class="v5-security-question">
     <van-nav-bar
-      title="密保问题"
+      title="Câu hỏi bảo mật"
       left-arrow
       @click-left="onClickLeft"
       class="custom-nav"
     />
 
     <div class="content">
-      <div class="label">修改密保问题</div>
+      <div class="label">Thay đổi câu hỏi bảo mật</div>
       
       
       <div class="input-container select-trigger" @click="showPicker = true">
         <van-icon name="shield-o" class="prefix-icon" />
         <div class="select-text" :class="{ 'placeholder': !selectedQuestion }">
-          {{ selectedQuestion || '请选择密保问题' }}
+          {{ selectedQuestion || 'Chọn câu hỏi bảo mật' }}
         </div>
         <van-icon name="arrow-down" class="suffix-icon" />
       </div>
@@ -25,7 +25,7 @@
         <input 
           type="text" 
           v-model="answer" 
-          placeholder="请输入密保答案" 
+          placeholder="Nhập câu trả lời bảo mật"
           class="custom-input"
         />
       </div>
@@ -36,14 +36,14 @@
         <input 
           type="text" 
           v-model="confirmAnswer" 
-          placeholder="请再次输入密保答案" 
+          placeholder="Nhập lại câu trả lời bảo mật"
           class="custom-input"
         />
       </div>
     </div>
 
     <div class="bottom-area">
-      <van-button block color="#009688" class="submit-btn" @click="onSubmit" :loading="submitting">确定</van-button>
+      <van-button block color="#009688" class="submit-btn" @click="onSubmit" :loading="submitting">Xác nhận</van-button>
     </div>
 
     
@@ -99,19 +99,19 @@ const onConfirmQuestion = ({ selectedOptions }) => {
 
 const onSubmit = async () => {
   if (!selectedQuestion.value) {
-    showToast('请选择密保问题')
+    showToast('Vui lòng chọn câu hỏi bảo mật')
     return
   }
   if (!answer.value) {
-    showToast('请输入密保答案')
+    showToast('Vui lòng nhập câu trả lời')
     return
   }
   if (!confirmAnswer.value) {
-    showToast('请再次输入密保答案')
+    showToast('Vui lòng nhập lại câu trả lời')
     return
   }
   if (answer.value !== confirmAnswer.value) {
-    showToast('两次输入的答案不一致')
+    showToast('Hai lần nhập không khớp')
     return
   }
 
@@ -119,13 +119,13 @@ const onSubmit = async () => {
   try {
     const res = await securityApi.setQuestion({ question: selectedQuestion.value, answer: answer.value })
     if (res.code === 0) {
-      showToast('设置成功')
+      showToast('Thiết lập thành công')
       setTimeout(() => router.back(), 1000)
     } else {
-      showToast(res.message || '设置失败')
+      showToast(res.message || 'Thiết lập thất bại')
     }
   } catch (e) {
-    showToast(e.message || '设置失败')
+    showToast(e.message || 'Thiết lập thất bại')
   } finally {
     submitting.value = false
   }

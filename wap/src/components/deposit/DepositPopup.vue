@@ -14,7 +14,7 @@
         <div class="header-left" @click="handleClose">
           <van-icon name="arrow-left" size="20" />
         </div>
-        <div class="header-title">存款</div>
+        <div class="header-title">Nạp tiền</div>
         <div class="header-right">
           <img src="/assets/img/comm_icon_cz_kf.svg" class="header-icon kf-icon" @click="toService" />
           <div class="divider-line"></div>
@@ -29,7 +29,7 @@
       <div class="popup-body">
         
         <div class="section-row">
-          <span class="section-label">支付方式</span>
+          <span class="section-label">Phương thức</span>
           <div class="balance-info">
             <div class="usdt-icon-small">₮</div>
             <span class="balance-val" :class="{ updating: isRefreshing }">{{ balance }}</span>
@@ -50,13 +50,13 @@
               {{ getMethodIconText(method.type) }}
             </div>
             <span class="method-name">{{ method.title }}</span>
-            <div class="hot-tag" v-if="method.type === 'USDT'">火热</div>
+            <div class="hot-tag" v-if="method.type === 'USDT'">Hot</div>
           </div>
         </div>
 
         
         <div class="amount-section">
-          <div class="section-label">存款金额</div>
+          <div class="section-label">Số tiền nạp</div>
           <div class="amount-grid">
             <div 
               v-for="amt in amountOptions" 
@@ -74,7 +74,7 @@
             <input 
               type="number" 
               v-model="customAmount" 
-              :placeholder="`最低${minAmount}~最高${formatAmount(maxAmount)}`"
+              :placeholder="`Tối thiểu ${minAmount}~Tối đa ${formatAmount(maxAmount)}`"
               class="custom-input"
               @input="handleCustomInput"
             />
@@ -91,11 +91,11 @@
           {{ currentMethodConfig.remark }}
         </div>
         <div class="tip-text" v-else-if="selectedMethod === 'USDT'">
-          温馨提示：只支持Trc 不支持Erc（赠送能量请联系客服）
+          Lưu ý: Chỉ hỗ trợ TRC20, không hỗ trợ ERC20 (Tặng năng lượng liên hệ CSKH)
         </div>
 
         <div class="submit-btn" :class="{ disabled: !canSubmit }" @click="handleSubmit">
-          立即存款
+          Nạp ngay
         </div>
       </div>
     </div>
@@ -224,10 +224,10 @@ const refreshBalance = async () => {
     const res = await authApi.getProfile()
     if (res.code === 0 && res.data?.user) {
       balance.value = parseFloat(res.data.user.balance || 0).toFixed(2)
-      showToast('刷新成功')
+      showToast('Làm mới thành công')
     }
   } catch (e) {
-    showToast('刷新失败')
+    showToast('Làm mới thất bại')
   } finally {
     setTimeout(() => { isRefreshing.value = false }, 500)
   }
@@ -279,12 +279,12 @@ const loadMethodConfig = async (type) => {
 
 const handleSubmit = async () => {
   if (!canSubmit.value) {
-    showToast(`请输入${minAmount.value}~${formatAmount(maxAmount.value)}之间的金额`)
+    showToast(`Vui lòng nhập số tiền từ ${minAmount.value}~${formatAmount(maxAmount.value)}`)
     return
   }
 
   try {
-    showLoadingToast({ message: '提交中...', forbidClick: true, duration: 0 })
+    showLoadingToast({ message: 'Đang gửi...', forbidClick: true, duration: 0 })
     
     const res = await rechargeApi.submit({
       paytype: selectedMethod.value,
@@ -318,11 +318,11 @@ const handleSubmit = async () => {
       customAmount.value = ''
       hasPendingOrder.value = true
     } else {
-      showToast(res.message || '提交失败')
+      showToast(res.message || 'Gửi thất bại')
     }
   } catch (e) {
     closeToast()
-    showToast('网络错误，请重试')
+    showToast('Lỗi mạng, vui lòng thử lại')
   }
 }
 

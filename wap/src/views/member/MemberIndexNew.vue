@@ -29,10 +29,10 @@
         </div>
         <div class="vip-info">
           <div class="vip-next-tip">
-            距离 <span class="bold">VIP {{ currentVipLevel + 1 }}</span> 还需投注 <span class="bold">{{ nextLevelBet }}</span>
+            Cách <span class="bold">VIP {{ currentVipLevel + 1 }}</span> còn cần cược <span class="bold">{{ nextLevelBet }}</span>
           </div>
           <div class="vip-progress-bar">
-            <span class="label">晋级再投注</span>
+            <span class="label">Thăng cấp</span>
             <div class="progress-track">
               <div class="progress-fill" :style="{ width: vipProgress + '%' }"></div>
               <span class="progress-text">{{ formatAmount(currentBet) }}/{{ nextLevelBet }}</span>
@@ -77,53 +77,53 @@
           <div class="icon-wrapper">
              <img src="/assets/img/style_3_icon_mid_tx.svg" class="action-icon" />
           </div>
-          <span>提现</span>
+          <span>Rút tiền</span>
         </div>
         <div class="action-item divider-left divider-right" @click="showDepositPopup = true">
           <div class="icon-wrapper-center">
             <img src="/assets/img/gif_profile_style3.webp" class="action-icon-center" />
           </div>
-          <span>存款</span>
+          <span>Nạp tiền</span>
         </div>
         <div class="action-item" @click="go('/interest')">
           <div class="icon-wrapper">
             <img src="/assets/img/style_3_icon_mid_lxb.svg" class="action-icon" />
           </div>
-          <span>利息宝</span>
+          <span>Lãi suất</span>
         </div>
       </div>
     </div>
 
     <div class="menu-list">
       <van-cell-group inset>
-        <van-cell title="找回余额" is-link @click="go('/member/recover-balance')">
+        <van-cell title="Khôi phục số dư" is-link @click="go('/member/recover-balance')">
           <template #icon><img src="/assets/img/style_3_icon_list_zhye.svg" class="menu-icon-green" /></template>
         </van-cell>
-        <van-cell title="我的记录" is-link value="明细、投注、报表" @click="go('/member/records')">
+        <van-cell title="Hồ sơ của tôi" is-link value="Chi tiết, Cược, Báo cáo" @click="go('/member/records')">
           <template #icon><img src="/assets/img/style_3_icon_list_zhmx.svg" class="menu-icon-green" /></template>
         </van-cell>
-        <van-cell title="提现管理" is-link @click="go('/payment/withdraw?active=1')">
+        <van-cell title="Quản lý rút tiền" is-link @click="go('/payment/withdraw?active=1')">
           <template #icon><img src="/assets/img/style_3_icon_list_txgl.svg" class="menu-icon-green" /></template>
         </van-cell>
-        <van-cell title="分享赚钱" is-link value="月入百万不是梦" value-class="green-text" @click="go('/invite')">
+        <van-cell title="Chia sẻ kiếm tiền" is-link value="Thu nhập triệu đô không còn là mơ" value-class="green-text" @click="go('/invite')">
           <template #icon><img src="/assets/img/style_3_icon_list_fxzq.svg" class="menu-icon-green" /></template>
         </van-cell>
-        <van-cell title="安全中心" is-link @click="go('/security')">
+        <van-cell title="Trung tâm bảo mật" is-link @click="go('/security')">
           <template #icon><img src="/assets/img/style_3_icon_list_aqzx.svg" class="menu-icon-green" /></template>
         </van-cell>
-        <van-cell title="选择语言" is-link value="简体中文" @click="showToast('暂未开放')">
+        <van-cell title="Chọn ngôn ngữ" is-link value="Tiếng Việt" @click="showToast('Chưa mở')">
           <template #icon><img src="/assets/img/style_3_icon_list_xzyy.svg" class="menu-icon-green" /></template>
         </van-cell>
-        <van-cell title="常见问题" is-link @click="go('/userCenter/help')">
+        <van-cell title="Câu hỏi thường gặp" is-link @click="go('/userCenter/help')">
           <template #icon><img src="/assets/img/style_3_icon_list_cjwt.svg" class="menu-icon-green" /></template>
         </van-cell>
-        <van-cell title="有奖反馈" is-link @click="go('/notice?tab=feedback')">
+        <van-cell title="Phản hồi có thưởng" is-link @click="go('/notice?tab=feedback')">
           <template #icon><img src="/assets/img/style_3_icon_list_yjfk.svg" class="menu-icon-green" /></template>
         </van-cell>
-        <van-cell title="登录设备" is-link @click="go('/security/devices')">
+        <van-cell title="Thiết bị đăng nhập" is-link @click="go('/security/devices')">
           <template #icon><img src="/assets/img/style_3_icon_list_dlsb.svg" class="menu-icon-green" /></template>
         </van-cell>
-        <van-cell title="安全退出" is-link @click="handleLogout">
+        <van-cell title="Đăng xuất an toàn" is-link @click="handleLogout">
           <template #icon><img src="/assets/img/style_3_icon_list_aqtc.svg" class="menu-icon-green" /></template>
         </van-cell>
       </van-cell-group>
@@ -197,9 +197,9 @@ const go = async (path) => {
 const copyText = (text) => {
   if (!text) return
   navigator.clipboard.writeText(text).then(() => {
-    showToast('复制成功')
+    showToast('Sao chép thành công')
   }).catch(() => {
-    showToast('复制失败')
+    showToast('Sao chép thất bại')
   })
 }
 
@@ -211,10 +211,10 @@ const refreshBalance = async () => {
     const res = await authApi.getProfile()
     if (res.code === 0 && res.data?.user) {
       userinfo.value.balance = parseFloat(res.data.user.balance || 0)
-      showToast('刷新成功')
+      showToast('Làm mới thành công')
     }
   } catch (error) {
-    showToast('刷新失败')
+    showToast('Làm mới thất bại')
   } finally {
     setTimeout(() => { loading.value = false }, 1000)
   }
@@ -222,11 +222,11 @@ const refreshBalance = async () => {
 
 const handleLogout = () => {
   showConfirmDialog({
-    title: '提示',
-    message: '确定要退出登录吗？',
+    title: 'Thông báo',
+    message: 'Bạn có chắc muốn đăng xuất?',
   })
     .then(async () => {
-      const toast = showLoadingToast({ message: '退出中...', forbidClick: true })
+      const toast = showLoadingToast({ message: 'Đang đăng xuất...', forbidClick: true })
       try {
         await logout({ router, logoutApi: authApi.logout, redirectUrl: '/home-new' })
       } catch {
@@ -266,16 +266,16 @@ const handleAvatarChange = async (e) => {
   if (!file) return
   
   if (!file.type.startsWith('image/')) {
-    showToast('请选择图片文件')
+    showToast('Vui lòng chọn file ảnh')
     return
   }
   
   if (file.size > 2 * 1024 * 1024) {
-    showToast('图片大小不能超过2MB')
+    showToast('Kích thước ảnh không được vượt quá 2MB')
     return
   }
   
-  showLoadingToast({ message: '上传中...', forbidClick: true })
+  showLoadingToast({ message: 'Đang tải lên...', forbidClick: true })
   
   try {
     const formData = new FormData()
@@ -288,14 +288,14 @@ const handleAvatarChange = async (e) => {
     
     if (url) {
       userinfo.value.face = url
-      showSuccessToast('头像已更新')
+      showSuccessToast('Đã cập nhật ảnh đại diện')
       localStorage.setItem('userAvatar', url)
     } else {
-      showToast('上传失败')
+      showToast('Tải lên thất bại')
     }
   } catch {
     closeToast()
-    showToast('上传失败')
+    showToast('Tải lên thất bại')
   }
   
   e.target.value = ''

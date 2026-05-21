@@ -53,19 +53,19 @@ const handleClick = async (item) => {
 const navItems = computed(() => {
   if (isLogin.value) {
     return [
-      { name: '首页', icon: 'wap-home-o', activeIcon: 'wap-home', path: '/home-new' },
-      { name: '优惠', icon: 'gift-o', activeIcon: 'gift', path: '/activity' },
-      { name: '聊天室', icon: 'chat-o', activeIcon: 'chat', path: '/im' },
-      { name: '存款', icon: 'gold-coin-o', activeIcon: 'gold-coin', path: '', action: 'deposit' },
-      { name: '我的', icon: 'user-o', activeIcon: 'user', path: '/member' }
+      { name: 'Trang chủ', icon: 'wap-home-o', activeIcon: 'wap-home', path: '/home-new' },
+      { name: 'Khuyến mãi', icon: 'gift-o', activeIcon: 'gift', path: '/activity' },
+      { name: 'Phòng chat', icon: 'chat-o', activeIcon: 'chat', path: '/im' },
+      { name: 'Nạp tiền', icon: 'gold-coin-o', activeIcon: 'gold-coin', path: '', action: 'deposit' },
+      { name: 'Của tôi', icon: 'user-o', activeIcon: 'user', path: '/member' }
     ]
   } else {
     return [
-      { name: '首页', icon: 'wap-home-o', activeIcon: 'wap-home', path: '/home-new' },
-      { name: '优惠', icon: 'gift-o', activeIcon: 'gift', path: '/activity' },
-      { name: '聊天室', icon: 'chat-o', activeIcon: 'chat', path: '/im' },
-      { name: '登录', icon: 'manager-o', activeIcon: 'manager', path: '/login' },
-      { name: '我的', icon: 'user-o', activeIcon: 'user', path: '/member' }
+      { name: 'Trang chủ', icon: 'wap-home-o', activeIcon: 'wap-home', path: '/home-new' },
+      { name: 'Khuyến mãi', icon: 'gift-o', activeIcon: 'gift', path: '/activity' },
+      { name: 'Phòng chat', icon: 'chat-o', activeIcon: 'chat', path: '/im' },
+      { name: 'Đăng nhập', icon: 'manager-o', activeIcon: 'manager', path: '/login' },
+      { name: 'Của tôi', icon: 'user-o', activeIcon: 'user', path: '/member' }
     ]
   }
 })

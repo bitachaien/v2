@@ -4,25 +4,25 @@
       <li>
         <router-link to="/" class="index" :class="{ active: isActive('/') }">
           <i class="iconfont icon-7">&#xe620;</i>
-          <span>首页</span>
+          <span>Trang chủ</span>
         </router-link>
       </li>
       <li>
         <router-link to="/lotteryMore" class="games" :class="{ active: isActive('/lotteryMore') }">
           <i class="iconfont icon-8">&#xea76;</i>
-          <span>大厅</span>
+          <span>Sảnh</span>
         </router-link>
       </li>
       <li>
         <router-link to="/activity" class="activity" :class="{ active: isActive('/activity') }">
           <i class="iconfont icon-9">&#xe616;</i>
-          <span>活动</span>
+          <span>Sự kiện</span>
         </router-link>
       </li>
       <li>
         <router-link to="/member" class="myhome" :class="{ active: isActive('/member') }">
           <i class="iconfont icon-10">&#xe625;</i>
-          <span>我的</span>
+          <span>Của tôi</span>
         </router-link>
       </li>
     </ul>

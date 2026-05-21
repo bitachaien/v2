@@ -23,22 +23,22 @@
               <span class="currency">¥</span>
               <span class="amount">{{ formatMoney(userInfo.balance || 0) }}</span>
             </div>
-            <div class="status-row">今日盈亏 {{ userInfo.todayPL || '+0.00' }}</div>
+            <div class="status-row">Lãi/lỗ hôm nay {{ userInfo.todayPL || '+0.00' }}</div>
           </div>
         </div>
 
         <div class="action-buttons-row">
           <div class="action-btn btn-recharge" @click="handleAction('recharge')">
             <div class="icon-circle"><van-icon name="gold-coin-o" /></div>
-            <span>充值</span>
+            <span>Nạp tiền</span>
           </div>
           <div class="action-btn btn-withdraw" @click="handleAction('withdraw')">
             <div class="icon-circle"><van-icon name="balance-list-o" /></div>
-            <span>提现</span>
+            <span>Rút tiền</span>
           </div>
           <div class="action-btn btn-transfer" @click="handleAction('transfer')">
             <div class="icon-circle"><van-icon name="exchange" /></div>
-            <span>转账</span>
+            <span>Chuyển khoản</span>
           </div>
         </div>
       </div>
@@ -47,31 +47,31 @@
       <div class="menu-scroll-area">
         
         <div class="menu-group">
-          <div class="group-title">钱包专区</div>
+          <div class="group-title">Khu vực ví</div>
           <div class="menu-list">
             <div class="menu-item" @click="onMenuClick('game-hall')">
               <div class="menu-icon"><van-icon name="apps-o" /></div>
-              <span class="menu-text">游戏大厅</span>
+              <span class="menu-text">Sảnh game</span>
               <van-icon name="arrow" class="menu-arrow" />
             </div>
             <div class="menu-item" @click="onMenuClick('hemai')">
               <div class="menu-icon"><van-icon name="friends-o" /></div>
-              <span class="menu-text">合买大厅</span>
+              <span class="menu-text">Sảnh mua chung</span>
               <van-icon name="arrow" class="menu-arrow" />
             </div>
             <div class="menu-item" @click="onMenuClick('yuebao')">
               <div class="menu-icon"><van-icon name="gem-o" /></div>
-              <span class="menu-text">余额宝</span>
+              <span class="menu-text">Tiết kiệm</span>
               <div class="badge-dot"></div>
             </div>
             <div class="menu-item" @click="onMenuClick('funds')">
               <div class="menu-icon"><van-icon name="bill-o" /></div>
-              <span class="menu-text">资金记录</span>
+              <span class="menu-text">Lịch sử giao dịch</span>
               <van-icon name="arrow" class="menu-arrow" />
             </div>
             <div class="menu-item" @click="onMenuClick('report')">
               <div class="menu-icon"><van-icon name="chart-trending-o" /></div>
-              <span class="menu-text">盈亏报表</span>
+              <span class="menu-text">Báo cáo lãi/lỗ</span>
               <van-icon name="arrow" class="menu-arrow" />
             </div>
           </div>
@@ -79,26 +79,26 @@
 
         
         <div class="menu-group">
-          <div class="group-title">个人中心</div>
+          <div class="group-title">Trung tâm cá nhân</div>
           <div class="menu-list">
             <div class="menu-item" @click="onMenuClick('profile')">
               <div class="menu-icon"><van-icon name="user-o" /></div>
-              <span class="menu-text">个人中心</span>
+              <span class="menu-text">Tài khoản</span>
               <van-icon name="arrow" class="menu-arrow" />
             </div>
             <div class="menu-item" @click="onMenuClick('records')">
               <div class="menu-icon"><van-icon name="todo-list-o" /></div>
-              <span class="menu-text">游戏记录</span>
+              <span class="menu-text">Lịch sử chơi</span>
               <van-icon name="arrow" class="menu-arrow" />
             </div>
             <div class="menu-item" @click="onMenuClick('activity')">
               <div class="menu-icon"><van-icon name="gift-o" /></div>
-              <span class="menu-text">活动中心</span>
+              <span class="menu-text">Khuyến mãi</span>
               <van-icon name="hot-o" class="menu-status hot" />
             </div>
             <div class="menu-item" @click="onMenuClick('notice')">
               <div class="menu-icon"><van-icon name="bullhorn-o" /></div>
-              <span class="menu-text">公告中心</span>
+              <span class="menu-text">Thông báo</span>
               <van-icon name="arrow" class="menu-arrow" />
             </div>
           </div>
@@ -108,23 +108,23 @@
       
       <div class="bottom-fixed-area glass-panel-top">
         <div class="menu-group service-group">
-          <div class="group-title">服务</div>
+          <div class="group-title">Dịch vụ</div>
           <div class="menu-list">
             <div class="menu-item small" @click="onMenuClick('service')">
               <div class="menu-icon"><van-icon name="service-o" /></div>
-              <span class="menu-text">联系客服</span>
+              <span class="menu-text">Liên hệ CSKH</span>
             </div>
             <div class="menu-item small" @click="onMenuClick('help')">
               <div class="menu-icon"><van-icon name="question-o" /></div>
-              <span class="menu-text">帮助中心</span>
+              <span class="menu-text">Trợ giúp</span>
             </div>
             <div class="menu-item small" @click="onMenuClick('refresh')">
               <div class="menu-icon"><van-icon name="replay" /></div>
-              <span class="menu-text">刷新应用</span>
+              <span class="menu-text">Làm mới</span>
             </div>
             <div class="menu-item logout" @click="onMenuClick('logout')">
               <div class="menu-icon"><van-icon name="revoke" /></div>
-              <span class="menu-text">退出登录</span>
+              <span class="menu-text">Đăng xuất</span>
             </div>
           </div>
         </div>

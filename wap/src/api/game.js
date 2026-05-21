@@ -1,6 +1,64 @@
 import request from './request'
 
+/**
+ * GSC+ Game API
+ *
+ * Usage with constants:
+ * import { GAME_CATEGORIES } from '@/constants/gameCategories'
+ *
+ * const platforms = await gameApi.getGscPlusPlatforms({
+ *   category: GAME_CATEGORIES.SLOT
+ * })
+ */
+
 export const gameApi = {
+  // ==================== GSC+ APIs ====================
+  
+  // Get GSC+ game categories (Nổ Hũ, Casino, Bắn Cá, etc.)
+  getGscPlusCategories() {
+    return request({
+      url: '/v1/game/gscplus/categories',
+      method: 'get'
+    })
+  },
+
+  // Get GSC+ platforms by category (PG, PP, JDB, etc.)
+  getGscPlusPlatforms(params = {}) {
+    return request({
+      url: '/v1/game/gscplus/platforms',
+      method: 'get',
+      params // { category: '{category}' } // e.g., 'NO_HU', 'CASINO_TRUC_TUYEN', 'BAN_CA'
+    })
+  },
+
+  // Get GSC+ game list with filters
+  getGscPlusGameList(params) {
+    return request({
+      url: '/v1/game/gscplus/list',
+      method: 'get',
+      params // { category: '{category}', platform: '{platform}', page: 1, limit: 20 }
+    })
+  },
+
+  // Launch GSC+ game
+  launchGscPlusGame(data) {
+    return request({
+      url: '/v1/game/launch',
+      method: 'post',
+      data // { game_code: '1312883', platform: 'PG', device: 'mobile' }
+    })
+  },
+
+  // Get GSC+ configuration (admin only)
+  getGscPlusConfig() {
+    return request({
+      url: '/v1/gscplus/config',
+      method: 'get'
+    })
+  },
+
+  // ==================== Original APIs ====================
+  
   getPlatforms(params = {}) {
     return request({
       url: '/v1/game/platforms',

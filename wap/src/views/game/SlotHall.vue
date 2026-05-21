@@ -13,7 +13,7 @@
         <input 
           v-model="keyword" 
           type="text" 
-          placeholder="搜索游戏" 
+          placeholder="Tìm kiếm trò chơi"
           class="search-input"
           @input="onSearchInput"
         >
@@ -97,7 +97,7 @@
             </div>
             
             <div v-else class="empty-box">
-              <van-empty description="暂无相关游戏" image="search" />
+              <van-empty description="Không có trò chơi liên quan" image="search" />
             </div>
           </van-skeleton>
         </div>

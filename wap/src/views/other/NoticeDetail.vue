@@ -4,7 +4,7 @@
       <div class="nav-back" @click="$router.back()">
         <van-icon name="arrow-left" />
       </div>
-      <div class="nav-title">公告详情</div>
+      <div class="nav-title">Chi Tiết Thông Báo</div>
       <div class="nav-right"></div>
     </div>
 
@@ -41,8 +41,8 @@ const notice = ref({
 })
 
 const getTypeName = (type) => {
-  const map = { system: '系统公告', activity: '活动福利', update: '版本更新' }
-  return map[type] || '公告'
+  const map = { system: 'Thông báo hệ thống', activity: 'Hoạt động ưu đãi', update: 'Cập nhật phiên bản' }
+  return map[type] || 'Thông báo'
 }
 
 const formatTime = (ts) => {
@@ -70,10 +70,10 @@ onMounted(async () => {
     if (res.code === 0 && res.data) {
       notice.value = res.data
     } else {
-      showToast(res.msg || '公告不存在')
+      showToast(res.msg || 'Thông báo không tồn tại')
     }
   } catch (error) {
-    showToast('加载失败')
+    showToast('Tải thất bại')
   } finally {
     loading.value = false
   }

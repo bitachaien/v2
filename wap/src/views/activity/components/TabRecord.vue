@@ -22,11 +22,11 @@
     </div>
     
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-      <van-loading v-if="loading" type="spinner" size="24" style="margin: 40px auto;">加载中...</van-loading>
+      <van-loading v-if="loading" type="spinner" size="24" style="margin: 40px auto;">Đang tải...</van-loading>
       
       <div class="record-empty" v-else-if="recordList.length === 0">
         <van-icon name="orders-o" size="60" color="#ccc" />
-        <p>暂无领取记录</p>
+        <p>Chưa có lịch sử nhận</p>
       </div>
       
       <div class="record-list" v-else>
@@ -57,15 +57,15 @@ const showTimeDropdown = ref(false)
 const timeFilter = ref(7)
 
 const timeOptions = [
-  { text: '今日', value: 0 },
-  { text: '昨日', value: 1 },
-  { text: '近7日', value: 7 },
-  { text: '近30日', value: 30 }
+  { text: 'Hôm nay', value: 0 },
+  { text: 'Hôm qua', value: 1 },
+  { text: '7 ngày gần đây', value: 7 },
+  { text: '30 ngày gần đây', value: 30 }
 ]
 
 const currentTimeText = computed(() => {
   const item = timeOptions.find(o => o.value === timeFilter.value)
-  return item ? item.text : '近7日'
+  return item ? item.text : '7 ngày gần đây'
 })
 
 const selectTime = (val) => {
@@ -87,7 +87,7 @@ const loadRecords = async () => {
       recordList.value = res.data.list || []
     }
   } catch (e) {
-    showToast('加载失败')
+    showToast('Tải thất bại')
   } finally {
     loading.value = false
     refreshing.value = false
@@ -106,14 +106,14 @@ const formatTime = (timestamp) => {
 
 const getRewardTypeName = (type) => {
   const map = {
-    'lucky_order': '幸运注单',
-    'loss_rescue': '亏损救援',
-    'weekly_salary': '周俘禄',
-    'monthly_salary': '月俘禄',
-    'pg_betting_king': '打码王',
-    'deposit_bonus': '充值奖励'
+    'lucky_order': 'Đơn may mắn',
+    'loss_rescue': 'Cứu trợ thua lỗ',
+    'weekly_salary': 'Lương tuần',
+    'monthly_salary': 'Lương tháng',
+    'pg_betting_king': 'Vua cược',
+    'deposit_bonus': 'Thưởng nạp tiền'
   }
-  return map[type] || '活动奖励'
+  return map[type] || 'Thưởng hoạt động'
 }
 
 const getStatusClass = (status) => {

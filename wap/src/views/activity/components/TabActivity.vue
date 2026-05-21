@@ -20,18 +20,18 @@
         
         <div class="sidebar-footer-inline">
           <div class="sidebar-btn" @click="goRecord">
-            <span class="btn-text">领取记录</span>
+            <span class="btn-text">Lịch sử nhận</span>
           </div>
           <div class="sidebar-btn outline" @click="refreshReward">
             <van-icon name="replay" :class="{ spinning: isRefreshing }" />
-            <span class="btn-text">刷新</span>
+            <span class="btn-text">Làm mới</span>
           </div>
         </div>
       </div>
     </div>
 
     <div class="content-list" ref="contentListRef">
-      <van-loading v-if="loading" type="spinner" size="24" style="margin: 40px auto;">加载中...</van-loading>
+      <van-loading v-if="loading" type="spinner" size="24" style="margin: 40px auto;">Đang tải...</van-loading>
       
       <div 
         class="activity-card" 
@@ -42,7 +42,7 @@
         <img :src="act.image" class="card-img" />
       </div>
       
-      <div v-if="!loading && activities.length === 0" class="empty-text">暂无活动</div>
+      <div v-if="!loading && activities.length === 0" class="empty-text">Chưa có hoạt động</div>
     </div>
 
     <CheckinPopup v-model:show="showCheckinPopup" :activity-id="checkinActivityId" />
@@ -76,24 +76,24 @@ const loadCategories = async () => {
       }))
     } else {
       categories.value = [
-        { text: '综合', iconImg: '/assets/img/icon_dtfl_zh_0.svg', code: 'general' },
-        { text: '电子', iconImg: '/assets/img/icon_dtfl_dz_0.svg', code: 'electronic' },
-        { text: '真人', iconImg: '/assets/img/icon_dtfl_zr_0.svg', code: 'live' },
-        { text: '棋牌', iconImg: '/assets/img/icon_dtfl_qp_0.svg', code: 'chess' },
-        { text: '捕鱼', iconImg: '/assets/img/icon_dtfl_by_0.svg', code: 'fishing' },
-        { text: '彩票', iconImg: '/assets/img/icon_dtfl_cp_0.svg', code: 'lottery' },
-        { text: '体育', iconImg: '/assets/img/icon_dtfl_ty_0.svg', code: 'sports' },
+        { text: 'Tổng hợp', iconImg: '/assets/img/icon_dtfl_zh_0.svg', code: 'general' },
+        { text: 'Điện tử', iconImg: '/assets/img/icon_dtfl_dz_0.svg', code: 'electronic' },
+        { text: 'Live Casino', iconImg: '/assets/img/icon_dtfl_zr_0.svg', code: 'live' },
+        { text: 'Cờ bài', iconImg: '/assets/img/icon_dtfl_qp_0.svg', code: 'chess' },
+        { text: 'Bắn cá', iconImg: '/assets/img/icon_dtfl_by_0.svg', code: 'fishing' },
+        { text: 'Xổ số', iconImg: '/assets/img/icon_dtfl_cp_0.svg', code: 'lottery' },
+        { text: 'Thể thao', iconImg: '/assets/img/icon_dtfl_ty_0.svg', code: 'sports' },
       ]
     }
   } catch (error) {
     categories.value = [
-      { text: '综合', iconImg: '/assets/img/icon_dtfl_zh_0.svg', code: 'general' },
-      { text: '电子', iconImg: '/assets/img/icon_dtfl_dz_0.svg', code: 'electronic' },
-      { text: '真人', iconImg: '/assets/img/icon_dtfl_zr_0.svg', code: 'live' },
-      { text: '棋牌', iconImg: '/assets/img/icon_dtfl_qp_0.svg', code: 'chess' },
-      { text: '捕鱼', iconImg: '/assets/img/icon_dtfl_by_0.svg', code: 'fishing' },
-      { text: '彩票', iconImg: '/assets/img/icon_dtfl_cp_0.svg', code: 'lottery' },
-      { text: '体育', iconImg: '/assets/img/icon_dtfl_ty_0.svg', code: 'sports' },
+      { text: 'Tổng hợp', iconImg: '/assets/img/icon_dtfl_zh_0.svg', code: 'general' },
+      { text: 'Điện tử', iconImg: '/assets/img/icon_dtfl_dz_0.svg', code: 'electronic' },
+      { text: 'Live Casino', iconImg: '/assets/img/icon_dtfl_zr_0.svg', code: 'live' },
+      { text: 'Cờ bài', iconImg: '/assets/img/icon_dtfl_qp_0.svg', code: 'chess' },
+      { text: 'Bắn cá', iconImg: '/assets/img/icon_dtfl_by_0.svg', code: 'fishing' },
+      { text: 'Xổ số', iconImg: '/assets/img/icon_dtfl_cp_0.svg', code: 'lottery' },
+      { text: 'Thể thao', iconImg: '/assets/img/icon_dtfl_ty_0.svg', code: 'sports' },
     ]
   }
 }
@@ -133,16 +133,16 @@ const loadActivities = async () => {
 
 const getActivityTag = (type) => {
   const tagMap = {
-    'lucky_order': '幸运',
-    'loss_rescue': '救援',
-    'weekly_salary': '周俸禄',
-    'monthly_salary': '月俸禄',
-    'pg_betting_king': '打码王',
-    'deposit': '充值',
-    'deposit_bonus': '充值',
-    'other': '热门'
+    'lucky_order': 'May mắn',
+    'loss_rescue': 'Cứu trợ',
+    'weekly_salary': 'Lương tuần',
+    'monthly_salary': 'Lương tháng',
+    'pg_betting_king': 'Vua cược',
+    'deposit': 'Nạp tiền',
+    'deposit_bonus': 'Nạp tiền',
+    'other': 'Hot'
   }
-  return tagMap[type] || '活动'
+  return tagMap[type] || 'Hoạt động'
 }
 
 const getActivityTagClass = (type) => {
@@ -235,9 +235,9 @@ const refreshReward = async () => {
   
   try {
     await loadActivities()
-    showToast({ message: '刷新成功', position: 'middle' })
+    showToast({ message: 'Làm mới thành công', position: 'middle' })
   } catch (error) {
-    showToast({ message: '刷新失败', position: 'middle' })
+    showToast({ message: 'Làm mới thất bại', position: 'middle' })
   } finally {
     isRefreshing.value = false
   }

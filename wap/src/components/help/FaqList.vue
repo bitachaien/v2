@@ -36,7 +36,7 @@
             class="solve-btn" 
             @click="handleSolved"
           >
-            问题已解决
+            Đã giải quyết
           </van-button>
           <van-button 
             block 
@@ -44,7 +44,7 @@
             plain 
             @click="handleContactService"
           >
-            仍需帮助，联系在线客服
+            Vẫn cần trợ giúp, liên hệ CSKH
           </van-button>
         </div>
       </div>
@@ -100,7 +100,7 @@ const openDetail = (item: FaqItem) => {
 const handleSolved = () => {
   showDetail.value = false;
   showToast({
-    message: '感谢您的反馈',
+    message: 'Cảm ơn phản hồi của bạn',
     icon: 'success'
   });
 };

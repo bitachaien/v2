@@ -1,18 +1,18 @@
 <template>
   <div class="friend-requests-page">
     <van-nav-bar
-      title="新朋友"
+      title="Bạn mới"
       left-arrow
       @click-left="router.back()"
     >
        <template #right>
-         <span @click="router.push('/im/add-friend')">添加朋友</span>
+         <span @click="router.push('/im/add-friend')">Thêm bạn</span>
        </template>
     </van-nav-bar>
 
     <van-loading v-if="loading" class="loading" />
 
-    <van-empty v-else-if="requests.length === 0" description="暂无好友通知" />
+    <van-empty v-else-if="requests.length === 0" description="Chưa có thông báo kết bạn" />
     
     <div class="request-list" v-else>
       <div 
@@ -29,13 +29,13 @@
         />
         <div class="content">
           <div class="name">{{ req.nickname }}</div>
-          <div class="msg">{{ req.remark || '请求添加你为好友' }}</div>
+          <div class="msg">{{ req.remark || 'Yêu cầu kết bạn với bạn' }}</div>
         </div>
         <div class="action">
            <template v-if="req.status === 'pending'">
-             <van-button size="small" type="primary" @click="handle(req, 'accept')">接受</van-button>
+             <van-button size="small" type="primary" @click="handle(req, 'accept')">Chấp nhận</van-button>
            </template>
-           <span v-else class="status-text">{{ req.status === 'accepted' ? '已添加' : '已拒绝' }}</span>
+           <span v-else class="status-text">{{ req.status === 'accepted' ? 'Đã thêm' : 'Đã từ chối' }}</span>
         </div>
       </div>
     </div>
@@ -77,7 +77,7 @@ const handle = async (req, action) => {
   try {
     await handleFriendRequest({ requestId: req.id, action })
     req.status = action === 'accept' ? 'accepted' : 'rejected'
-    showToast(action === 'accept' ? '已添加' : '已拒绝')
+    showToast(action === 'accept' ? 'Đã thêm' : 'Đã từ chối')
   } catch (e) {}
 }
 

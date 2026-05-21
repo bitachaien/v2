@@ -5,7 +5,7 @@
       <div class="nav-left" @click="goBack">
         <van-icon name="arrow-left" class="neon-icon" />
       </div>
-      <div class="nav-title">额度转换</div>
+      <div class="nav-title">Chuyển đổi số dư</div>
       <div class="nav-right">
         <van-icon name="question-o" class="neon-icon" />
       </div>
@@ -20,7 +20,7 @@
             <div class="icon-box wallet">
               <van-icon name="paid" />
             </div>
-            <span class="card-label">中心钱包余额</span>
+            <span class="card-label">Số dư ví chính</span>
           </div>
           <div class="card-value">
             <span class="currency">¥</span>
@@ -35,7 +35,7 @@
             <div class="icon-box game">
               <van-icon name="play-circle-o" />
             </div>
-            <span class="card-label">娱乐钱包余额</span>
+            <span class="card-label">Số dư ví game</span>
           </div>
           <div class="card-value game-color">
             <span class="currency">¥</span>
@@ -49,18 +49,18 @@
       <div class="transfer-form glass-card animate-up" style="animation-delay: 0.3s">
         <div class="form-title">
           <span class="neon-bar"></span>
-          转换操作
+          Thao tác chuyển đổi
         </div>
 
         
         <div class="form-item">
-          <div class="label">转换方向</div>
+          <div class="label">Hướng chuyển</div>
           <div class="tech-selector" @click="showDirectionPicker = true">
             <div class="selected-val">
               <div class="direction-display">
-                <span :class="{ active: form.direction === 'wallet_to_game' }">中心钱包</span>
+                <span :class="{ active: form.direction === 'wallet_to_game' }">Ví chính</span>
                 <van-icon name="exchange" class="exchange-icon" />
-                <span :class="{ active: form.direction === 'game_to_wallet' }">娱乐钱包</span>
+                <span :class="{ active: form.direction === 'game_to_wallet' }">Ví game</span>
               </div>
             </div>
             <van-icon name="arrow-down" class="arrow" />
@@ -69,27 +69,27 @@
 
         
         <div class="form-item">
-          <div class="label">转换金额</div>
+          <div class="label">Số tiền chuyển</div>
           <div class="tech-input-box" :class="{ focused: isInputFocused }">
             <span class="prefix">¥</span>
             <input 
               type="number" 
               v-model="form.amount" 
-              placeholder="请输入转换金额"
+              placeholder="Nhập số tiền chuyển đổi"
               @focus="isInputFocused = true"
               @blur="isInputFocused = false"
             />
-            <span class="max-btn" @click="setMaxAmount">最大</span>
+            <span class="max-btn" @click="setMaxAmount">Tối đa</span>
           </div>
         </div>
 
         
         <div class="action-group">
           <button class="btn-reset" @click="resetForm">
-            <van-icon name="replay" /> 重置
+            <van-icon name="replay" /> Đặt lại
           </button>
           <button class="btn-confirm" @click="handleTransfer">
-            <van-icon name="success" /> 立即转换
+            <van-icon name="success" /> Chuyển ngay
             <div class="btn-glow"></div>
           </button>
         </div>
@@ -101,7 +101,7 @@
       v-model:show="showDirectionPicker" 
       :actions="directionActions" 
       @select="onSelectDirection"
-      cancel-text="取消"
+      cancel-text="Hủy"
       class="tech-sheet"
     />
   </div>
@@ -128,8 +128,8 @@ const isInputFocused = ref(false)
 const showDirectionPicker = ref(false)
 
 const directionActions = [
-  { name: '中心钱包 → 娱乐钱包', value: 'wallet_to_game', className: 'tech-action' },
-  { name: '娱乐钱包 → 中心钱包', value: 'game_to_wallet', className: 'tech-action' }
+  { name: 'Ví chính → Ví game', value: 'wallet_to_game', className: 'tech-action' },
+  { name: 'Ví game → Ví chính', value: 'game_to_wallet', className: 'tech-action' }
 ]
 
 const goBack = () => router.go(-1)
@@ -161,19 +161,19 @@ const handleTransfer = () => {
   
 
   if (!amt || amt <= 0) {
-    showToast('请输入有效金额')
+    showToast('Vui lòng nhập số tiền hợp lệ')
     return
   }
 
   const max = form.direction === 'wallet_to_game' ? balances.wallet : balances.game
   if (amt > max) {
-    showToast('余额不足')
+    showToast('Số dư không đủ')
     return
   }
 
   showToast({
     type: 'loading',
-    message: '转换中...',
+    message: 'Đang chuyển đổi...',
     forbidClick: true,
     duration: 1000,
     onClose: () => {
@@ -187,8 +187,8 @@ const handleTransfer = () => {
       }
       
       showDialog({
-        title: '转换成功',
-        message: `成功转换 ${amt} 元`,
+        title: 'Chuyển đổi thành công',
+        message: `Đã chuyển đổi thành công ${amt} VNĐ`,
         theme: 'round-button',
         confirmButtonColor: '#EAC26E'
       })

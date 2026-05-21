@@ -1,8 +1,8 @@
 <template>
   <div class="v5-quick">
     <div class="auth-btns" v-if="!isLogin">
-      <div class="btn login" @click="openAuth('login')">登录</div>
-      <div class="btn reg" @click="openAuth('register')">注册</div>
+      <div class="btn login" @click="openAuth('login')>Đăng nhập</div>
+      <div class="btn reg" @click="openAuth('register')">Đăng ký</div>
     </div>
 
     <div class="user-info-panel" v-else>
@@ -23,7 +23,7 @@
     <div class="quick-icons">
       <div class="q-item" @click="go('/service')">
         <img src="/assets/img/icon_dt_1kf.avif" class="q-icon" />
-        <span>客服</span>
+        <span>CSKH</span>
       </div>
       <div class="q-item" @click="go('/vip')">
         <img src="/assets/img/icon_dt_1vip.avif" class="q-icon" />
@@ -31,11 +31,11 @@
       </div>
       <div class="q-item" @click="go('/about')">
         <img src="/assets/img/icon_dt_1app.avif" class="q-icon" />
-        <span>关于</span>
+        <span>Giới thiệu</span>
       </div>
       <div class="q-item" @click="showMore = true">
         <img src="/assets/img/icon_dt_1gd.avif" class="q-icon" />
-        <span>更多</span>
+        <span>Thêm</span>
       </div>
     </div>
     
@@ -95,10 +95,10 @@ const refreshBalance = async () => {
     const res = await authApi.getProfile()
     if (res.code === 0 && res.data?.user) {
       userInfo.value.balance = res.data.user.balance || 0
-      showToast('刷新成功')
+      showToast('Làm mới thành công')
     }
   } catch (e) {
-    showToast('刷新失败')
+    showToast('Làm mới thất bại')
   } finally {
     refreshing.value = false
   }
@@ -107,9 +107,9 @@ const refreshBalance = async () => {
 const copyText = (text) => {
   if (!text) return
   navigator.clipboard.writeText(text).then(() => {
-    showToast('复制成功')
+    showToast('Sao chép thành công')
   }).catch(() => {
-    showToast('复制失败')
+    showToast('Sao chép thất bại')
   })
 }
 
@@ -120,26 +120,26 @@ const openAuth = (type) => {
 const go = (path) => router.push(path)
 
 const moreItems = [
-  { name: '利息宝', iconImg: '/assets/img/icon_dt_1yeb.avif', path: '/interest' },
-  { name: '分享赚钱', iconImg: '/assets/img/icon_dt_1tg.avif', path: '/member/invite' },
-  { name: '提现', iconImg: '/assets/img/icon_dt_1tx.avif', path: '/payment/withdraw' },
-  { name: '存款', iconImg: '/assets/img/icon_dt_1cz.avif', path: '/payment/deposit' },
-  { name: '活动', iconImg: '/assets/img/icon_dt_1yh.avif', path: '/activity' },
-  { name: '返水', iconImg: '/assets/img/icon_dt_1fs.avif', path: '/cashback' },
-  { name: '帮助中心', iconImg: '/assets/img/icon_dt_1yjfq.avif', path: '/help' },
-  { name: '安全中心', iconImg: '/assets/img/icon_dt_1aqzx.avif', path: '/security' },
-  { name: '个人中心', iconImg: '/assets/img/icon_dt_1sz.avif', path: '/member' },
-  { name: '账户明细', iconImg: '/assets/img/icon_dt_1zhmx.avif', path: '/account/bill' },
-  { name: '投注记录', iconImg: '/assets/img/icon_dt_1tzjl.avif', path: '/member/history' },
-  { name: '今日统计', iconImg: '/assets/img/icon_dt_1grbb.avif', path: '/account/today-stats' },
-  { name: '待领取', iconImg: '/assets/img/icon_dt_1jl.avif', path: '/pending' },
-  { name: '额度转换', iconImg: '/assets/img/icon_dt_1txgl.avif', path: '/account/transfer' },
-  { name: '修改密码', iconImg: '/assets/img/icon_dt_1yuyuan.avif', path: '/account/change-password' },
-  { name: '每日签到', iconImg: '/assets/img/icon_dt_1jh.avif', path: '/lottery/signin' },
-  { name: '领取记录', iconImg: '/assets/img/icon_dt_1lqjl.avif', path: '/reward-record' },
-  { name: '余额找回', iconImg: '/assets/img/icon_dt_1ljfx.avif', path: '/member/recover-balance' },
-  { name: '聊天室', iconImg: '/assets/img/icon_dt_1zj.avif', path: '/im' },
-  { name: '关于我们', iconImg: '/assets/img/icon_dt_1sc.avif', path: '/about' }
+  { name: 'Lãi suất', iconImg: '/assets/img/icon_dt_1yeb.avif', path: '/interest' },
+  { name: 'Chia sẻ', iconImg: '/assets/img/icon_dt_1tg.avif', path: '/member/invite' },
+  { name: 'Rút tiền', iconImg: '/assets/img/icon_dt_1tx.avif', path: '/payment/withdraw' },
+  { name: 'Nạp tiền', iconImg: '/assets/img/icon_dt_1cz.avif', path: '/payment/deposit' },
+  { name: 'Sự kiện', iconImg: '/assets/img/icon_dt_1yh.avif', path: '/activity' },
+  { name: 'Hoàn trả', iconImg: '/assets/img/icon_dt_1fs.avif', path: '/cashback' },
+  { name: 'Trợ giúp', iconImg: '/assets/img/icon_dt_1yjfq.avif', path: '/help' },
+  { name: 'Bảo mật', iconImg: '/assets/img/icon_dt_1aqzx.avif', path: '/security' },
+  { name: 'Cá nhân', iconImg: '/assets/img/icon_dt_1sz.avif', path: '/member' },
+  { name: 'Chi tiết', iconImg: '/assets/img/icon_dt_1zhmx.avif', path: '/account/bill' },
+  { name: 'Lịch sử', iconImg: '/assets/img/icon_dt_1tzjl.avif', path: '/member/history' },
+  { name: 'Hôm nay', iconImg: '/assets/img/icon_dt_1grbb.avif', path: '/account/today-stats' },
+  { name: 'Chờ nhận', iconImg: '/assets/img/icon_dt_1jl.avif', path: '/pending' },
+  { name: 'Chuyển đổi', iconImg: '/assets/img/icon_dt_1txgl.avif', path: '/account/transfer' },
+  { name: 'Đổi MK', iconImg: '/assets/img/icon_dt_1yuyuan.avif', path: '/account/change-password' },
+  { name: 'Điểm danh', iconImg: '/assets/img/icon_dt_1jh.avif', path: '/lottery/signin' },
+  { name: 'LS nhận', iconImg: '/assets/img/icon_dt_1lqjl.avif', path: '/reward-record' },
+  { name: 'Khôi phục', iconImg: '/assets/img/icon_dt_1ljfx.avif', path: '/member/recover-balance' },
+  { name: 'Chat', iconImg: '/assets/img/icon_dt_1zj.avif', path: '/im' },
+  { name: 'Về chúng tôi', iconImg: '/assets/img/icon_dt_1sc.avif', path: '/about' }
 ]
 
 const handleMenuClick = async (item) => {
@@ -312,12 +312,15 @@ const handleMenuClick = async (item) => {
   position: absolute;
   top: 70px;
   right: 12px;
-  width: 309px;
-  height: 290px;
+  width: 320px;
+  max-width: 95vw;
+  height: auto;
+  max-height: 400px;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   z-index: 1001;
+  overflow: hidden;
 }
 
 .popup-arrow {
@@ -334,33 +337,52 @@ const handleMenuClick = async (item) => {
 .more-menu-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  padding: 5px 5px 15px 5px;
+  padding: 10px 5px 15px 5px;
   background: transparent;
-  height: 100%;
+  max-height: 400px;
+  overflow-y: auto;
   align-content: flex-start;
-  row-gap: 12px;
+  gap: 8px 2px;
 }
 
 .menu-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 57px;
-  height: 62px;
-  gap: 4px;
+  justify-content: flex-start;
+  padding: 8px 4px;
+  min-height: 65px;
+  gap: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:active {
+    background: rgba(38, 161, 123, 0.1);
+    border-radius: 6px;
+  }
 
   span {
-    font-size: 12px;
+    font-size: 11px;
     color: #333;
     text-align: center;
-    white-space: nowrap;
+    line-height: 1.3;
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: auto;
+    min-height: 28px;
   }
 }
 
 .menu-icon-img {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
+  flex-shrink: 0;
 }
 </style>

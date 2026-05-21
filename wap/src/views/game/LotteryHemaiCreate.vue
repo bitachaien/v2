@@ -4,7 +4,7 @@
     <div class="tech-bg-grid"></div>
 
     <van-nav-bar
-      title="发起合买"
+      title="Phát hành hợp mãi"
       left-arrow
       fixed
       placeholder
@@ -16,7 +16,7 @@
       
       <div class="glass-card-form">
         <div class="form-header">
-          <span class="title">选择彩种</span>
+          <span class="title">Chọn loại xổ số</span>
         </div>
         <div class="lottery-selector" @click="showLotteryPicker = true">
           <div class="ls-left" v-if="selectedLottery">
@@ -27,21 +27,21 @@
             </div>
           </div>
           <div class="ls-left" v-else>
-            <span class="ls-placeholder">请选择彩种</span>
+            <span class="ls-placeholder">Vui lòng chọn loại xổ số</span>
           </div>
           <van-icon name="arrow" color="#64748b" />
         </div>
         
         <div class="countdown-row" v-if="selectedLottery">
-          <span class="label">截止倒计时</span>
+          <span class="label">Đếm ngược hết hạn</span>
           <van-count-down :time="3600000" format="HH:mm:ss" class="timer-red" />
         </div>
       </div>
 
       <div class="glass-card-form">
         <div class="form-header">
-          <span class="title">方案内容</span>
-          <span class="action-link" @click="mockReselect">重新选号</span>
+          <span class="title">Nội dung phương án</span>
+          <span class="action-link" @click="mockReselect">Chọn lại số</span>
         </div>
         <div class="code-area">
           <van-field
@@ -49,63 +49,63 @@
             rows="4"
             autosize
             type="textarea"
-            placeholder="暂无号码，请返回玩法页选号"
+            placeholder="Chưa có số, vui lòng quay lại trang chơi để chọn số"
             class="tech-input-area"
           />
         </div>
         <div class="stats-line">
-          共 0 注，理论奖金 0.00 元
+          Tổng 0 vé, tiền thưởng lý thuyết 0.00 đ
         </div>
       </div>
 
       <div class="glass-card-form">
         <div class="form-header">
-          <span class="title">金额设置</span>
+          <span class="title">Cài đặt số tiền</span>
         </div>
         
         <div class="input-row">
-          <span class="label">方案总金额</span>
+          <span class="label">Tổng tiền phương án</span>
           <div class="input-wrapper">
             <input type="number" v-model.number="formData.amount" placeholder="0" class="tech-input" />
-            <span class="unit">元</span>
+            <span class="unit">đ</span>
           </div>
         </div>
 
         <div class="input-row">
-          <span class="label">每份金额</span>
+          <span class="label">Tiền mỗi phần</span>
           <div class="input-wrapper">
             <input type="number" v-model.number="formData.unitPrice" placeholder="1" class="tech-input" />
-            <span class="unit">元</span>
+            <span class="unit">đ</span>
           </div>
         </div>
 
         <div class="error-tip" v-if="formData.amount > 0 && formData.unitPrice > 0 && formData.amount % formData.unitPrice !== 0">
-          <van-icon name="info-o" /> 方案金额必须是每份金额的整数倍
+          <van-icon name="info-o" /> Số tiền phương án phải là bội số nguyên của tiền mỗi phần
         </div>
 
         <div class="calc-result">
-          <span class="label">总份数</span>
-          <span class="val-tag">{{ totalShares }} 份</span>
+          <span class="label">Tổng số phần</span>
+          <span class="val-tag">{{ totalShares }} phần</span>
         </div>
       </div>
 
       <div class="glass-card-form">
         <div class="form-header">
-          <span class="title">认购设置</span>
+          <span class="title">Cài đặt mua</span>
         </div>
 
         <div class="stepper-row">
-          <span class="label">我要认购</span>
+          <span class="label">Tôi muốn mua</span>
           <van-stepper v-model="formData.num" :min="1" :max="maxBuy" theme="round" button-size="22" class="tech-stepper" integer />
         </div>
         
         <div class="stepper-row">
-          <span class="label">保底份数</span>
+          <span class="label">Số phần bảo đảm</span>
           <van-stepper v-model="formData.baodi" :min="0" :max="maxBaodi" theme="round" button-size="22" class="tech-stepper" integer />
         </div>
 
         <div class="stepper-row">
-          <span class="label">中奖提成</span>
+          <span class="label">Hoa hồng trúng thưởng</span>
           <div class="right-input">
             <van-stepper v-model="formData.commission" :min="0" :max="10" theme="round" button-size="22" class="tech-stepper" integer />
             <span class="suffix">%</span>
@@ -113,44 +113,44 @@
         </div>
 
         <div class="warn-tip" v-if="totalShares > 0 && (formData.baodi / totalShares) < 0.2">
-          保底不足20%，该方案不会出现在热门大厅，只能通过分享参与
+          Bảo đảm dưới 20%, phương án này sẽ không xuất hiện trong sảnh hot, chỉ có thể tham gia qua chia sẻ
         </div>
 
         <div class="pay-row">
-          <span class="label">需支付</span>
-          <span class="val-gold">{{ currentPay }} 元</span>
+          <span class="label">Cần thanh toán</span>
+          <span class="val-gold">{{ currentPay }} đ</span>
         </div>
       </div>
 
       <div class="glass-card-form">
         <div class="form-header">
-          <span class="title">其他设置</span>
+          <span class="title">Cài đặt khác</span>
         </div>
         <van-field
           v-model="formData.content"
           rows="2"
           autosize
           type="textarea"
-          placeholder="合买宣言：跟着我买，别墅靠海！"
+          placeholder="Tuyên ngôn hợp mãi: Theo tôi mua, biệt thự ven biển!"
           class="tech-input-area"
         />
         
         <div class="radio-group-col">
-          <span class="label-sm">公开方案</span>
+          <span class="label-sm">Công khai phương án</span>
           <van-radio-group v-model="formData.public" direction="horizontal" class="tech-radio">
-            <van-radio :name="0">公开</van-radio>
-            <van-radio :name="1">截止后</van-radio>
-            <van-radio :name="2">跟单可见</van-radio>
-            <van-radio :name="3">保密</van-radio>
+            <van-radio :name="0">Công khai</van-radio>
+            <van-radio :name="1">Sau khi hết hạn</van-radio>
+            <van-radio :name="2">Người theo mới thấy</van-radio>
+            <van-radio :name="3">Bảo mật</van-radio>
           </van-radio-group>
         </div>
       </div>
 
       <div class="submit-bar">
         <div class="total-info">
-          需支付: <span class="pay-money">{{ currentPay }}</span> 元
+          Cần thanh toán: <span class="pay-money">{{ currentPay }}</span> đ
         </div>
-        <button class="submit-btn" :class="{ disabled: !canSubmit }" @click="handleSubmit">立即发起</button>
+        <button class="submit-btn" :class="{ disabled: !canSubmit }" @click="handleSubmit">Phát hành ngay</button>
       </div>
 
     </div>
@@ -252,7 +252,7 @@ const onLotteryConfirm = async ({ selectedOptions }) => {
   showLotteryPicker.value = false
   
 
-  showLoadingToast({ message: '获取期号...', forbidClick: true, duration: 0 })
+  showLoadingToast({ message: 'Đang lấy kỳ số...', forbidClick: true, duration: 0 })
   try {
     const res = await hemaiApi.getNextIssue(opt.value)
     
@@ -260,7 +260,7 @@ const onLotteryConfirm = async ({ selectedOptions }) => {
       currentExpect.value = res.data.issue
 
     } else {
-      throw new Error('获取期号失败')
+      throw new Error('Lấy kỳ số thất bại')
     }
     
     closeToast()
@@ -274,7 +274,7 @@ const onLotteryConfirm = async ({ selectedOptions }) => {
 }
 
 const mockReselect = () => {
-  showToast('已模拟返回选号页')
+  showToast('Đã mô phỏng quay lại trang chọn số')
 }
 
 const loadLotteryList = async () => {
@@ -302,13 +302,13 @@ const fallbackLotteryList = () => {
 const handleSubmit = async () => {
   if (!canSubmit.value) return
   
-  showLoadingToast({ message: '发起中...', forbidClick: true })
+  showLoadingToast({ message: 'Đang phát hành...', forbidClick: true })
   
   try {
     const data = {
       lottery: selectedLottery.value.name,
       expect: currentExpect.value,
-      playtitle: '复式投注', // 如有 playid 也需传入
+      playtitle: 'Đặt cược phức hợp', // 如有 playid 也需传入
       tzcode: formData.value.tzcode,
       totalAmount: parseFloat(formData.value.amount),
       perShare: parseFloat(formData.value.unitPrice),
@@ -324,18 +324,18 @@ const handleSubmit = async () => {
     
     if (res.code === 0) {
       closeToast()
-      showSuccessToast('合买方案已发起')
+      showSuccessToast('Phương án hợp mãi đã phát hành')
 
       setTimeout(() => {
         router.replace({ name: 'LotteryHemaiDetail', query: { id: res.data?.id || 'mock_id' } })
       }, 1500)
     } else {
       closeToast()
-      showToast(res.message || '发起失败')
+      showToast(res.message || 'Phát hành thất bại')
     }
   } catch (e) {
     closeToast()
-    showToast(e.message || '网络错误')
+    showToast(e.message || 'Lỗi mạng')
   }
 }
 

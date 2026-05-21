@@ -7,7 +7,7 @@
     <div class="right">
       <div class="search-box" @click="router.push('/game/search')">
         <img src="/assets/img/icon_dt_1ss.avif" class="search-icon" />
-        <span class="search-text">搜索</span>
+        <span class="search-text">Tìm kiếm</span>
       </div>
     </div>
   </header>

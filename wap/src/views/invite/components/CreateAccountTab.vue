@@ -6,7 +6,7 @@
           <van-icon name="user-o" class="input-icon" />
           <van-field 
             v-model="form.username" 
-            placeholder="*请输入账号"
+            placeholder="*Vui lòng nhập tài khoản"
             :border="false"
             maxlength="20"
           />
@@ -19,7 +19,7 @@
           <van-field 
             v-model="form.password" 
             :type="showPassword ? 'text' : 'password'"
-            placeholder="*请输入密码"
+            placeholder="*Vui lòng nhập mật khẩu"
             :border="false"
             maxlength="20"
           >
@@ -34,7 +34,7 @@
       </div>
 
       <div class="password-strength">
-        <span class="label">密码强度</span>
+        <span class="label">Độ mạnh mật khẩu</span>
         <div class="strength-bars">
           <div 
             v-for="i in 5" 
@@ -49,19 +49,19 @@
       <div class="password-requirements">
         <div class="req-item" :class="{ valid: hasUpperCase }">
           <van-icon :name="hasUpperCase ? 'success' : 'cross'" />
-          <span>大写字母</span>
+          <span>Chữ hoa</span>
         </div>
         <div class="req-item" :class="{ valid: hasLowerCase }">
           <van-icon :name="hasLowerCase ? 'success' : 'cross'" />
-          <span>小写字母</span>
+          <span>Chữ thường</span>
         </div>
         <div class="req-item" :class="{ valid: hasNumber }">
           <van-icon :name="hasNumber ? 'success' : 'cross'" />
-          <span>数字</span>
+          <span>Số</span>
         </div>
         <div class="req-item" :class="{ valid: hasSymbol }">
           <van-icon :name="hasSymbol ? 'success' : 'cross'" />
-          <span>符号</span>
+          <span>Ký hiệu</span>
         </div>
         <div class="req-item" :class="{ valid: hasValidLength }">
           <van-icon :name="hasValidLength ? 'success' : 'cross'" />
@@ -75,7 +75,7 @@
       :disabled="!canSubmit"
       @click="handleSubmit"
     >
-      提交开户
+      Gửi mở tài khoản
     </button>
   </div>
 </template>
@@ -116,9 +116,9 @@ const strengthClass = computed(() => {
 
 const strengthRequirement = computed(() => {
   if (passwordStrength.value === 0) return '8-16位'
-  if (passwordStrength.value <= 2) return '弱'
-  if (passwordStrength.value <= 4) return '中'
-  return '强'
+  if (passwordStrength.value <= 2) return 'Yếu'
+  if (passwordStrength.value <= 4) return 'Trung bình'
+  return 'Mạnh'
 })
 
 const canSubmit = computed(() => {
@@ -130,28 +130,28 @@ const canSubmit = computed(() => {
 
 const handleSubmit = async () => {
   if (!form.username) {
-    showToast('请输入账号')
+    showToast('Vui lòng nhập tài khoản')
     return
   }
   if (form.username.length < 4) {
-    showToast('账号至少4位')
+    showToast('Tài khoản tối thiểu 4 ký tự')
     return
   }
   if (!hasValidLength.value) {
-    showToast('密码长度需8-16位')
+    showToast('Mật khẩu cần 8-16 ký tự')
     return
   }
   if (!hasUpperCase.value && !hasLowerCase.value) {
-    showToast('密码需包含字母')
+    showToast('Mật khẩu cần có chữ cái')
     return
   }
   if (!hasNumber.value) {
-    showToast('密码需包含数字')
+    showToast('Mật khẩu cần có số')
     return
   }
 
   showLoadingToast({
-    message: '提交中...',
+    message: 'Đang gửi...',
     forbidClick: true
   })
 
@@ -164,15 +164,15 @@ const handleSubmit = async () => {
     closeToast()
 
     if (res.code === 0) {
-      showSuccessToast('开户成功')
+      showSuccessToast('Mở tài khoản thành công')
       form.username = ''
       form.password = ''
     } else {
-      showToast(res.msg || '开户失败')
+      showToast(res.msg || 'Mở tài khoản thất bại')
     }
   } catch (e) {
     closeToast()
-    showToast('开户失败')
+    showToast('Mở tài khoản thất bại')
   }
 }
 </script>

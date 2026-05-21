@@ -1,7 +1,7 @@
 <template>
   <div class="group-members-page">
     <van-nav-bar
-      :title="`群成员(${members.length})`"
+      :title="`Thành viên nhóm (${members.length})`"
       left-arrow
       @click-left="$router.back()"
     >
@@ -17,7 +17,7 @@
 
     <van-search
       v-model="searchKeyword"
-      placeholder="搜索群成员"
+      placeholder="Tìm thành viên"
     />
 
     <van-list class="member-list">
@@ -45,15 +45,15 @@
           </div>
         </template>
         <template #right-icon>
-          <van-tag v-if="member.role === 'owner'" type="danger" size="medium">群主</van-tag>
-          <van-tag v-else-if="member.role === 'admin'" type="primary" size="medium">管理员</van-tag>
+          <van-tag v-if="member.role === 'owner'" type="danger" size="medium">Chủ nhóm</van-tag>
+          <van-tag v-else-if="member.role === 'admin'" type="primary" size="medium">Quản trị viên</van-tag>
         </template>
       </van-cell>
     </van-list>
 
     <van-empty
       v-if="filteredMembers.length === 0 && searchKeyword"
-      description="未找到成员"
+      description="Không tìm thấy thành viên"
       image="search"
     />
 
@@ -65,13 +65,13 @@
     >
       <div class="invite-popup">
         <div class="popup-header">
-          <span class="title">邀请成员</span>
+          <span class="title">Mời thành viên</span>
           <van-icon name="cross" @click="showInvite = false" />
         </div>
         
         <van-search
           v-model="inviteSearch"
-          placeholder="搜索好友"
+          placeholder="Tìm bạn bè"
         />
         
         <div class="friend-list">
@@ -112,7 +112,7 @@
             :disabled="selectedFriends.length === 0"
             @click="inviteMembers"
           >
-            邀请 {{ selectedFriends.length > 0 ? `(${selectedFriends.length})` : '' }}
+            Mời {{ selectedFriends.length > 0 ? `(${selectedFriends.length})` : '' }}
           </van-button>
         </div>
       </div>
@@ -121,7 +121,7 @@
     <van-action-sheet
       v-model:show="showMemberAction"
       :actions="memberActions"
-      cancel-text="取消"
+      cancel-text="Hủy"
       @select="handleMemberAction"
     />
   </div>
@@ -183,23 +183,23 @@ const memberActions = computed(() => {
   
   const actions = []
   
-  actions.push({ name: '查看资料', action: 'profile' })
+  actions.push({ name: 'Xem hồ sơ', action: 'profile' })
   
   actions.push({ name: '@ TA', action: 'mention' })
   
   if (selectedMember.value.userId !== currentUserId.value) {
-    actions.push({ name: '发消息', action: 'chat' })
+    actions.push({ name: 'Nhắn tin', action: 'chat' })
   }
   
   if (isAdmin.value && selectedMember.value.userId !== currentUserId.value) {
     if (selectedMember.value.role !== 'owner') {
       if (currentUserRole.value === 'owner') {
         actions.push({
-          name: selectedMember.value.role === 'admin' ? '取消管理员' : '设为管理员',
+          name: selectedMember.value.role === 'admin' ? 'Hủy quản trị viên' : 'Đặt làm quản trị viên',
           action: 'toggleAdmin'
         })
       }
-      actions.push({ name: '移出群聊', action: 'kick', color: '#ee0a24' })
+      actions.push({ name: 'Xóa khỏi nhóm', action: 'kick', color: '#ee0a24' })
     }
   }
   
@@ -208,8 +208,8 @@ const memberActions = computed(() => {
 
 function getRoleLabel(role) {
   const map = {
-    owner: '群主',
-    admin: '管理员',
+    owner: 'Chủ nhóm',
+    admin: 'Quản trị viên',
     member: ''
   }
   return map[role] || ''
@@ -284,18 +284,18 @@ async function toggleAdmin() {
     })
     
     member.role = newIsAdmin ? 'admin' : 'member'
-    showToast(newIsAdmin ? '已设为管理员' : '已取消管理员')
+    showToast(newIsAdmin ? 'Đã đặt làm quản trị viên' : 'Đã hủy quản trị viên')
   } catch (e) {
-    console.error('操作失败:', e)
-    showToast('操作失败')
+    console.error('Thao tác thất bại:', e)
+    showToast('Thao tác thất bại')
   }
 }
 
 async function kickMember() {
   try {
     await showConfirmDialog({
-      title: '移出群聊',
-      message: `确定要将 ${selectedMember.value.nickname} 移出群聊吗？`
+      title: 'Xóa khỏi nhóm',
+      message: `Bạn có chắc muốn xóa ${selectedMember.value.nickname} khỏi nhóm?`
     })
     
     await kickFromGroup(groupId, { userId: selectedMember.value.userId })
@@ -304,10 +304,10 @@ async function kickMember() {
     if (index > -1) {
       members.value.splice(index, 1)
     }
-    showToast('已移出群聊')
+    showToast('Đã xóa khỏi nhóm')
   } catch (e) {
     if (e?.name !== 'cancel') {
-      showToast('操作失败')
+      showToast('Thao tác thất bại')
     }
   }
 }
@@ -317,13 +317,13 @@ async function inviteMembers() {
   
   try {
     await inviteToGroup(groupId, { userIds: selectedFriends.value })
-    showToast(`已邀请 ${selectedFriends.value.length} 人`)
+    showToast(`Đã mời ${selectedFriends.value.length} người`)
     showInvite.value = false
     selectedFriends.value = []
     loadData()
   } catch (e) {
-    console.error('邀请失败:', e)
-    showToast('邀请失败')
+    console.error('Mời thất bại:', e)
+    showToast('Mời thất bại')
   }
 }
 
@@ -346,7 +346,7 @@ async function loadData() {
       friends.value = Array.isArray(contactsRes.value?.data) ? contactsRes.value.data : []
     }
   } catch (e) {
-    console.error('加载失败:', e)
+    console.error('Tải thất bại:', e)
   }
 }
 

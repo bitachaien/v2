@@ -3,7 +3,7 @@
     
     <div class="header-section">
       <van-nav-bar
-        title="帮助中心"
+        title="Trung Tâm Trợ Giúp"
         left-arrow
         @click-left="onClickLeft"
         :border="false"
@@ -17,7 +17,7 @@
           <input 
             v-model="searchValue" 
             type="text" 
-            placeholder="搜索问题..." 
+            placeholder="Tìm kiếm câu hỏi..."
             class="search-input"
           />
         </div>
@@ -50,7 +50,7 @@
             
             <van-empty 
               v-if="filteredItems.length === 0" 
-              description="未找到相关问题"
+              description="Không tìm thấy câu hỏi liên quan"
               image="search"
             />
           </div>
@@ -68,7 +68,7 @@
         <div class="service-icon-circle">
           <van-icon name="service" />
         </div>
-        <span class="service-text">联系客服</span>
+        <span class="service-text">Liên hệ CSKH</span>
       </div>
     </transition>
   </div>
@@ -86,21 +86,21 @@ const searchValue = ref('');
 const showFloatingBtn = ref(true);
 
 const tabs = [
-  { key: 'all', title: '全部' },
-  { key: 'newbie', title: '新手' },
-  { key: 'wallet', title: '充提' },
-  { key: 'account', title: '账户' },
-  { key: 'activity', title: '活动' },
+  { key: 'all', title: 'Tất cả' },
+  { key: 'newbie', title: 'Người mới' },
+  { key: 'wallet', title: 'Nạp/Rút' },
+  { key: 'account', title: 'Tài khoản' },
+  { key: 'activity', title: 'Hoạt động' },
 ];
 
 const allFaqItems = [
-  { id: 1, category: 'newbie', title: '如何注册新账号？', content: '点击首页右下角的"我的"，然后点击"注册"按钮。填写手机号、验证码和设置密码即可完成注册。<br><br><strong>注意：</strong>请确保手机号真实有效。' },
-  { id: 2, category: 'wallet', title: '充值未到账怎么办？', content: '一般情况下充值会在1-5分钟内到账。如果超过10分钟未到账，请保留转账截图，点击下方的"联系客服"按钮进行处理。' },
-  { id: 3, category: 'account', title: '忘记登录密码如何找回？', content: '在登录页面点击"忘记密码"，通过注册时的手机号验证即可重置密码。' },
-  { id: 4, category: 'activity', title: '新用户有什么福利？', content: '新用户注册即送体验金，首充更有高额返利。具体请查看"活动中心"页面。' },
-  { id: 5, category: 'wallet', title: '提现需要手续费吗？', content: '每日首笔提现免手续费，后续提现将收取少量手续费，具体费率以提现页面显示为准。' },
-  { id: 6, category: 'account', title: '如何修改绑定银行卡？', content: '进入"我的" -> "账户安全" -> "银行卡管理"，可以添加或解绑银行卡。为了资金安全，解绑需要验证支付密码。' },
-  { id: 7, category: 'newbie', title: 'APP下载安装教程', content: '安卓用户请直接下载APK安装包；iOS用户请下载描述文件并信任企业证书。' },
+  { id: 1, category: 'newbie', title: 'Làm thế nào để đăng ký tài khoản mới?', content: 'Nhấn vào "Của tôi" ở góc dưới bên phải trang chủ, sau đó nhấn nút "Đăng ký". Điền số điện thoại, mã xác thực và đặt mật khẩu để hoàn tất đăng ký.<br><br><strong>Lưu ý:</strong> Vui lòng đảm bảo số điện thoại thật và hợp lệ.' },
+  { id: 2, category: 'wallet', title: 'Nạp tiền chưa vào tài khoản phải làm sao?', content: 'Thông thường nạp tiền sẽ vào tài khoản trong 1-5 phút. Nếu quá 10 phút chưa vào, vui lòng giữ ảnh chụp màn hình chuyển khoản và nhấn nút "Liên hệ CSKH" bên dưới để xử lý.' },
+  { id: 3, category: 'account', title: 'Quên mật khẩu đăng nhập phải làm sao?', content: 'Tại trang đăng nhập nhấn "Quên mật khẩu", xác thực qua số điện thoại đã đăng ký để đặt lại mật khẩu.' },
+  { id: 4, category: 'activity', title: 'Người dùng mới có ưu đãi gì?', content: 'Người dùng mới đăng ký nhận ngay tiền trải nghiệm, nạp lần đầu còn có hoàn trả cao. Chi tiết xem tại trang "Trung tâm hoạt động".' },
+  { id: 5, category: 'wallet', title: 'Rút tiền có mất phí không?', content: 'Lần rút đầu tiên mỗi ngày miễn phí, các lần rút sau sẽ thu phí nhỏ, mức phí cụ thể theo hiển thị tại trang rút tiền.' },
+  { id: 6, category: 'account', title: 'Làm thế nào để sửa thẻ ngân hàng đã liên kết?', content: 'Vào "Của tôi" -> "Bảo mật tài khoản" -> "Quản lý thẻ ngân hàng", có thể thêm hoặc gỡ liên kết thẻ. Để bảo mật tiền, gỡ liên kết cần xác thực mật khẩu thanh toán.' },
+  { id: 7, category: 'newbie', title: 'Hướng dẫn tải và cài đặt APP', content: 'Người dùng Android vui lòng tải trực tiếp file APK; người dùng iOS vui lòng tải file mô tả và tin tưởng chứng chỉ doanh nghiệp.' },
 ];
 
 const filteredItems = computed(() => {

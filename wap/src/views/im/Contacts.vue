@@ -1,7 +1,7 @@
 <template>
   <div class="contacts-page">
     <van-nav-bar
-      title="通讯录"
+      title="Danh bạ"
     >
       <template #right>
         <van-icon name="add-o" size="18" style="margin-right: 16px" @click="router.push('/im/add-friend')" />
@@ -12,7 +12,7 @@
     <van-search
       v-if="showSearch"
       v-model="searchKeyword"
-      placeholder="搜索联系人"
+      placeholder="Tìm liên hệ"
       show-action
       @cancel="showSearch = false; searchKeyword = ''"
     />
@@ -20,7 +20,7 @@
     <van-index-bar :index-list="indexList">
       <div class="special-items">
         <van-cell
-          title="新朋友"
+          title="Bạn mới"
           is-link
           to="/im/friend-requests"
           class="special-cell"
@@ -35,7 +35,7 @@
           </template>
         </van-cell>
         <van-cell
-          title="群聊"
+          title="Nhóm chat"
           is-link
           to="/im/groups"
           class="special-cell"
@@ -46,7 +46,7 @@
             </div>
           </template>
           <template #value>
-            <span class="group-count">{{ groups.length }}个</span>
+            <span class="group-count">{{ groups.length }} nhóm</span>
           </template>
         </van-cell>
       </div>
@@ -82,7 +82,7 @@
 
     <van-empty
       v-if="filteredContacts.length === 0 && !loading"
-      description="暂无联系人"
+      description="Chưa có liên hệ"
       image="search"
     />
 
@@ -175,7 +175,7 @@ async function loadData() {
       friendRequestCount.value = requests.filter(r => r.status === 'pending').length
     }
   } catch (e) {
-    console.error('加载联系人失败:', e)
+    console.error('Tải danh bạ thất bại:', e)
   } finally {
     loading.value = false
   }

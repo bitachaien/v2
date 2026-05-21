@@ -9,7 +9,7 @@
   >
     <div class="view-history">
       <div class="history-header">
-        <div class="history-title">存款记录</div>
+        <div class="history-title">Lịch sử nạp tiền</div>
       </div>
 
       
@@ -127,21 +127,21 @@ const records = ref([])
 const loading = ref(false)
 
 const timeActions = [
-  { name: '今日', value: 'today' },
-  { name: '昨日', value: 'yesterday' },
-  { name: '近7日', value: 'week' },
-  { name: '近30日', value: 'month' },
-  { name: '全部', value: 'all' }
+  { name: 'Hôm nay', value: 'today' },
+  { name: 'Hôm qua', value: 'yesterday' },
+  { name: '7 ngày', value: 'week' },
+  { name: '30 ngày', value: 'month' },
+  { name: 'Tất cả', value: 'all' }
 ]
 
 const statusActions = [
-  { name: '全部状态', value: 'all' },
-  { name: '确认中', value: 'confirming' },
-  { name: '等待付款', value: 'pending' },
-  { name: '存款超时', value: 'timeout' },
-  { name: '存款失败', value: 'failed' },
-  { name: '存款取消', value: 'cancelled' },
-  { name: '存款成功', value: 'success' }
+  { name: 'Tất cả', value: 'all' },
+  { name: 'Đang xác nhận', value: 'confirming' },
+  { name: 'Chờ thanh toán', value: 'pending' },
+  { name: 'Quá hạn', value: 'timeout' },
+  { name: 'Thất bại', value: 'failed' },
+  { name: 'Đã hủy', value: 'cancelled' },
+  { name: 'Thành công', value: 'success' }
 ]
 
 const stateToStatus = {
@@ -195,9 +195,9 @@ const onStatusSelect = (action) => {
 const copyText = async (text) => {
   try {
     await navigator.clipboard.writeText(text)
-    showToast('已复制')
+    showToast('Đã sao chép')
   } catch (e) {
-    showToast('复制失败')
+    showToast('Sao chép thất bại')
   }
 }
 
@@ -299,12 +299,12 @@ const getStatusClass = (status) => {
 
 const getStatusText = (status) => {
   const map = {
-    'pending': '等待付款',
-    'confirming': '确认中',
-    'success': '存款成功',
-    'failed': '存款失败',
-    'timeout': '存款超时',
-    'cancelled': '存款取消'
+    'pending': 'Chờ thanh toán',
+    'confirming': 'Đang xác nhận',
+    'success': 'Thành công',
+    'failed': 'Thất bại',
+    'timeout': 'Quá hạn',
+    'cancelled': 'Đã hủy'
   }
   return map[status] || status
 }
@@ -312,9 +312,9 @@ const getStatusText = (status) => {
 const getPayTypeName = (type) => {
   const map = {
     'USDT': 'USDT',
-    'alipay': '支付宝',
-    'weixin': '微信',
-    'linepay': '银行转账'
+    'alipay': 'Alipay',
+    'weixin': 'WeChat',
+    'linepay': 'Chuyển khoản ngân hàng'
   }
   return map[type] || type || 'USDT'
 }

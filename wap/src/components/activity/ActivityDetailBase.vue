@@ -28,7 +28,7 @@ import { useRouter } from 'vue-router'
 defineProps({
   title: {
     type: String,
-    default: '活动详情'
+    default: 'Chi tiết sự kiện'
   }
 })
 

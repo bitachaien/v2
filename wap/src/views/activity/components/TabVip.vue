@@ -1,7 +1,7 @@
 <template>
   <div class="tab-vip">
     <div class="vip-header-card">
-      <div class="current-level-tag" v-if="previewLevel === currentLevel">当前等级</div>
+      <div class="current-level-tag" v-if="previewLevel === currentLevel">Cấp hiện tại</div>
       
       <div class="level-switcher">
         <div class="vip-badge-wrapper">
@@ -16,15 +16,15 @@
       <div class="vip-status">
         <div class="status-text">
           <template v-if="previewLevel === currentLevel">
-            距离 <span class="next-level">VIP{{ currentLevel + 1 }}</span>
+            Cách <span class="next-level">VIP{{ currentLevel + 1 }}</span>
           </template>
           <template v-else>
-            <span class="preview-title">VIP {{ previewLevel }} 详情</span>
+            <span class="preview-title">Chi tiết VIP {{ previewLevel }}</span>
           </template>
         </div>
         <div class="status-sub">
           <template v-if="previewLevel === currentLevel">
-            还需投注 <span class="amount">{{ formatAmount(needBet) }}</span>
+            Còn cần cược <span class="amount">{{ formatAmount(needBet) }}</span>
             <i 
               class="refresh-icon" 
               :class="{ spinning: refreshing }"
@@ -34,19 +34,19 @@
             ></i>
           </template>
           <template v-else>
-            晋级需投注 <span class="amount">{{ formatAmount(getLevelData(previewLevel).upgradeBet) }}</span>
+            Thăng cấp cần cược <span class="amount">{{ formatAmount(getLevelData(previewLevel).upgradeBet) }}</span>
           </template>
         </div>
       </div>
 
       <div class="vip-actions">
-        <button class="vip-claim-btn" :class="canClaim ? 'green' : 'gray'" :disabled="!canClaim" @click="handleClaim" type="button">一键领取</button>
-        <button class="vip-record-btn" type="button" @click="openRecords">领取记录</button>
+        <button class="vip-claim-btn" :class="canClaim ? 'green' : 'gray'" :disabled="!canClaim" @click="handleClaim" type="button">Nhận tất cả</button>
+        <button class="vip-record-btn" type="button" @click="openRecords">Lịch sử nhận</button>
       </div>
     </div>
 
     <div class="vip-table-section">
-      <div class="section-title">VIP等级对照表</div>
+      <div class="section-title">Bảng Đối Chiếu Cấp VIP</div>
       
       <div class="table-body-wrapper">
         <div class="floating-arrow left" v-if="activeTableTab > 0" @click="activeTableTab--">
@@ -64,23 +64,23 @@
         >
           <van-tab v-for="(tab, index) in tableTabs" :key="index" :title="tab">
             <div class="table-header">
-              <div class="col-level">等级</div>
+              <div class="col-level">Cấp</div>
               <template v-if="index === 0">
-                <div class="col-data">每日提现总额<br><span class="sub">上限</span></div>
-                <div class="col-data">每日提现次数<br><span class="sub">上限</span></div>
-                <div class="col-data">每日免手续费<br><span class="sub">笔数</span></div>
+                <div class="col-data">Tổng rút mỗi ngày<br><span class="sub">Tối đa</span></div>
+                <div class="col-data">Số lần rút/ngày<br><span class="sub">Tối đa</span></div>
+                <div class="col-data">Miễn phí rút/ngày<br><span class="sub">Số lần</span></div>
               </template>
               <template v-if="index === 1">
-                <div class="col-data">晋级再投注</div>
-                <div class="col-data">晋级奖金</div>
+                <div class="col-data">Cược thăng cấp</div>
+                <div class="col-data">Thưởng thăng cấp</div>
               </template>
               <template v-if="index === 2">
-                <div class="col-data">当周打码</div>
-                <div class="col-data">周俸禄奖金</div>
+                <div class="col-data">Cược trong tuần</div>
+                <div class="col-data">Lương tuần</div>
               </template>
               <template v-if="index === 3">
-                <div class="col-data">当月打码</div>
-                <div class="col-data">月俸禄奖金</div>
+                <div class="col-data">Cược trong tháng</div>
+                <div class="col-data">Lương tháng</div>
               </template>
             </div>
 
@@ -139,15 +139,15 @@
     </div>
 
      <div class="vip-rules">
-       <div class="rules-title">VIP规则说明</div>
+       <div class="rules-title">Quy Tắc VIP</div>
        <div class="rules-content">
-         <p>1. 晋级标准：满足VIP晋级要求（即充值或有效投注都满足条件），即可晋级相应VIP等级，获得相应晋级奖金，如连续晋级多级，可获得全部等级晋级奖金，奖金实时可领取。</p>
-         <p>2. 周俸禄：每周充值及有效投注满足当前等级周俸禄要求，可获得对应周俸禄奖金，如连续晋级多级，仅可获得当前等级周俸禄奖金，奖金实时可领取。</p>
-         <p>3. 月俸禄：每月充值及有效投注满足当前等级月俸禄要求，可获得对应月俸禄奖金，如连续晋级多级，仅可获得当前等级月俸禄奖金，奖金实时可领取。</p>
-         <p>4. 奖励过期时间：获得的奖金以优惠要求需手动领取</p>
-         <p>5. 稽核说明：VIP所赠送的奖金需1倍流水（即稀核/打码或有效投注）才能提现，打码不限游戏平台</p>
-         <p>6. 活动声明：本活动仅限账号本人进行正常游戏投注，禁止租借账号、无风险投注（如赌大/对刷/低倍刷水）、恶意复制、使用外挂程序、机器人、利用协议、漏洞、接口、群控或其他技术手段参与，一经稽核属实，本平台有权终止会员登陆、暂停会员使用网站以及没收奖金和不当盈利的权利，无需特别通知</p>
-         <p>7. 解释说明：会员领取VIP奖励时，汇旺娱乐将默认会员同意且遵守对应条件等相关规定，为避免文字理解歧义，本平台保有本活动最终解释权。</p>
+         <p>1. Tiêu chuẩn thăng cấp: Đáp ứng yêu cầu thăng cấp VIP (nạp tiền hoặc cược hợp lệ đủ điều kiện), sẽ thăng cấp VIP tương ứng và nhận thưởng thăng cấp. Nếu thăng nhiều cấp liên tiếp, nhận được tất cả thưởng thăng cấp, có thể nhận ngay.</p>
+         <p>2. Lương tuần: Mỗi tuần nạp tiền và cược hợp lệ đủ yêu cầu lương tuần cấp hiện tại, nhận được thưởng lương tuần tương ứng. Nếu thăng nhiều cấp liên tiếp, chỉ nhận lương tuần cấp hiện tại, có thể nhận ngay.</p>
+         <p>3. Lương tháng: Mỗi tháng nạp tiền và cược hợp lệ đủ yêu cầu lương tháng cấp hiện tại, nhận được thưởng lương tháng tương ứng. Nếu thăng nhiều cấp liên tiếp, chỉ nhận lương tháng cấp hiện tại, có thể nhận ngay.</p>
+         <p>4. Thời hạn thưởng: Thưởng nhận được cần nhận thủ công theo yêu cầu ưu đãi</p>
+         <p>5. Yêu cầu vòng cược: Thưởng VIP cần 1x vòng cược (tức cược hợp lệ) mới rút được, không giới hạn nền tảng game</p>
+         <p>6. Tuyên bố hoạt động: Hoạt động này chỉ dành cho chủ tài khoản chơi game bình thường, cấm cho thuê tài khoản, cược không rủi ro (như cược 2 bên/đối xung/cược thấp), sao chép ác ý, sử dụng cheat, bot, lợi dụng giao thức, lỗ hổng, giao diện, điều khiển nhóm hoặc các thủ đoạn kỹ thuật khác. Nếu phát hiện, nền tảng có quyền chấm dứt đăng nhập, tạm ngừng sử dụng website và tịch thu thưởng cùng lợi nhuận bất hợp pháp mà không cần thông báo</p>
+         <p>7. Giải thích: Khi nhận thưởng VIP, nền tảng mặc định thành viên đồng ý và tuân thủ các điều kiện liên quan. Để tránh hiểu nhầm, nền tảng giữ quyền giải thích cuối cùng hoạt động này.</p>
        </div>
      </div>
   </div>
@@ -171,7 +171,7 @@ const progress = ref(0)
 const loading = ref(true)
 const refreshing = ref(false)
 
-const tableTabs = ['VIP特权', '晋级奖金', '周俸禄', '月俸禄']
+const tableTabs = ['Đặc quyền VIP', 'Thưởng thăng cấp', 'Lương tuần', 'Lương tháng']
 const activeTableTab = ref(1)
 
 const vipLevels = ref([])
@@ -186,8 +186,8 @@ const fetchLevelConfigs = async () => {
         level: index + 1,
         levelId: item.levelId,
         levelName: item.levelName,
-        withdrawLimit: item.withdrawLimit > 0 ? formatAmount(item.withdrawLimit) : '不限制',
-        withdrawTimes: item.withdrawTimes > 0 ? item.withdrawTimes + '次' : '不限制',
+        withdrawLimit: item.withdrawLimit > 0 ? formatAmount(item.withdrawLimit) : 'Không giới hạn',
+        withdrawTimes: item.withdrawTimes > 0 ? item.withdrawTimes + ' lần' : 'Không giới hạn',
         withdrawFree: item.freeWithdrawTimes || 0,
         upgradeBet: item.cumulativeRequired || 0,
         upgradeBonus: item.rewardAmount || 0,
@@ -224,19 +224,19 @@ const fetchRewardInfo = async () => {
 
 const handleClaim = async () => {
   if (!canClaim.value) return
-  const toast = showLoadingToast({ message: '领取中...', forbidClick: true, duration: 0 })
+  const toast = showLoadingToast({ message: 'Đang nhận...', forbidClick: true, duration: 0 })
   try {
     const res = await vipApi.claimReward()
     toast.close()
     if (isApiSuccess(res)) {
-      showSuccessToast(`领取成功！${res.data?.amount || 0}`)
+      showSuccessToast(`Nhận thành công! ${res.data?.amount || 0}`)
       fetchRewardInfo()
     } else {
-      showToast(res?.msg || res?.message || '领取失败')
+      showToast(res?.msg || res?.message || 'Nhận thất bại')
     }
   } catch (e) {
     toast.close()
-    showToast('网络错误')
+    showToast('Lỗi mạng')
   }
 }
 
@@ -251,12 +251,12 @@ const getLevelData = (level) => {
 const handleRefresh = async () => {
   if (refreshing.value) return
   refreshing.value = true
-  showToast({ message: '刷新中...', duration: 800 })
+  showToast({ message: 'Đang làm mới...', duration: 800 })
   try {
     await fetchRewardInfo()
-    showSuccessToast('刷新成功')
+    showSuccessToast('Làm mới thành công')
   } catch (e) {
-    showToast('刷新失败')
+    showToast('Làm mới thất bại')
   } finally {
     setTimeout(() => { refreshing.value = false }, 600)
   }

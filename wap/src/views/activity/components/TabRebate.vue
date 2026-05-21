@@ -1,7 +1,7 @@
 <template>
   <div class="tab-rebate">
     <div class="rebate-header">
-      <span class="label">今日可领取</span>
+      <span class="label">Hôm nay có thể nhận</span>
       <span class="amount">{{ totalClaimable.toFixed(2) }}</span>
     </div>
 
@@ -23,14 +23,14 @@
           
           <div class="sidebar-footer-inline">
             <div class="sidebar-btn primary" @click="claimAll">
-              <span class="btn-text">一键领取</span>
+              <span class="btn-text">Nhận tất cả</span>
             </div>
             <div class="sidebar-btn" @click="goToRecord">
-              <span class="btn-text">领取记录</span>
+              <span class="btn-text">Lịch sử nhận</span>
             </div>
             <div class="sidebar-btn outline" @click="refreshData">
               <van-icon name="replay" :class="{ spinning: isRefreshing }" />
-              <span class="btn-text">刷新奖励</span>
+              <span class="btn-text">Làm mới thưởng</span>
             </div>
           </div>
         </div>
@@ -47,22 +47,22 @@
             <div class="vendor-top-row">
               <img :src="vendor.logo" :alt="vendor.name" class="vendor-logo" />
               <div class="bet-row">
-                <span class="label">有效投注</span>
+                <span class="label">Cược hợp lệ</span>
                 <span class="value">{{ vendor.validBet.toFixed(2) }}</span>
               </div>
             </div>
             <div class="progress-bar">
               <div class="progress-fill" :style="{ width: vendor.progress + '%' }"></div>
-              <span class="progress-text">再投注{{ vendor.nextTarget }}{{ vendor.nextRate }}</span>
+              <span class="progress-text">Cược thêm {{ vendor.nextTarget }}{{ vendor.nextRate }}</span>
             </div>
           </div>
           <div class="vendor-right">
             <div class="rate-row">
-              <span class="label">返水比例</span>
+              <span class="label">Tỷ lệ hoàn trả</span>
               <span class="value">{{ vendor.rate }}</span>
             </div>
             <div class="claim-row">
-              <span class="label">可领取</span>
+              <span class="label">Có thể nhận</span>
               <span class="value highlight">{{ vendor.claimable.toFixed(2) }}</span>
             </div>
           </div>
@@ -148,10 +148,10 @@ const fetchRebateData = async () => {
 
 const claimAll = async () => {
   if (totalClaimable.value <= 0) {
-    showToast('暂无可领取的返水')
+    showToast('Chưa có hoàn trả để nhận')
     return
   }
-  showLoadingToast({ message: '领取中...', forbidClick: true })
+  showLoadingToast({ message: 'Đang nhận...', forbidClick: true })
   try {
     const res = await request.post('/v1/activity/claim-vendor-rebate', {
       claim_all: true
@@ -161,29 +161,29 @@ const claimAll = async () => {
     if (res.code === 0) {
       const claimed = res.data?.totalClaimed || 0
       showDialog({
-        title: '领取成功',
-        message: `成功领取 ${claimed.toFixed(2)} 元返水！`
+        title: 'Nhận thành công',
+        message: `Đã nhận ${claimed.toFixed(2)} hoàn trả!`
       })
       await fetchRebateData()
     } else {
-      showToast(res.message || '领取失败')
+      showToast(res.message || 'Nhận thất bại')
     }
   } catch (e) {
     closeToast()
-    showToast('网络错误，请重试')
+    showToast('Lỗi mạng, vui lòng thử lại')
   }
 }
 
 const claimVendorRebate = async (vendor) => {
   if (vendor.claimable <= 0 || vendor.claimed) {
-    showToast('暂无可领取的返水')
+    showToast('Chưa có hoàn trả để nhận')
     return
   }
   
   const currentCategory = categories.value[activeCategoryIndex.value]
   if (!currentCategory) return
   
-  showLoadingToast({ message: '领取中...', forbidClick: true })
+  showLoadingToast({ message: 'Đang nhận...', forbidClick: true })
   try {
     const res = await request.post('/api/v1/activity/claim-vendor-rebate', {
       category_code: currentCategory.code,
@@ -193,14 +193,14 @@ const claimVendorRebate = async (vendor) => {
     
     if (res.code === 0) {
       const claimed = res.data?.totalClaimed || vendor.claimable
-      showToast(`领取成功 ${claimed.toFixed(2)} 元`)
+      showToast(`Nhận thành công ${claimed.toFixed(2)}`)
       await fetchRebateData()
     } else {
-      showToast(res.message || '领取失败')
+      showToast(res.message || 'Nhận thất bại')
     }
   } catch (e) {
     closeToast()
-    showToast('网络错误，请重试')
+    showToast('Lỗi mạng, vui lòng thử lại')
   }
 }
 
@@ -214,9 +214,9 @@ const refreshData = async () => {
   
   try {
     await fetchRebateData()
-    showToast({ message: '刷新成功', position: 'middle' })
+    showToast({ message: 'Làm mới thành công', position: 'middle' })
   } catch (e) {
-    showToast('刷新失败')
+    showToast('Làm mới thất bại')
   } finally {
     isRefreshing.value = false
   }

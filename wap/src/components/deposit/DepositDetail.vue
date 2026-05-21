@@ -11,7 +11,7 @@
         <div class="header-left" @click="visible = false">
           <van-icon name="arrow-left" size="20" />
         </div>
-        <div class="header-title">存款详情</div>
+        <div class="header-title">Chi tiết nạp tiền</div>
         <div class="header-right">
           <img src="/assets/img/style_3_icon_top_kf.svg" class="header-icon" @click="toService" />
         </div>
@@ -37,26 +37,26 @@
 
         <div class="detail-info-list">
           <div class="info-row">
-            <span class="info-label">交易类型</span>
-            <span class="info-value">充值</span>
+            <span class="info-label">Loại giao dịch</span>
+            <span class="info-value">Nạp tiền</span>
           </div>
           <div class="info-row">
-            <span class="info-label">存款方式</span>
+            <span class="info-label">Phương thức</span>
             <span class="info-value">
               <div class="usdt-icon-tiny">₮</div>
               USDT
             </span>
           </div>
           <div class="info-row">
-            <span class="info-label">存款通道</span>
+            <span class="info-label">Kênh nạp</span>
             <span class="info-value">USDT—{{ record.chain || 'TRC-20' }}</span>
           </div>
           <div class="info-row">
-            <span class="info-label">创建时间</span>
+            <span class="info-label">Thời gian tạo</span>
             <span class="info-value">{{ record.createTime }}</span>
           </div>
           <div class="info-row">
-            <span class="info-label">订单号码</span>
+            <span class="info-label">Mã đơn hàng</span>
             <span class="info-value order-no">
               {{ record.orderNo }}
               <van-icon name="description-o" class="copy-icon-small" @click="copyOrderNo" />
@@ -66,7 +66,7 @@
       </div>
 
       <div class="detail-footer" v-if="record && (record.status === 'pending' || record.status === 'confirming')">
-        <div class="continue-btn" @click="$emit('continue-pay', record)">继续支付</div>
+        <div class="continue-btn" @click="$emit('continue-pay', record)">Tiếp tục thanh toán</div>
       </div>
     </div>
   </van-popup>
@@ -106,12 +106,12 @@ const getStatusClass = (status) => {
 
 const getStatusText = (status) => {
   const map = {
-    'pending': '等待付款',
-    'confirming': '确认中',
-    'success': '存款成功',
-    'failed': '存款失败',
-    'timeout': '存款超时',
-    'cancelled': '存款取消'
+    'pending': 'Chờ thanh toán',
+    'confirming': 'Đang xác nhận',
+    'success': 'Thành công',
+    'failed': 'Thất bại',
+    'timeout': 'Quá hạn',
+    'cancelled': 'Đã hủy'
   }
   return map[status] || status
 }
@@ -132,9 +132,9 @@ const copyAmount = async () => {
   if (props.record) {
     try {
       await navigator.clipboard.writeText(String(props.record.amount))
-      showToast('金额已复制')
+      showToast('Đã sao chép số tiền')
     } catch (e) {
-      showToast('复制失败')
+      showToast('Sao chép thất bại')
     }
   }
 }
@@ -143,9 +143,9 @@ const copyOrderNo = async () => {
   if (props.record) {
     try {
       await navigator.clipboard.writeText(props.record.orderNo)
-      showToast('订单号已复制')
+      showToast('Đã sao chép mã đơn')
     } catch (e) {
-      showToast('复制失败')
+      showToast('Sao chép thất bại')
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <ActivityDetailBase title="每日反水">
+  <ActivityDetailBase title="Hoàn trả hàng ngày">
     <template #banner>
       <div class="banner-area">
         <div class="glass-card stats-card">
@@ -7,7 +7,7 @@
             <i class="iconfont icon-fanshui"></i>
           </div>
           <div class="stats-info">
-            <div class="label">当前可领返水</div>
+            <div class="label">Hoàn trả hiện có thể nhận</div>
             <div class="value">{{ jljine }}</div>
           </div>
           <van-button 
@@ -16,7 +16,7 @@
             :loading="loading"
             @click="claimFanshui"
           >
-            立即领取
+            Nhận ngay
           </van-button>
         </div>
       </div>
@@ -24,17 +24,17 @@
 
     <div class="glass-card list-card" v-if="lqlist.length > 0">
       <div class="card-header">
-        <span class="title">领取记录</span>
+        <span class="title">Lịch sử nhận</span>
       </div>
       <div class="table-responsive">
         <table class="cyber-table">
           <thead>
             <tr>
-              <th>时间</th>
-              <th>投注额</th>
-              <th>比例</th>
-              <th>金额</th>
-              <th>状态</th>
+              <th>Thời gian</th>
+              <th>Cược</th>
+              <th>Tỷ lệ</th>
+              <th>Số tiền</th>
+              <th>Trạng thái</th>
             </tr>
           </thead>
           <tbody>
@@ -44,8 +44,8 @@
               <td>{{ item.bili }}</td>
               <td class="gold">{{ item.amount }}</td>
               <td>
-                <span v-if="item.shenhe === 0" class="status-audit">审核中</span>
-                <span v-else class="status-pass">通过</span>
+                <span v-if="item.shenhe === 0" class="status-audit">Đang duyệt</span>
+                <span v-else class="status-pass">Đã duyệt</span>
               </td>
             </tr>
           </tbody>
@@ -54,15 +54,15 @@
     </div>
     
     <div v-else class="empty-state">
-      <van-empty description="暂无反水记录" />
+      <van-empty description="Chưa có lịch sử hoàn trả" />
     </div>
 
     <div class="rules-section">
-      <div class="rule-title">活动说明</div>
+      <div class="rule-title">Hướng dẫn hoạt động</div>
       <ul class="rule-list">
-        <li>每天限领取一次反水佣金。</li>
-        <li>反水金额根据您的有效投注额和会员等级计算。</li>
-        <li>领取后系统将自动审核，审核通过后即刻到账。</li>
+        <li>Mỗi ngày chỉ được nhận hoàn trả một lần.</li>
+        <li>Số tiền hoàn trả được tính dựa trên cược hợp lệ và cấp VIP của bạn.</li>
+        <li>Sau khi nhận, hệ thống sẽ tự động duyệt và tiền sẽ vào tài khoản ngay lập tức.</li>
       </ul>
     </div>
 
@@ -112,7 +112,7 @@ const fetchRebateInfo = async () => {
       canClaim.value = jljine.value > 0
     }
   } catch (err) {
-    console.error('获取反水信息失败:', err)
+    console.error('Lấy thông tin hoàn trả thất bại:', err)
 
     try {
       const res = await request.get('/api/v1/activity/daily-reward')
@@ -124,7 +124,7 @@ const fetchRebateInfo = async () => {
         canClaim.value = res.data.canClaim || false
       }
     } catch (e) {
-      console.error('降级获取反水信息失败:', e)
+      console.error('Lấy thông tin hoàn trả dự phòng thất bại:', e)
     }
   } finally {
     loading.value = false
@@ -140,27 +140,27 @@ const fetchRebateRecords = async () => {
       lqlist.value = res.data.list || []
     }
   } catch (err) {
-    console.error('获取反水记录失败:', err)
+    console.error('Lấy lịch sử hoàn trả thất bại:', err)
     lqlist.value = []
   }
 }
 
 const claimFanshui = async () => {
   if (!canClaim.value || jljine.value <= 0) {
-    showToast('暂无可领取的反水')
+    showToast('Chưa có hoàn trả để nhận')
     return
   }
   
   try {
-    showToast({ type: 'loading', message: '领取中...', forbidClick: true })
+    showToast({ type: 'loading', message: 'Đang nhận...', forbidClick: true })
     
 
     const res = await request.post('/api/v1/rebate/claim', { type: 1 })
     
     if (res.code === 0) {
-      showDialog({ 
-        title: '领取成功', 
-        message: `成功领取 ${res.data?.amount || jljine.value} 元！` 
+      showDialog({
+        title: 'Nhận thành công',
+        message: `Đã nhận thành công ${res.data?.amount || jljine.value} VNĐ!`
       })
       jljine.value = 0
       canClaim.value = false
@@ -168,11 +168,11 @@ const claimFanshui = async () => {
       await fetchRebateInfo()
       await fetchRebateRecords()
     } else {
-      showToast(res.message || '领取失败')
+      showToast(res.message || 'Nhận thất bại')
     }
 
   } catch (err) {
-    showToast('网络错误，请重试')
+    showToast('Lỗi mạng, vui lòng thử lại')
   }
 }
 

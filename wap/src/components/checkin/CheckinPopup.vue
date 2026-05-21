@@ -10,22 +10,22 @@
       <div class="progress-info">
         <div class="info-left">
           <div class="info-row">
-            <span class="label">已连续签到</span>
-            <span class="value">{{ consecutiveDays }} 天</span>
+            <span class="label">Đã điểm danh liên tục</span>
+            <span class="value">{{ consecutiveDays }} ngày</span>
           </div>
           <div class="info-row">
-            <span class="label">所需充值</span>
+            <span class="label">Yêu cầu nạp</span>
             <span class="value"><span class="red">{{ todayDeposit }}</span>/<span class="black">{{ requiredDeposit }}</span></span>
           </div>
         </div>
         <div class="info-right">
           <div class="info-row">
-            <span class="label">已领取</span>
+            <span class="label">Đã nhận</span>
             <span class="value gold">{{ totalClaimed }}</span>
             <van-icon name="replay" class="refresh-icon" @click="refreshData" :class="{ spinning: refreshing }" />
           </div>
           <div class="info-row">
-            <span class="label">所需投注</span>
+            <span class="label">Yêu cầu cược</span>
             <span class="value"><span class="red">{{ todayBet }}</span>/<span class="black">{{ requiredBet }}</span></span>
           </div>
         </div>
@@ -44,7 +44,7 @@
           }"
         >
           
-          <div class="extra-badge" v-if="day.isExtra">额外奖励</div>
+          <div class="extra-badge" v-if="day.isExtra">Thưởng thêm</div>
           
           
           <div class="reward-icon">
@@ -59,7 +59,7 @@
           
           
           <div class="day-label" v-if="!day.canClaim || day.claimed">
-            第{{ index + 1 }}天
+            Ngày {{ index + 1 }}
           </div>
           <van-button 
             v-else
@@ -69,7 +69,7 @@
             :loading="claiming === index"
             @click="handleClaim(index)"
           >
-            签 到
+            Điểm danh
           </van-button>
         </div>
       </div>
@@ -77,7 +77,7 @@
       
       <div class="section-block">
         <div class="section-title">
-          <span class="title-text">活动时间 (UTC+8)</span>
+          <span class="title-text">Thời gian sự kiện (UTC+8)</span>
         </div>
         <div class="section-content time-content">
           {{ activityTime }}
@@ -87,7 +87,7 @@
       
       <div class="section-block">
         <div class="section-title">
-          <span class="title-text">活动说明</span>
+          <span class="title-text">Hướng dẫn</span>
         </div>
         <div class="section-content rules-content">
           <div class="rules-text" v-html="activityRules"></div>
@@ -126,7 +126,7 @@ const refreshing = ref(false)
 const claiming = ref(-1)
 const loading = ref(false)
 
-const activityTitle = ref('连续签到')
+const activityTitle = ref('Điểm danh liên tục')
 const consecutiveDays = ref(0)
 const totalClaimed = ref('0.00')
 const todayDeposit = ref(0)
@@ -157,7 +157,7 @@ const loadData = async () => {
       const data = res.data
       
 
-      activityTitle.value = data.title || '连续签到'
+      activityTitle.value = data.title || 'Điểm danh liên tục'
       activityTime.value = `${data.startDate || ''} - ${data.endDate || ''}`
       activityRules.value = data.content || data.desc || ''
       
@@ -193,7 +193,7 @@ const loadData = async () => {
       todayBet.value = data.todayBet || 0
     }
   } catch (error) {
-    console.error('加载签到数据失败:', error)
+    console.error('Tải dữ liệu điểm danh thất bại:', error)
   } finally {
     loading.value = false
   }
@@ -204,7 +204,7 @@ const refreshData = async () => {
   refreshing.value = true
   try {
     await loadData()
-    showToast({ message: '刷新成功', position: 'middle' })
+    showToast({ message: 'Làm mới thành công', position: 'middle' })
   } finally {
     setTimeout(() => {
       refreshing.value = false
@@ -215,11 +215,11 @@ const refreshData = async () => {
 const handleClaim = async (index) => {
 
   if (todayDeposit.value < requiredDeposit.value) {
-    showToast({ message: `今日充值需达到${requiredDeposit.value}元`, position: 'middle' })
+    showToast({ message: `Hôm nay cần nạp đủ ${requiredDeposit.value} đ`, position: 'middle' })
     return
   }
   if (todayBet.value < requiredBet.value) {
-    showToast({ message: `今日投注需达到${requiredBet.value}元`, position: 'middle' })
+    showToast({ message: `Hôm nay cần cược đủ ${requiredBet.value} đ`, position: 'middle' })
     return
   }
 
@@ -240,13 +240,13 @@ const handleClaim = async (index) => {
       days.value[index + 1].canClaim = true
     }
     
-    showToast({ 
-      message: `签到成功！获得 ${days.value[index].amount.toFixed(2)} 元`, 
+    showToast({
+      message: `Điểm danh thành công! Nhận ${days.value[index].amount.toFixed(2)} đ`,
       icon: 'success',
-      position: 'middle' 
+      position: 'middle'
     })
   } catch (error) {
-    showToast({ message: '签到失败，请重试', position: 'middle' })
+    showToast({ message: 'Điểm danh thất bại, vui lòng thử lại', position: 'middle' })
   } finally {
     claiming.value = -1
   }

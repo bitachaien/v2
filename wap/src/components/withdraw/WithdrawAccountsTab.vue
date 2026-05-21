@@ -3,7 +3,7 @@
     <div class="bound-card" v-if="savedAccounts.length > 0">
       <div class="account-header">
         <div class="header-left">
-          收款账户 ({{ savedAccounts.length }}/4) 
+          Tài khoản nhận ({{ savedAccounts.length }}/4)
           <img src="/assets/img/comm_icon_retry.svg" class="refresh-icon-green" :class="{ spinning: isRefreshing }" @click="handleRefresh" />
         </div>
         <img :src="showAccountNumbers ? '/assets/img/comm_icon_show.svg' : '/assets/img/comm_icon_hide.svg'" class="toggle-eye" :class="{ active: showAccountNumbers }" @click="showAccountNumbers = !showAccountNumbers" />
@@ -22,7 +22,7 @@
           <img v-else-if="acc.type === 'alipay'" src="/assets/img/zfb.svg" class="acc-type-icon" />
           <img v-else-if="acc.type === 'wechat'" src="/assets/img/wx.svg" class="acc-type-icon" />
           <div v-else class="acc-icon-wrapper" :class="getAccountIconClass(acc.type)">
-            <span v-if="acc.type === 'huiwang'" class="icon-text">汇旺</span>
+            <span v-if="acc.type === 'huiwang'" class="icon-text">Huiwang</span>
           </div>
           <div class="acc-info">
             <div class="acc-name">
@@ -39,8 +39,8 @@
             </div>
           </div>
           <div class="acc-action">
-            <span v-if="acc.isDefault" class="default-text">默认</span>
-            <span v-else class="set-default-btn" @click.stop="setDefaultAccount(acc)">设为默认</span>
+            <span v-if="acc.isDefault" class="default-text">Mặc định</span>
+            <span v-else class="set-default-btn" @click.stop="setDefaultAccount(acc)">Đặt mặc định</span>
           </div>
           <div v-if="acc.isDefault" class="corner-icon-wrapper">
             <img src="/assets/img/comm_img_corner.svg" class="corner-bg" />
@@ -52,7 +52,7 @@
 
     <div class="account-header empty-header" v-else>
        <div class="header-left">
-          收款账户 (0/4) 
+          Tài khoản nhận (0/4)
           <img src="/assets/img/comm_icon_retry.svg" class="refresh-icon-green" :class="{ spinning: isRefreshing }" @click="handleRefresh" />
         </div>
     </div>
@@ -64,31 +64,31 @@
           <div class="opt-info">
             <div class="opt-name">数字货币(USDT)</div>
           </div>
-          <div class="opt-add-btn">添加 <van-icon name="arrow" /></div>
+          <div class="opt-add-btn">Thêm <van-icon name="arrow" /></div>
         </div>
 
         <div class="account-option-item" v-if="!hasAccountType('bank')" @click="$emit('add-bank')">
           <img src="/assets/img/yhk.svg" class="opt-type-icon" />
           <div class="opt-info">
-            <div class="opt-name">银行卡</div>
+            <div class="opt-name">Thẻ ngân hàng</div>
           </div>
-          <div class="opt-add-btn">添加 <van-icon name="arrow" /></div>
+          <div class="opt-add-btn">Thêm <van-icon name="arrow" /></div>
         </div>
 
         <div class="account-option-item" v-if="!hasAccountType('alipay')" @click="$emit('add-alipay')">
           <img src="/assets/img/zfb.svg" class="opt-type-icon" />
           <div class="opt-info">
-            <div class="opt-name">支付宝</div>
+            <div class="opt-name">Alipay</div>
           </div>
-          <div class="opt-add-btn">添加 <van-icon name="arrow" /></div>
+          <div class="opt-add-btn">Thêm <van-icon name="arrow" /></div>
         </div>
 
         <div class="account-option-item" v-if="!hasAccountType('wechat')" @click="$emit('add-wechat')">
           <img src="/assets/img/wx.svg" class="opt-type-icon" />
           <div class="opt-info">
-            <div class="opt-name">微信</div>
+            <div class="opt-name">WeChat</div>
           </div>
-          <div class="opt-add-btn">添加 <van-icon name="arrow" /></div>
+          <div class="opt-add-btn">Thêm <van-icon name="arrow" /></div>
         </div>
       </div>
     </div>

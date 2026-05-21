@@ -16,18 +16,18 @@
           v-if="!isFirstSet"
           v-model="form.oldPassword"
           type="password"
-          label="原密码"
-          placeholder="请输入原密码"
+          label="Mật khẩu cũ"
+          placeholder="Vui lòng nhập mật khẩu cũ"
           required
-          :rules="[{ required: true, message: '请输入原密码' }]"
+          :rules="[{ required: true, message: 'Vui lòng nhập mật khẩu cũ' }]"
         />
 
         
         <van-field
           v-model="form.newPassword"
           type="password"
-          :label="isFirstSet ? '设置密码' : '新密码'"
-          :placeholder="isFirstSet ? '请设置密码' : '请输入新密码'"
+          :label="isFirstSet ? 'Đặt mật khẩu' : 'Mật khẩu mới'"
+          :placeholder="isFirstSet ? 'Vui lòng đặt mật khẩu' : 'Vui lòng nhập mật khẩu mới'"
           required
           :rules="passwordRules"
         />
@@ -36,30 +36,30 @@
         <van-field
           v-model="form.confirmPassword"
           type="password"
-          label="确认密码"
-          placeholder="请再次输入密码"
+          label="Xác nhận mật khẩu"
+          placeholder="Vui lòng nhập lại mật khẩu"
           required
           :rules="[
-            { required: true, message: '请再次输入密码' },
-            { validator: validateConfirm, message: '两次密码不一致' }
+            { required: true, message: 'Vui lòng nhập lại mật khẩu' },
+            { validator: validateConfirm, message: 'Hai mật khẩu không khớp' }
           ]"
         />
 
         
         <div class="tips">
-          <div class="tips-title">密码规则：</div>
+          <div class="tips-title">Quy tắc mật khẩu:</div>
           <div class="tips-item" v-if="type === 'login'">
-            • 长度6-20位，支持字母、数字、特殊字符
+            • Độ dài 6-20 ký tự, hỗ trợ chữ cái, số, ký tự đặc biệt
           </div>
           <div class="tips-item" v-else>
-            • 6位纯数字
+            • 6 chữ số
           </div>
         </div>
 
         
         <div class="submit-button">
           <van-button block type="primary" native-type="submit">
-            {{ isFirstSet ? '确认设置' : '确认修改' }}
+            {{ isFirstSet ? 'Xác nhận đặt' : 'Xác nhận thay đổi' }}
           </van-button>
         </div>
       </van-form>
@@ -88,21 +88,21 @@ const form = ref({
 
 const pageTitle = computed(() => {
   if (isFirstSet.value) {
-    return type.value === 'login' ? '设置登录密码' : '设置资金密码'
+    return type.value === 'login' ? 'Đặt mật khẩu đăng nhập' : 'Đặt mật khẩu rút tiền'
   }
-  return type.value === 'login' ? '修改登录密码' : '修改资金密码'
+  return type.value === 'login' ? 'Đổi mật khẩu đăng nhập' : 'Đổi mật khẩu rút tiền'
 })
 
 const passwordRules = computed(() => {
   if (type.value === 'login') {
     return [
-      { required: true, message: '请输入密码' },
-      { pattern: /^.{6,20}$/, message: '密码长度为6-20位' }
+      { required: true, message: 'Vui lòng nhập mật khẩu' },
+      { pattern: /^.{6,20}$/, message: 'Độ dài mật khẩu từ 6-20 ký tự' }
     ]
   } else {
     return [
-      { required: true, message: '请输入密码' },
-      { pattern: /^\d{6}$/, message: '资金密码必须为6位数字' }
+      { required: true, message: 'Vui lòng nhập mật khẩu' },
+      { pattern: /^\d{6}$/, message: 'Mật khẩu rút tiền phải là 6 chữ số' }
     ]
   }
 })
@@ -117,7 +117,7 @@ const goBack = () => {
 
 const onSubmit = async () => {
   const toast = showLoadingToast({
-    message: '提交中...',
+    message: 'Đang gửi...',
     forbidClick: true,
     duration: 0
   })
@@ -154,19 +154,19 @@ const onSubmit = async () => {
 
     if (res.code === 0) {
       showToast({
-        message: isFirstSet.value ? '设置成功' : '修改成功',
+        message: isFirstSet.value ? 'Đặt thành công' : 'Thay đổi thành công',
         icon: 'success',
         onClose: () => {
           router.go(-1)
         }
       })
     } else {
-      showToast(res.message || '操作失败')
+      showToast(res.message || 'Thao tác thất bại')
     }
   } catch (error) {
     closeToast()
-    console.error('密码操作失败:', error)
-    showToast('网络错误')
+    console.error('Thao tác mật khẩu thất bại:', error)
+    showToast('Lỗi mạng')
   }
 }
 </script>

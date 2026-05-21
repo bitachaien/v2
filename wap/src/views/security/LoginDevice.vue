@@ -1,7 +1,7 @@
 <template>
   <div class="login-device">
     <van-nav-bar
-      title="登录设备"
+      title="Thiết bị đăng nhập"
       left-arrow
       @click-left="onClickLeft"
       class="custom-nav"
@@ -16,12 +16,12 @@
           <span>ID: {{ userInfo.id }}</span>
           <van-icon name="description" class="copy-icon" @click="copyText(userInfo.id)" />
         </div>
-        <div class="user-account">账号: {{ userInfo.username }}</div>
+        <div class="user-account">Tài khoản: {{ userInfo.username }}</div>
       </div>
     </div>
 
     <div class="auto-logout-setting" @click="showTimeoutPicker = true">
-      <span class="label">自动退出登录<span class="sub-label">(闲置时长)</span></span>
+      <span class="label">Tự động đăng xuất<span class="sub-label">(thời gian rảnh)</span></span>
       <span class="value">{{ timeoutText }} <van-icon name="arrow" /></span>
     </div>
 
@@ -29,53 +29,53 @@
       <div v-for="device in deviceList" :key="device.id" class="device-card">
         <div class="device-header">
           <van-icon :name="device.os_type === 'Windows' ? 'desktop-o' : 'phone-o'" class="device-type-icon" />
-          <span class="device-label">{{ device.is_current ? '当前设备' : '历史设备' }}</span>
+          <span class="device-label">{{ device.is_current ? 'Thiết bị hiện tại' : 'Thiết bị lịch sử' }}</span>
           <van-icon v-if="device.is_current" name="passed" class="check-icon" />
         </div>
 
         <div class="device-info">
           <div class="info-row">
-            <span class="info-label">客户端</span>
+            <span class="info-label">Ứng dụng</span>
             <span class="info-value">{{ device.client_version || 'H5' }}</span>
           </div>
           <div class="info-row">
-            <span class="info-label">浏览器类型</span>
-            <span class="info-value">{{ device.browser_type || '未知' }}</span>
+            <span class="info-label">Loại trình duyệt</span>
+            <span class="info-value">{{ device.browser_type || 'Không rõ' }}</span>
           </div>
           <div class="info-row">
-            <span class="info-label">操作系统</span>
-            <span class="info-value">{{ device.os_type || '未知' }}</span>
+            <span class="info-label">Hệ điều hành</span>
+            <span class="info-value">{{ device.os_type || 'Không rõ' }}</span>
           </div>
           <div class="info-row">
-            <span class="info-label">系统版本</span>
-            <span class="info-value">{{ device.os_version || '未知' }}</span>
+            <span class="info-label">Phiên bản hệ thống</span>
+            <span class="info-value">{{ device.os_version || 'Không rõ' }}</span>
           </div>
           <div class="info-row">
-            <span class="info-label">设备品牌</span>
-            <span class="info-value">{{ device.device_brand || '未知' }}</span>
+            <span class="info-label">Thương hiệu</span>
+            <span class="info-value">{{ device.device_brand || 'Không rõ' }}</span>
           </div>
           <div class="info-row">
-            <span class="info-label">设备型号</span>
-            <span class="info-value">{{ device.device_model || '未知' }}</span>
+            <span class="info-label">Mẫu thiết bị</span>
+            <span class="info-value">{{ device.device_model || 'Không rõ' }}</span>
           </div>
           <div class="info-row">
-            <span class="info-label">IP地区</span>
-            <span class="info-value ip-value">{{ device.ip_region || device.ip || '未知' }}</span>
+            <span class="info-label">Khu vực IP</span>
+            <span class="info-value ip-value">{{ device.ip_region || device.ip || 'Không rõ' }}</span>
           </div>
           <div class="info-row" v-if="device.last_login_at">
-            <span class="info-label">登录时间</span>
+            <span class="info-label">Thời gian đăng nhập</span>
             <span class="info-value">{{ formatTime(device.last_login_at) }}</span>
           </div>
         </div>
       </div>
 
-      <van-empty v-if="!loading && deviceList.length === 0" description="暂无登录设备" />
+      <van-empty v-if="!loading && deviceList.length === 0" description="Chưa có thiết bị đăng nhập" />
     </div>
 
     <van-action-sheet
       v-model:show="showTimeoutPicker"
       :actions="timeoutOptions"
-      cancel-text="取消"
+      cancel-text="Hủy"
       @select="onSelectTimeout"
     />
   </div>
@@ -96,17 +96,17 @@ const userInfo = ref({ id: '', username: '' })
 const deviceList = ref([])
 
 const timeoutOptions = [
-  { name: '30分钟', value: 0.02 },
-  { name: '1小时', value: 0.04 },
-  { name: '1天', value: 1 },
-  { name: '7天', value: 7 },
-  { name: '30天', value: 30 },
-  { name: '1年', value: 365 }
+  { name: '30 phút', value: 0.02 },
+  { name: '1 giờ', value: 0.04 },
+  { name: '1 ngày', value: 1 },
+  { name: '7 ngày', value: 7 },
+  { name: '30 ngày', value: 30 },
+  { name: '1 năm', value: 365 }
 ]
 
 const timeoutText = computed(() => {
   const opt = timeoutOptions.find(o => o.value === selectedTimeout.value)
-  return opt ? opt.name : '1年'
+  return opt ? opt.name : '1 năm'
 })
 
 const loadUserInfo = () => {
@@ -157,9 +157,9 @@ const onClickLeft = () => router.go(-1)
 const copyText = (text) => {
   if (!text) return
   navigator.clipboard.writeText(String(text)).then(() => {
-    showToast('复制成功')
+    showToast('Sao chép thành công')
   }).catch(() => {
-    showToast('复制失败')
+    showToast('Sao chép thất bại')
   })
 }
 
@@ -168,9 +168,9 @@ const onSelectTimeout = async (action) => {
   showTimeoutPicker.value = false
   try {
     await request.post('/v1/user/settings', { key: 'autoLogoutDays', value: action.value })
-    showToast('设置已保存')
+    showToast('Đã lưu cài đặt')
   } catch (e) {
-    showToast('保存失败')
+    showToast('Lưu thất bại')
   }
 }
 

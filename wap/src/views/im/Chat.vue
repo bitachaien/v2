@@ -4,8 +4,8 @@
       <van-icon name="arrow-left" @click="$router.back()" />
       <div class="header-info">
         <span class="chat-name">{{ chatName }}</span>
-        <span v-if="chatType === 'group'" class="member-count">({{ memberCount }}人)</span>
-        <span v-if="chatType === 'private' && isOnline" class="online-status">在线</span>
+        <span v-if="chatType === 'group'" class="member-count">({{ memberCount }} người)</span>
+        <span v-if="chatType === 'private' && isOnline" class="online-status">Trực tuyến</span>
       </div>
       <van-icon name="ellipsis" @click="showSettings = true" />
     </div>
@@ -17,7 +17,7 @@
       
       <div v-if="hasMore && !initialLoading" class="load-more" @click="loadMore">
         <van-loading v-if="loadingMore" size="20" />
-        <span v-else>加载更多</span>
+        <span v-else>Tải thêm</span>
       </div>
 
       <template v-for="(msg, idx) in messages" :key="msg.id">
@@ -61,7 +61,7 @@
               <template v-else-if="msg.msgType === 6">
                 <div class="redpacket-msg" @click="openRedpacket(msg)">
                   <van-icon name="red-packet" />
-                  <span>{{ msg.content || '恭喜发财' }}</span>
+                  <span>{{ msg.content || 'Chúc mừng phát tài' }}</span>
                 </div>
               </template>
               
@@ -73,7 +73,7 @@
             <div v-if="msg.isSelf" class="msg-status">
               <van-icon v-if="msg.status === 'sending'" name="loading" class="spinning" />
               <van-icon v-else-if="msg.status === 'failed'" name="warning-o" class="failed" @click="resend(msg)" />
-              <span v-else-if="msg.read" class="read-status">已读</span>
+              <span v-else-if="msg.read" class="read-status">Đã đọc</span>
             </div>
           </div>
           
@@ -206,14 +206,14 @@
     <van-action-sheet 
       v-model:show="showSettings" 
       :actions="settingActions"
-      cancel-text="取消"
+      cancel-text="Hủy"
       @select="onSettingSelect"
     />
 
     <van-popup v-model:show="showRedpacket" position="bottom" round :style="{ height: '50%' }">
       <div class="redpacket-form">
         <div class="popup-header">
-          <span>发红包</span>
+          <span>Gửi lì xì</span>
           <van-icon name="cross" @click="showRedpacket = false" />
         </div>
         <van-form @submit="sendRedpacket">
@@ -221,19 +221,19 @@
             <van-field
               v-model="redpacketAmount"
               type="number"
-              label="金额"
-              placeholder="输入红包金额"
-              :rules="[{ required: true, message: '请输入金额' }]"
+              label="Số tiền"
+              placeholder="Nhập số tiền lì xì"
+              :rules="[{ required: true, message: 'Vui lòng nhập số tiền' }]"
             />
             <van-field
               v-model="redpacketRemark"
-              label="祝福语"
-              placeholder="恭喜发财，大吉大利"
+              label="Lời chúc"
+              placeholder="Chúc mừng phát tài, vạn sự như ý"
             />
           </van-cell-group>
           <div class="form-footer">
             <van-button type="danger" block native-type="submit">
-              塞钱进红包
+              Cho tiền vào lì xì
             </van-button>
           </div>
         </van-form>
@@ -279,7 +279,7 @@ const targetId = computed(() => {
   return parseInt(id.replace(/^(private_|group_)/, '')) || 0
 })
 const chatType = computed(() => targetType.value === TARGET_TYPE.GROUP ? 'group' : 'private')
-const chatName = ref(route.query.name || '聊天')
+const chatName = ref(route.query.name || 'Trò chuyện')
 
 const currentUserId = ref(localStorage.getItem('userId') || 'me')
 const myAvatar = ref('')
@@ -410,7 +410,7 @@ const loadMore = async () => {
     hasMore.value = list.length >= 20
   } catch (e) {
     if (!e.message?.includes('404')) {
-      console.error('加载消息失败:', e)
+      console.error('Tải tin nhắn thất bại:', e)
     }
     hasMore.value = false
   } finally {
@@ -430,11 +430,11 @@ const sendText = async () => {
   if (!text) return
   
   if (!imWS.isConnected || !imWS.isAuthenticated) {
-    showToast('正在连接...')
+    showToast('Đang kết nối...')
     try {
       await imStore.initIM()
     } catch (e) {
-      showToast('连接失败，请重试')
+      showToast('Kết nối thất bại, vui lòng thử lại')
       return
     }
   }
@@ -629,24 +629,24 @@ const onSettingSelect = async (action) => {
       break
     case 'mute':
       imStore.toggleMute(chatId.value)
-      showToast(imStore.isMuted(chatId.value) ? '已开启免打扰' : '已关闭免打扰')
+      showToast(imStore.isMuted(chatId.value) ? 'Đã bật chế độ im lặng' : 'Đã tắt chế độ im lặng')
       break
     case 'members':
       router.push({ name: 'GroupMembers', params: { groupId: targetId.value } })
       break
     case 'quit':
       try {
-        await showConfirmDialog({ title: '确认退出群聊？' })
+        await showConfirmDialog({ title: 'Xác nhận rời nhóm?' })
         await quitGroup(targetId.value)
-        showToast('已退出')
+        showToast('Đã rời nhóm')
         router.back()
       } catch {}
       break
     case 'clear':
       try {
-        await showConfirmDialog({ title: '确认清空聊天记录？' })
+        await showConfirmDialog({ title: 'Xác nhận xóa lịch sử trò chuyện?' })
         messages.value = []
-        showToast('已清空')
+        showToast('Đã xóa')
       } catch {}
       break
   }
@@ -671,7 +671,7 @@ const loadInitialData = async () => {
     hasMore.value = list.length >= 20
   } catch (e) {
     if (!e.message?.includes('404')) {
-      console.error('加载消息失败:', e)
+      console.error('Tải tin nhắn thất bại:', e)
     }
     messages.value = []
     hasMore.value = false
@@ -683,7 +683,7 @@ const loadInitialData = async () => {
     try {
       const userRes = await fetchUserInfo(targetId.value)
       const userData = userRes?.data?.user || userRes?.data || {}
-      chatName.value = userData.nickname || userData.username || '聊天'
+      chatName.value = userData.nickname || userData.username || 'Trò chuyện'
       isOnline.value = userData.online || false
     } catch (e) {
     }

@@ -114,7 +114,7 @@ const {
 } = useWithdraw()
 
 const activeTab = ref(0)
-const tabs = ['申请提现', '收款账户', '提现记录']
+const tabs = ['Yêu cầu rút', 'Tài khoản nhận', 'Lịch sử rút']
 
 const showAddCrypto = ref(false)
 const showAddWechatPopup = ref(false)
@@ -174,7 +174,7 @@ const openAddCrypto = () => {
 
 const openAddBank = () => {
   if (!checkHasFundPassword()) return
-  showToast('银行卡功能暂未开放')
+  showToast('Chức năng thẻ ngân hàng chưa mở')
 }
 
 const openAddAlipay = () => {

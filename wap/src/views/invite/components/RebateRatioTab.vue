@@ -3,11 +3,11 @@
     <div class="ratio-table-card">
       <div class="table-header">
         <div class="th">
-          有效人数 
+          Số người hợp lệ
           <van-icon name="question-o" @click="showTip" />
         </div>
-        <div class="th">业绩<br/>(单位：个)</div>
-        <div class="th">返佣金额<br/>(比例)</div>
+        <div class="th">Thành tích<br/>(Đơn vị: cái)</div>
+        <div class="th">Số tiền hoàn hoa hồng<br/>(Tỷ lệ)</div>
       </div>
       <div class="table-body">
         <div class="tr" v-for="(item, index) in ratioList" :key="index">
@@ -29,35 +29,35 @@
     >
       <div class="calculator-dialog">
         <div class="dialog-header">
-          <span>佣金模拟计算器</span>
+          <span>Máy tính mô phỏng hoa hồng</span>
         </div>
         <van-icon name="cross" class="dialog-close" @click="showCalculator = false" />
         
         <div class="calc-form">
           <div class="form-item">
-            <label>有效人数</label>
+            <label>Số người hợp lệ</label>
             <van-field v-model="calcForm.effectiveCount" type="digit" placeholder="0" />
           </div>
           <div class="form-item">
-            <label>直属输赢</label>
+            <label>Thắng thua trực thuộc</label>
             <van-field v-model="calcForm.directWinLoss" type="number" placeholder="0.00" />
           </div>
           <div class="form-item">
-            <label>领取优惠</label>
+            <label>Nhận ưu đãi</label>
             <van-field v-model="calcForm.claimBonus" type="number" placeholder="0.00" />
           </div>
         </div>
 
-        <button class="calc-submit-btn" @click="calculateCommission">计算佣金</button>
+        <button class="calc-submit-btn" @click="calculateCommission">Tính hoa hồng</button>
 
         <div class="calc-result">
-          <div class="result-title">计算结果</div>
+          <div class="result-title">Kết quả tính toán</div>
           <div class="result-row">
-            <span class="label">返佣比例</span>
+            <span class="label">Tỷ lệ hoàn hoa hồng</span>
             <span class="value">{{ calcResult.rate || '-' }}</span>
           </div>
           <div class="result-row">
-            <span class="label">预计佣金</span>
+            <span class="label">Hoa hồng dự kiến</span>
             <span class="value green">{{ calcResult.commission || '-' }}</span>
           </div>
         </div>
@@ -95,7 +95,7 @@ const formatNumber = (num) => {
 
 const showTip = () => {
   showToast({
-    message: '有效的条件：该下级充值金额 ≥ 100，并且有效投注 ≥ 100',
+    message: 'Điều kiện hợp lệ: Cấp dưới nạp tiền ≥ 100 và cược hợp lệ ≥ 100',
     duration: 3000
   })
 }
@@ -112,7 +112,7 @@ const fetchRatioList = async () => {
 
 const calculateCommission = async () => {
   if (!calcForm.effectiveCount) {
-    showToast('请输入有效人数')
+    showToast('Vui lòng nhập số người hợp lệ')
     return
   }
 
@@ -143,7 +143,7 @@ const calculateCommission = async () => {
       calcResult.commission = '¥' + formatNumber(Math.max(0, commission))
     }
   } catch (e) {
-    showToast('计算失败')
+    showToast('Tính toán thất bại')
   }
 }
 

@@ -4,9 +4,9 @@
       <div class="nav-back" @click="$router.back()">
         <van-icon name="arrow-left" />
       </div>
-      <div class="nav-title">分享赚钱</div>
+      <div class="nav-title">Chia sẻ kiếm tiền</div>
       <div class="nav-right" @click="showCalculator = true" v-if="activeTab === 'rebateRatio'">
-        <span class="calc-btn">佣金模拟计算器</span>
+        <span class="calc-btn">Máy tính hoa hồng</span>
       </div>
       <div class="nav-right" v-else></div>
     </div>
@@ -79,32 +79,32 @@
     >
       <div class="calculator-dialog">
         <div class="dialog-header">
-          <span>佣金模拟计算器</span>
+          <span>Máy tính mô phỏng hoa hồng</span>
         </div>
         <van-icon name="cross" class="dialog-close" @click="showCalculator = false" />
         
         <div class="calc-form">
           <div class="form-item">
-            <label>有效人数</label>
+            <label>Số người hợp lệ</label>
             <van-field v-model="calcForm.effectiveCount" type="digit" placeholder="0" />
           </div>
           <div class="form-item">
-            <label>直属输赢</label>
+            <label>Thắng/Thua trực thuộc</label>
             <van-field v-model="calcForm.directWinLoss" type="number" placeholder="0.00" />
           </div>
           <div class="form-item">
-            <label>领取优惠</label>
+            <label>Nhận ưu đãi</label>
             <van-field v-model="calcForm.claimBonus" type="number" placeholder="0.00" />
           </div>
         </div>
 
-        <button class="calc-submit-btn" @click="calculateCommission">计算佣金</button>
+        <button class="calc-submit-btn" @click="calculateCommission">Tính hoa hồng</button>
 
         <div class="calc-result">
-          <div class="result-title">计算结果</div>
+          <div class="result-title">Kết quả tính toán</div>
           <div class="result-row">
-            <span class="label">返佣比例 -</span>
-            <span class="value">预计佣金 -</span>
+            <span class="label">Tỷ lệ hoa hồng -</span>
+            <span class="value">Hoa hồng dự kiến -</span>
           </div>
         </div>
       </div>
@@ -141,17 +141,17 @@ const changeTime = (value) => {
 }
 
 const tabs = [
-  { key: 'home', label: '首页' },
-  { key: 'share', label: '推广分享' },
-  { key: 'myData', label: '我的数据' },
-  { key: 'myPerformance', label: '我的业绩' },
-  { key: 'myCommission', label: '我的佣金' },
-  { key: 'subInfo', label: '下级信息' },
-  { key: 'subBets', label: '下级投注' },
-  { key: 'subFinance', label: '下级财务' },
-  { key: 'subClaims', label: '下级领取' },
-  { key: 'createAccount', label: '直属开户' },
-  { key: 'rebateRatio', label: '返佣比例' }
+  { key: 'home', label: 'Trang chủ' },
+  { key: 'share', label: 'Chia sẻ quảng bá' },
+  { key: 'myData', label: 'Dữ liệu của tôi' },
+  { key: 'myPerformance', label: 'Thành tích của tôi' },
+  { key: 'myCommission', label: 'Hoa hồng của tôi' },
+  { key: 'subInfo', label: 'Thông tin cấp dưới' },
+  { key: 'subBets', label: 'Cược cấp dưới' },
+  { key: 'subFinance', label: 'Tài chính cấp dưới' },
+  { key: 'subClaims', label: 'Nhận cấp dưới' },
+  { key: 'createAccount', label: 'Mở tài khoản trực thuộc' },
+  { key: 'rebateRatio', label: 'Tỷ lệ hoa hồng' }
 ]
 
 const activeTab = ref(sessionStorage.getItem('inviteActiveTab') || 'home')
@@ -175,7 +175,7 @@ watch(activeTab, (val, oldVal) => {
 
 const agentInfo = ref({
   agentId: '',
-  agentMode: '一级净盈利',
+  agentMode: 'Lợi nhuận ròng cấp 1',
   auditMultiple: 0,
   settlementDate: ''
 })
@@ -227,7 +227,7 @@ const scrollTabIntoView = (key) => {
 
 const handleCopy = async (text) => {
   if (!text) {
-    showToast('暂无内容')
+    showToast('Chưa có nội dung')
     return
   }
   try {
@@ -243,27 +243,27 @@ const handleCopy = async (text) => {
       document.execCommand('copy')
       document.body.removeChild(textarea)
     }
-    showSuccessToast('复制成功')
+    showSuccessToast('Sao chép thành công')
   } catch (e) {
-    showToast('复制失败，请手动复制')
+    showToast('Sao chép thất bại, vui lòng sao chép thủ công')
   }
 }
 
 const handleSaveQrcode = () => {
-  showToast('长按二维码保存图片')
+  showToast('Nhấn giữ mã QR để lưu ảnh')
 }
 
 const handleClaim = async () => {
   try {
     const res = await agentApi.claimCommission()
     if (res.code === 0) {
-      showSuccessToast('领取成功')
+      showSuccessToast('Nhận thành công')
       fetchOverview()
     } else {
-      showToast(res.msg || '领取失败')
+      showToast(res.msg || 'Nhận thất bại')
     }
   } catch {
-    showToast('领取失败')
+    showToast('Nhận thất bại')
   }
 }
 
@@ -275,10 +275,10 @@ const calculateCommission = async () => {
       claimBonus: calcForm.claimBonus || 0
     })
     if (res.code === 0) {
-      showToast(`预计佣金: ¥${res.data.commission}`)
+      showToast(`Hoa hồng dự kiến: ¥${res.data.commission}`)
     }
   } catch {
-    showToast('计算失败')
+    showToast('Tính toán thất bại')
   }
 }
 
@@ -289,7 +289,7 @@ const fetchAgentInfo = async () => {
       agentInfo.value = res.data
     }
   } catch (e) {
-    showToast('获取失败')
+    showToast('Lấy thất bại')
   }
 }
 
@@ -300,7 +300,7 @@ const fetchInviteInfo = async () => {
       inviteInfo.value = res.data
     }
   } catch (e) {
-    showToast('获取失败')
+    showToast('Lấy thất bại')
   }
 }
 
@@ -311,7 +311,7 @@ const fetchOverview = async () => {
       overview.value = res.data
     }
   } catch (e) {
-    showToast('获取失败')
+    showToast('Lấy thất bại')
   }
 }
 

@@ -1,185 +1,185 @@
 <template>
   <div class="my-data-tab">
-    <div class="section-title-outer">直属数据</div>
+    <div class="section-title-outer">Dữ Liệu Trực Thuộc</div>
     <div class="data-grid-outer">
         <div class="data-item">
-          <div class="label">新增直属</div>
+          <div class="label">Trực thuộc mới</div>
           <div class="value">{{ formatInt(stats.newDirect) }}</div>
         </div>
         <div class="data-item">
-          <div class="label">充值人次</div>
+          <div class="label">Lượt nạp tiền</div>
           <div class="value">{{ formatInt(stats.rechargeCount) }}</div>
         </div>
         <div class="data-item">
-          <div class="label">首充人数</div>
+          <div class="label">Số người nạp lần đầu</div>
           <div class="value">{{ formatInt(stats.firstRechargeCount) }}</div>
         </div>
         <div class="data-item">
-          <div class="label">当天注册首充人数</div>
+          <div class="label">Đăng ký nạp đầu trong ngày</div>
           <div class="value">{{ formatInt(stats.todayRegFirstRecharge) }}</div>
         </div>
         <div class="data-item">
-          <div class="label">充值金额</div>
+          <div class="label">Số tiền nạp</div>
           <div class="value">{{ formatNumber(stats.rechargeAmount) }}</div>
         </div>
         <div class="data-item">
-          <div class="label">首充金额</div>
+          <div class="label">Số tiền nạp đầu</div>
           <div class="value">{{ formatNumber(stats.firstRechargeAmount) }}</div>
         </div>
         <div class="data-item">
-          <div class="label">当天注册首充金额</div>
+          <div class="label">Nạp đầu đăng ký trong ngày</div>
           <div class="value">{{ formatNumber(stats.todayRegFirstRechargeAmount) }}</div>
         </div>
         <div class="data-item">
-          <div class="label">提现金额</div>
+          <div class="label">Số tiền rút</div>
           <div class="value">{{ formatNumber(stats.withdrawAmount) }}</div>
         </div>
         <div class="data-item">
-          <div class="label">提现次数</div>
+          <div class="label">Số lần rút</div>
           <div class="value">{{ formatInt(stats.withdrawCount) }}</div>
         </div>
         <div class="data-item">
-          <div class="label">领取奖励</div>
+          <div class="label">Nhận thưởng</div>
           <div class="value">{{ formatNumber(stats.claimReward) }}</div>
         </div>
         <div class="data-item">
-          <div class="label">有效投注</div>
+          <div class="label">Cược hợp lệ</div>
           <div class="value">{{ formatNumber(stats.validBet) }}</div>
         </div>
         <div class="data-item">
-          <div class="label">直属输赢</div>
+          <div class="label">Thắng thua trực thuộc</div>
           <div class="value">{{ formatNumber(stats.directWinLoss) }}</div>
         </div>
     </div>
 
     <div class="single-item-wrapper">
       <div class="data-item-single">
-        <div class="label">直属业绩</div>
+        <div class="label">Thành tích trực thuộc</div>
         <div class="value">{{ formatNumber(stats.directPerformance) }}</div>
       </div>
     </div>
 
-    <div class="section-title-outer">来自直属收益</div>
+    <div class="section-title-outer">Thu Nhập Từ Trực Thuộc</div>
     <div class="data-grid-outer">
         <div class="data-item">
-          <div class="label">直属佣金</div>
+          <div class="label">Hoa hồng trực thuộc</div>
           <div class="value orange">{{ formatNumber(revenue.directCommission) }}</div>
         </div>
         <div class="data-item">
-          <div class="label">其他佣金</div>
+          <div class="label">Hoa hồng khác</div>
           <div class="value orange">{{ formatNumber(revenue.otherCommission) }}</div>
         </div>
         <div class="data-item">
-          <div class="label">总佣金</div>
+          <div class="label">Tổng hoa hồng</div>
           <div class="value orange">{{ formatNumber(revenue.totalCommission) }}</div>
         </div>
         <div class="data-item">
-          <div class="label">获得佣金</div>
+          <div class="label">Hoa hồng nhận được</div>
           <div class="value orange">{{ formatNumber(revenue.earnedCommission) }}</div>
         </div>
         <div class="data-item">
-          <div class="label">推广活动奖励</div>
+          <div class="label">Thưởng hoạt động quảng bá</div>
           <div class="value">{{ formatNumber(revenue.promoReward) }}</div>
         </div>
         <div class="data-item">
-          <div class="label">代理活动奖励</div>
+          <div class="label">Thưởng hoạt động đại lý</div>
           <div class="value">{{ formatNumber(revenue.agentReward) }}</div>
         </div>
     </div>
 
     <div class="all-data-card">
-      <div class="card-title">全部数据(含其他下级)</div>
+      <div class="card-title">Toàn Bộ Dữ Liệu (Bao gồm cấp dưới khác)</div>
       <div class="card-row">
         <div class="card-cell">
-          <div class="label">总人数</div>
+          <div class="label">Tổng số người</div>
           <div class="value">{{ formatInt(allStats.totalCount) }}</div>
         </div>
         <div class="card-cell">
-          <div class="label">直属人数</div>
+          <div class="label">Số người trực thuộc</div>
           <div class="value">{{ formatInt(allStats.directCount) }}</div>
         </div>
         <div class="card-cell">
-          <div class="label">其他人数</div>
+          <div class="label">Số người khác</div>
           <div class="value">{{ formatInt(allStats.otherCount) }}</div>
         </div>
       </div>
       <div class="card-row">
         <div class="card-cell">
-          <div class="label">直属业绩</div>
+          <div class="label">Thành tích trực thuộc</div>
           <div class="value">{{ formatNumber(allStats.directPerformance) }}</div>
         </div>
         <div class="card-cell">
-          <div class="label">其他业绩</div>
+          <div class="label">Thành tích khác</div>
           <div class="value">{{ formatNumber(allStats.otherPerformance) }}</div>
         </div>
         <div class="card-cell">
-          <div class="label">总业绩</div>
+          <div class="label">Tổng thành tích</div>
           <div class="value">{{ formatNumber(allStats.totalPerformance) }}</div>
         </div>
       </div>
       <div class="card-row">
         <div class="card-cell">
-          <div class="label">累计直属充值</div>
+          <div class="label">Tổng nạp trực thuộc</div>
           <div class="value">{{ formatNumber(allStats.directRechargeTotal) }}</div>
         </div>
         <div class="card-cell">
-          <div class="label">累计直属提现</div>
+          <div class="label">Tổng rút trực thuộc</div>
           <div class="value">{{ formatNumber(allStats.directWithdrawTotal) }}</div>
         </div>
         <div class="card-cell">
-          <div class="label">累计直属领取</div>
+          <div class="label">Tổng nhận trực thuộc</div>
           <div class="value">{{ formatNumber(allStats.directClaimTotal) }}</div>
         </div>
       </div>
       <div class="card-row last-row">
         <div class="card-cell">
-          <div class="label">累计直属有效投注</div>
+          <div class="label">Tổng cược hợp lệ trực thuộc</div>
           <div class="value">{{ formatNumber(allStats.directValidBetTotal) }}</div>
         </div>
         <div class="card-cell">
-          <div class="label">累计直属输赢</div>
+          <div class="label">Tổng thắng thua trực thuộc</div>
           <div class="value">{{ formatNumber(allStats.directWinLossTotal) }}</div>
         </div>
       </div>
     </div>
 
     <div class="all-data-card">
-      <div class="card-title">我的全部收益</div>
+      <div class="card-title">Toàn Bộ Thu Nhập Của Tôi</div>
       <div class="card-row">
         <div class="card-cell">
-          <div class="label">直属佣金</div>
+          <div class="label">Hoa hồng trực thuộc</div>
           <div class="value">{{ formatNumber(totalRevenue.directCommission) }}</div>
         </div>
         <div class="card-cell">
-          <div class="label">其他佣金</div>
+          <div class="label">Hoa hồng khác</div>
           <div class="value">{{ formatNumber(totalRevenue.otherCommission) }}</div>
         </div>
         <div class="card-cell">
-          <div class="label">总佣金</div>
+          <div class="label">Tổng hoa hồng</div>
           <div class="value">{{ formatNumber(totalRevenue.totalCommission) }}</div>
         </div>
       </div>
       <div class="card-row">
         <div class="card-cell">
-          <div class="label">待领取</div>
+          <div class="label">Chờ nhận</div>
           <div class="value">{{ formatNumber(totalRevenue.pending) }}</div>
         </div>
         <div class="card-cell">
-          <div class="label">已领取</div>
+          <div class="label">Đã nhận</div>
           <div class="value">{{ formatNumber(totalRevenue.claimed) }}</div>
         </div>
         <div class="card-cell">
-          <div class="label">累计佣金</div>
+          <div class="label">Tổng hoa hồng</div>
           <div class="value">{{ formatNumber(totalRevenue.cumulativeCommission) }}</div>
         </div>
       </div>
       <div class="card-row last-row">
         <div class="card-cell">
-          <div class="label">推广活动累计奖励</div>
+          <div class="label">Tổng thưởng hoạt động quảng bá</div>
           <div class="value">{{ formatNumber(totalRevenue.promoRewardTotal) }}</div>
         </div>
         <div class="card-cell">
-          <div class="label">代理活动累计奖励</div>
+          <div class="label">Tổng thưởng hoạt động đại lý</div>
           <div class="value">{{ formatNumber(totalRevenue.agentRewardTotal) }}</div>
         </div>
       </div>

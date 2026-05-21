@@ -5,7 +5,7 @@
       <div class="nav-left" @click="goBack">
         <van-icon name="arrow-left" class="neon-icon" />
       </div>
-      <div class="nav-title">用户转账</div>
+      <div class="nav-title">Chuyển tiền</div>
       <div class="nav-right" @click="onHelp">
         <van-icon name="service-o" class="neon-icon" />
       </div>
@@ -17,12 +17,12 @@
         
         <div class="card-section">
           <div class="section-header">
-            <span class="title">收款人信息</span>
+            <span class="title">Thông tin người nhận</span>
           </div>
           <div class="input-wrapper">
             <van-field
               v-model="receiverAccount"
-              placeholder="请输入对方 ID / 手机号 / 邀请码"
+              placeholder="Nhập ID / SĐT / Mã mời của người nhận"
               class="tech-field"
               :border="false"
               @blur="validateReceiver"
@@ -42,13 +42,13 @@
           
           <div class="validation-msg" v-if="receiverAccount">
             <div v-if="validating" class="status-text checking">
-              <van-loading type="spinner" size="12px" /> 正在核对...
+              <van-loading type="spinner" size="12px" /> Đang kiểm tra...
             </div>
             <div v-else-if="receiverValid" class="status-text success animate-fade-in">
-              <van-icon name="checked" /> 收款人：{{ receiverName }} (ID: {{ mockReceiverId }})
+              <van-icon name="checked" /> Người nhận: {{ receiverName }} (ID: {{ mockReceiverId }})
             </div>
             <div v-else class="status-text error animate-fade-in">
-              <van-icon name="clear" /> 未找到该用户，请确认账号
+              <van-icon name="clear" /> Không tìm thấy người dùng, vui lòng kiểm tra lại
             </div>
           </div>
         </div>
@@ -58,13 +58,13 @@
         
         <div class="card-section">
           <div class="section-header">
-            <span class="title">转账金额</span>
+            <span class="title">Số tiền chuyển</span>
           </div>
           <div class="input-wrapper amount-wrapper">
             <van-field
               v-model="amount"
               type="number"
-              placeholder="请输入转账金额"
+              placeholder="Nhập số tiền chuyển"
               class="tech-field amount-field"
               :border="false"
             >
@@ -75,17 +75,17 @@
           </div>
           
           <div class="balance-row">
-            <span class="balance-text">当前可用余额：¥{{ formatAmount(balance) }}</span>
-            <span class="max-btn" @click="fillMaxAmount">全部</span>
+            <span class="balance-text">Số dư khả dụng: ¥{{ formatAmount(balance) }}</span>
+            <span class="max-btn" @click="fillMaxAmount">Tất cả</span>
           </div>
           
           
           <div class="validation-msg" v-if="amount && !validAmount">
             <div class="status-text error" v-if="Number(amount) < minAmount">
-              单笔最低转账 {{ minAmount }} 元
+              Chuyển tối thiểu {{ minAmount }} VNĐ
             </div>
             <div class="status-text error" v-else-if="Number(amount) > balance">
-              余额不足
+              Số dư không đủ
             </div>
           </div>
         </div>
@@ -95,13 +95,13 @@
         
         <div class="card-section">
           <div class="section-header">
-            <span class="title">资金密码</span>
+            <span class="title">Mật khẩu rút tiền</span>
           </div>
           <div class="input-wrapper">
             <van-field
               v-model="password"
               type="password"
-              placeholder="请输入资金密码"
+              placeholder="Nhập mật khẩu rút tiền"
               class="tech-field"
               :border="false"
               clearable
@@ -112,7 +112,7 @@
             </van-field>
           </div>
           <div class="forgot-pwd-row">
-            <span class="link-text" @click="onForgotPwd">忘记资金密码？</span>
+            <span class="link-text" @click="onForgotPwd">Quên mật khẩu rút tiền?</span>
           </div>
         </div>
 
@@ -121,14 +121,14 @@
         
         <div class="card-section">
           <div class="section-header">
-            <span class="title">备注说明 <span class="subtitle">(可选)</span></span>
+            <span class="title">Ghi chú <span class="subtitle">(tùy chọn)</span></span>
           </div>
           <div class="input-wrapper">
             <van-field
               v-model="remark"
               type="text"
               maxlength="20"
-              placeholder="给对方留言（最多20字，可不填）"
+              placeholder="Lời nhắn cho người nhận (tối đa 20 ký tự)"
               class="tech-field"
               :border="false"
               show-word-limit
@@ -139,8 +139,8 @@
 
       
       <div class="security-tips">
-        <p>• 请务必确认收款账号是否正确，转账成功后将无法撤回。</p>
-        <p>• 若非本人操作，请立即修改资金密码并联系客服。</p>
+        <p>• Vui lòng xác nhận chính xác tài khoản người nhận, không thể hoàn tác sau khi chuyển.</p>
+        <p>• Nếu không phải bạn thực hiện, hãy đổi mật khẩu rút tiền và liên hệ CSKH ngay.</p>
       </div>
     </div>
 
@@ -148,10 +148,10 @@
     <div class="bottom-bar glass-panel">
       <div class="summary-info">
         <div v-if="canSubmitInfo" class="summary-content">
-          <div class="summary-label">向 {{ receiverName || '对方' }} 转账</div>
+          <div class="summary-label">Chuyển cho {{ receiverName || 'người nhận' }}</div>
           <div class="summary-amount">¥{{ formatAmount(Number(amount)) }}</div>
         </div>
-        <div v-else class="summary-placeholder">请先填写完整转账信息</div>
+        <div v-else class="summary-placeholder">Vui lòng điền đầy đủ thông tin</div>
       </div>
       
       <div class="action-btn-wrapper">
@@ -161,7 +161,7 @@
           @click="onConfirmClick"
           :disabled="!canSubmit"
         >
-          确认转账
+          Xác nhận chuyển
           <div class="btn-glow"></div>
         </button>
       </div>
@@ -175,7 +175,7 @@
       class="tech-popup"
     >
       <div class="popup-header">
-        <span>常用联系人</span>
+        <span>Liên hệ thường dùng</span>
         <van-icon name="cross" @click="showContacts = false" />
       </div>
       <div class="contact-list">
@@ -238,8 +238,8 @@ const canSubmit = computed(() => {
 })
 
 const goBack = () => router.go(-1)
-const onHelp = () => showToast('正在连接客服...')
-const onForgotPwd = () => showToast('请联系客服重置资金密码')
+const onHelp = () => showToast('Đang kết nối CSKH...')
+const onForgotPwd = () => showToast('Vui lòng liên hệ CSKH để đặt lại mật khẩu')
 
 const formatAmount = (val: number) => {
   return val.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
@@ -287,8 +287,8 @@ const onConfirmClick = () => {
   const remaining = balance.value - transferAmt
 
   showDialog({
-    title: `确认向 ${receiverName.value} 转账？`,
-    message: `转账金额：¥${formatAmount(transferAmt)}\n转账后余额：¥${formatAmount(remaining)}`,
+    title: `Xác nhận chuyển cho ${receiverName.value}?`,
+    message: `Số tiền: ¥${formatAmount(transferAmt)}\nSố dư sau chuyển: ¥${formatAmount(remaining)}`,
     theme: 'round-button',
     confirmButtonColor: '#EAC26E',
     cancelButtonColor: '#1a1a2e',
@@ -304,7 +304,7 @@ const onConfirmClick = () => {
 const submitTransfer = () => {
   showToast({
     type: 'loading',
-    message: '转账处理中...',
+    message: 'Đang xử lý...',
     forbidClick: true,
     duration: 0
   })
@@ -312,7 +312,7 @@ const submitTransfer = () => {
   setTimeout(() => {
     showToast({
       type: 'success',
-      message: '转账成功',
+      message: 'Chuyển thành công',
       onClose: () => {
 
         balance.value -= Number(amount.value)

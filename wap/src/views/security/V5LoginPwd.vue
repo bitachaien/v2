@@ -1,7 +1,7 @@
 <template>
   <div class="v5-login-pwd">
     <van-nav-bar
-      title="登录密码"
+      title="Mật khẩu đăng nhập"
       left-arrow
       @click-left="onClickLeft"
       class="custom-nav"
@@ -9,13 +9,13 @@
 
     <div class="content">
       
-      <div class="label">原登录密码</div>
+      <div class="label">Mật khẩu cũ</div>
       <div class="input-container">
         <van-icon name="lock" class="prefix-icon" />
         <input 
           :type="showOldPwd ? 'text' : 'password'" 
           v-model="oldPassword" 
-          placeholder="请输入原登录密码" 
+          placeholder="Nhập mật khẩu cũ"
           class="custom-input"
         />
         <van-icon 
@@ -26,13 +26,13 @@
       </div>
 
       
-      <div class="label mt-20">新登录密码</div>
+      <div class="label mt-20">Mật khẩu mới</div>
       <div class="input-container">
         <van-icon name="lock" class="prefix-icon" />
         <input 
           :type="showPwd ? 'text' : 'password'" 
           v-model="password" 
-          placeholder="请输入登录密码" 
+          placeholder="Nhập mật khẩu mới"
           class="custom-input"
         />
         <van-icon 
@@ -45,7 +45,7 @@
       
       <div class="strength-section">
         <div class="strength-row">
-          <span>密码强度</span>
+          <span>Độ mạnh mật khẩu</span>
           <div class="bars">
             <div class="bar" :class="{ filled: strengthScore >= 1 }"></div>
             <div class="bar" :class="{ filled: strengthScore >= 2 }"></div>
@@ -56,31 +56,31 @@
         
         <div class="rules-row">
           <div class="rule-tag" :class="{ valid: isLengthValid }">
-            <van-icon :name="isLengthValid ? 'checked' : 'clear'" /> 8-16位
+            <van-icon :name="isLengthValid ? 'checked' : 'clear'" /> 8-16 ký tự
           </div>
           <div class="rule-tag" :class="{ valid: hasUpper }">
-            <van-icon :name="hasUpper ? 'checked' : 'clear'" /> 大写字母
+            <van-icon :name="hasUpper ? 'checked' : 'clear'" /> Chữ hoa
           </div>
           <div class="rule-tag" :class="{ valid: hasLower }">
-            <van-icon :name="hasLower ? 'checked' : 'clear'" /> 小写字母
+            <van-icon :name="hasLower ? 'checked' : 'clear'" /> Chữ thường
           </div>
           <div class="rule-tag" :class="{ valid: hasNumber }">
-            <van-icon :name="hasNumber ? 'checked' : 'clear'" /> 数字
+            <van-icon :name="hasNumber ? 'checked' : 'clear'" /> Số
           </div>
           <div class="rule-tag" :class="{ valid: hasSymbol }">
-            <van-icon :name="hasSymbol ? 'checked' : 'clear'" /> 符号
+            <van-icon :name="hasSymbol ? 'checked' : 'clear'" /> Ký tự đặc biệt
           </div>
         </div>
       </div>
 
       
-      <div class="label mt-20">二次确认新密码</div>
+      <div class="label mt-20">Xác nhận mật khẩu mới</div>
       <div class="input-container">
         <van-icon name="lock" class="prefix-icon" />
         <input 
           :type="showConfirmPwd ? 'text' : 'password'" 
           v-model="confirmPassword" 
-          placeholder="请再次输入密码" 
+          placeholder="Nhập lại mật khẩu"
           class="custom-input"
         />
         <van-icon 
@@ -92,7 +92,7 @@
     </div>
 
     <div class="bottom-area">
-      <van-button block color="#009688" class="submit-btn" @click="onSubmit" :loading="submitting">确定</van-button>
+      <van-button block color="#009688" class="submit-btn" @click="onSubmit" :loading="submitting">Xác nhận</van-button>
     </div>
   </div>
 </template>
@@ -135,15 +135,15 @@ const onClickLeft = () => {
 
 const onSubmit = async () => {
   if (!oldPassword.value) {
-    showToast('请输入原密码')
+    showToast('Vui lòng nhập mật khẩu cũ')
     return
   }
   if (!isLengthValid.value) {
-    showToast('新密码长度需8-16位')
+    showToast('Mật khẩu mới cần 8-16 ký tự')
     return
   }
   if (password.value !== confirmPassword.value) {
-    showToast('两次密码输入不一致')
+    showToast('Hai lần nhập mật khẩu không khớp')
     return
   }
   
@@ -155,15 +155,15 @@ const onSubmit = async () => {
       confirmPassword: confirmPassword.value
     })
     if (res.code === 0) {
-      showToast('密码修改成功，请重新登录')
+      showToast('Đổi mật khẩu thành công, vui lòng đăng nhập lại')
       setTimeout(() => {
         logout({ router, redirectUrl: '/home-new' })
       }, 1500)
     } else {
-      showToast(res.message || '修改失败')
+      showToast(res.message || 'Đổi mật khẩu thất bại')
     }
   } catch (e) {
-    showToast(e.message || '修改失败')
+    showToast(e.message || 'Đổi mật khẩu thất bại')
   } finally {
     submitting.value = false
   }

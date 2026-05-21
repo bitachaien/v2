@@ -12,8 +12,8 @@
         <i class="iconfont">&#xe602;</i>
       </div>
       <div class="header-center">
-        <h1 class="header-title">邀请有礼</h1>
-        <p class="header-subtitle">邀请好友一起玩，轻松赚奖励</p>
+        <h1 class="header-title">Mời Bạn Nhận Quà</h1>
+        <p class="header-subtitle">Mời bạn bè cùng chơi, dễ dàng kiếm thưởng</p>
       </div>
       <div class="header-actions">
         <i class="iconfont" @click="showRules = true">&#xe63f;</i>
@@ -28,8 +28,8 @@
         </div>
         <div class="banner-content">
           <div class="banner-left">
-            <h2 class="banner-title">邀请好友 · 双重收益</h2>
-            <p class="banner-desc">好友下注，你拿奖励<br/>最高返利<span class="highlight-glow">8%</span></p>
+            <h2 class="banner-title">Mời Bạn Bè · Thu Nhập Kép</h2>
+            <p class="banner-desc">Bạn bè cược, bạn nhận thưởng<br/>Hoàn trả tối đa <span class="highlight-glow">8%</span></p>
             <div class="banner-stats-mini">
               <div class="mini-stat">
                 <i class="iconfont">&#xe625;</i>
@@ -70,7 +70,7 @@
 
       <div class="overview-card">
         <div class="card-title-bar">
-          <span class="card-title">我的邀请</span>
+          <span class="card-title">Lời Mời Của Tôi</span>
           <div class="title-line"></div>
         </div>
 
@@ -84,19 +84,19 @@
 
         <div class="invite-code-section">
           <div class="code-row">
-            <span class="code-label">邀请码</span>
+            <span class="code-label">Mã mời</span>
             <span class="code-value">{{ inviteCode }}</span>
             <button class="copy-btn" @click="copyText(inviteCode)">
               <i class="iconfont">&#xe61f;</i>
-              <span>复制</span>
+              <span>Sao chép</span>
             </button>
           </div>
           <div class="code-row">
-            <span class="code-label">专属链接</span>
+            <span class="code-label">Link riêng</span>
             <span class="code-value link">{{ inviteLink }}</span>
             <button class="copy-btn" @click="copyText(inviteLink)">
               <i class="iconfont">&#xe61f;</i>
-              <span>复制</span>
+              <span>Sao chép</span>
             </button>
           </div>
         </div>
@@ -105,7 +105,7 @@
           <div class="qrcode-box">
             <div class="qr-placeholder">
               <i class="iconfont">&#xe62c;</i>
-              <span>点击查看二维码</span>
+              <span>Nhấn xem mã QR</span>
             </div>
             <div class="qr-glow"></div>
           </div>
@@ -114,22 +114,22 @@
         <div class="stats-grid">
           <div class="stat-item">
             <div class="stat-value">{{ stats.totalInvited }}</div>
-            <div class="stat-label">已邀请好友</div>
+            <div class="stat-label">Đã mời bạn bè</div>
           </div>
           <div class="stat-item">
             <div class="stat-value">{{ stats.activeInvited }}</div>
-            <div class="stat-label">有效好友</div>
+            <div class="stat-label">Bạn bè hợp lệ</div>
           </div>
           <div class="stat-item">
             <div class="stat-value highlight">¥{{ stats.totalReward }}</div>
-            <div class="stat-label">累计奖励</div>
+            <div class="stat-label">Tổng thưởng</div>
           </div>
         </div>
       </div>
 
       <div class="steps-section-enhanced">
         <div class="section-title-cyber">
-          <span>邀请步骤</span>
+          <span>Các Bước Mời</span>
           <div class="title-line"></div>
         </div>
         <div class="steps-flow-container">
@@ -156,7 +156,7 @@
 
       <div class="rules-section-enhanced">
         <div class="section-title-cyber">
-          <span>奖励规则</span>
+          <span>Quy Tắc Thưởng</span>
           <div class="title-line"></div>
         </div>
         <div class="rules-card-tech">
@@ -168,7 +168,7 @@
             <span class="rule-text-tech">{{ rule }}</span>
           </div>
           <button class="view-full-rules-btn-glow" @click="showRules = true">
-            <span>查看完整规则</span>
+            <span>Xem quy tắc đầy đủ</span>
             <i class="iconfont">&#xe656;</i>
             <div class="btn-border-glow"></div>
           </button>
@@ -177,7 +177,7 @@
 
       <div class="friends-section">
         <div class="section-title-cyber">
-          <span>我的好友</span>
+          <span>Bạn Bè Của Tôi</span>
           <div class="title-line"></div>
         </div>
         <div class="friends-list-tech">
@@ -191,15 +191,15 @@
             <div class="friend-info-tech">
               <div class="friend-name-tech">{{ friend.username }}</div>
               <div class="friend-meta-row">
-                <span class="meta-item">注册：{{ friend.registerTime }}</span>
+                <span class="meta-item">Đăng ký: {{ friend.registerTime }}</span>
               </div>
               <div class="friend-data-row">
-                <span class="data-item">投注：<em>¥{{ friend.totalBet }}</em></span>
-                <span class="data-item reward">奖励：<em>¥{{ friend.reward }}</em></span>
+                <span class="data-item">Cược: <em>¥{{ friend.totalBet }}</em></span>
+                <span class="data-item reward">Thưởng: <em>¥{{ friend.reward }}</em></span>
               </div>
             </div>
             <div class="friend-status-badge" :class="friend.status">
-              <span>{{ friend.status === 'active' ? '有效' : '未激活' }}</span>
+              <span>{{ friend.status === 'active' ? 'Hợp lệ' : 'Chưa kích hoạt' }}</span>
               <div class="badge-glow"></div>
             </div>
           </div>
@@ -207,15 +207,15 @@
             <div class="empty-icon-ball">
               <i class="iconfont">&#xe625;</i>
             </div>
-            <p>暂无好友数据</p>
-            <span class="empty-tip">邀请好友即可获得奖励</span>
+            <p>Chưa có dữ liệu bạn bè</p>
+            <span class="empty-tip">Mời bạn bè để nhận thưởng</span>
           </div>
         </div>
       </div>
 
       <div class="share-section">
         <div class="section-title-cyber">
-          <span>分享邀请</span>
+          <span>Chia Sẻ Lời Mời</span>
           <div class="title-line"></div>
         </div>
         <div class="share-grid">
@@ -237,14 +237,14 @@
     <van-popup v-model:show="showQRCode" round :style="{ background: 'transparent' }">
       <div class="qr-dialog">
         <div class="qr-dialog-content">
-          <h3>扫码邀请</h3>
+          <h3>Quét Mã Mời</h3>
           <div class="qr-code-large">
             <div class="qr-placeholder-large">
               <i class="iconfont">&#xe62c;</i>
             </div>
           </div>
-          <p class="qr-tip">好友扫码即可注册</p>
-          <button class="qr-close-btn" @click="showQRCode = false">关闭</button>
+          <p class="qr-tip">Bạn bè quét mã để đăng ký</p>
+          <button class="qr-close-btn" @click="showQRCode = false">Đóng</button>
         </div>
       </div>
     </van-popup>
@@ -252,7 +252,7 @@
     <van-popup v-model:show="showRules" round position="bottom" :style="{ height: '70%' }">
       <div class="rules-dialog">
         <div class="rules-dialog-header">
-          <h3>完整规则</h3>
+          <h3>Quy Tắc Đầy Đủ</h3>
           <i class="iconfont" @click="showRules = false">&#xe60a;</i>
         </div>
         <div class="rules-dialog-content">
@@ -289,49 +289,49 @@ const stats = ref({
 
 const steps = ref([
   {
-    title: '分享邀请码/链接',
-    desc: '发送给好友或分享到社交平台',
+    title: 'Chia sẻ mã/link mời',
+    desc: 'Gửi cho bạn bè hoặc chia sẻ lên mạng xã hội',
     iconPath: 'M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13'
   },
   {
-    title: '好友注册并充值',
-    desc: '使用你的邀请码完成注册',
+    title: 'Bạn bè đăng ký và nạp tiền',
+    desc: 'Sử dụng mã mời của bạn để hoàn tất đăng ký',
     iconPath: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM22 11l-3-3m0 0l-3 3m3-3v8'
   },
   {
-    title: '好友下注，你拿奖励',
-    desc: '好友每次投注，你都可获得返利',
+    title: 'Bạn bè cược, bạn nhận thưởng',
+    desc: 'Mỗi lần bạn bè cược, bạn đều nhận hoàn trả',
     iconPath: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z'
   }
 ])
 
 const rules = ref([
-  '好友通过你的专属链接或邀请码注册，即视为你的邀请用户。',
-  '好友每次有效投注，你可获得 5% 的佣金返利。',
-  '返利实时结算至【邀请奖励余额】，可随时转入主账户。',
-  '同一设备、同一身份信息仅可被邀请一次，严禁刷号、套利。',
-  '平台有权对异常账号进行冻结、清零处理。'
+  'Bạn bè đăng ký qua link riêng hoặc mã mời của bạn sẽ được tính là người dùng mời của bạn.',
+  'Mỗi lần bạn bè cược hợp lệ, bạn nhận 5% hoa hồng hoàn trả.',
+  'Hoàn trả được thanh toán ngay vào [Số dư thưởng mời], có thể chuyển vào tài khoản chính bất cứ lúc nào.',
+  'Cùng thiết bị, cùng thông tin danh tính chỉ được mời một lần, nghiêm cấm tạo tài khoản ảo, lợi dụng.',
+  'Nền tảng có quyền đóng băng, xóa số dư các tài khoản bất thường.'
 ])
 
 const fullRules = ref([
-  { title: '邀请资格', content: '所有注册用户均可参与邀请活动，邀请好友注册并投注即可获得奖励。' },
-  { title: '奖励计算', content: '好友每次有效投注金额的5%将作为佣金返利给邀请人，实时到账。' },
-  { title: '提现规则', content: '邀请奖励余额可随时转入主账户，无需流水要求。' },
-  { title: '违规处理', content: '严禁使用虚假信息、刷号等方式套利，一经发现将冻结账户并清零奖励。' }
+  { title: 'Điều kiện mời', content: 'Tất cả người dùng đã đăng ký đều có thể tham gia hoạt động mời bạn, mời bạn bè đăng ký và cược để nhận thưởng.' },
+  { title: 'Tính thưởng', content: '5% số tiền cược hợp lệ của bạn bè sẽ được hoàn trả hoa hồng cho người mời, thanh toán ngay lập tức.' },
+  { title: 'Quy tắc rút tiền', content: 'Số dư thưởng mời có thể chuyển vào tài khoản chính bất cứ lúc nào, không yêu cầu doanh thu.' },
+  { title: 'Xử lý vi phạm', content: 'Nghiêm cấm sử dụng thông tin giả, tạo tài khoản ảo để lợi dụng, một khi phát hiện sẽ đóng băng tài khoản và xóa thưởng.' }
 ])
 
 const friendsList = ref([
-  { id: 1, username: '用户***123', registerTime: '2024-11-20', totalBet: '5,200', reward: '260.00', status: 'active' },
-  { id: 2, username: '用户***456', registerTime: '2024-11-19', totalBet: '3,800', reward: '190.00', status: 'active' },
-  { id: 3, username: '用户***789', registerTime: '2024-11-18', totalBet: '0', reward: '0.00', status: 'inactive' }
+  { id: 1, username: 'Người dùng***123', registerTime: '2024-11-20', totalBet: '5,200', reward: '260.00', status: 'active' },
+  { id: 2, username: 'Người dùng***456', registerTime: '2024-11-19', totalBet: '3,800', reward: '190.00', status: 'active' },
+  { id: 3, username: 'Người dùng***789', registerTime: '2024-11-18', totalBet: '0', reward: '0.00', status: 'inactive' }
 ])
 
 const shareOptions = ref([
-  { type: 'wechat', label: '微信好友', iconPath: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z' },
-  { type: 'moments', label: '朋友圈', iconPath: 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z' },
+  { type: 'wechat', label: 'Bạn WeChat', iconPath: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z' },
+  { type: 'moments', label: 'Moments', iconPath: 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z' },
   { type: 'qq', label: 'QQ', iconPath: 'M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z' },
-  { type: 'copy', label: '复制链接', iconPath: 'M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2' },
-  { type: 'poster', label: '保存海报', iconPath: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3' }
+  { type: 'copy', label: 'Sao chép link', iconPath: 'M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2' },
+  { type: 'poster', label: 'Lưu poster', iconPath: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3' }
 ])
 
 const showQRCode = ref(false)
@@ -339,14 +339,14 @@ const showRules = ref(false)
 
 const copyText = (text) => {
   navigator.clipboard.writeText(text).then(() => {
-    showToast('复制成功')
+    showToast('Sao chép thành công')
   }).catch(() => {
-    showToast('复制失败')
+    showToast('Sao chép thất bại')
   })
 }
 
 const handleShare = (type) => {
-  showToast(`分享到${type}`)
+  showToast(`Chia sẻ đến ${type}`)
 }
 
 const particleStyle = (index) => {

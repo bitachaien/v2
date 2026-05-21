@@ -1,8 +1,8 @@
 <template>
   <div class="bill-record-page">
-    <van-nav-bar title="交易记录" left-arrow @click-left="$router.back()" />
+    <van-nav-bar title="Lịch sử giao dịch" left-arrow @click-left="$router.back()" />
     <div class="content">
-      <van-empty description="页面正在维护中" />
+      <van-empty description="Trang đang bảo trì" />
     </div>
   </div>
 </template>

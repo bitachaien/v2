@@ -1,11 +1,11 @@
 <template>
   <div class="tab-pending">
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-      <van-loading v-if="loading" type="spinner" size="24" style="margin: 40px auto;">加载中...</van-loading>
+      <van-loading v-if="loading" type="spinner" size="24" style="margin: 40px auto;">Đang tải...</van-loading>
       
       <div class="pending-empty" v-else-if="pendingList.length === 0">
         <van-icon name="gift-o" size="60" color="#ccc" />
-        <p>暂无待领取奖励</p>
+        <p>Chưa có thưởng chờ nhận</p>
       </div>
       
       <div class="pending-list" v-else>
@@ -16,7 +16,7 @@
           </div>
           <div class="item-right">
             <span class="item-amount">¥ {{ item.rewardAmount }}</span>
-            <span class="item-status pending">待审核</span>
+            <span class="item-status pending">Chờ duyệt</span>
           </div>
         </div>
       </div>
@@ -41,7 +41,7 @@ const loadPendingRewards = async () => {
       pendingList.value = res.data.list || []
     }
   } catch (e) {
-    showToast('加载失败')
+    showToast('Tải thất bại')
   } finally {
     loading.value = false
     refreshing.value = false

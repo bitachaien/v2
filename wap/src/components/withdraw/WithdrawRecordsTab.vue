@@ -29,13 +29,13 @@
               </div>
               <div class="date-input-row">
                 <div class="date-input-item" :class="{ active: currentDateType === 'start' }" @click="currentDateType = 'start'">
-                  <span class="date-label">开始</span>
-                  <span class="date-value">{{ customStartDate || '请选择' }}</span>
+                  <span class="date-label">Bắt đầu</span>
+                  <span class="date-value">{{ customStartDate || 'Chọn ngày' }}</span>
                 </div>
-                <span class="date-sep">至</span>
+                <span class="date-sep">đến</span>
                 <div class="date-input-item" :class="{ active: currentDateType === 'end' }" @click="currentDateType = 'end'">
-                  <span class="date-label">结束</span>
-                  <span class="date-value">{{ customEndDate || '请选择' }}</span>
+                  <span class="date-label">Kết thúc</span>
+                  <span class="date-value">{{ customEndDate || 'Chọn ngày' }}</span>
                 </div>
               </div>
               <van-date-picker
@@ -47,7 +47,7 @@
                 :visible-item-count="5"
               />
               <div class="date-picker-panel-footer">
-                <div class="date-confirm-btn" :class="{ disabled: !customStartDate || !customEndDate }" @click="confirmDateRange">确定</div>
+                <div class="date-confirm-btn" :class="{ disabled: !customStartDate || !customEndDate }" @click="confirmDateRange">Xác nhận</div>
               </div>
             </div>
           </transition>
@@ -73,7 +73,7 @@
         </div>
       </div>
       <div class="total-stat">
-        <span class="stat-label">累计提现</span>
+        <span class="stat-label">Tổng đã rút</span>
         <span class="stat-amount">{{ totalWithdraw.toFixed(2) }} USDT <img src="/assets/img/comm_icon_retry.svg" class="refresh-record-icon" :class="{ spinning: isRecordsLoading }" @click="refreshRecords" /></span>
       </div>
     </div>
@@ -88,19 +88,19 @@
             <div class="record-amount" :class="{ 'refund': item.state === 2 || item.state === 3 }">{{ (item.state === 2 || item.state === 3) ? '+' : '-' }}{{ Number(item.amount).toFixed(2) }}</div>
             <div class="record-status-row">
               <span class="record-status" :class="'status-' + item.state">{{ getRecordStatusText(item.state) }}</span>
-              <span v-if="item.state === 0" class="cancel-btn" @click.stop="cancelWithdraw(item)">取消</span>
+              <span v-if="item.state === 0" class="cancel-btn" @click.stop="cancelWithdraw(item)">Hủy</span>
             </div>
           </div>
         </div>
         <div v-if="hasMoreRecords" class="load-more" @click="loadMoreRecords">
-          <span>查看更多</span>
+          <span>Xem thêm</span>
           <van-icon name="arrow-down" />
         </div>
-        <div v-else-if="records.length >= 10" class="no-more">没有更多了</div>
+        <div v-else-if="records.length >= 10" class="no-more">Hết rồi</div>
     </div>
     <div v-else class="empty-list">
       <img src="/assets/img/img_none_sj.avif" class="empty-img" />
-      <div class="empty-text">暂无提现记录，可<span class="green-link" @click="showAllHistory">查看更多</span></div>
+      <div class="empty-text">Chưa có lịch sử rút tiền, có thể <span class="green-link" @click="showAllHistory">xem thêm</span></div>
     </div>
   </div>
 </template>
@@ -192,7 +192,7 @@ const confirmDateRange = () => {
     showDatePicker.value = false
     loadRecords(false)
   } else {
-    showToast('请选择完整的日期范围')
+    showToast('Vui lòng chọn đầy đủ khoảng thời gian')
   }
 }
 

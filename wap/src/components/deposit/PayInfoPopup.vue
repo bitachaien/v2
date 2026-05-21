@@ -9,29 +9,29 @@
   >
     <div class="pay-info-view">
       <div class="pay-info-header">
-        <div class="pay-info-title">{{ order?.paytypeName || '充值' }}</div>
+        <div class="pay-info-title">{{ order?.paytypeName || 'Nạp tiền' }}</div>
       </div>
 
       <div class="pay-info-body">
         <div class="pay-amount-display">
-          <div class="pay-amount-label">充值金额</div>
+          <div class="pay-amount-label">Số tiền nạp</div>
           <div class="pay-amount-value">
             <span class="currency">{{ order?.paytype === 'USDT' ? '₮' : '¥' }}</span>
             <span class="num">{{ order?.amount }}</span>
           </div>
-          <div class="pay-status-tag">待支付</div>
+          <div class="pay-status-tag">Chờ thanh toán</div>
         </div>
 
         <div class="info-cell-group">
           <div class="info-cell">
-            <span class="cell-label">订单号</span>
+            <span class="cell-label">Mã đơn</span>
             <div class="cell-value">
               {{ order?.trano }}
               <van-icon name="description-o" class="copy-icon" @click="copyText(order?.trano)" />
             </div>
           </div>
           <div class="info-cell" v-if="order?.fuyanma">
-            <span class="cell-label">附言码</span>
+            <span class="cell-label">Mã ghi chú</span>
             <div class="cell-value highlight-red">
               {{ order?.fuyanma }}
               <van-icon name="description-o" class="copy-icon" @click="copyText(order?.fuyanma)" />
@@ -61,30 +61,30 @@
             <div class="qr-wrapper">
               <img :src="currentPayQrCode" class="qr-image" />
             </div>
-            <div class="qr-text">扫码支付</div>
+            <div class="qr-text">Quét mã thanh toán</div>
           </div>
 
           <div class="pay-details-box" v-if="order?.paytype === 'linepay' && order.bankInfo">
             <div class="bank-card">
               <div class="bank-row">
-                <span class="bank-label">银行</span>
+                <span class="bank-label">Ngân hàng</span>
                 <span class="bank-val">{{ order.bankInfo.bankName }}</span>
-                <span class="copy-btn-text" @click="copyText(order.bankInfo.bankName)">复制</span>
+                <span class="copy-btn-text" @click="copyText(order.bankInfo.bankName)">Sao chép</span>
               </div>
               <div class="bank-row" v-if="order.bankInfo.bankBranch">
-                <span class="bank-label">分行</span>
+                <span class="bank-label">Chi nhánh</span>
                 <span class="bank-val">{{ order.bankInfo.bankBranch }}</span>
-                <span class="copy-btn-text" @click="copyText(order.bankInfo.bankBranch)">复制</span>
+                <span class="copy-btn-text" @click="copyText(order.bankInfo.bankBranch)">Sao chép</span>
               </div>
               <div class="bank-row">
-                <span class="bank-label">姓名</span>
+                <span class="bank-label">Họ tên</span>
                 <span class="bank-val">{{ order.bankInfo.accountName }}</span>
-                <span class="copy-btn-text" @click="copyText(order.bankInfo.accountName)">复制</span>
+                <span class="copy-btn-text" @click="copyText(order.bankInfo.accountName)">Sao chép</span>
               </div>
               <div class="bank-row">
-                <span class="bank-label">卡号</span>
+                <span class="bank-label">Số thẻ</span>
                 <span class="bank-val bank-code">{{ order.bankInfo.bankCode }}</span>
-                <span class="copy-btn-text" @click="copyText(order.bankInfo.bankCode)">复制</span>
+                <span class="copy-btn-text" @click="copyText(order.bankInfo.bankCode)">Sao chép</span>
               </div>
             </div>
           </div>
@@ -92,39 +92,39 @@
           <div class="pay-details-box" v-else-if="currentPayAddress">
             <div class="address-display">
               <div class="address-label">
-                {{ order?.paytype === 'USDT' ? '充值地址' : '收款账号' }}
+                {{ order?.paytype === 'USDT' ? 'Địa chỉ nạp' : 'Tài khoản nhận' }}
               </div>
               <div class="address-content">
                 <div class="address-text">{{ currentPayAddress }}</div>
               </div>
               <div class="address-actions">
                 <div class="action-btn" @click="copyAddress">
-                  <van-icon name="description" /> 复制
+                  <van-icon name="description" /> Sao chép
                 </div>
               </div>
             </div>
             <div class="payee-name" v-if="order?.accountName">
-              收款人：{{ order.accountName }}
+              Người nhận: {{ order.accountName }}
             </div>
           </div>
 
           <div class="no-address-tip" v-else-if="order?.paytype === 'USDT' && !currentPayAddress">
             <van-icon name="warning-o" size="40" color="#ff976a" />
-            <div class="tip-text">收款地址暂未配置</div>
-            <div class="tip-sub">请联系客服获取充值地址</div>
+            <div class="tip-text">Địa chỉ nhận chưa được cấu hình</div>
+            <div class="tip-sub">Vui lòng liên hệ CSKH để lấy địa chỉ nạp</div>
           </div>
         </div>
 
         <div class="pay-footer-section">
           <div class="warning-tips">
             <van-icon name="info-o" />
-            <span v-if="order?.paytype === 'USDT'">请务必使用 {{ selectedChain }} 网络转账，否则无法到账</span>
-            <span v-else>请确认收款信息一致后再转账</span>
+            <span v-if="order?.paytype === 'USDT'">Vui lòng chuyển qua mạng {{ selectedChain }}, nếu không sẽ mất tiền</span>
+            <span v-else>Vui lòng xác nhận thông tin trước khi chuyển</span>
           </div>
           
           <div class="confirm-check-row">
             <van-checkbox v-model="payConfirmed" checked-color="#04BE02" icon-size="16px">
-              我已完成转账
+              Tôi đã chuyển khoản
             </van-checkbox>
           </div>
           
@@ -133,7 +133,7 @@
             :class="{ disabled: !payConfirmed }"
             @click="confirmPayment"
           >
-            确认提交
+            Xác nhận
           </div>
         </div>
       </div>
@@ -205,43 +205,43 @@ const copyText = async (text) => {
   if (!text) return
   try {
     await navigator.clipboard.writeText(text)
-    showToast('已复制')
+    showToast('Đã sao chép')
   } catch (e) {
-    showToast('复制失败')
+    showToast('Sao chép thất bại')
   }
 }
 
 const copyAddress = async () => {
   await copyText(currentPayAddress.value)
-  showToast('地址已复制')
+  showToast('Đã sao chép địa chỉ')
 }
 
 const confirmPayment = async () => {
   if (!payConfirmed.value) {
-    showToast('请先确认已完成转账')
+    showToast('Vui lòng xác nhận đã chuyển khoản')
     return
   }
   
   if (!props.order?.trano) {
-    showToast('订单信息不存在')
+    showToast('Thông tin đơn hàng không tồn tại')
     return
   }
   
   try {
-    showLoadingToast({ message: '提交中...', forbidClick: true, duration: 0 })
+    showLoadingToast({ message: 'Đang gửi...', forbidClick: true, duration: 0 })
     const res = await rechargeApi.confirm(props.order.trano)
     closeToast()
     
     if (res.code === 0) {
-      showToast({ type: 'success', message: '确认成功，请等待审核' })
+      showToast({ type: 'success', message: 'Xác nhận thành công, vui lòng chờ duyệt' })
       visible.value = false
       emit('confirmed')
     } else {
-      showToast(res.message || '确认失败')
+      showToast(res.message || 'Xác nhận thất bại')
     }
   } catch (e) {
     closeToast()
-    showToast('网络错误，请重试')
+    showToast('Lỗi mạng, vui lòng thử lại')
   }
 }
 

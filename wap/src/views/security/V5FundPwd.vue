@@ -1,7 +1,7 @@
 <template>
   <div class="v5-fund-pwd" :class="{ 'keyboard-open': showKeyboard }">
 <van-nav-bar
-      title="提现密码"
+      title="Mật khẩu rút tiền"
       left-arrow
       @click-left="onClickLeft"
       class="custom-nav"
@@ -9,10 +9,10 @@
 
     <div class="content">
       <div class="step-1">
-        <div class="green-tip">为了资金安全，需先设置提现密码哦！</div>
+        <div class="green-tip">Để bảo mật tài khoản, vui lòng thiết lập mật khẩu rút tiền!</div>
         
         <div class="pwd-block" @click.stop="openKeyboard('fund')">
-          <div class="label">设置提现密码</div>
+          <div class="label">Thiết lập mật khẩu rút tiền</div>
           <van-password-input
             :value="fundPassword"
             :focused="currentFocus === 'fund'"
@@ -23,7 +23,7 @@
         </div>
 
         <div class="pwd-block" @click.stop="openKeyboard('confirm')">
-          <div class="label">确认提现密码</div>
+          <div class="label">Xác nhận mật khẩu rút tiền</div>
           <van-password-input
             :value="confirmFundPassword"
             :focused="currentFocus === 'confirm'"
@@ -35,7 +35,7 @@
 
         <div class="warning-tip">
           <van-icon name="info" class="warn-icon" />
-          注意：提现密码保护您的资金安全，非常重要，只能自己知道，以免造成资金损失
+          Lưu ý: Mật khẩu rút tiền bảo vệ tài sản của bạn, rất quan trọng, chỉ bạn được biết để tránh mất tiền
         </div>
       </div>
 
@@ -43,7 +43,7 @@
 
     <div class="bottom-area" :style="{ bottom: showKeyboard ? '240px' : '0' }">
       <van-button block color="#009688" class="submit-btn" @click="onSubmit" :loading="submitting">
-        确定
+        Xác nhận
       </van-button>
     </div>
 
@@ -109,15 +109,15 @@ const onDelete = () => {
 
 const onSubmit = async () => {
   if (fundPassword.value.length !== 6) {
-    showToast('请输入6位提现密码')
+    showToast('Vui lòng nhập mật khẩu 6 chữ số')
     return
   }
   if (confirmFundPassword.value.length !== 6) {
-    showToast('请确认提现密码')
+    showToast('Vui lòng xác nhận mật khẩu rút tiền')
     return
   }
   if (fundPassword.value !== confirmFundPassword.value) {
-    showToast('两次输入不一致')
+    showToast('Hai lần nhập không khớp')
     confirmFundPassword.value = ''
     currentFocus.value = 'confirm'
     return
@@ -129,13 +129,13 @@ const onSubmit = async () => {
       confirmPassword: confirmFundPassword.value
     })
     if (res.code === 0) {
-      showToast('设置成功')
+      showToast('Thiết lập thành công')
       setTimeout(() => router.back(), 1000)
     } else {
-      showToast(res.message || '设置失败')
+      showToast(res.message || 'Thiết lập thất bại')
     }
   } catch (e) {
-    showToast(e.message || '设置失败')
+    showToast(e.message || 'Thiết lập thất bại')
   } finally {
     submitting.value = false
     showKeyboard.value = false

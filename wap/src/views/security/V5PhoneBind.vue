@@ -1,14 +1,14 @@
 <template>
   <div class="v5-phone-bind">
     <van-nav-bar
-      title="手机"
+      title="Số điện thoại"
       left-arrow
       @click-left="onClickLeft"
       class="custom-nav"
     />
 
     <div class="content">
-      <div class="page-label">绑定手机</div>
+      <div class="page-label">Liên kết số điện thoại</div>
       
       <div class="phone-input-container">
         <div class="country-selector" @click="showCountryPicker = true">
@@ -20,7 +20,7 @@
         <input 
           type="tel" 
           v-model="phone" 
-          placeholder="请输入手机号" 
+          placeholder="Nhập số điện thoại"
           class="phone-input"
         />
       </div>
@@ -31,18 +31,18 @@
         <input 
           type="text" 
           v-model="code" 
-          placeholder="请输入验证码" 
+          placeholder="Nhập mã xác minh"
           class="code-input"
           maxlength="6"
         />
         <span class="countdown" v-if="countdown > 0">{{ countdown }}s</span>
-        <span class="resend" v-else @click="sendCode">重新发送</span>
+        <span class="resend" v-else @click="sendCode">Gửi lại</span>
       </div>
     </div>
 
     <div class="bottom-area">
-      <van-button v-if="!codeSent" block color="#009688" class="submit-btn" @click="sendCode" :loading="sending">发送验证码</van-button>
-      <van-button v-else block color="#009688" class="submit-btn" @click="onSubmit" :loading="submitting">确定绑定</van-button>
+      <van-button v-if="!codeSent" block color="#009688" class="submit-btn" @click="sendCode" :loading="sending">Gửi mã xác minh</van-button>
+      <van-button v-else block color="#009688" class="submit-btn" @click="onSubmit" :loading="submitting">Xác nhận liên kết</van-button>
     </div>
 
     
@@ -87,16 +87,16 @@ const submitting = ref(false)
 let timer = null
 
 const countryList = [
-  { name: '中国', code: '86', emoji: '🇨🇳' },
-  { name: '圣马力诺', code: '378', emoji: '🇸🇲' },
-  { name: '卡塔尔', code: '974', emoji: '🇶🇦' },
-  { name: '圣彼埃尔和密克隆岛', code: '508', emoji: '🇵🇲' },
-  { name: '加拿大', code: '1', emoji: '🇨🇦' },
-  { name: '巴西', code: '55', emoji: '🇧🇷' },
-  { name: '巴勒斯坦', code: '970', emoji: '🇵🇸' },
-  { name: '美国', code: '1', emoji: '🇺🇸' },
-  { name: '英国', code: '44', emoji: '🇬🇧' },
-  { name: '日本', code: '81', emoji: '🇯🇵' },
+  { name: 'Trung Quốc', code: '86', emoji: '🇨🇳' },
+  { name: 'San Marino', code: '378', emoji: '🇸🇲' },
+  { name: 'Qatar', code: '974', emoji: '🇶🇦' },
+  { name: 'Saint Pierre và Miquelon', code: '508', emoji: '🇵🇲' },
+  { name: 'Canada', code: '1', emoji: '🇨🇦' },
+  { name: 'Brazil', code: '55', emoji: '🇧🇷' },
+  { name: 'Palestine', code: '970', emoji: '🇵🇸' },
+  { name: 'Mỹ', code: '1', emoji: '🇺🇸' },
+  { name: 'Anh', code: '44', emoji: '🇬🇧' },
+  { name: 'Nhật Bản', code: '81', emoji: '🇯🇵' },
 ]
 
 const currentCountry = ref(countryList[0])
@@ -120,11 +120,11 @@ const startCountdown = () => {
 
 const sendCode = async () => {
   if (!phone.value) {
-    showToast('请输入手机号')
+    showToast('Vui lòng nhập số điện thoại')
     return
   }
   if (phone.value.length < 5 || phone.value.length > 15 || !/^\d+$/.test(phone.value)) {
-    showToast('请输入正确的手机号')
+    showToast('Vui lòng nhập số điện thoại hợp lệ')
     return
   }
   
@@ -132,14 +132,14 @@ const sendCode = async () => {
   try {
     const res = await securityApi.sendPhoneCode(phone.value)
     if (res.code === 0) {
-      showToast('验证码已发送')
+      showToast('Đã gửi mã xác minh')
       codeSent.value = true
       startCountdown()
     } else {
-      showToast(res.message || '发送失败')
+      showToast(res.message || 'Gửi thất bại')
     }
   } catch (e) {
-    showToast(e.message || '发送失败')
+    showToast(e.message || 'Gửi thất bại')
   } finally {
     sending.value = false
   }
@@ -147,7 +147,7 @@ const sendCode = async () => {
 
 const onSubmit = async () => {
   if (!code.value || code.value.length !== 6) {
-    showToast('请输入6位验证码')
+    showToast('Vui lòng nhập mã 6 chữ số')
     return
   }
   
@@ -155,13 +155,13 @@ const onSubmit = async () => {
   try {
     const res = await securityApi.bindPhone({ phone: phone.value, code: code.value })
     if (res.code === 0) {
-      showToast('绑定成功')
+      showToast('Liên kết thành công')
       setTimeout(() => router.back(), 1000)
     } else {
-      showToast(res.message || '绑定失败')
+      showToast(res.message || 'Liên kết thất bại')
     }
   } catch (e) {
-    showToast(e.message || '绑定失败')
+    showToast(e.message || 'Liên kết thất bại')
   } finally {
     submitting.value = false
   }

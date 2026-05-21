@@ -6,7 +6,7 @@
     
     
     <div class="faqihemai animated linearTop" :style="{ display: visible ? 'block' : 'none', zIndex: 1001 }">
-      <div class="faqihemai_title">发起合买</div>
+      <div class="faqihemai_title">Tạo mua chung</div>
       <div class="faqihemai_notice">
         <div class="faqihemai_notice_div">
           <div class="leixing" style="border-bottom: 1px solid #7777771f;">
@@ -23,10 +23,10 @@
             </div>
           </div>
           <div class="faqihemai_f">
-            <span>我要分为：</span><input type="text" id="fsInput" name="allnum" v-model.number="fenShu" @input="updateFenShuMoney"><span> 份，</span><span>每份<i style="color: rgb(255, 170, 13);" id="fsMoney">￥{{ fenShuMoney.toFixed(2) }}</i>元，</span><span>每份最低1元。</span>
+            <span>Chia thành:</span><input type="text" id="fsInput" name="allnum" v-model.number="fenShu" @input="updateFenShuMoney"><span> phần,</span><span>mỗi phần <i style="color: rgb(255, 170, 13);" id="fsMoney">{{ fenShuMoney.toFixed(2) }}</i>đ,</span><span>tối thiểu 1đ/phần.</span>
           </div>
           <div class="faqihemai_r">
-            <span>我要认购：</span><input type="text" id="rgInput" name="buynum" v-model.number="renGou" @input="updateRenGouPercent"><span> 份，</span><span><span>{{ renGouPercent }}</span>%</span>
+            <span>Tôi mua:</span><input type="text" id="rgInput" name="buynum" v-model.number="renGou" @input="updateRenGouPercent"><span> phần,</span><span><span>{{ renGouPercent }}</span>%</span>
             <div class="tips" id="rgErr" :style="{ display: rgErr ? 'block' : 'none' }">{{ rgErr }}</div>
           </div>
           <div class="faqihemai_b">
@@ -38,13 +38,13 @@
               :num="isBaoDi ? 1 : 0"
               @click="isBaoDi = !isBaoDi"
             ></div>
-            <span>我要保底：</span><input type="text" id="bdInput" name="baodinum" v-model.number="baoDiFenShu" :disabled="!isBaoDi" @input="updateBaoDi"><span> 份，</span><span><span id="bdMoney" style="color: rgb(255, 170, 13);">￥{{ baoDiMoney.toFixed(2) }}</span>元（<span id="bdScale">{{ baoDiPercent }}</span>%）</span>
+            <span>Tôi bảo đảm:</span><input type="text" id="bdInput" name="baodinum" v-model.number="baoDiFenShu" :disabled="!isBaoDi" @input="updateBaoDi"><span> phần,</span><span><span id="bdMoney" style="color: rgb(255, 170, 13);">{{ baoDiMoney.toFixed(2) }}</span>đ（<span id="bdScale">{{ baoDiPercent }}</span>%）</span>
             <div class="tips" id="bdErr" :style="{ display: bdErr ? 'block' : 'none' }">{{ bdErr }}</div>
           </div>
         </div>
       </div>
       <div class="bottom">
-        <button class="noe" @click="handleClose">取 消</button><button class="two" id="buy_hemai" @click="handleConfirm">发起合买</button>
+        <button class="noe" @click="handleClose">Hủy</button><button class="two" id="buy_hemai" @click="handleConfirm">Tạo mua chung</button>
       </div>
     </div>
   </div>
@@ -67,10 +67,10 @@ const props = defineProps({
 const emit = defineEmits(['close', 'confirm', 'update:visible'])
 
 const hemaiTypes = [
-  { label: '完全公开', data: 'yes' },
-  { label: '开奖后公开', data: 'no' },
-  { label: '仅跟单人可看', data: 'no' },
-  { label: '完全保密', data: 'no' }
+  { label: 'Công khai', data: 'yes' },
+  { label: 'Công khai sau quay', data: 'no' },
+  { label: 'Chỉ người tham gia', data: 'no' },
+  { label: 'Hoàn toàn bí mật', data: 'no' }
 ]
 
 const selectedType = ref(0)
@@ -122,7 +122,7 @@ const updateRenGouPercent = () => {
   }
   if (renGou.value > fenShu.value) {
     renGou.value = fenShu.value
-    rgErr.value = '认购份数不能超过总份数'
+    rgErr.value = 'Số phần mua không được vượt quá tổng'
   }
   renGouPercent.value = fenShu.value > 0 ? Math.floor((renGou.value / fenShu.value) * 100) : 0
   
@@ -149,7 +149,7 @@ const updateBaoDi = () => {
   }
   if (baoDiFenShu.value > renGou.value) {
     baoDiFenShu.value = renGou.value
-    bdErr.value = '保底份数不能超过认购份数'
+    bdErr.value = 'Số phần bảo đảm không được vượt quá số mua'
   }
   
   baoDiMoney.value = baoDiFenShu.value * fenShuMoney.value
@@ -164,27 +164,27 @@ const handleClose = () => {
 const handleConfirm = () => {
 
   if (props.totalAmount <= 0) {
-    alert('请先选择投注号码')
+    alert('Vui lòng chọn số cược trước')
     return
   }
   
   if (fenShu.value < 1) {
-    alert('份数不能小于1')
+    alert('Số phần không được nhỏ hơn 1')
     return
   }
   
   if (fenShuMoney.value < 1) {
-    alert('每份金额不能小于1元')
+    alert('Mỗi phần không được nhỏ hơn 1đ')
     return
   }
   
   if (renGou.value < 1 || renGou.value > fenShu.value) {
-    alert('认购份数不正确')
+    alert('Số phần mua không đúng')
     return
   }
   
   if (isBaoDi.value && baoDiFenShu.value > renGou.value) {
-    alert('保底份数不能超过认购份数')
+    alert('Số phần bảo đảm không được vượt quá số mua')
     return
   }
   

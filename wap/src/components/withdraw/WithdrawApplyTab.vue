@@ -1,7 +1,7 @@
 <template>
   <div class="tab-content tab-apply">
     <div class="balance-bar">
-      <span>余额 <span class="gold">{{ balance.toFixed(2) }}</span></span>
+      <span>Số dư <span class="gold">{{ balance.toFixed(2) }}</span></span>
       <img src="/assets/img/comm_icon_sx.svg" class="refresh-icon" :class="{ spinning: isBalanceRefreshing }" @click="handleBalanceRefresh" />
     </div>
 
@@ -21,7 +21,7 @@
           <div class="center-text" :class="{ 'has-value': selectedAccount }">
             <transition name="text-switch" mode="out-in">
               <span v-if="selectedAccount" :key="selectedAccount.id" v-html="getSelectedAccountText(selectedAccount)"></span>
-              <span v-else key="default">添加提现账户</span>
+              <span v-else key="default">Thêm tài khoản rút tiền</span>
             </transition>
           </div>
             <van-icon :name="showAccountDropdown ? 'arrow-up' : 'arrow-down'" class="arrow-icon" />
@@ -61,7 +61,7 @@
                 <div class="dropdown-item-info">
                   <div class="dropdown-item-name">{{ typeItem.name }}</div>
                 </div>
-                <span class="add-text">添加</span>
+                <span class="add-text">Thêm</span>
                 <van-icon name="arrow" class="add-arrow" />
               </div>
             </div>
@@ -78,16 +78,16 @@
         <input 
           type="number" 
           v-model="amount"
-          :placeholder="selectedAccount ? `最低${minAmount}元，最高${maxAmount}元` : '请先添加提现账户才能提现'" 
+          :placeholder="selectedAccount ? `Tối thiểu ${minAmount}đ, tối đa ${maxAmount}đ` : 'Vui lòng thêm tài khoản rút tiền trước'"
           :disabled="!selectedAccount" 
           class="input-field" 
         />
-        <span class="all-btn" @click="fillAllBalance">全部</span>
+        <span class="all-btn" @click="fillAllBalance">Tất cả</span>
       </div>
       <div class="amount-divider"></div>
       <div class="withdraw-pwd-section" v-if="savedAccounts.length > 0">
         <div class="pwd-label-row">
-          <span class="pwd-label">验证提现密码</span>
+          <span class="pwd-label">Xác minh mật khẩu rút tiền</span>
           <img :src="showPwdVisible ? '/assets/img/comm_icon_show.svg' : '/assets/img/comm_icon_hide.svg'" class="pwd-eye-icon" :class="{ active: showPwdVisible }" @click="showPwdVisible = !showPwdVisible" />
         </div>
         <div class="pwd-boxes" @click="$emit('show-keyboard')">
@@ -98,13 +98,13 @@
             </template>
           </div>
         </div>
-        <div class="pwd-tip">温馨提示：即日起：汇旺上分的请汇旺下分，免手续费，秒到账</div>
+        <div class="pwd-tip">Lưu ý: Từ hôm nay: Nạp qua Huiwang vui lòng rút qua Huiwang, miễn phí, đến ngay</div>
       </div>
     </div>
 
     <div class="action-buttons">
-      <div class="btn btn-interest" @click="goToYueBao">赚取利息</div>
-      <div class="btn btn-submit" :class="{ active: canSubmit }" @click="handleSubmit">确定提现</div>
+      <div class="btn btn-interest" @click="goToYueBao">Kiếm lãi</div>
+      <div class="btn btn-submit" :class="{ active: canSubmit }" @click="handleSubmit">Xác nhận rút</div>
     </div>
   </div>
 </template>
@@ -161,10 +161,10 @@ defineExpose({
 const toggleAccountDropdown = () => {
   if (!hasFundPassword.value) {
     showConfirmDialog({
-      title: '提示',
-      message: '您还未设置资金密码，请先设置资金密码',
-      confirmButtonText: '去设置',
-      cancelButtonText: '取消',
+      title: 'Thông báo',
+      message: 'Bạn chưa đặt mật khẩu rút tiền, vui lòng đặt trước',
+      confirmButtonText: 'Đi đặt',
+      cancelButtonText: 'Hủy',
       confirmButtonColor: '#26A17B'
     }).then(() => {
       router.push('/security/fund-pwd')
@@ -186,7 +186,7 @@ const handleAddNewAccount = (type) => {
 
 const fillAllBalance = () => {
   if (!selectedAccount.value) {
-    showToast('请先选择提现账户')
+    showToast('Vui lòng chọn tài khoản rút tiền')
     return
   }
   amount.value = balance.value
@@ -201,7 +201,7 @@ const handleSubmit = async () => {
   if (!checkHasFundPassword()) return
   
   if (!withdrawPassword.value) {
-    showToast('请输入资金密码')
+    showToast('Vui lòng nhập mật khẩu rút tiền')
     return
   }
   
@@ -212,7 +212,7 @@ const handleSubmit = async () => {
       fundPassword: withdrawPassword.value
     })
     if (res.code === 0) {
-      showToast('提现申请已提交')
+      showToast('Đã gửi yêu cầu rút tiền')
       amount.value = ''
       withdrawPassword.value = ''
       loadConfig()
@@ -220,11 +220,11 @@ const handleSubmit = async () => {
       if (res.data?.needSetFundPwd) {
         checkHasFundPassword()
       } else {
-        showToast(res.message || '提现失败')
+        showToast(res.message || 'Rút tiền thất bại')
       }
     }
   } catch (e) {
-    showToast('提现失败')
+    showToast('Rút tiền thất bại')
   }
 }
 </script>

@@ -25,14 +25,14 @@
         <div class="category-header" v-if="tab.code !== 'hot'">
           <img :src="tab.iconImg" class="cat-icon" />
           <span class="cat-title">{{ getCategoryTitle(tab) }}</span>
-          <span class="cat-all" @click="goToAllPlatforms(tab)">全部</span>
+          <span class="cat-all" @click="goToAllPlatforms(tab)">Tất cả</span>
         </div>
         
         <div class="sub-tabs-wrapper" v-else>
           <div class="sub-tabs">
-            <div class="sub-tab" :class="{ active: hotSubTab === 'hot' }" @click="switchHotSubTab('hot')">热门</div>
-            <div class="sub-tab" :class="{ active: hotSubTab === 'recent' }" @click="switchHotSubTab('recent')">最近</div>
-            <div class="sub-tab" :class="{ active: hotSubTab === 'favorite' }" @click="switchHotSubTab('favorite')">收藏</div>
+            <div class="sub-tab" :class="{ active: hotSubTab === 'hot' }" @click="switchHotSubTab('hot')">Hot</div>
+            <div class="sub-tab" :class="{ active: hotSubTab === 'recent' }" @click="switchHotSubTab('recent')">Gần đây</div>
+            <div class="sub-tab" :class="{ active: hotSubTab === 'favorite' }" @click="switchHotSubTab('favorite')">Yêu thích</div>
             <div class="sub-tab-indicator" :style="{ transform: `translateX(${hotSubTabIndex * 100}%)` }"></div>
           </div>
         </div>
@@ -40,7 +40,7 @@
           <div class="section-content">
             <div class="platform-loading" v-if="getCategoryState(tab.code).loading">
               <van-loading type="spinner" color="#009688" size="24px" />
-              <span style="margin-top:8px;font-size:12px">加载中...</span>
+              <span style="margin-top:8px;font-size:12px">Đang tải...</span>
             </div>
 
             <template v-else-if="tab.code === 'hot'">
@@ -86,24 +86,24 @@
               </div>
               
               <div class="platform-empty" v-if="!getCategoryState(tab.code).loading && getCategoryState(tab.code).list.length === 0">
-                <span style="font-size:12px;color:#ccc">暂无数据</span>
+                <span style="font-size:12px;color:#ccc">Chưa có dữ liệu</span>
               </div>
             </template>
 
             <div class="load-more" v-if="tab.code === 'hot'">
               <template v-if="getHotCurrentList().length > 0">
-                <span v-if="getHotCurrentList().length > hotLimit">正在显示 {{ getHotCurrentList().length }} 款{{ getHotSubTabName() }}中的 {{ getHotVisibleItems().length }} 款</span>
-                <span v-else>已加载完成</span>
-                <div class="more-btn" v-if="getHotCurrentList().length > hotLimit" @click="hotLimit += 9">加载更多 <van-icon name="arrow-down" /></div>
+                <span v-if="getHotCurrentList().length > hotLimit">Đang hiển thị {{ getHotVisibleItems().length }}/{{ getHotCurrentList().length }} {{ getHotSubTabName() }}</span>
+                <span v-else>Đã tải xong</span>
+                <div class="more-btn" v-if="getHotCurrentList().length > hotLimit" @click="hotLimit += 9">Tải thêm <van-icon name="arrow-down" /></div>
               </template>
               <template v-else>
-                <span style="color:#999">暂无{{ getHotSubTabName() }}</span>
+                <span style="color:#999">Chưa có {{ getHotSubTabName() }}</span>
               </template>
             </div>
             <div class="load-more" v-else-if="getCategoryState(tab.code).list.length > 0">
-               <span v-if="hasMoreItems(tab.code)">正在显示 {{ getCategoryState(tab.code).list.length }} 款{{ getCategoryTitle(tab) }}中的 {{ getVisibleItems(tab.code).length }} 款</span>
-               <span v-else>已加载完成</span>
-               <div class="more-btn" v-if="hasMoreItems(tab.code)" @click="handleLoadMore(tab.code)">加载更多 <van-icon name="arrow-down" /></div>
+               <span v-if="hasMoreItems(tab.code)">Đang hiển thị {{ getVisibleItems(tab.code).length }}/{{ getCategoryState(tab.code).list.length }} {{ getCategoryTitle(tab) }}</span>
+               <span v-else>Đã tải xong</span>
+               <div class="more-btn" v-if="hasMoreItems(tab.code)" @click="handleLoadMore(tab.code)">Tải thêm <van-icon name="arrow-down" /></div>
             </div>
           </div>
         </div>
@@ -140,13 +140,13 @@ const favoriteGames = ref([])
 const favoriteIds = ref(new Set())
 
 const defaultSidebarTabs = [
-  { code: 'hot', name: '热 门', iconImg: '/assets/img/icon_dtfl_rm_1.avif' },
-  { code: 'slot', name: '电 子', iconImg: '/assets/img/icon_dtfl_dz_1.avif' },
-  { code: 'live', name: '真 人', iconImg: '/assets/img/icon_dtfl_zr_1.avif' },
-  { code: 'fish', name: '捕 鱼', iconImg: '/assets/img/icon_dtfl_by_1.avif' },
-  { code: 'chess', name: '棋 牌', iconImg: '/assets/img/icon_dtfl_qp_1.avif' },
-  { code: 'lottery', name: '彩 票', iconImg: '/assets/img/icon_dtfl_cp_1.avif' },
-  { code: 'blockchain', name: '区块链', iconImg: '/assets/img/icon_dtfl_qkl_1.avif' }
+  { code: 'hot', name: 'H O T', iconImg: '/assets/img/icon_dtfl_rm_1.avif' },
+  { code: 'slot', name: 'S L O T', iconImg: '/assets/img/icon_dtfl_dz_1.avif' },
+  { code: 'live', name: 'L I V E', iconImg: '/assets/img/icon_dtfl_zr_1.avif' },
+  { code: 'fish', name: 'B Ắ N C Á', iconImg: '/assets/img/icon_dtfl_by_1.avif' },
+  { code: 'chess', name: 'B À I', iconImg: '/assets/img/icon_dtfl_qp_1.avif' },
+  { code: 'lottery', name: 'X Ổ S Ố', iconImg: '/assets/img/icon_dtfl_cp_1.avif' },
+  { code: 'blockchain', name: 'B L O C K', iconImg: '/assets/img/icon_dtfl_qkl_1.avif' }
 ]
 
 const categoryMap = reactive({})
@@ -164,15 +164,15 @@ const iconMap = {
 }
 
 const categoryNameMap = {
-  hot: '热门游戏',
-  slot: '电子游戏',
-  live: '真人视讯',
-  fish: '捕鱼游戏',
-  chess: '棋牌游戏',
-  lottery: '彩票游戏',
-  esport: '电子竞技',
-  sport: '体育竞技',
-  blockchain: '区块链游戏'
+  hot: 'Game Hot',
+  slot: 'Slot Game',
+  live: 'Casino Trực Tuyến',
+  fish: 'Bắn Cá',
+  chess: 'Game Bài',
+  lottery: 'Xổ Số',
+  esport: 'Thể Thao Điện Tử',
+  sport: 'Thể Thao',
+  blockchain: 'Blockchain'
 }
 
 const sidebarTabs = ref([...defaultSidebarTabs])
@@ -307,7 +307,7 @@ const switchHotSubTab = (tab) => {
 }
 
 const getHotSubTabName = () => {
-  const names = { hot: '热门游戏', recent: '最近游戏', favorite: '收藏游戏' }
+  const names = { hot: 'game hot', recent: 'game gần đây', favorite: 'game yêu thích' }
   return names[hotSubTab.value] || '热门游戏'
 }
 
@@ -323,11 +323,11 @@ const getHotVisibleItems = () => {
 
 const enterHotGame = async (game) => {
   if (!isLoggedIn()) {
-    showToast('请先登录')
+    showToast('Vui lòng đăng nhập')
     return
   }
   
-  showToast({ message: `正在进入 ${game.name}...`, icon: 'loading' })
+  showToast({ message: `Đang vào ${game.name}...`, icon: 'loading' })
   
   try {
     gameApi.addRecent({
@@ -349,10 +349,10 @@ const enterHotGame = async (game) => {
         window.location.href = res.data.url
       }
     } else {
-      showToast(res.message || res.msg || '进入游戏失败')
+      showToast(res.message || res.msg || 'Vào game thất bại')
     }
   } catch (e) {
-    showToast(e.message || '网络错误')
+    showToast(e.message || 'Lỗi mạng')
   }
 }
 
@@ -363,7 +363,7 @@ const isFavorited = (game) => {
 
 const toggleFavorite = async (game) => {
   if (!isLoggedIn()) {
-    showToast('请先登录')
+    showToast('Vui lòng đăng nhập')
     return
   }
   const id = `${game.platform}_${game.code}`
@@ -372,15 +372,15 @@ const toggleFavorite = async (game) => {
       await gameApi.removeFavorite({ platform: game.platform, gameId: game.code })
       favoriteIds.value.delete(id)
       favoriteGames.value = favoriteGames.value.filter(g => `${g.platform}_${g.code}` !== id)
-      showToast('已取消收藏')
+      showToast('Đã hủy yêu thích')
     } else {
       await gameApi.addFavorite({ platform: game.platform, gameId: game.code, gameName: game.name, type: game.type, icon: game.image })
       favoriteIds.value.add(id)
       favoriteGames.value.unshift(game)
-      showToast('收藏成功')
+      showToast('Đã thêm yêu thích')
     }
   } catch (e) {
-    showToast('操作失败')
+    showToast('Thao tác thất bại')
   }
 }
 
@@ -516,7 +516,7 @@ const enterPlatform = async (platform, type) => {
 }
 
 const enterGameCommon = async (platform) => {
-  showToast({ message: `正在进入 ${platform.name}...`, icon: 'loading' })
+  showToast({ message: `Đang vào ${platform.name}...`, icon: 'loading' })
   try {
     const res = await gameApi.enterGame({
       platform: platform.code,
@@ -530,10 +530,10 @@ const enterGameCommon = async (platform) => {
         window.location.href = res.data.url
       }
     } else {
-      showToast(res.message || res.msg || '进入游戏失败')
+      showToast(res.message || res.msg || 'Vào game thất bại')
     }
   } catch (e) {
-    showToast(e.message || '网络错误')
+    showToast(e.message || 'Lỗi mạng')
   }
 }
 

@@ -4,8 +4,8 @@
       <div class="nav-back" @click="$router.back()">
         <van-icon name="arrow-left" />
       </div>
-      <div class="nav-title">消息中心</div>
-      <div class="nav-right" @click="showToast('设置功能开发中')">
+      <div class="nav-title">Trung Tâm Tin Nhắn</div>
+      <div class="nav-right" @click="showToast('Chức năng cài đặt đang phát triển')">
         <van-icon name="setting-o" />
       </div>
     </div>
@@ -44,7 +44,7 @@
       <div class="search-box">
         <van-field 
           v-model="searchKeyword" 
-          placeholder="搜索"
+          placeholder="Tìm kiếm"
           :border="false"
         >
           <template #right-icon>
@@ -58,7 +58,7 @@
       <div v-if="activeTab === 'service'" class="tab-content">
         <div class="empty-state">
           <img src="/assets/img/img_none_sj.avif" class="empty-icon" />
-          <p>暂无消息</p>
+          <p>Chưa có tin nhắn</p>
         </div>
       </div>
 
@@ -84,7 +84,7 @@
           </div>
           <div v-else-if="!loading" class="empty-state">
             <img src="/assets/img/img_none_sj.avif" class="empty-icon" />
-            <p>暂无消息</p>
+            <p>Chưa có tin nhắn</p>
           </div>
         </van-list>
       </div>
@@ -202,11 +202,11 @@
           </div>
 
           <div class="form-item">
-            <div class="form-label">反馈内容（你提我改）<span class="required">*</span></div>
+            <div class="form-label">Nội dung phản hồi (Bạn góp ý, chúng tôi cải thiện)<span class="required">*</span></div>
             <div class="form-textarea">
-              <textarea 
-                v-model="feedbackForm.content" 
-                placeholder="您的任何意见对我们都很重要，凡是有价值意见都将被采纳，一旦采纳将视重要程度给予不同现金奖励，欢迎您畅所欲言！"
+              <textarea
+                v-model="feedbackForm.content"
+                placeholder="Mọi ý kiến của bạn đều rất quan trọng với chúng tôi. Những ý kiến có giá trị sẽ được áp dụng và tùy theo mức độ quan trọng sẽ nhận được phần thưởng tiền mặt khác nhau. Hãy thoải mái chia sẻ!"
                 maxlength="1000"
               ></textarea>
               <div class="textarea-count">{{ feedbackForm.content.length }}/1000</div>
@@ -214,7 +214,7 @@
           </div>
 
           <div class="form-item">
-            <div class="form-label">有图有真相<span class="tip">（更容易被采纳）</span></div>
+            <div class="form-label">Hình ảnh minh chứng<span class="tip">(Dễ được chấp nhận hơn)</span></div>
             <div class="upload-area">
               <div class="upload-box" v-for="(img, idx) in feedbackForm.images" :key="idx">
                 <img :src="img" class="preview-img" />
@@ -231,18 +231,18 @@
                 @change="handleFeedbackImage"
               />
             </div>
-            <div class="upload-tip">支持图片与视频上传，图片大小不得超过2MB，视频大小不得超过20MB</div>
+            <div class="upload-tip">Hỗ trợ tải lên hình ảnh và video, kích thước ảnh không quá 2MB, video không quá 20MB</div>
           </div>
 
           <div class="reward-rules">
-            <div class="rules-title">奖励规则</div>
+            <div class="rules-title">Quy tắc thưởng</div>
             <div class="rules-content">
-              我们已经设置巨额奖金，专门收集反馈意见，以便我们优化系统和功能，给您带来更好的体验！一旦被采纳，将根据重要程度给予奖励（未采纳除外）。
+              Chúng tôi đã thiết lập quỹ thưởng lớn để thu thập ý kiến phản hồi, giúp chúng tôi tối ưu hóa hệ thống và tính năng, mang đến trải nghiệm tốt hơn cho bạn! Một khi được chấp nhận, sẽ nhận thưởng tùy theo mức độ quan trọng (không áp dụng cho ý kiến không được chấp nhận).
             </div>
           </div>
 
           <div class="submit-area">
-            <button class="submit-btn" @click="submitFeedback">提交反馈</button>
+            <button class="submit-btn" @click="submitFeedback">Gửi Phản Hồi</button>
           </div>
         </div>
 
@@ -259,7 +259,7 @@
           </div>
           <div v-else class="empty-state">
             <img src="/assets/img/img_none_sj.avif" class="empty-icon" />
-            <p>暂无反馈</p>
+            <p>Chưa có phản hồi</p>
           </div>
         </div>
       </div>
@@ -273,7 +273,7 @@
     >
       <div class="message-detail-popup" v-if="currentMessage">
         <div class="popup-header">
-          <span class="popup-title">站内信详情</span>
+          <span class="popup-title">Chi Tiết Tin Nhắn</span>
           <van-icon name="cross" @click="showMessagePopup = false" />
         </div>
         <div class="popup-body">
@@ -497,12 +497,12 @@ const handleFeedbackImage = async (e) => {
   if (!file) return
   
   if (!file.type.startsWith('image/')) {
-    showToast('请选择图片文件')
+    showToast('Vui lòng chọn file hình ảnh')
     return
   }
   
   if (file.size > 2 * 1024 * 1024) {
-    showToast('图片大小不能超过2MB')
+    showToast('Kích thước ảnh không được vượt quá 2MB')
     return
   }
   

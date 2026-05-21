@@ -5,7 +5,7 @@
 
     
     <van-nav-bar
-      title="存款"
+      title="Nạp tiền"
       left-arrow
       @click-left="$router.go(-1)"
       class="nav-header"
@@ -23,15 +23,15 @@
         <div class="entry-icon">
           <van-icon name="gold-coin-o" size="48" color="#04BE02" />
         </div>
-        <div class="entry-text">点击进行存款</div>
-        <div class="entry-sub">安全快捷 · 极速到账</div>
+        <div class="entry-text">Nhấn để nạp tiền</div>
+        <div class="entry-sub">An toàn nhanh chóng · Lên tài khoản tức thì</div>
       </div>
 
       
       <div class="quick-links">
         <div class="link-item" @click="showDeposit = true; goToHistory()">
           <van-icon name="notes-o" size="24" />
-          <span>存款记录</span>
+          <span>Lịch sử nạp</span>
         </div>
       </div>
     </div>

@@ -11,25 +11,25 @@
       </div>
       <div class="bottom-beishu selectMultipleNumber">
         <i class="iconfont reduce" @click="handleReduce">&#xe796;</i>
-        <span><input type="tel" class="selectMultipInput" :value="localMultiple" @input="handleInput" @keypress="validateNumber"> 倍 </span>
+        <span><input type="tel" class="selectMultipInput" :value="localMultiple" @input="handleInput" @keypress="validateNumber"> lần </span>
         <i class="iconfont add" @click="handleAdd">&#xe795;</i>
       </div>
     </div>
     <div class="lottery-bottom-2">
       <div>
-        <span class="select_zhushu">已选 <em class="zhushu" style="color: rgb(67, 67, 84); font-weight: bold;">{{ selectedCount }}</em> 注</span>, 
-        <span class="selectMultipleOld">共计 <em class="selectMultipleOldMoney" style="color: rgb(67, 67, 84); font-weight: bold;">{{ totalMoney.toFixed(3) }}</em>元</span>
-        <span class="hemaijiner" :style="{ display: showHemai ? 'inline' : 'none' }"> 合买金额 <em class="hemaijinerMoney" style="color: rgb(67, 67, 84); font-weight: bold;">{{ hemaiMoney.toFixed(3) }}</em>元 </span>
+        <span class="select_zhushu">Đã chọn <em class="zhushu" style="color: rgb(67, 67, 84); font-weight: bold;">{{ selectedCount }}</em> vé</span>,
+        <span class="selectMultipleOld">Tổng <em class="selectMultipleOldMoney" style="color: rgb(67, 67, 84); font-weight: bold;">{{ totalMoney.toFixed(3) }}</em>đ</span>
+        <span class="hemaijiner" :style="{ display: showHemai ? 'inline' : 'none' }"> Mua chung <em class="hemaijinerMoney" style="color: rgb(67, 67, 84); font-weight: bold;">{{ hemaiMoney.toFixed(3) }}</em>đ </span>
       </div>
-      <span>余额: <em class="wrapRefreshShow" style="color: rgb(67, 67, 84); font-weight: bold;">{{ userBalance }}</em> 元</span>
+      <span>Số dư: <em class="wrapRefreshShow" style="color: rgb(67, 67, 84); font-weight: bold;">{{ userBalance }}</em> đ</span>
     </div>
     <div class="lottery-bottom-3">
-      <div class="hemai" @click="$emit('open-hemai')">发起合买</div>
+      <div class="hemai" @click="$emit('open-hemai')">Mua chung</div>
       <div class="bygcl goucai" style="color: rgb(166, 143, 76);" @click="$emit('open-cart')">
-        <i class="lanIconNumber" id="lanIconNumbere">{{ cartCount }}</i><i class="iconfont">&#xe60e;</i> 购彩篮 
+        <i class="lanIconNumber" id="lanIconNumbere">{{ cartCount }}</i><i class="iconfont">&#xe60e;</i> Giỏ
       </div>
-      <div class="bygcl addtobetbtn" @click="$emit('add-to-cart')"><i class="iconfont">&#xe676;</i> 购彩篮 </div>
-      <div class="kuaijie" @click="$emit('quick-bet')">快速投注</div>
+      <div class="bygcl addtobetbtn" @click="$emit('add-to-cart')"><i class="iconfont">&#xe676;</i> Giỏ </div>
+      <div class="kuaijie" @click="$emit('quick-bet')">Cược nhanh</div>
     </div>
   </div>
 </template>

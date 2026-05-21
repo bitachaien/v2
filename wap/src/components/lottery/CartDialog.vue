@@ -4,18 +4,18 @@
     <div class="dialog-container">
       <div class="CartMain">
         <div class="top">
-          <span>{{ lotteryName }} - 购彩篮</span> 
-          <span class="rbtn" id="orderlist_clear" @click="handleClear">清空所有</span>
+          <span>{{ lotteryName }} - Giỏ cược</span>
+          <span class="rbtn" id="orderlist_clear" @click="handleClear">Xóa tất cả</span>
         </div> 
         <div class="middle">
           <div class="">
             <div class="jixuan" v-if="showRandomSelect">
-              <span class="random1" @click="$emit('random-select', 1)"><i class="iconfont">&#xe6cc; </i>机选一注</span>
-              <span class="random5" @click="$emit('random-select', 5)"><i class="iconfont">&#xe6cc; </i>机选五注</span>
+              <span class="random1" @click="$emit('random-select', 1)"><i class="iconfont">&#xe6cc; </i>Chọn ngẫu nhiên 1</span>
+              <span class="random5" @click="$emit('random-select', 5)"><i class="iconfont">&#xe6cc; </i>Chọn ngẫu nhiên 5</span>
             </div>
             <div class="gouclanwu yBettingLists">
               <div v-if="cartItems.length === 0" class="empty-cart">
-                <p style="text-align: center; padding: 0.3rem; color: #999;">购彩篮为空</p>
+                <p style="text-align: center; padding: 0.3rem; color: #999;">Giỏ cược trống</p>
               </div>
               <div 
                 v-for="(item, index) in cartItems" 
@@ -23,15 +23,15 @@
                 class="yBettingList"
               >
                 <div class="left">{{ item.playName }} [{{ item.playType }}] {{ item.number }}</div>
-                <div class="right">{{ item.zhushu }}注 {{ item.multiple }}倍 {{ item.money.toFixed(3) }}元</div>
-                <div class="delete" @click="handleDelete(index)">删除</div>
+                <div class="right">{{ item.zhushu }}vé {{ item.multiple }}lần {{ item.money.toFixed(3) }}đ</div>
+                <div class="delete" @click="handleDelete(index)">Xóa</div>
               </div>
             </div> 
           </div>
         </div> 
         <div class="foot border_top_1px">
-          <span class="border_right_1px" @click="handleContinue"><i class="iconfont">&#xe62c;</i>继续选号</span> 
-          <span id="f_submit_order" @click="handleSubmit">提交订单</span>
+          <span class="border_right_1px" @click="handleContinue"><i class="iconfont">&#xe62c;</i>Tiếp tục chọn</span>
+          <span id="f_submit_order" @click="handleSubmit">Gửi đơn</span>
         </div>
       </div>
     </div>
@@ -73,7 +73,7 @@ const handleClear = () => {
   if (props.cartItems.length === 0) {
     return
   }
-  if (confirm('确定清空所有投注吗？')) {
+  if (confirm('Bạn có chắc muốn xóa tất cả?')) {
     emit('clear')
   }
 }
@@ -89,7 +89,7 @@ const handleContinue = () => {
 
 const handleSubmit = () => {
   if (props.cartItems.length === 0) {
-    alert('请先选择投注号码')
+    alert('Vui lòng chọn số cược trước')
     return
   }
   emit('submit')

@@ -33,10 +33,10 @@ const loadData = async () => {
       const titles = res.data.map(n => n.title).join('        ')
       noticeText.value = `${titles}        ${titles}`
     } else {
-      noticeText.value = '暂无公告'
+      noticeText.value = 'Chưa có thông báo'
     }
   } catch (e) {
-    noticeText.value = '暂无公告'
+    noticeText.value = 'Chưa có thông báo'
   }
   
   try {

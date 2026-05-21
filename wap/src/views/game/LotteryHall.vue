@@ -4,7 +4,7 @@
       <div class="header-left" @click="router.back()">
         <van-icon name="arrow-left" size="22" color="#333" />
       </div>
-      <h1 class="header-title">彩票大厅</h1>
+      <h1 class="header-title">Sảnh xổ số</h1>
       <div class="header-right">
         <van-icon name="service-o" size="22" color="#333" @click="router.push('/service/online')" />
       </div>
@@ -38,7 +38,7 @@
           >
             <div class="card-cover">
               <img :src="getGameIcon(game)" :alt="game.name" @error="onImageError" />
-              <div class="card-badge" v-if="game.hot">热门</div>
+              <div class="card-badge" v-if="game.hot">Hot</div>
             </div>
             <div class="card-info">
               <span class="card-title">{{ game.name }}</span>
@@ -46,7 +46,7 @@
           </div>
         </div>
 
-        <van-empty v-if="!loading && filteredGames.length === 0" description="暂无游戏" />
+        <van-empty v-if="!loading && filteredGames.length === 0" description="Chưa có trò chơi" />
       </main>
     </div>
   </div>
@@ -64,15 +64,15 @@ const activeCat = ref('all')
 const games = ref([])
 
 const categories = [
-  { code: 'all', name: '彩票', icon: '/assets/img/icon_dtfl_cp_0.svg' },
-  { code: 'ssc', name: '时时彩', icon: '/assets/img/icon_dtfl_cp_0.svg' },
+  { code: 'all', name: 'Xổ số', icon: '/assets/img/icon_dtfl_cp_0.svg' },
+  { code: 'ssc', name: 'SSC', icon: '/assets/img/icon_dtfl_cp_0.svg' },
   { code: 'pk10', name: 'PK10', icon: '/assets/img/icon_dtfl_cp_0.svg' },
-  { code: 'k3', name: '快三', icon: '/assets/img/icon_dtfl_cp_0.svg' },
-  { code: 'x5', name: '11选5', icon: '/assets/img/icon_dtfl_cp_0.svg' },
-  { code: 'lhc', name: '六合彩', icon: '/assets/img/icon_dtfl_cp_0.svg' },
-  { code: 'xy28', name: '幸运28', icon: '/assets/img/icon_dtfl_cp_0.svg' },
-  { code: 'keno', name: '快乐8', icon: '/assets/img/icon_dtfl_cp_0.svg' },
-  { code: 'dpc', name: '低频彩', icon: '/assets/img/icon_dtfl_cp_0.svg' },
+  { code: 'k3', name: 'K3', icon: '/assets/img/icon_dtfl_cp_0.svg' },
+  { code: 'x5', name: '11x5', icon: '/assets/img/icon_dtfl_cp_0.svg' },
+  { code: 'lhc', name: 'Lục hợp', icon: '/assets/img/icon_dtfl_cp_0.svg' },
+  { code: 'xy28', name: 'XY28', icon: '/assets/img/icon_dtfl_cp_0.svg' },
+  { code: 'keno', name: 'Keno', icon: '/assets/img/icon_dtfl_cp_0.svg' },
+  { code: 'dpc', name: 'Tần suất thấp', icon: '/assets/img/icon_dtfl_cp_0.svg' },
 ]
 
 const defaultIcon = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgdmlld0JveD0iMCAwIDY0IDY0Ij48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIGZpbGw9IiNlOGY1ZjAiLz48dGV4dCB4PSIzMiIgeT0iMzYiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiMyNkExN0IiIHRleHQtYW5jaG9yPSJtaWRkbGUiPuW9qTwvdGV4dD48L3N2Zz4='

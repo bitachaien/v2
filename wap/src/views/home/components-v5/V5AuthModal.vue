@@ -23,12 +23,12 @@
           <p v-for="(text, idx) in siteConfig.promoTexts" :key="idx">{{ text }}</p>
         </template>
         <template v-else>
-          <p>🥇全球游戏爱好者的最佳选择🥇</p>
-          <p>🌈畅享多元化游戏娱乐体验🌈</p>
-          <p>❣️安全、诚信、高效的游戏平台，信誉保障，大额无忧❣️</p>
-          <p>👉USDT存取 匿名安全无风险👈</p>
+          <p>🥇Lựa chọn tốt nhất cho game thủ toàn cầu🥇</p>
+          <p>🌈Trải nghiệm giải trí game đa dạng🌈</p>
+          <p>❣️Nền tảng game an toàn, uy tín, hiệu quả, bảo đảm tín nhiệm, giao dịch lớn không lo❣️</p>
+          <p>👉Nạp/rút USDT ẩn danh an toàn không rủi ro👈</p>
         </template>
-        <p class="site-url">易记网址: <span class="url-highlight">{{ siteConfig.siteDomain || '2015.com' }}</span></p>
+        <p class="site-url">Website dễ nhớ: <span class="url-highlight">{{ siteConfig.siteDomain || '2015.com' }}</span></p>
       </div>
 
       <div class="auth-tabs">
@@ -37,23 +37,23 @@
           :class="{ active: activeTab === 'register' }"
           @click="activeTab = 'register'"
         >
-          注册
+          Đăng ký
         </div>
         <div 
           class="tab-item" 
           :class="{ active: activeTab === 'login' }"
           @click="activeTab = 'login'"
         >
-          登录
+          Đăng nhập
         </div>
       </div>
 
       <div v-if="activeTab === 'register'" class="auth-form">
-        <div class="input-label">仅支持账号注册</div>
+        <div class="input-label">Chỉ hỗ trợ đăng ký bằng tài khoản</div>
         
         <div class="tip-box" v-if="defaultTjcode && !tgid">
           <van-icon name="info-o" />
-          无邀请码请填 <span class="code-highlight">{{ defaultTjcode }}</span>
+          Không có mã mời vui lòng điền <span class="code-highlight">{{ defaultTjcode }}</span>
         </div>
         
         <div class="form-item">
@@ -61,7 +61,7 @@
           <input 
             type="text" 
             v-model="regForm.reccode" 
-            :placeholder="tgid ? '邀请码 (已锁定)' : '请输入邀请码 (选填)'" 
+            :placeholder="tgid ? 'Mã mời (đã khóa)' : 'Nhập mã mời (tùy chọn)'"
             class="custom-input" 
             :readonly="!!tgid"
           />
@@ -69,19 +69,19 @@
 
         <div class="form-item">
           <van-icon name="manager" class="input-icon" />
-          <input type="text" v-model="regForm.username" placeholder="请输入账号 (2-12位)" class="custom-input" />
+          <input type="text" v-model="regForm.username" placeholder="Nhập tài khoản (2-12 ký tự)" class="custom-input" />
           <span class="required">*</span>
         </div>
 
         <div class="form-item">
           <van-icon name="lock" class="input-icon" />
-          <input :type="showPwd ? 'text' : 'password'" v-model="regForm.password" placeholder="请输入登录密码" class="custom-input" />
+          <input :type="showPwd ? 'text' : 'password'" v-model="regForm.password" placeholder="Nhập mật khẩu đăng nhập" class="custom-input" />
           <van-icon :name="showPwd ? 'eye-o' : 'closed-eye'" class="eye-icon" @click="showPwd = !showPwd" />
           <span class="required">*</span>
         </div>
 
         <div class="pwd-strength">
-          <span>密码强度</span>
+          <span>Độ mạnh mật khẩu</span>
           <div class="strength-bars">
             <div class="bar" :class="{ filled: pwdStrength >= 1 }"></div>
             <div class="bar" :class="{ filled: pwdStrength >= 2 }"></div>
@@ -90,57 +90,57 @@
           <span class="strength-text" v-if="regForm.password">{{ strengthText }}</span>
         </div>
         <div class="pwd-tips">
-          <span :class="{ valid: hasUpper }"><van-icon :name="hasUpper ? 'checked' : 'clear'" /> 大写</span>
-          <span :class="{ valid: hasLower }"><van-icon :name="hasLower ? 'checked' : 'clear'" /> 小写</span>
-          <span :class="{ valid: hasNumber }"><van-icon :name="hasNumber ? 'checked' : 'clear'" /> 数字</span>
-          <span :class="{ valid: hasSymbol }"><van-icon :name="hasSymbol ? 'checked' : 'clear'" /> 符号</span>
+          <span :class="{ valid: hasUpper }"><van-icon :name="hasUpper ? 'checked' : 'clear'" /> Chữ hoa</span>
+          <span :class="{ valid: hasLower }"><van-icon :name="hasLower ? 'checked' : 'clear'" /> Chữ thường</span>
+          <span :class="{ valid: hasNumber }"><van-icon :name="hasNumber ? 'checked' : 'clear'" /> Số</span>
+          <span :class="{ valid: hasSymbol }"><van-icon :name="hasSymbol ? 'checked' : 'clear'" /> Ký tự đặc biệt</span>
         </div>
 
         <div class="form-item">
           <van-icon name="lock" class="input-icon" />
-          <input type="password" v-model="regForm.cpassword" placeholder="请再次输入密码" class="custom-input" />
+          <input type="password" v-model="regForm.cpassword" placeholder="Nhập lại mật khẩu" class="custom-input" />
           <van-icon name="closed-eye" class="eye-icon" style="opacity: 0" />
           <span class="required">*</span>
         </div>
 
         <div class="agreement-row">
           <van-checkbox v-model="agree" checked-color="#009688" icon-size="16px">
-            我已满18岁,已阅读且同意 <span class="link">《用户协议》</span>
+            Tôi đã đủ 18 tuổi, đã đọc và đồng ý <span class="link">《Thỏa thuận người dùng》</span>
           </van-checkbox>
         </div>
 
-        <van-button block color="#009688" class="submit-btn" @click="handleRegister" :loading="loading">注册</van-button>
+        <van-button block color="#009688" class="submit-btn" @click="handleRegister" :loading="loading">Đăng ký</van-button>
       </div>
 
       <div v-else class="auth-form">
-        <div class="input-label">仅支持账号登录</div>
+        <div class="input-label">Chỉ hỗ trợ đăng nhập bằng tài khoản</div>
         
         <div class="form-item">
           <van-icon name="manager" class="input-icon" />
-          <input type="text" v-model="loginForm.username" placeholder="请输入账号" class="custom-input" />
+          <input type="text" v-model="loginForm.username" placeholder="Nhập tài khoản" class="custom-input" />
           <span class="required">*</span>
         </div>
 
         <div class="form-item">
           <van-icon name="lock" class="input-icon" />
-          <input :type="showPwd ? 'text' : 'password'" v-model="loginForm.password" placeholder="请输入登录密码" class="custom-input" />
+          <input :type="showPwd ? 'text' : 'password'" v-model="loginForm.password" placeholder="Nhập mật khẩu đăng nhập" class="custom-input" />
           <van-icon :name="showPwd ? 'eye-o' : 'closed-eye'" class="eye-icon" @click="showPwd = !showPwd" />
           <span class="required">*</span>
         </div>
 
         <div class="agreement-row">
           <van-checkbox v-model="remember" checked-color="#009688" icon-size="16px">
-            记住账号密码
+            Nhớ tài khoản mật khẩu
           </van-checkbox>
         </div>
 
-        <van-button block color="#009688" class="submit-btn" @click="handleLogin" :loading="loading">登录</van-button>
+        <van-button block color="#009688" class="submit-btn" @click="handleLogin" :loading="loading">Đăng nhập</van-button>
       </div>
 
       <div class="auth-footer">
-        <div class="link-item" @click="goService">联系客服</div>
-        <div class="link-item" @click="goTrial">免费试玩</div>
-        <div class="link-item" v-if="activeTab === 'login'" @click="goForget">忘记密码</div>
+        <div class="link-item" @click="goService">Liên hệ CSKH</div>
+        <div class="link-item" @click="goTrial">Chơi thử miễn phí</div>
+        <div class="link-item" v-if="activeTab === 'login'" @click="goForget">Quên mật khẩu</div>
       </div>
 
     </div>
@@ -208,13 +208,13 @@ const pwdStrength = computed(() => {
 })
 
 const strengthText = computed(() => {
-  if (pwdStrength.value <= 1) return '弱'
-  if (pwdStrength.value === 2) return '中'
-  return '强'
+  if (pwdStrength.value <= 1) return 'Yếu'
+  if (pwdStrength.value === 2) return 'Trung bình'
+  return 'Mạnh'
 })
 
 const formattedBrandName = computed(() => {
-  const name = siteConfig.value.brandName || '博悦娱乐'
+  const name = siteConfig.value.brandName || 'Giải trí Boyue'
   const domain = siteConfig.value.siteDomain || '2015.com'
   return `${name}<span class="highlight">${domain}</span>`
 })
@@ -275,7 +275,7 @@ const loadCookies = () => {
 }
 
 const handleLogin = async () => {
-  if (!loginForm.value.username || !loginForm.value.password) return showToast('请输入账号和密码')
+  if (!loginForm.value.username || !loginForm.value.password) return showToast('Vui lòng nhập tài khoản và mật khẩu')
   
   loading.value = true
   try {
@@ -297,25 +297,25 @@ const handleLogin = async () => {
       if (handleLoginSuccess(loginData)) {
         resetAuthState()
         heartbeatService.restart()
-        showToast({ type: 'success', message: '登录成功' })
+        showToast({ type: 'success', message: 'Đăng nhập thành công' })
         emit('success')
         close()
         setTimeout(() => window.location.reload(), 500)
       }
     } else {
-      showToast(res.message || '登录失败')
+      showToast(res.message || 'Đăng nhập thất bại')
     }
   } catch (e) {
-    showToast(e.message || '网络错误')
+    showToast(e.message || 'Lỗi mạng')
   } finally {
     loading.value = false
   }
 }
 
 const handleRegister = async () => {
-  if (!agree.value) return showToast('请同意用户协议')
-  if (!regForm.value.username || !regForm.value.password) return showToast('请完善信息')
-  if (regForm.value.password !== regForm.value.cpassword) return showToast('两次密码不一致')
+  if (!agree.value) return showToast('Vui lòng đồng ý thỏa thuận người dùng')
+  if (!regForm.value.username || !regForm.value.password) return showToast('Vui lòng điền đầy đủ thông tin')
+  if (regForm.value.password !== regForm.value.cpassword) return showToast('Hai mật khẩu không khớp')
   
   loading.value = true
   try {
@@ -331,21 +331,21 @@ const handleRegister = async () => {
       if (loginData.token && handleLoginSuccess(loginData)) {
         resetAuthState()
         heartbeatService.restart()
-        showToast({ type: 'success', message: '注册成功' })
+        showToast({ type: 'success', message: 'Đăng ký thành công' })
         emit('success')
         close()
         setTimeout(() => window.location.reload(), 500)
       } else {
-        showToast({ type: 'success', message: '注册成功，请登录' })
+        showToast({ type: 'success', message: 'Đăng ký thành công, vui lòng đăng nhập' })
         activeTab.value = 'login'
         loginForm.value.username = regForm.value.username
         loginForm.value.password = regForm.value.password
       }
     } else {
-      showToast(res.message || '注册失败')
+      showToast(res.message || 'Đăng ký thất bại')
     }
   } catch (e) {
-    showToast(e.message || '网络错误')
+    showToast(e.message || 'Lỗi mạng')
   } finally {
     loading.value = false
   }
@@ -356,7 +356,7 @@ const goService = () => {
   router.push('/service')
 }
 const goTrial = () => {
-  showToast('功能开发中')
+  showToast('Tính năng đang phát triển')
 }
 const goForget = () => {
   close()

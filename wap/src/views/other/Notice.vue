@@ -11,7 +11,7 @@
         <van-icon name="arrow-left" size="22" color="#fff" @click="router.back()" />
       </template>
       <template #title>
-        <span class="nav-title">消息中心</span>
+        <span class="nav-title">Trung Tâm Tin Nhắn</span>
       </template>
       <template #right>
         <div class="filter-btn" @click="showFilter = true" v-if="mainTab === 'notice'">
@@ -26,7 +26,7 @@
           :class="{ active: mainTab === 'notice' }"
           @click="switchMainTab('notice')"
         >
-          <span>公告</span>
+          <span>Thông báo</span>
           <span v-if="noticeUnreadCount > 0" class="main-tab-badge">{{ noticeUnreadCount > 99 ? '99+' : noticeUnreadCount }}</span>
         </div>
         <div 
@@ -34,7 +34,7 @@
           :class="{ active: mainTab === 'message' }"
           @click="switchMainTab('message')"
         >
-          <span>站内信</span>
+          <span>Tin nhắn nội bộ</span>
           <span v-if="messageUnreadCount > 0" class="main-tab-badge">{{ messageUnreadCount > 99 ? '99+' : messageUnreadCount }}</span>
         </div>
         <div class="main-tab-indicator" :style="{ transform: `translateX(${mainTab === 'notice' ? 0 : 100}%)` }"></div>
@@ -60,11 +60,11 @@
       </div>
     </div>
     <div class="content-area" :class="{ 'no-sub-tabs': mainTab === 'message' }" v-show="mainTab === 'notice'">
-      <van-pull-refresh v-model="refreshing" @refresh="onRefresh" success-text="刷新成功">
+      <van-pull-refresh v-model="refreshing" @refresh="onRefresh" success-text="Làm mới thành công">
         <van-list
           v-model:loading="loading"
           :finished="finished"
-          finished-text="没有更多了"
+          finished-text="Không còn nữa"
           @load="onLoad"
         >
           <template v-if="groupedNotices.length > 0">
@@ -214,7 +214,7 @@
             <van-icon name="arrow-left" size="22" color="#fff" @click="showDetail = false" />
           </template>
           <template #title>
-            <span class="nav-title">公告详情</span>
+            <span class="nav-title">Chi Tiết Thông Báo</span>
           </template>
         </van-nav-bar>
         <div class="detail-content">
@@ -232,11 +232,11 @@
         <div class="detail-footer glass-panel">
           <div class="nav-btns">
             <div class="nav-btn prev" :class="{ disabled: !hasPrev }" @click="goPrev">
-              <van-icon name="arrow-left" /> 上一条
+              <van-icon name="arrow-left" /> Trước
             </div>
             <div class="divider"></div>
             <div class="nav-btn next" :class="{ disabled: !hasNext }" @click="goNext">
-              下一条 <van-icon name="arrow" />
+              Sau <van-icon name="arrow" />
             </div>
           </div>
         </div>
@@ -258,7 +258,7 @@
             <van-icon name="arrow-left" size="22" color="#fff" @click="showMsgDetail = false" />
           </template>
           <template #title>
-            <span class="nav-title">站内信详情</span>
+            <span class="nav-title">Chi Tiết Tin Nhắn</span>
           </template>
           <template #right>
             <div class="delete-btn" @click="deleteCurrentMessage">
@@ -270,8 +270,8 @@
           <div class="detail-header">
             <h1 class="big-title">{{ currentMessage.title }}</h1>
             <div class="meta-row">
-              <span class="type-badge message">站内信</span>
-              <span class="sender" v-if="currentMessage.senderName">来自: {{ currentMessage.senderName }}</span>
+              <span class="type-badge message">Tin nhắn</span>
+              <span class="sender" v-if="currentMessage.senderName">Từ: {{ currentMessage.senderName }}</span>
               <span class="time">{{ formatFullTime(currentMessage.sentTime) }}</span>
             </div>
           </div>
@@ -390,7 +390,7 @@ const loadNoticeList = async () => {
     }
   } catch (error) {
     closeToast();
-    showToast('网络请求失败');
+    showToast('Yêu cầu mạng thất bại');
     finished.value = true;
   } finally {
     loading.value = false;
@@ -443,7 +443,7 @@ const loadMessageList = async () => {
       pageSize: pageSize.value,
     };
     if (msgCurrentPage.value === 1 && !msgRefreshing.value) {
-      showLoadingToast({ message: '加载中...', forbidClick: true, duration: 0 });
+      showLoadingToast({ message: 'Đang tải...', forbidClick: true, duration: 0 });
     }
     const res = await messageApi.getMessageList(params);
     closeToast();
@@ -461,12 +461,12 @@ const loadMessageList = async () => {
       }
     } else {
       closeToast();
-      showToast(res?.message || '加载失败');
+      showToast(res?.message || 'Tải thất bại');
       msgFinished.value = true;
     }
   } catch (error) {
     closeToast();
-    showToast('网络请求失败');
+    showToast('Yêu cầu mạng thất bại');
     msgFinished.value = true;
   } finally {
     msgLoading.value = false;
@@ -612,7 +612,7 @@ const goNext = async () => {
 };
 const loadDetailById = async (id: number) => {
   try {
-    showLoadingToast({ message: '加载中...', forbidClick: true, duration: 0 });
+    showLoadingToast({ message: 'Đang tải...', forbidClick: true, duration: 0 });
     const res = await noticeApi.getNoticeDetail(id);
     if (res && (res.code === 0 || res.code === 200)) {
       currentNotice.value = res.data;
@@ -624,11 +624,11 @@ const loadDetailById = async (id: number) => {
       closeToast();
     } else {
       closeToast();
-      showToast(res?.message || '加载失败');
+      showToast(res?.message || 'Tải thất bại');
     }
   } catch (error) {
     closeToast();
-    showToast('网络请求失败');
+    showToast('Yêu cầu mạng thất bại');
   }
 };
 const openDetail = async (item: Notice) => {
@@ -661,8 +661,8 @@ const getTypeIcon = (type: string) => {
   return map[type] || 'bell';
 };
 const getTypeName = (type: string) => {
-  const map: Record<string, string> = { system: '系统公告', activity: '活动福利', update: '版本更新' };
-  return map[type] || '公告';
+  const map: Record<string, string> = { system: 'Thông báo hệ thống', activity: 'Hoạt động ưu đãi', update: 'Cập nhật phiên bản' };
+  return map[type] || 'Thông báo';
 };
 const formatTime = (ts: number) => {
   const d = new Date(ts);

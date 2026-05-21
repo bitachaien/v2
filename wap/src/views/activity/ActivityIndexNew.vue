@@ -31,12 +31,12 @@ const showDepositPopup = ref(false)
 const tabTransition = ref('tab-slide-left')
 
 const topTabs = [
-  { name: '活动', path: '/activity', component: markRaw(TabActivity) },
+  { name: 'Hoạt động', path: '/activity', component: markRaw(TabActivity) },
   { name: 'VIP', path: '/vip', component: markRaw(TabVip) },
-  { name: '返水', path: '/cashback', component: markRaw(TabRebate) },
-  { name: '待领取', path: '/pending', component: markRaw(TabPending) },
-  { name: '利息宝', path: '/interest', component: markRaw(TabInterest) },
-  { name: '领取记录', path: '/reward-record', component: markRaw(TabRecord) },
+  { name: 'Hoàn trả', path: '/cashback', component: markRaw(TabRebate) },
+  { name: 'Chờ nhận', path: '/pending', component: markRaw(TabPending) },
+  { name: 'Lãi suất', path: '/interest', component: markRaw(TabInterest) },
+  { name: 'Lịch sử nhận', path: '/reward-record', component: markRaw(TabRecord) },
 ]
 
 const getTabIndex = (path) => topTabs.findIndex(t => t.path === path)

@@ -1,7 +1,7 @@
 <template>
   <div class="security-page">
     <van-nav-bar
-      title="实名认证"
+      title="Xác thực danh tính"
       left-arrow
       @click-left="onClickLeft"
       class="tech-header"
@@ -11,18 +11,18 @@
       <div class="glass-card form-container">
         <div class="card-header">
           <van-icon name="manager-o" class="header-icon" />
-          <span class="header-title">身份信息验证</span>
+          <span class="header-title">Xác minh thông tin cá nhân</span>
         </div>
         
         <van-form @submit="onSubmit">
           
           <div class="input-group">
-            <div class="label">真实姓名</div>
+            <div class="label">Họ tên thật</div>
             <van-field
               v-model="formData.realName"
               name="realName"
-              placeholder="请输入您的真实姓名"
-              :rules="[{ required: true, message: '请填写真实姓名' }]"
+              placeholder="Nhập họ tên thật của bạn"
+              :rules="[{ required: true, message: 'Vui lòng nhập họ tên thật' }]"
               class="tech-input"
               :disabled="isVerified"
             >
@@ -34,13 +34,13 @@
 
           
            <div class="input-group">
-            <div class="label">证件类型</div>
+            <div class="label">Loại giấy tờ</div>
             <van-field
               v-model="formData.idType"
               is-link
               readonly
               name="idType"
-              placeholder="选择证件类型"
+              placeholder="Chọn loại giấy tờ"
               @click="showPicker = !isVerified"
               class="tech-input"
               :disabled="isVerified"
@@ -60,12 +60,12 @@
 
           
           <div class="input-group">
-            <div class="label">证件号码</div>
+            <div class="label">Số giấy tờ</div>
             <van-field
               v-model="formData.idNumber"
               name="idNumber"
-              placeholder="请输入证件号码"
-              :rules="[{ required: true, message: '请填写证件号码' }]"
+              placeholder="Nhập số giấy tờ"
+              :rules="[{ required: true, message: 'Vui lòng nhập số giấy tờ' }]"
               class="tech-input"
               :disabled="isVerified"
             >
@@ -77,13 +77,13 @@
           
           
           <div class="input-group" v-if="!isVerified">
-            <div class="label">资金密码</div>
+            <div class="label">Mật khẩu rút tiền</div>
             <van-field
               v-model="formData.fundPwd"
               type="password"
               name="fundPwd"
-              placeholder="验证资金密码"
-              :rules="[{ required: true, message: '请输入资金密码' }]"
+              placeholder="Xác minh mật khẩu rút tiền"
+              :rules="[{ required: true, message: 'Vui lòng nhập mật khẩu rút tiền' }]"
               class="tech-input"
             >
               <template #left-icon>
@@ -102,13 +102,13 @@
               :loading="loading"
               :disabled="isVerified"
             >
-              {{ isVerified ? '已认证' : '提交认证' }}
+              {{ isVerified ? 'Đã xác thực' : 'Gửi xác thực' }}
             </van-button>
           </div>
         </van-form>
 
         <div class="privacy-tip">
-          <p>实名认证用于提现及账户安全找回，平台承诺严格保护您的隐私安全。</p>
+          <p>Xác thực danh tính dùng để rút tiền và khôi phục tài khoản, nền tảng cam kết bảo vệ nghiêm ngặt quyền riêng tư của bạn.</p>
         </div>
       </div>
     </div>
@@ -128,16 +128,16 @@ const loading = ref(false);
 
 const formData = reactive({
   realName: '',
-  idType: '身份证',
+  idType: 'CMND/CCCD',
   idNumber: '',
   fundPwd: ''
 });
 
 const showPicker = ref(false);
 const idTypeColumns = [
-  { text: '身份证', value: 'id_card' },
-  { text: '护照', value: 'passport' },
-  { text: '驾驶证', value: 'driver_license' }
+  { text: 'CMND/CCCD', value: 'id_card' },
+  { text: 'Hộ chiếu', value: 'passport' },
+  { text: 'Bằng lái xe', value: 'driver_license' }
 ];
 
 const onConfirmIdType = ({ selectedOptions }) => {

@@ -1,11 +1,11 @@
 <template>
   <van-popup v-model:show="visible" round class="fund-pwd-popup" :style="{ width: '92%' }" :lock-scroll="false" :z-index="2000">
     <div class="pwd-popup-content">
-      <div class="pwd-popup-title">输入密码</div>
+      <div class="pwd-popup-title">Nhập mật khẩu</div>
       
       <div class="pwd-input-wrapper">
         <div class="pwd-input-header">
-          <div class="pwd-input-label">提现密码</div>
+          <div class="pwd-input-label">Mật khẩu rút tiền</div>
           <img :src="showPwdVisible ? '/assets/img/comm_icon_show.svg' : '/assets/img/comm_icon_hide.svg'" class="pwd-visible-icon" :class="{ active: showPwdVisible }" @click="showPwdVisible = !showPwdVisible" />
         </div>
         <van-password-input
@@ -17,11 +17,11 @@
       </div>
       
       <div class="pwd-tip-row">
-        <span class="pwd-tip-text">为了您的账户安全，请输入提现密码</span>
-        <span class="pwd-forget-link" @click="handleForgetPwd">忘记密码？</span>
+        <span class="pwd-tip-text">Để bảo mật tài khoản, vui lòng nhập mật khẩu rút tiền</span>
+        <span class="pwd-forget-link" @click="handleForgetPwd">Quên mật khẩu?</span>
       </div>
       
-      <div class="pwd-popup-btn" :class="{ disabled: password.length < 6 }" @click="handleConfirm">下一步</div>
+      <div class="pwd-popup-btn" :class="{ disabled: password.length < 6 }" @click="handleConfirm">Tiếp theo</div>
     </div>
     <div class="close-circle-wrapper">
       <div class="close-circle" @click="handleClose">
@@ -91,7 +91,7 @@ const handleClose = () => {
 
 const handleConfirm = async () => {
   if (password.value.length < 6) {
-    showToast('请输入完整的资金密码')
+    showToast('Vui lòng nhập đầy đủ mật khẩu')
     return
   }
   
@@ -103,21 +103,21 @@ const handleConfirm = async () => {
       emit('confirm', password.value)
       password.value = ''
     } else {
-      showToast(res.message || '密码错误')
+      showToast(res.message || 'Mật khẩu sai')
       password.value = ''
     }
   } catch (e) {
-    showToast('验证失败')
+    showToast('Xác minh thất bại')
     password.value = ''
   }
 }
 
 const handleForgetPwd = () => {
   showConfirmDialog({
-    title: '温馨提示',
-    message: '请联系客服修改密码!',
-    confirmButtonText: '客 服',
-    cancelButtonText: '取 消',
+    title: 'Thông báo',
+    message: 'Vui lòng liên hệ CSKH để đổi mật khẩu!',
+    confirmButtonText: 'CSKH',
+    cancelButtonText: 'Hủy',
     confirmButtonColor: '#26A17B',
     className: 'forget-pwd-dialog'
   }).then(() => {

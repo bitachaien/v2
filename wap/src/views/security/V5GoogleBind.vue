@@ -1,7 +1,7 @@
 <template>
   <div class="v5-google-bind">
     <van-nav-bar
-      title="绑定Google验证器"
+      title="Liên kết Google Authenticator"
       left-arrow
       @click-left="onClickLeft"
       class="custom-nav"
@@ -10,17 +10,17 @@
     <div class="content">
       
       <div class="step-block">
-        <div class="step-title">第一步：下载Google验证器</div>
+        <div class="step-title">Bước 1: Tải Google Authenticator</div>
         <div class="step-desc">
-          在各应用商店搜索 
-          <span class="google-icon"><van-icon name="scan" class="colorful-icon" /> Google验证器</span> 
-          或 点击链接 <a href="#" class="link" @click.prevent="openLink">下载地址</a> 进行下载
+          Tìm kiếm trong cửa hàng ứng dụng
+          <span class="google-icon"><van-icon name="scan" class="colorful-icon" /> Google Authenticator</span>
+          hoặc nhấp vào <a href="#" class="link" @click.prevent="openLink">link tải xuống</a>
         </div>
       </div>
 
       
       <div class="step-block">
-        <div class="step-title">第二步：扫描二维码或手动添加密钥</div>
+        <div class="step-title">Bước 2: Quét mã QR hoặc thêm khóa thủ công</div>
         <div class="qr-container">
         <div class="qr-box">
             <canvas ref="qrCanvas" v-show="qrcode"></canvas>
@@ -29,11 +29,11 @@
           
           <div class="secret-area">
             <div v-if="!showSecret" class="show-secret-btn" @click="showSecret = true">
-              无法扫描？直接复制密钥进行手动添加 <span class="green-text">展示密钥</span>
+              Không quét được? Sao chép khóa để thêm thủ công <span class="green-text">Hiện khóa</span>
             </div>
             <div v-else class="secret-box">
               <span class="secret-text">{{ secretKey }}</span>
-              <span class="copy-btn" @click="copySecret">复制</span>
+              <span class="copy-btn" @click="copySecret">Sao chép</span>
             </div>
           </div>
         </div>
@@ -41,23 +41,23 @@
 
       
       <div class="step-block">
-        <div class="step-title">第三步：从Google验证器中获得6位纯数字</div>
+        <div class="step-title">Bước 3: Lấy mã 6 chữ số từ Google Authenticator</div>
         <div class="input-container">
           <van-icon name="scan" class="input-icon colorful-icon" />
           <input 
             type="tel" 
             v-model="code" 
-            placeholder="请输入6位验证码" 
+            placeholder="Nhập mã xác minh 6 chữ số"
             class="code-input"
             maxlength="6"
           />
-          <span class="paste-btn" @click="pasteCode">粘贴</span>
+          <span class="paste-btn" @click="pasteCode">Dán</span>
         </div>
       </div>
     </div>
 
     <div class="bottom-area">
-      <van-button block color="#009688" class="submit-btn" @click="onSubmit" :loading="submitting">确定</van-button>
+      <van-button block color="#009688" class="submit-btn" @click="onSubmit" :loading="submitting">Xác nhận</van-button>
     </div>
   </div>
 </template>
@@ -101,10 +101,10 @@ const loadSecret = async () => {
       qrcode.value = res.data.qrcode
       generateQR(res.data.qrcode)
     } else {
-      showToast(res.message || '获取密钥失败')
+      showToast(res.message || 'Lấy khóa thất bại')
     }
   } catch (e) {
-    showToast(e.message || '获取密钥失败')
+    showToast(e.message || 'Lấy khóa thất bại')
   } finally {
     loading.value = false
   }
@@ -122,9 +122,9 @@ const openLink = () => {
 
 const copySecret = () => {
   navigator.clipboard.writeText(secretKey.value).then(() => {
-    showToast('复制成功')
+    showToast('Sao chép thành công')
   }).catch(() => {
-    showToast('复制失败')
+    showToast('Sao chép thất bại')
   })
 }
 
@@ -134,16 +134,16 @@ const pasteCode = async () => {
     if (text && /^\d{6}$/.test(text)) {
       code.value = text
     } else {
-      showToast('剪贴板无有效验证码')
+      showToast('Clipboard không có mã hợp lệ')
     }
   } catch (e) {
-    showToast('粘贴失败，请手动输入')
+    showToast('Dán thất bại, vui lòng nhập thủ công')
   }
 }
 
 const onSubmit = async () => {
   if (!code.value || code.value.length !== 6) {
-    showToast('请输入6位验证码')
+    showToast('Vui lòng nhập mã 6 chữ số')
     return
   }
   
@@ -151,13 +151,13 @@ const onSubmit = async () => {
   try {
     const res = await securityApi.bindGoogle(code.value)
     if (res.code === 0) {
-      showToast('绑定成功')
+      showToast('Liên kết thành công')
       setTimeout(() => router.back(), 1000)
     } else {
-      showToast(res.message || '绑定失败')
+      showToast(res.message || 'Liên kết thất bại')
     }
   } catch (e) {
-    showToast(e.message || '绑定失败')
+    showToast(e.message || 'Liên kết thất bại')
   } finally {
     submitting.value = false
   }

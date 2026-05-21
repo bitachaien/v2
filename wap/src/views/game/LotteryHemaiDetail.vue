@@ -2,7 +2,7 @@
   <transition name="slide-up">
     <div class="hemai-detail-page" v-if="isVisible">
       <van-nav-bar
-        title="合买详情"
+        title="Chi tiết hợp mãi"
         left-arrow
         fixed
         placeholder
@@ -29,7 +29,7 @@
             </div>
             <div class="lottery-main">
               <div class="l-title">{{ displayDetail.cptitle }}</div>
-              <div class="l-expect">第 {{ displayDetail.expect }} 期</div>
+              <div class="l-expect">Kỳ {{ displayDetail.expect }}</div>
             </div>
             <div class="status-tag" :class="getStatusClass(displayDetail.isdraw)">
               {{ displayDetail.isdraw }}
@@ -49,7 +49,7 @@
                   <span class="commission-tag" v-if="displayDetail.commission > 0">提成{{ displayDetail.commission }}%</span>
                 </div>
                 <div class="slogan-text" @click="toggleSlogan">
-                   {{ displayDetail.content || '暂无合买宣言，大家一起中大奖！' }}
+                   {{ displayDetail.content || 'Chưa có tuyên ngôn hợp mãi, cùng nhau trúng giải lớn!' }}
                    <van-icon :name="isSloganExpanded ? 'arrow-up' : 'arrow-down'" class="expand-icon" />
                 </div>
               </div>
@@ -63,26 +63,26 @@
               <div class="circle-progress-ring" :style="progressRingStyle"></div>
               <div class="inner-circle">
                 <span class="percent">{{ displayDetail.progress }}<small>%</small></span>
-                <span class="label">保底{{ displayDetail.baodi || '0' }}%</span>
+                <span class="label">Bảo đảm {{ displayDetail.baodi || '0' }}%</span>
               </div>
             </div>
           </div>
           <div class="right-data">
             <div class="data-grid-2">
               <div class="data-item">
-                <span class="label">方案金额</span>
+                <span class="label">Tiền phương án</span>
                 <span class="value gold">{{ displayDetail.amount }}</span>
               </div>
               <div class="data-item">
-                <span class="label">每份金额</span>
+                <span class="label">Tiền mỗi phần</span>
                 <span class="value">{{ displayDetail.hemaipic }}</span>
               </div>
               <div class="data-item">
-                <span class="label">剩余份数</span>
+                <span class="label">Số phần còn lại</span>
                 <span class="value red">{{ displayDetail.buyhave }}</span>
               </div>
               <div class="data-item">
-                <span class="label">截止时间</span>
+                <span class="label">Thời gian hết hạn</span>
                 <van-count-down :time="getRemainingTime(displayDetail.endtime)" format="HH:mm:ss" class="time-count" />
               </div>
             </div>
@@ -91,16 +91,16 @@
 
         <div class="glass-card info-card">
           <div class="card-header" @click="showCode = !showCode">
-            <span class="title">方案内容</span>
+            <span class="title">Nội dung phương án</span>
             <span class="subtitle">
-              {{ showCode ? '收起' : '展开' }}
+              {{ showCode ? 'Thu gọn' : 'Mở rộng' }}
               <van-icon :name="showCode ? 'arrow-up' : 'arrow-down'" />
             </span>
           </div>
           <transition name="fade-slide">
             <div class="code-content" v-if="showCode">
                <div class="play-type-row">
-                 <span class="pt-label">玩法：</span>
+                 <span class="pt-label">Cách chơi: </span>
                  <span class="pt-val">{{ displayDetail.playtitle }}</span>
                </div>
                <div class="code-box">
@@ -110,8 +110,8 @@
           </transition>
           <div class="draw-result" v-if="displayDetail.opencode">
             <div class="result-header">
-              <span>开奖号码</span>
-              <span class="win-status" v-if="displayDetail.isWin">中奖 {{ displayDetail.winAmount }}元</span>
+              <span>Số mở thưởng</span>
+              <span class="win-status" v-if="displayDetail.isWin">Trúng {{ displayDetail.winAmount }}đ</span>
             </div>
             <div class="ball-list">
               <span v-for="(n, i) in displayDetail.opencode.split(',')" :key="i" class="ball">{{ n }}</span>
@@ -122,10 +122,10 @@
         <div class="glass-card user-list-card">
           <div class="card-header">
             <div class="ch-left">
-              <span class="title">参与用户</span>
+              <span class="title">Người tham gia</span>
               <span class="count-badge">{{ userList.length }}</span>
             </div>
-            <span class="subtitle">共认购 <span class="gold">{{ totalBought }}</span> 份</span>
+            <span class="subtitle">Đã mua <span class="gold">{{ totalBought }}</span> phần</span>
           </div>
           
           <div class="user-list-body">
@@ -138,11 +138,11 @@
                 <div class="u-info">
                   <div class="u-top">
                     <span class="u-name">{{ maskName(user.username) }}</span>
-                    <span class="u-num">认购 <span class="highlight">{{ user.num }}</span> 份</span>
+                    <span class="u-num">Mua <span class="highlight">{{ user.num }}</span> phần</span>
                   </div>
                   <div class="u-bottom">
                     <span class="u-time">{{ formatTime(user.time) }}</span>
-                    <span class="u-money">{{ user.amount }}元</span>
+                    <span class="u-money">{{ user.amount }}đ</span>
                   </div>
                 </div>
                 <div class="u-medal" v-if="idx < 3">
@@ -158,9 +158,9 @@
       <div class="bottom-action-bar-pro">
         <div class="bar-left">
           <div class="remain-info">
-            <span class="lbl">剩余</span>
+            <span class="lbl">Còn lại</span>
             <span class="val">{{ displayDetail.buyhave }}</span>
-            <span class="unit">份</span>
+            <span class="unit">phần</span>
           </div>
         </div>
         
@@ -181,7 +181,7 @@
             @click="handleBuy"
           >
             <span class="btn-text">{{ getBtnText() }}</span>
-            <span class="btn-sub" v-if="canBuy">{{ (buyNum * parseFloat(displayDetail.hemaipic || 0)).toFixed(2) }}元</span>
+            <span class="btn-sub" v-if="canBuy">{{ (buyNum * parseFloat(displayDetail.hemaipic || 0)).toFixed(2) }}đ</span>
           </button>
         </div>
       </div>
@@ -192,7 +192,7 @@
         @blur="showKeyboard = false"
         :maxlength="4"
         theme="custom"
-        close-button-text="完成"
+        close-button-text="Hoàn tất"
         @close="showKeyboard = false"
       />
 
@@ -301,7 +301,7 @@ const loadFullData = async () => {
       userList.value = usersRes.data.list
     }
   } catch (e) {
-    showToast('加载详情失败')
+    showToast('Tải chi tiết thất bại')
   } finally {
     loadingDetail.value = false
   }
@@ -318,9 +318,9 @@ const close = () => {
 const getLotteryIcon = (name) => getGameIconPath(name)
 
 const getStatusClass = (status) => {
-  if (status === '进行中') return 'status-green'
-  if (status === '已截止') return 'status-gray'
-  if (status === '已开奖') return 'status-red'
+  if (status === 'Đang diễn ra') return 'status-green'
+  if (status === 'Đã hết hạn') return 'status-gray'
+  if (status === 'Đã mở thưởng') return 'status-red'
   return ''
 }
 
@@ -358,7 +358,7 @@ const toggleSlogan = () => {
 }
 
 const formatCode = (code) => {
-  if (!code) return '暂无号码'
+  if (!code) return 'Chưa có số'
   return code.split('|').map((line, idx) => {
     return `<div class="code-line"><span class="line-idx">[${idx+1}]</span> ${line}</div>`
   }).join('')
@@ -376,10 +376,10 @@ const updateBuyNum = (delta) => {
 
 const getBtnText = () => {
   const d = displayDetail.value
-  if (d.isdraw === '已截止') return '已截止'
-  if (d.isdraw === '已开奖') return '已开奖'
-  if (d.buyhave <= 0) return '已满员'
-  return '立即认购'
+  if (d.isdraw === 'Đã hết hạn') return 'Đã hết hạn'
+  if (d.isdraw === 'Đã mở thưởng') return 'Đã mở thưởng'
+  if (d.buyhave <= 0) return 'Đã đủ người'
+  return 'Mua ngay'
 }
 
 const handleBuy = async () => {
@@ -388,23 +388,23 @@ const handleBuy = async () => {
   const num = buyNum.value
   const id = displayDetail.value.id
   
-  showLoadingToast({ message: '提交中...', forbidClick: true })
+  showLoadingToast({ message: 'Đang gửi...', forbidClick: true })
   
   try {
     const res = await hemaiApi.buy({ id, num })
     
     if (res.code === 0) {
       closeToast()
-      showSuccessToast('认购成功')
+      showSuccessToast('Mua thành công')
       emit('buy', { id, num })
       loadFullData()
     } else {
       closeToast()
-      showFailToast(res.message || '认购失败')
+      showFailToast(res.message || 'Mua thất bại')
     }
   } catch (e) {
     closeToast()
-    showFailToast(e.message || '网络错误')
+    showFailToast(e.message || 'Lỗi mạng')
   }
 }
 
@@ -412,9 +412,9 @@ const handleShare = () => {
   const url = window.location.href
   if (navigator.clipboard) {
     navigator.clipboard.writeText(url).then(() => {
-      showToast('链接已复制，快去分享吧')
+      showToast('Đã sao chép link, nhanh tay chia sẻ')
     }).catch(() => {
-      showToast('复制失败，请手动复制')
+      showToast('Sao chép thất bại, vui lòng sao chép thủ công')
     })
   } else {
     const input = document.createElement('input')
@@ -423,7 +423,7 @@ const handleShare = () => {
     input.select()
     document.execCommand('copy')
     document.body.removeChild(input)
-    showToast('链接已复制')
+    showToast('Đã sao chép link')
   }
 }
 </script>

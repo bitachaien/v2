@@ -9,7 +9,7 @@
       class="custom-nav"
     >
       <template #right>
-        <span class="nav-right-link" @click="goToRecords">领取记录</span>
+        <span class="nav-right-link" @click="goToRecords">Lịch sử nhận</span>
       </template>
     </van-nav-bar>
 
@@ -17,18 +17,18 @@
       <div class="status-card">
         <div class="status-row">
           <div class="status-item">
-            昨日亏损 <span class="amount-red">{{ yesterdayLoss }}</span>
+            Lỗ hôm qua <span class="amount-red">{{ yesterdayLoss }}</span>
           </div>
           <div class="status-item right">
-            今日救援金 <span class="amount-gold">{{ todayRescue }}</span>
+            Tiền cứu trợ hôm nay <span class="amount-gold">{{ todayRescue }}</span>
             <van-icon name="replay" class="refresh-icon" :class="{ 'rotating': isRefreshing }" @click="refreshData" />
           </div>
         </div>
         
         <div class="reward-table">
           <div class="table-header">
-            <div class="th">亏损额</div>
-            <div class="th">额外奖励</div>
+            <div class="th">Số tiền lỗ</div>
+            <div class="th">Thưởng thêm</div>
             <div class="th action-col"></div>
           </div>
           <div class="table-body">
@@ -46,7 +46,7 @@
                   :class="{ 'btn-gray': !item.canClaim, 'btn-claim': item.canClaim }"
                   @click="handleClaim(item)"
                 >
-                  {{ item.statusText || '领取' }}
+                  {{ item.statusText || 'Nhận' }}
                 </div>
               </div>
             </div>
@@ -56,7 +56,7 @@
 
       <div class="info-card">
         <div class="ribbon-title">
-          <span>活动时间 (UTC+8)</span>
+          <span>Thời gian hoạt động (UTC+8)</span>
           <div class="ribbon-arrow"></div>
         </div>
         <div class="time-content">
@@ -66,7 +66,7 @@
 
       <div class="info-card">
         <div class="ribbon-title">
-          <span>活动说明</span>
+          <span>Hướng dẫn hoạt động</span>
           <div class="ribbon-arrow"></div>
         </div>
         <div class="rules-content" v-html="activityContent">
@@ -98,8 +98,8 @@ import { activityApi } from '@/api/activity'
 const router = useRouter()
 const route = useRoute()
 const isRefreshing = ref(false)
-const activityTitle = ref('加载中...')
-const activityContent = ref('<p>加载中...</p>')
+const activityTitle = ref('Đang tải...')
+const activityContent = ref('<p>Đang tải...</p>')
 const yesterdayLoss = ref('0.00')
 const todayRescue = ref('0.00')
 const activityId = computed(() => Number(route.params.id) || 0)
@@ -133,8 +133,8 @@ const loadData = async () => {
   try {
     const detailRes = await activityApi.getActivityDetail(activityId.value)
     if (detailRes.code === 0 && detailRes.data) {
-      activityTitle.value = detailRes.data.title || '活动详情'
-      activityContent.value = detailRes.data.content || '<p>暂无活动说明</p>'
+      activityTitle.value = detailRes.data.title || 'Chi tiết hoạt động'
+      activityContent.value = detailRes.data.content || '<p>Chưa có mô tả hoạt động</p>'
     }
     
     const res = await activityApi.checkReward(activityId.value)
@@ -153,7 +153,7 @@ const loadData = async () => {
           conditionValue: item.conditionMin || 0,
           rewardAmount: item.rewardAmount || '0.00',
           canClaim: item.isMatched && res.data.canClaim,
-          statusText: item.isMatched ? (res.data.canClaim ? '领取' : '已领取') : '领取'
+          statusText: item.isMatched ? (res.data.canClaim ? 'Nhận' : 'Đã nhận') : 'Nhận'
         }))
       }
     }
@@ -178,7 +178,7 @@ const goToRecords = () => {
 
 const refreshData = async () => {
   await loadData()
-  showToast('刷新成功')
+  showToast('Làm mới thành công')
 }
 
 const formatNumber = (num) => {
@@ -197,15 +197,15 @@ const handleClaim = async (item) => {
     
     const res = await activityApi.claimReward(data)
     if (res.code === 0) {
-      showToast('领取成功')
+      showToast('Nhận thành công')
       item.canClaim = false
-      item.statusText = '已领取'
+      item.statusText = 'Đã nhận'
       setTimeout(() => loadData(), 1000)
     } else {
-      showToast(res.message || '领取失败')
+      showToast(res.message || 'Nhận thất bại')
     }
   } catch (error) {
-    showToast('领取失败，请稍后重试')
+    showToast('Nhận thất bại, vui lòng thử lại sau')
   }
 }
 

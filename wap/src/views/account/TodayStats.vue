@@ -5,7 +5,7 @@
       <div class="nav-left" @click="goBack">
         <van-icon name="arrow-left" class="neon-icon" />
       </div>
-      <div class="nav-title">今日统计</div>
+      <div class="nav-title">Thống kê hôm nay</div>
       <div class="nav-right" @click="onHelp">
         <van-icon name="question-o" class="neon-icon" />
       </div>
@@ -34,7 +34,7 @@
             :class="{ active: currentWallet === 'main' }"
             @click="currentWallet = 'main'"
           >
-            主钱包
+            Ví chính
             <div class="active-indicator"></div>
           </div>
           <div 
@@ -42,7 +42,7 @@
             :class="{ active: currentWallet === 'game' }"
             @click="currentWallet = 'game'"
           >
-            娱乐钱包
+            Ví game
             <div class="active-indicator"></div>
           </div>
         </div>
@@ -53,12 +53,12 @@
         </div>
 
         <div class="balance-main">
-          <div class="label">当前余额 (元)</div>
+          <div class="label">Số dư hiện tại (VNĐ)</div>
           <div class="value">¥{{ formatAmount(currentWalletData.balance) }}</div>
         </div>
 
         <div class="pl-row">
-          <div class="label">今日盈亏</div>
+          <div class="label">Lãi/Lỗ hôm nay</div>
           <div 
             class="value" 
             :class="currentWalletData.pl >= 0 ? 'text-green' : 'text-red'"
@@ -71,15 +71,15 @@
 
         <div class="stats-row-bottom">
           <div class="stat-col">
-            <span class="lbl">今日充值</span>
+            <span class="lbl">Nạp hôm nay</span>
             <span class="val text-blue">{{ formatAmount(currentWalletData.recharge) }}</span>
           </div>
           <div class="stat-col center-border">
-            <span class="lbl">今日提现</span>
+            <span class="lbl">Rút hôm nay</span>
             <span class="val text-orange">{{ formatAmount(currentWalletData.withdraw) }}</span>
           </div>
           <div class="stat-col">
-            <span class="lbl">有效投注</span>
+            <span class="lbl">Cược hợp lệ</span>
             <span class="val text-purple">{{ formatAmount(currentWalletData.bet) }}</span>
           </div>
         </div>
@@ -113,11 +113,11 @@
     
     <div class="bottom-actions glass-panel">
       <button class="action-btn btn-recharge" @click="goToRecharge">
-        <van-icon name="gold-coin" /> 立即充值
+        <van-icon name="gold-coin" /> Nạp ngay
         <div class="btn-glow"></div>
       </button>
       <button class="action-btn btn-withdraw" @click="goToWithdraw">
-        <van-icon name="card" /> 申请提现
+        <van-icon name="card" /> Rút tiền
         <div class="btn-glow"></div>
       </button>
     </div>
@@ -136,21 +136,21 @@
           <div class="icon-box" :class="selectedStat.iconClass" style="width: 24px; height: 24px;">
             <van-icon :name="selectedStat.iconName" size="14" />
           </div>
-          {{ selectedStat.title }}详情
+          Chi tiết {{ selectedStat.title }}
         </div>
         <van-icon name="cross" class="popup-close" @click="showDetailPopup = false" />
       </div>
 
       <div class="popup-content" v-if="selectedStat">
         <div class="popup-summary-card">
-          <div class="label">今日{{ selectedStat.title }}总额</div>
+          <div class="label">Tổng {{ selectedStat.title }} hôm nay</div>
           <div class="value" :class="selectedStat.valueColor">
             <span style="font-size: 20px;">¥</span>{{ formatAmount(selectedStat.amount) }}
           </div>
           <div class="desc">{{ selectedStat.desc }}</div>
         </div>
 
-        <div class="recent-list-title">最近记录</div>
+        <div class="recent-list-title">Lịch sử gần đây</div>
         <div class="record-item" v-for="rec in transactionList" :key="rec.id">
           <div class="left">
             <div class="record-type">{{ rec.title }}</div>
@@ -160,11 +160,11 @@
             {{ rec.amount > 0 ? '+' : '' }}{{ formatAmount(rec.amount) }}
           </div>
         </div>
-        <div v-if="listLoading" class="no-data">加载中...</div>
-        <div v-else-if="transactionList.length === 0" class="no-data">暂无记录</div>
+        <div v-if="listLoading" class="no-data">Đang tải...</div>
+        <div v-else-if="transactionList.length === 0" class="no-data">Chưa có lịch sử</div>
 
         <div class="view-all-btn" @click="goToBillRecord">
-          查看全部记录 <van-icon name="arrow" />
+          Xem tất cả <van-icon name="arrow" />
         </div>
       </div>
     </van-popup>
@@ -200,10 +200,10 @@ const transactionList = ref<any[]>([])
 const listLoading = ref(false)
 
 const dateFilters = [
-  { label: '今天', value: 'today' },
-  { label: '昨天', value: 'yesterday' },
-  { label: '本周', value: 'week' },
-  { label: '本月', value: 'month' }
+  { label: 'Hôm nay', value: 'today' },
+  { label: 'Hôm qua', value: 'yesterday' },
+  { label: 'Tuần này', value: 'week' },
+  { label: 'Tháng này', value: 'month' }
 ]
 
 const currentWalletData = ref({
@@ -223,9 +223,9 @@ const statCards = computed(() => {
   return [
     { 
       type: 'payout', 
-      title: '派彩收入', 
-      amount: currentWalletData.value.payout, 
-      desc: '中奖及活动派彩', 
+      title: 'Trúng thưởng',
+      amount: currentWalletData.value.payout,
+      desc: 'Tiền thắng và hoạt động',
       iconName: 'gold-coin', 
       iconClass: 'icon-payout',
       glowColor: 'glow-cyan',
@@ -233,9 +233,9 @@ const statCards = computed(() => {
     },
     { 
       type: 'bet', 
-      title: '投注支出', 
-      amount: currentWalletData.value.bet, 
-      desc: '游戏投注总额', 
+      title: 'Tiền cược',
+      amount: currentWalletData.value.bet,
+      desc: 'Tổng tiền đặt cược',
       iconName: 'fire', 
       iconClass: 'icon-bet',
       glowColor: 'glow-pink',
@@ -243,9 +243,9 @@ const statCards = computed(() => {
     },
     { 
       type: 'rebate', 
-      title: '返点金额', 
-      amount: currentWalletData.value.rebate, 
-      desc: '下级返点及自身返水', 
+      title: 'Hoàn trả',
+      amount: currentWalletData.value.rebate,
+      desc: 'Hoa hồng và hoàn trả',
       iconName: 'refund-o', 
       iconClass: 'icon-rebate',
       glowColor: 'glow-gold',
@@ -253,9 +253,9 @@ const statCards = computed(() => {
     },
     { 
       type: 'bonus', 
-      title: '活动礼金', 
-      amount: currentWalletData.value.bonus, 
-      desc: '签到、晋级等活动', 
+      title: 'Quà tặng',
+      amount: currentWalletData.value.bonus,
+      desc: 'Điểm danh, thăng cấp',
       iconName: 'gift', 
       iconClass: 'icon-bonus',
       glowColor: 'glow-pink',
@@ -263,9 +263,9 @@ const statCards = computed(() => {
     },
     { 
       type: 'in', 
-      title: '充值/转入', 
-      amount: currentWalletData.value.recharge, // 暂时合并显示，或根据接口区分
-      desc: '在线充值及转账', 
+      title: 'Nạp/Chuyển vào',
+      amount: currentWalletData.value.recharge,
+      desc: 'Nạp tiền và chuyển khoản',
       iconName: 'card', 
       iconClass: 'icon-in',
       glowColor: 'glow-blue',
@@ -273,9 +273,9 @@ const statCards = computed(() => {
     },
     { 
       type: 'out', 
-      title: '提现/转出', 
-      amount: currentWalletData.value.withdraw, 
-      desc: '提现及转出资金', 
+      title: 'Rút/Chuyển ra',
+      amount: currentWalletData.value.withdraw,
+      desc: 'Rút tiền và chuyển ra',
       iconName: 'share', 
       iconClass: 'icon-out',
       glowColor: 'glow-orange',
@@ -285,7 +285,7 @@ const statCards = computed(() => {
 })
 
 const goBack = () => router.go(-1)
-const onHelp = () => showToast('统计数据说明：\n盈亏 = 派彩 + 返点 + 礼金 - 投注')
+const onHelp = () => showToast('Giải thích thống kê:\nLãi/Lỗ = Trúng thưởng + Hoàn trả + Quà tặng - Cược')
 
 const formatAmount = (val: number) => {
   return (val || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")

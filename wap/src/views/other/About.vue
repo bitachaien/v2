@@ -1,7 +1,7 @@
 <template>
   <div class="about-page">
     <van-nav-bar
-      title="关于我们"
+      title="Về Chúng Tôi"
       left-arrow
       @click-left="$router.back()"
       class="glass-nav"
@@ -17,35 +17,35 @@
           </div>
           <div class="logo-glow"></div>
         </div>
-        <h1 class="app-name">极速娱乐</h1>
+        <h1 class="app-name">Giải Trí Tốc Độ</h1>
         <p class="version">Version 2.0.1 (Build 202311)</p>
       </div>
 
       <div class="info-card">
-        <div class="card-title">平台简介</div>
+        <div class="card-title">Giới Thiệu Nền Tảng</div>
         <div class="card-text">
-          <p>极速娱乐致力于为用户提供安全、稳定、流畅的在线娱乐体验。我们采用顶尖的加密技术保护用户隐私，并引入全球领先的游戏系统，确保公平公正。</p>
-          <p>作为行业领先者，我们拥有24小时专业客服团队，随时为您解答疑问，处理突发状况，让您无后顾之忧。</p>
+          <p>Giải Trí Tốc Độ cam kết mang đến trải nghiệm giải trí trực tuyến an toàn, ổn định và mượt mà cho người dùng. Chúng tôi sử dụng công nghệ mã hóa hàng đầu để bảo vệ quyền riêng tư người dùng và áp dụng hệ thống game tiên tiến toàn cầu, đảm bảo công bằng và minh bạch.</p>
+          <p>Là người dẫn đầu trong ngành, chúng tôi có đội ngũ chăm sóc khách hàng chuyên nghiệp 24/7, sẵn sàng giải đáp thắc mắc và xử lý các tình huống phát sinh, giúp bạn hoàn toàn yên tâm.</p>
         </div>
       </div>
 
       <div class="menu-list">
-        <div class="menu-item" @click="showToast('已是最新版本')">
-          <span>检查更新</span>
+        <div class="menu-item" @click="showToast('Đã là phiên bản mới nhất')">
+          <span>Kiểm tra cập nhật</span>
           <van-icon name="arrow" />
         </div>
         <div class="menu-item">
-          <span>用户协议</span>
+          <span>Thỏa thuận người dùng</span>
           <van-icon name="arrow" />
         </div>
         <div class="menu-item">
-          <span>隐私政策</span>
+          <span>Chính sách bảo mật</span>
           <van-icon name="arrow" />
         </div>
       </div>
       
       <div class="footer-copy">
-        <p>Copyright © 2023-2025 极速娱乐 All Rights Reserved.</p>
+        <p>Copyright © 2023-2025 Giải Trí Tốc Độ All Rights Reserved.</p>
       </div>
     </div>
   </div>

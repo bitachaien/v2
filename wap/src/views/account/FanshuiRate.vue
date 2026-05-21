@@ -5,7 +5,7 @@
       <div class="back-btn" @click="goBack">
         <van-icon name="arrow-left" />
       </div>
-      <div class="title">返水比例</div>
+      <div class="title">Tỷ lệ hoàn trả</div>
       <div class="placeholder"></div>
     </div>
 
@@ -19,8 +19,8 @@
         <span>{{ vendorName || 'PG' }}</span>
         <van-icon name="arrow-down" />
       </div>
-      <div class="header-col bet">累计洗码</div>
-      <div class="header-col rate">返水比例</div>
+      <div class="header-col bet">Tổng cược</div>
+      <div class="header-col rate">Tỷ lệ hoàn trả</div>
     </div>
 
     
@@ -40,7 +40,7 @@
 
     
     <div v-else class="empty-state">
-      <van-empty description="暂无返水比例配置" />
+      <van-empty description="Chưa có cấu hình tỷ lệ hoàn trả" />
     </div>
 
     
@@ -49,8 +49,8 @@
         :columns="categoryColumns"
         @confirm="onCategoryConfirm"
         @cancel="showCategoryPicker = false"
-        confirm-button-text="确定"
-        cancel-button-text="取消"
+        confirm-button-text="Xác nhận"
+        cancel-button-text="Hủy"
       />
     </van-popup>
 
@@ -60,8 +60,8 @@
         :columns="vendorColumns"
         @confirm="onVendorConfirm"
         @cancel="showVendorPicker = false"
-        confirm-button-text="确定"
-        cancel-button-text="取消"
+        confirm-button-text="Xác nhận"
+        cancel-button-text="Hủy"
       />
     </van-popup>
   </div>
@@ -76,19 +76,19 @@ const route = useRoute()
 const router = useRouter()
 
 const categories = [
-  { code: 'slot', name: '电子' },
-  { code: 'live', name: '真人' },
-  { code: 'fishing', name: '捕鱼' },
-  { code: 'chess', name: '棋牌' },
-  { code: 'lottery', name: '彩票' },
-  { code: 'sport', name: '体育' },
+  { code: 'slot', name: 'SLOT' },
+  { code: 'live', name: 'LIVE' },
+  { code: 'fishing', name: 'Bắn Cá' },
+  { code: 'chess', name: 'Game Bài' },
+  { code: 'lottery', name: 'Xổ Số' },
+  { code: 'sport', name: 'Thể Thao' },
 ]
 
 const categoryColumns = categories.map(c => ({ text: c.name, value: c.code }))
 
 const vendors = ref([])
 const vendorColumns = computed(() => {
-  return [{ text: '全部', value: '' }, ...vendors.value.map(v => ({ text: v.name, value: v.code }))]
+  return [{ text: 'Tất cả', value: '' }, ...vendors.value.map(v => ({ text: v.name, value: v.code }))]
 })
 
 const loading = ref(false)
@@ -101,7 +101,7 @@ const showVendorPicker = ref(false)
 
 const categoryName = computed(() => {
   const cat = categories.find(c => c.code === selectedCategory.value)
-  return cat?.name || '电子'
+  return cat?.name || 'SLOT'
 })
 
 const vendorName = computed(() => {
@@ -151,7 +151,7 @@ const loadRates = async () => {
       }
     }
   } catch (err) {
-    console.error('加载返水比例失败:', err)
+    console.error('Tải tỷ lệ hoàn trả thất bại:', err)
     rateList.value = []
   } finally {
     loading.value = false

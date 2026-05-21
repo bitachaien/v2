@@ -3,24 +3,24 @@
     <div class="top-section">
       <div class="info-header">
         <div class="deposit-info">
-          <div class="label">已存入 <span class="val">{{ deposited }}</span></div>
+          <div class="label">Đã gửi <span class="val">{{ deposited }}</span></div>
         </div>
         <div class="action-group-top">
-          <van-button size="small" class="btn-transfer-in" @click="showTransferIn = true">转入</van-button>
-          <van-button size="small" class="btn-transfer-out" @click="handleTransferOut">转出</van-button>
+          <van-button size="small" class="btn-transfer-in" @click="showTransferIn = true">Chuyển vào</van-button>
+          <van-button size="small" class="btn-transfer-out" @click="handleTransferOut">Chuyển ra</van-button>
         </div>
       </div>
       
       <div class="info-cycle">
-        结算周期 {{ interestConfig.settle_cycle }} (封顶 {{ formatMaxInterest }})
+        Chu kỳ thanh toán {{ interestConfig.settle_cycle }} (Tối đa {{ formatMaxInterest }})
       </div>
 
       <div class="info-reward">
         <div class="reward-text">
-          待领取<span class="highlight">{{ pendingReward }}</span> <span class="gray-sub">(已领取{{ receivedReward }})</span>
+          Chờ nhận<span class="highlight">{{ pendingReward }}</span> <span class="gray-sub">(Đã nhận {{ receivedReward }})</span>
           <img src="/assets/img/comm_icon_sx.svg" class="refresh-icon" :class="{ spinning: isDataRefreshing }" @click="refreshData" />
         </div>
-        <van-button size="small" class="btn-claim" :class="{ active: canClaim }" :disabled="!canClaim" @click="handleClaim">领取</van-button>
+        <van-button size="small" class="btn-claim" :class="{ active: canClaim }" :disabled="!canClaim" @click="handleClaim">Nhận</van-button>
       </div>
     </div>
 
@@ -30,7 +30,7 @@
         :class="{ active: activeTab === 'rules' }"
         @click="activeTab = 'rules'"
       >
-        利息规则
+        Quy tắc lãi suất
         <div class="active-line" v-if="activeTab === 'rules'"></div>
       </div>
       <div 
@@ -38,47 +38,47 @@
         :class="{ active: activeTab === 'records' }"
         @click="activeTab = 'records'"
       >
-        记录明细
+        Chi tiết giao dịch
         <div class="active-line" v-if="activeTab === 'records'"></div>
       </div>
     </div>
 
     <div v-if="activeTab === 'rules'" class="tab-content rules-content">
       <div class="rule-item">
-        <div class="rule-title">1、收益介绍：</div>
-        <div class="rule-desc">存入利息宝金额，至少满足一个完整周期才能产生利息，若中途提前转出则该周期不计算收益，例如：当前结算周期为{{ interestConfig.settle_cycle }}，则转入的金额，将在下一个周期产生第一个周期利息；</div>
+        <div class="rule-title">1. Giới thiệu lợi nhuận:</div>
+        <div class="rule-desc">Số tiền gửi vào phải đủ ít nhất một chu kỳ hoàn chỉnh mới sinh lãi. Nếu rút ra giữa chừng thì chu kỳ đó không tính lợi nhuận. Ví dụ: Chu kỳ thanh toán hiện tại là {{ interestConfig.settle_cycle }}, số tiền chuyển vào sẽ sinh lãi chu kỳ đầu tiên vào chu kỳ tiếp theo;</div>
       </div>
       <div class="rule-item">
-        <div class="rule-title">2、结算周期：</div>
-        <div class="rule-desc">当前利息的结算周期为{{ interestConfig.settle_cycle }}；</div>
+        <div class="rule-title">2. Chu kỳ thanh toán:</div>
+        <div class="rule-desc">Chu kỳ thanh toán lãi suất hiện tại là {{ interestConfig.settle_cycle }};</div>
       </div>
       <div class="rule-item">
-        <div class="rule-title">3、年利率：</div>
-        <div class="rule-desc">当前年利率为{{ interestConfig.annual_rate }}；</div>
+        <div class="rule-title">3. Lãi suất năm:</div>
+        <div class="rule-desc">Lãi suất năm hiện tại là {{ interestConfig.annual_rate }};</div>
       </div>
       <div class="rule-item">
-        <div class="rule-title">4、计算公式：</div>
-        <div class="rule-desc">每周期利息 = 存入金额 × 日利率 × (结算周期小时数 / 24)；</div>
+        <div class="rule-title">4. Công thức tính:</div>
+        <div class="rule-desc">Lãi mỗi chu kỳ = Số tiền gửi × Lãi suất ngày × (Số giờ chu kỳ / 24);</div>
       </div>
       <div class="rule-item">
-        <div class="rule-title">5、举例说明：</div>
-        <div class="rule-desc">例如存入10,000，日利率0.03%，结算周期为{{ interestConfig.settle_cycle }}，则每小时利息≈{{ exampleInterest }}元；</div>
+        <div class="rule-title">5. Ví dụ minh họa:</div>
+        <div class="rule-desc">Ví dụ gửi 10,000, lãi suất ngày 0.03%, chu kỳ thanh toán {{ interestConfig.settle_cycle }}, thì lãi mỗi giờ ≈ {{ exampleInterest }};</div>
       </div>
       <div class="rule-item">
-        <div class="rule-title">6、转入门槛：</div>
-        <div class="rule-desc">每次转入金额必须大于等于{{ interestConfig.min_amount }}（即≥{{ interestConfig.min_amount }}），转入金额无上限，越多收益越大；</div>
+        <div class="rule-title">6. Ngưỡng chuyển vào:</div>
+        <div class="rule-desc">Mỗi lần chuyển vào phải ≥ {{ interestConfig.min_amount }}, không giới hạn số tiền chuyển vào, càng nhiều lợi nhuận càng cao;</div>
       </div>
       <div class="rule-item">
-        <div class="rule-title">7、利息封顶：</div>
-        <div class="rule-desc">当前利息封顶为{{ formatMaxInterest }}，记得定期或经常来领取收益，以免错过更多收益哦；</div>
+        <div class="rule-title">7. Lãi tối đa:</div>
+        <div class="rule-desc">Lãi tối đa hiện tại là {{ formatMaxInterest }}, nhớ thường xuyên nhận lợi nhuận để không bỏ lỡ thu nhập nhé;</div>
       </div>
       <div class="rule-item">
-        <div class="rule-title">8、领取时间：</div>
-        <div class="rule-desc">当前为{{ interestConfig.claim_time }}，即当天产生的利息，要等到第二天0点后才能领取；</div>
+        <div class="rule-title">8. Thời gian nhận:</div>
+        <div class="rule-desc">Hiện tại là {{ interestConfig.claim_time }}, tức lãi phát sinh trong ngày phải đợi đến 0h ngày hôm sau mới nhận được;</div>
       </div>
       <div class="rule-item">
-        <div class="rule-title">9、稽核倍数：</div>
-        <div class="rule-desc">当前稽核倍数为{{ interestConfig.audit_multiple }}倍（投注流水要求），即产生的利息需要完成{{ interestConfig.audit_multiple }}倍流水才能提现；</div>
+        <div class="rule-title">9. Yêu cầu vòng cược:</div>
+        <div class="rule-desc">Yêu cầu vòng cược hiện tại là {{ interestConfig.audit_multiple }}x, tức lãi phát sinh cần hoàn thành {{ interestConfig.audit_multiple }}x vòng cược mới rút được;</div>
       </div>
     </div>
 
@@ -94,7 +94,7 @@
             <van-icon name="arrow-down" size="12" :class="{ rotated: showTypeDropdown }" />
           </div>
         </div>
-        <div class="total-income">累计收益 <span class="gold">{{ totalIncome }}</span></div>
+        <div class="total-income">Tổng thu nhập <span class="gold">{{ totalIncome }}</span></div>
       </div>
 
       <div v-if="showTimeDropdown" class="dropdown-overlay" @click="showTimeDropdown = false"></div>
@@ -126,16 +126,16 @@
       </div>
 
       <div class="list-header">
-        <span class="col-time">时间</span>
-        <span class="col-type">类型</span>
-        <span class="col-amount">金额</span>
+        <span class="col-time">Thời gian</span>
+        <span class="col-type">Loại</span>
+        <span class="col-amount">Số tiền</span>
       </div>
 
       <div class="list-body">
         <van-loading v-if="loading" class="loading-spinner" color="#009688" />
         <div v-else-if="records.length === 0" class="empty-state">
           <img src="/assets/img/img_none_sj.avif" class="empty-img" />
-          <div class="empty-text">暂无记录</div>
+          <div class="empty-text">Chưa có giao dịch</div>
         </div>
         <div v-else class="record-list">
           <div v-for="item in records" :key="item.id" class="record-item">
@@ -156,29 +156,29 @@
       class="transfer-popup"
       :style="{ width: '90%', padding: '20px' }"
     >
-      <div class="popup-title">转入</div>
+      <div class="popup-title">Chuyển Vào</div>
       
       <div class="popup-info-row">
-        <span class="balance-row">账号余额&nbsp;&nbsp;<span class="gold balance-val" :class="{ 'balance-flash': isRefreshing }">{{ userBalance }}</span> <img src="/assets/img/comm_icon_sx.svg" class="refresh-svg" :class="{ spinning: isRefreshing }" @click="refreshBalance" /></span>
-        <span>结算周期 {{ interestConfig.settle_cycle }}</span>
+        <span class="balance-row">Số dư tài khoản&nbsp;&nbsp;<span class="gold balance-val" :class="{ 'balance-flash': isRefreshing }">{{ userBalance }}</span> <img src="/assets/img/comm_icon_sx.svg" class="refresh-svg" :class="{ spinning: isRefreshing }" @click="refreshBalance" /></span>
+        <span>Chu kỳ {{ interestConfig.settle_cycle }}</span>
       </div>
 
       <div class="popup-label-row">
-        <span>转入金额</span>
-        <span class="gray-text">当前时间 {{ currentTime }}</span>
+        <span>Số tiền chuyển vào</span>
+        <span class="gray-text">Thời gian hiện tại {{ currentTime }}</span>
       </div>
 
       <div class="input-wrapper">
         <span class="prefix">U</span>
-        <input type="number" v-model="transferAmount" :placeholder="`单笔最少转入U${interestConfig.min_amount}，仅限整数`" />
-        <span class="suffix-btn" @click="transferAmount = Math.floor(userBalance)">全部</span>
+        <input type="number" v-model="transferAmount" :placeholder="`Tối thiểu U${interestConfig.min_amount}, chỉ số nguyên`" />
+        <span class="suffix-btn" @click="transferAmount = Math.floor(userBalance)">Tất cả</span>
       </div>
 
       <div class="popup-tip">
-        本次转入首次产生利息的时间：{{ nextInterestTime }}
+        Thời gian sinh lãi lần đầu: {{ nextInterestTime }}
       </div>
 
-      <van-button block :color="canTransfer ? '#009688' : '#999'" class="confirm-btn" :disabled="!canTransfer" @click="handleTransferIn">确认转入</van-button>
+      <van-button block :color="canTransfer ? '#009688' : '#999'" class="confirm-btn" :disabled="!canTransfer" @click="handleTransferIn">Xác nhận chuyển vào</van-button>
       
       <div class="close-btn-wrapper" @click="showTransferIn = false">
         <van-icon name="cross" class="close-icon" />
@@ -192,32 +192,32 @@
       class="transfer-popup"
       :style="{ width: '90%', padding: '20px' }"
     >
-      <div class="popup-title">转出</div>
+      <div class="popup-title">Chuyển Ra</div>
       
       <div class="popup-info-row">
-        <span>可转出 <span class="gold">{{ deposited }}</span></span>
-        <span>实时到账</span>
+        <span>Có thể chuyển <span class="gold">{{ deposited }}</span></span>
+        <span>Nhận ngay</span>
       </div>
 
       <div class="popup-label-row">
-        <span>转出金额</span>
+        <span>Số tiền chuyển ra</span>
       </div>
 
       <div class="input-wrapper">
         <span class="prefix">U</span>
-        <input type="number" v-model="transferOutAmount" placeholder="请输入转出金额" />
-        <span class="suffix-btn" @click="transferOutAmount = deposited">全部</span>
+        <input type="number" v-model="transferOutAmount" placeholder="Nhập số tiền chuyển ra" />
+        <span class="suffix-btn" @click="transferOutAmount = deposited">Tất cả</span>
       </div>
 
       <div class="popup-label-row">
-        <span>资金密码</span>
+        <span>Mật khẩu rút tiền</span>
       </div>
 
       <div class="input-wrapper">
-        <input type="password" v-model="fundPassword" placeholder="请输入资金密码" maxlength="20" />
+        <input type="password" v-model="fundPassword" placeholder="Nhập mật khẩu rút tiền" maxlength="20" />
       </div>
 
-      <van-button block :color="canTransferOut ? '#009688' : '#999'" class="confirm-btn" :disabled="!canTransferOut" @click="confirmTransferOut">确认转出</van-button>
+      <van-button block :color="canTransferOut ? '#009688' : '#999'" class="confirm-btn" :disabled="!canTransferOut" @click="confirmTransferOut">Xác nhận chuyển ra</van-button>
       
       <div class="close-btn-wrapper" @click="showTransferOut = false">
         <van-icon name="cross" class="close-icon" />
@@ -255,39 +255,39 @@ const showTimeDropdown = ref(false)
 const showTypeDropdown = ref(false)
 
 const interestConfig = ref({
-  settle_cycle: '1小时',
+  settle_cycle: '1 giờ',
   settle_cycle_hours: 1,
   annual_rate: '4%',
   annual_rate_value: 0.04,
   min_amount: 20,
-  max_interest: '不限制',
-  claim_time: '隔天领取',
+  max_interest: 'Không giới hạn',
+  claim_time: 'Nhận ngày hôm sau',
   audit_multiple: 1
 })
 
 const timeFilter = ref(0)
 const typeFilter = ref(0)
 const timeOptions = [
-  { text: '今日', value: 0 },
-  { text: '昨日', value: 1 },
-  { text: '近7日', value: 7 }
+  { text: 'Hôm nay', value: 0 },
+  { text: 'Hôm qua', value: 1 },
+  { text: '7 ngày gần đây', value: 7 }
 ]
 const typeOptions = [
-  { text: '全部', value: 0 },
-  { text: '转入', value: 1 },
-  { text: '转出', value: 2 },
-  { text: '领取收益', value: 3 }
+  { text: 'Tất cả', value: 0 },
+  { text: 'Chuyển vào', value: 1 },
+  { text: 'Chuyển ra', value: 2 },
+  { text: 'Nhận lợi nhuận', value: 3 }
 ]
 
 const records = ref([])
 
 const currentTimeText = computed(() => {
   const item = timeOptions.find(o => o.value === timeFilter.value)
-  return item ? item.text : '今日'
+  return item ? item.text : 'Hôm nay'
 })
 const currentTypeText = computed(() => {
   const item = typeOptions.find(o => o.value === typeFilter.value)
-  return item ? item.text : '全部'
+  return item ? item.text : 'Tất cả'
 })
 
 const selectTime = (val) => {
@@ -315,7 +315,7 @@ const canClaim = computed(() => {
 
 const formatMaxInterest = computed(() => {
   const val = interestConfig.value.max_interest
-  if (val === 0 || val === '0' || val === '不限制') return '不限制'
+  if (val === 0 || val === '0' || val === '不限制') return 'Không giới hạn'
   return val
 })
 
@@ -399,7 +399,7 @@ const fetchRecords = async () => {
 const handleTransferIn = async () => {
   if (!canTransfer.value) return
   
-  const toast = showLoadingToast({ message: '处理中...', forbidClick: true, duration: 0 })
+  const toast = showLoadingToast({ message: 'Đang xử lý...', forbidClick: true, duration: 0 })
   try {
     const productsRes = await yueBaoApi.getProducts()
     let productId = 1
@@ -415,23 +415,23 @@ const handleTransferIn = async () => {
     
     toast.close()
     if (isApiSuccess(res)) {
-      showSuccessToast('转入成功')
+      showSuccessToast('Chuyển vào thành công')
       showTransferIn.value = false
       transferAmount.value = ''
       fetchData()
       fetchRecords()
     } else {
-      showToast(res?.msg || res?.message || '转入失败')
+      showToast(res?.msg || res?.message || 'Chuyển vào thất bại')
     }
   } catch (e) {
     toast.close()
-    showToast('网络错误')
+    showToast('Lỗi mạng')
   }
 }
 
 const handleTransferOut = () => {
   if (Number(deposited.value) <= 0) {
-    return showToast('暂无可转出金额')
+    return showToast('Chưa có số tiền để chuyển ra')
   }
   showTransferOut.value = true
 }
@@ -439,7 +439,7 @@ const handleTransferOut = () => {
 const confirmTransferOut = async () => {
   if (!canTransferOut.value) return
   
-  const toast = showLoadingToast({ message: '处理中...', forbidClick: true, duration: 0 })
+  const toast = showLoadingToast({ message: 'Đang xử lý...', forbidClick: true, duration: 0 })
   try {
     const res = await yueBaoApi.transferOut({
       amount: Number(transferOutAmount.value),
@@ -448,50 +448,50 @@ const confirmTransferOut = async () => {
     
     toast.close()
     if (isApiSuccess(res)) {
-      showSuccessToast('转出成功')
+      showSuccessToast('Chuyển ra thành công')
       showTransferOut.value = false
       transferOutAmount.value = ''
       fundPassword.value = ''
       fetchData()
       fetchRecords()
     } else {
-      showToast(res?.msg || res?.message || '转出失败')
+      showToast(res?.msg || res?.message || 'Chuyển ra thất bại')
     }
   } catch (e) {
     toast.close()
-    showToast('网络错误')
+    showToast('Lỗi mạng')
   }
 }
 
 const handleClaim = async () => {
   if (!canClaim.value) return
   
-  const toast = showLoadingToast({ message: '处理中...', forbidClick: true, duration: 0 })
+  const toast = showLoadingToast({ message: 'Đang xử lý...', forbidClick: true, duration: 0 })
   try {
     const res = await yueBaoApi.claimInterest()
     toast.close()
     if (isApiSuccess(res)) {
-      showSuccessToast(`领取成功，+${res.data?.amount || 0}`)
+      showSuccessToast(`Nhận thành công, +${res.data?.amount || 0}`)
       fetchData()
       fetchRecords()
     } else {
-      showToast(res?.msg || res?.message || '领取失败')
+      showToast(res?.msg || res?.message || 'Nhận thất bại')
     }
   } catch (e) {
     toast.close()
-    showToast('网络错误')
+    showToast('Lỗi mạng')
   }
 }
 
 const getTypeText = (type) => {
   const map = {
-    'deposit': '转入',
-    'withdraw': '转出',
-    'income': '收益',
-    'interest': '利息',
-    'claim': '领取收益',
-    'transfer_in': '转入',
-    'transfer_out': '转出'
+    'deposit': 'Chuyển vào',
+    'withdraw': 'Chuyển ra',
+    'income': 'Thu nhập',
+    'interest': 'Lãi suất',
+    'claim': 'Nhận lợi nhuận',
+    'transfer_in': 'Chuyển vào',
+    'transfer_out': 'Chuyển ra'
   }
   return map[type] || type
 }
@@ -513,7 +513,7 @@ const refreshBalance = async () => {
     if (isApiSuccess(profileRes)) {
       const u = profileRes.data?.user || profileRes.data || {}
       userBalance.value = u.balance || '0.00'
-      showToast('已刷新')
+      showToast('Đã làm mới')
     }
   } catch (e) {
   } finally {
@@ -526,7 +526,7 @@ const refreshData = async () => {
   isDataRefreshing.value = true
   try {
     await fetchData()
-    showToast('已刷新')
+    showToast('Đã làm mới')
   } finally {
     setTimeout(() => { isDataRefreshing.value = false }, 500)
   }
@@ -563,7 +563,7 @@ onMounted(() => {
       nextInterestTime.value = data.nextSettleTime
     }
     if (data.addedInterest && Number(data.addedInterest) > 0) {
-      showToast(`利息+${data.addedInterest}`)
+      showToast(`Lãi +${data.addedInterest}`)
     }
   })
   

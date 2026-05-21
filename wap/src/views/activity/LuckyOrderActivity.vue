@@ -9,28 +9,28 @@
       class="custom-nav"
     >
       <template #right>
-        <span class="nav-right-link" @click="goToRecords">领取记录</span>
+        <span class="nav-right-link" @click="goToRecords">Lịch sử nhận</span>
       </template>
     </van-nav-bar>
 
     <div class="main-container">
       <div class="status-card">
         <div class="status-row">
-          <span class="status-text">今日暂无中奖注单</span>
+          <span class="status-text">Hôm nay chưa có đơn trúng</span>
           <div class="refresh-btn" @click="refreshData">
             <van-icon name="replay" class="refresh-icon" :class="{ 'rotating': isRefreshing }" />
-            <span>刷新奖励</span>
+            <span>Làm mới</span>
           </div>
         </div>
         <div class="limit-row">
-          今日领取上限3次 <span class="limit-green">(还剩{{ remainingClaims }}次)</span>
+          Giới hạn nhận hôm nay 3 lần <span class="limit-green">(Còn {{ remainingClaims }} lần)</span>
         </div>
         
         <div class="reward-table">
           <div class="table-header">
-            <div class="th col-1">注单尾号</div>
-            <div class="th col-2">奖金倍数</div>
-            <div class="th col-3">奖金上限</div>
+            <div class="th col-1">Số cuối đơn</div>
+            <div class="th col-2">Hệ số thưởng</div>
+            <div class="th col-3">Giới hạn thưởng</div>
           </div>
           <div class="table-body">
             <div 
@@ -46,13 +46,13 @@
           </div>
         </div>
         <div class="table-footer-note">
-          奖励金额=该笔注单的有效投注金额 x 奖金倍数，且不超过上限
+          Tiền thưởng = Cược hợp lệ x Hệ số thưởng, không vượt giới hạn
         </div>
       </div>
 
       <div class="info-card">
         <div class="ribbon-title">
-          <span>活动时间 (UTC+8)</span>
+          <span>Thời gian hoạt động (UTC+8)</span>
           <div class="ribbon-arrow"></div>
         </div>
         <div class="time-content">
@@ -62,7 +62,7 @@
 
       <div class="info-card">
         <div class="ribbon-title">
-          <span>活动说明</span>
+          <span>Hướng dẫn hoạt động</span>
           <div class="ribbon-arrow"></div>
         </div>
         <div class="rules-content" v-html="activityContent">
@@ -95,9 +95,9 @@ const router = useRouter()
 const route = useRoute()
 const isRefreshing = ref(false)
 const remainingClaims = ref(3)
-const activityTitle = ref('加载中...')
-const activityTime = ref('加载中...')
-const activityContent = ref('<p>加载中...</p>')
+const activityTitle = ref('Đang tải...')
+const activityTime = ref('Đang tải...')
+const activityContent = ref('<p>Đang tải...</p>')
 
 const rewards = ref([])
 
@@ -128,13 +128,13 @@ onMounted(async () => {
       const res = await activityApi.getActivityDetail(activityId)
       if (res.code === 0 && res.data) {
         const data = res.data
-        activityTitle.value = data.title || '活动详情'
-        activityContent.value = data.content || '<p>暂无活动说明</p>'
+        activityTitle.value = data.title || 'Chi tiết hoạt động'
+        activityContent.value = data.content || '<p>Chưa có mô tả hoạt động</p>'
         
         if (data.startDate && data.endDate) {
           activityTime.value = `${data.startDate} 00:00:00 - ${data.endDate} 23:59:59`
         } else {
-          activityTime.value = '长期有效'
+          activityTime.value = 'Dài hạn'
         }
         
         if (data.rewards && data.rewards.length > 0) {
@@ -146,14 +146,14 @@ onMounted(async () => {
         }
       }
     } catch (error) {
-      activityTitle.value = '活动详情'
-      activityTime.value = '加载失败'
-      activityContent.value = '<p>加载失败，请稍后重试</p>'
+      activityTitle.value = 'Chi tiết hoạt động'
+      activityTime.value = 'Tải thất bại'
+      activityContent.value = '<p>Tải thất bại, vui lòng thử lại sau</p>'
     }
   } else {
-    activityTitle.value = '活动详情'
-    activityTime.value = '参数错误'
-    activityContent.value = '<p>活动参数错误</p>'
+    activityTitle.value = 'Chi tiết hoạt động'
+    activityTime.value = 'Lỗi tham số'
+    activityContent.value = '<p>Tham số hoạt động không hợp lệ</p>'
   }
   
   loadRelatedActivities()
@@ -170,7 +170,7 @@ const refreshData = () => {
   isRefreshing.value = true
   setTimeout(() => {
     isRefreshing.value = false
-    showToast('刷新成功')
+    showToast('Làm mới thành công')
   }, 1000)
 }
 

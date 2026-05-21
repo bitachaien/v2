@@ -1,21 +1,21 @@
 <template>
   <div class="v5-email-bind">
     <van-nav-bar
-      title="邮箱"
+      title="Email"
       left-arrow
       @click-left="onClickLeft"
       class="custom-nav"
     />
 
     <div class="content">
-      <div class="page-label">绑定邮箱</div>
+      <div class="page-label">Liên kết email</div>
       
       <div class="email-input-container">
         <van-icon name="envelop-o" size="20" color="#999" class="prefix-icon" />
         <input 
           type="text" 
           v-model="email" 
-          placeholder="请输入邮箱" 
+          placeholder="Nhập địa chỉ email"
           class="email-input"
           @input="onInput"
           @focus="showSuggestions = true"
@@ -49,18 +49,18 @@
         <input 
           type="text" 
           v-model="code" 
-          placeholder="请输入验证码" 
+          placeholder="Nhập mã xác minh"
           class="code-input"
           maxlength="6"
         />
         <span class="countdown" v-if="countdown > 0">{{ countdown }}s</span>
-        <span class="resend" v-else @click="sendCode">重新发送</span>
+        <span class="resend" v-else @click="sendCode">Gửi lại</span>
       </div>
     </div>
 
     <div class="bottom-area">
-      <van-button v-if="!codeSent" block color="#009688" class="submit-btn" @click="sendCode" :loading="sending">发送验证码</van-button>
-      <van-button v-else block color="#009688" class="submit-btn" @click="onSubmit" :loading="submitting">确定绑定</van-button>
+      <van-button v-if="!codeSent" block color="#009688" class="submit-btn" @click="sendCode" :loading="sending">Gửi mã xác minh</van-button>
+      <van-button v-else block color="#009688" class="submit-btn" @click="onSubmit" :loading="submitting">Xác nhận liên kết</van-button>
     </div>
   </div>
 </template>
@@ -139,11 +139,11 @@ const startCountdown = () => {
 
 const sendCode = async () => {
   if (!email.value) {
-    showToast('请输入邮箱')
+    showToast('Vui lòng nhập email')
     return
   }
   if (!/.+@.+\..+/.test(email.value)) {
-    showToast('邮箱格式不正确')
+    showToast('Định dạng email không đúng')
     return
   }
   
@@ -151,14 +151,14 @@ const sendCode = async () => {
   try {
     const res = await securityApi.sendEmailCode(email.value)
     if (res.code === 0) {
-      showToast('验证码已发送')
+      showToast('Đã gửi mã xác minh')
       codeSent.value = true
       startCountdown()
     } else {
-      showToast(res.message || '发送失败')
+      showToast(res.message || 'Gửi thất bại')
     }
   } catch (e) {
-    showToast(e.message || '发送失败')
+    showToast(e.message || 'Gửi thất bại')
   } finally {
     sending.value = false
   }
@@ -166,7 +166,7 @@ const sendCode = async () => {
 
 const onSubmit = async () => {
   if (!code.value || code.value.length !== 6) {
-    showToast('请输入6位验证码')
+    showToast('Vui lòng nhập mã 6 chữ số')
     return
   }
   
@@ -174,15 +174,15 @@ const onSubmit = async () => {
   try {
     const res = await securityApi.bindEmail({ email: email.value, code: code.value })
     if (res.code === 0) {
-      showToast('绑定成功')
+      showToast('Liên kết thành công')
       setTimeout(() => {
         router.back()
       }, 1000)
     } else {
-      showToast(res.message || '绑定失败')
+      showToast(res.message || 'Liên kết thất bại')
     }
   } catch (e) {
-    showToast(e.message || '绑定失败')
+    showToast(e.message || 'Liên kết thất bại')
   } finally {
     submitting.value = false
   }

@@ -1,7 +1,7 @@
 <template>
   <div class="v5-security">
     <van-nav-bar
-      title="安全中心"
+      title="Trung tâm bảo mật"
       left-arrow
       @click-left="onClickLeft"
       class="custom-nav"
@@ -12,7 +12,7 @@
       <div class="security-group">
         <van-cell-group inset>
           
-          <van-cell title="会员账号" class="info-cell">
+          <van-cell title="Tài khoản thành viên" class="info-cell">
             <template #icon>
               <van-icon name="manager" class="cell-icon gray" />
             </template>
@@ -25,21 +25,21 @@
           </van-cell>
 
           
-          <van-cell title="手机" is-link :value="userInfo.phoneBind ? '已添加' : '未添加'" :value-class="{ 'green-text': userInfo.phoneBind }" @click="go('/security/phone')">
+          <van-cell title="Số điện thoại" is-link :value="userInfo.phoneBind ? 'Đã thêm' : 'Chưa thêm'" :value-class="{ 'green-text': userInfo.phoneBind }" @click="go('/security/phone')">
             <template #icon>
               <van-icon name="phone-o" :class="['cell-icon', userInfo.phoneBind ? 'green' : 'gray']" />
             </template>
           </van-cell>
 
           
-          <van-cell title="邮箱" is-link :value="userInfo.emailBind ? '已添加' : '未添加'" :value-class="{ 'green-text': userInfo.emailBind }" @click="go('/security/email')">
+          <van-cell title="Email" is-link :value="userInfo.emailBind ? 'Đã thêm' : 'Chưa thêm'" :value-class="{ 'green-text': userInfo.emailBind }" @click="go('/security/email')">
             <template #icon>
               <van-icon name="envelop-o" :class="['cell-icon', userInfo.emailBind ? 'green' : 'gray']" />
             </template>
           </van-cell>
 
           
-          <van-cell title="Google验证器" is-link :value="userInfo.googleBind ? '已绑定' : '未绑定'" :value-class="{ 'green-text': userInfo.googleBind }" @click="go('/security/google')">
+          <van-cell title="Google Authenticator" is-link :value="userInfo.googleBind ? 'Đã liên kết' : 'Chưa liên kết'" :value-class="{ 'green-text': userInfo.googleBind }" @click="go('/security/google')">
             <template #icon>
               <van-icon name="scan" class="cell-icon colorful" />
             </template>
@@ -51,21 +51,21 @@
       <div class="security-group">
         <van-cell-group inset>
           
-          <van-cell title="登录密码" is-link @click="go('/security/login-pwd')">
+          <van-cell title="Mật khẩu đăng nhập" is-link @click="go('/security/login-pwd')">
             <template #icon>
               <van-icon name="lock" class="cell-icon green" />
             </template>
           </van-cell>
 
           
-          <van-cell title="提现密码" is-link :value="userInfo.hasFundPwd ? '已设置' : '未设置'" @click="go('/security/fund-pwd')">
+          <van-cell title="Mật khẩu rút tiền" is-link :value="userInfo.hasFundPwd ? 'Đã thiết lập' : 'Chưa thiết lập'" @click="go('/security/fund-pwd')">
             <template #icon>
               <van-icon name="card" class="cell-icon red" />
             </template>
           </van-cell>
 
           
-          <van-cell title="密保问题" is-link :value="userInfo.hasQuestion ? '已设置' : '未设置'" :value-class="{ 'green-text': userInfo.hasQuestion }" @click="go('/security/question')">
+          <van-cell title="Câu hỏi bảo mật" is-link :value="userInfo.hasQuestion ? 'Đã thiết lập' : 'Chưa thiết lập'" :value-class="{ 'green-text': userInfo.hasQuestion }" @click="go('/security/question')">
             <template #icon>
               <van-icon name="shield-o" class="cell-icon green" />
             </template>
@@ -123,9 +123,9 @@ const go = (path) => {
 const copyText = (text) => {
   if (!text) return
   navigator.clipboard.writeText(text).then(() => {
-    showToast('复制成功')
+    showToast('Sao chép thành công')
   }).catch(() => {
-    showToast('复制失败')
+    showToast('Sao chép thất bại')
   })
 }
 </script>

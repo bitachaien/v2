@@ -1,7 +1,7 @@
 <template>
   <div class="activity-detail-page">
     <van-nav-bar
-      :title="activityData.title || '活动详情'"
+      :title="activityData.title || 'Chi tiết hoạt động'"
       left-arrow
       fixed
       placeholder
@@ -10,7 +10,7 @@
     />
     
     <div v-if="loading" class="loading-container">
-      <van-loading type="spinner" size="24" color="#26A17B">加载中...</van-loading>
+      <van-loading type="spinner" size="24" color="#26A17B">Đang tải...</van-loading>
     </div>
     
     <div v-else class="detail-content">
@@ -79,7 +79,7 @@ const decodeHtml = (html) => {
 const loadActivityDetail = async () => {
   const activityId = route.params.id
   if (!activityId) {
-    showToast('活动参数错误')
+    showToast('Tham số hoạt động không hợp lệ')
     return
   }
   
@@ -88,7 +88,7 @@ const loadActivityDetail = async () => {
     const res = await activityApi.getActivityDetail(activityId)
     if (res.code === 0 && res.data) {
       const data = res.data
-      let content = data.content || '<p>暂无活动说明</p>'
+      let content = data.content || '<p>Chưa có mô tả hoạt động</p>'
       
       if (content.includes('&lt;') || content.includes('&gt;')) {
         content = decodeHtml(content)
@@ -96,7 +96,7 @@ const loadActivityDetail = async () => {
       
       activityData.value = {
         id: data.id,
-        title: data.title || '活动详情',
+        title: data.title || 'Chi tiết hoạt động',
         banner: data.banner || '',
         content: content,
         startDate: data.startDate || '',
@@ -107,12 +107,12 @@ const loadActivityDetail = async () => {
       
       await loadRelatedActivities()
     } else {
-      showToast(res.message || '加载失败')
-      activityData.value.content = '<p>加载失败，请稍后重试</p>'
+      showToast(res.message || 'Tải thất bại')
+      activityData.value.content = '<p>Tải thất bại, vui lòng thử lại sau</p>'
     }
   } catch (error) {
-    showToast('加载失败')
-    activityData.value.content = '<p>加载失败，请稍后重试</p>'
+    showToast('Tải thất bại')
+    activityData.value.content = '<p>Tải thất bại, vui lòng thử lại sau</p>'
   } finally {
     loading.value = false
   }

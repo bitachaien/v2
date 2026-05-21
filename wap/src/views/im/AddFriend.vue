@@ -1,29 +1,29 @@
 <template>
   <div class="add-friend-page">
     <van-nav-bar
-      title="添加朋友"
+      title="Thêm bạn"
       left-arrow
       @click-left="router.back()"
     />
     <van-search
       v-model="keyword"
-      placeholder="搜索用户ID/昵称"
+      placeholder="Tìm ID/Biệt danh người dùng"
       show-action
       @search="onSearch"
     >
       <template #action>
-        <div @click="onSearch">搜索</div>
+        <div @click="onSearch">Tìm kiếm</div>
       </template>
     </van-search>
 
     <div class="search-result" v-if="hasSearched">
-      <van-empty v-if="users.length === 0" description="未找到用户" />
-      <van-cell-group v-else title="搜索结果">
+      <van-empty v-if="users.length === 0" description="Không tìm thấy người dùng" />
+      <van-cell-group v-else title="Kết quả tìm kiếm">
         <van-cell
           v-for="user in users"
           :key="user.userId"
           :title="user.nickname || user.username"
-          :label="user.signature || '暂无个性签名'"
+          :label="user.signature || 'Chưa có chữ ký'"
           center
         >
           <template #icon>
@@ -40,13 +40,13 @@
               v-if="user.isFriend"
               size="small"
               disabled
-            >已添加</van-button>
+            >Đã thêm</van-button>
             <van-button
               v-else
               type="primary"
               size="small"
               @click="openRequestDialog(user)"
-            >添加到通讯录</van-button>
+            >Thêm vào danh bạ</van-button>
           </template>
         </van-cell>
       </van-cell-group>
@@ -54,13 +54,13 @@
 
     <van-dialog
       v-model:show="showRequestDialog"
-      title="发送好友申请"
+      title="Gửi yêu cầu kết bạn"
       show-cancel-button
       @confirm="sendRequest"
     >
       <van-field
         v-model="requestMessage"
-        placeholder="我是..."
+        placeholder="Tôi là..."
         maxlength="50"
         show-word-limit
         type="textarea"
@@ -109,14 +109,14 @@ const onSearch = async () => {
     hasSearched.value = true
     if (!e.message?.includes('404') && !e.message?.includes('Not Found')) {
       console.error(e)
-      showToast('搜索失败')
+      showToast('Tìm kiếm thất bại')
     }
   }
 }
 
 const openRequestDialog = (user) => {
   currentTarget.value = user
-  requestMessage.value = '我是'
+  requestMessage.value = 'Tôi là'
   showRequestDialog.value = true
 }
 
@@ -124,7 +124,7 @@ const sendRequest = async () => {
   if (!currentTarget.value) return
   const targetUserId = currentTarget.value.userId
   if (!targetUserId) {
-    showToast('用户ID无效')
+    showToast('ID người dùng không hợp lệ')
     return
   }
   try {
@@ -132,9 +132,9 @@ const sendRequest = async () => {
       userId: targetUserId,
       remark: requestMessage.value
     })
-    showToast('已发送申请')
+    showToast('Đã gửi yêu cầu')
   } catch (e) {
-    showToast(e.message || '发送失败')
+    showToast(e.message || 'Gửi thất bại')
   }
 }
 </script>

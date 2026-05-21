@@ -40,7 +40,7 @@
       <div class="search-box">
         <van-field 
           v-model="searchId" 
-          placeholder="会员ID"
+          placeholder="ID thành viên"
           :border="false"
         >
           <template #right-icon>
@@ -54,7 +54,7 @@
       <van-list
         v-model:loading="loading"
         :finished="finished"
-        finished-text="没有更多了"
+        finished-text="Không còn nữa"
         @load="onLoad"
       >
         <template v-if="type === 'info'">
@@ -65,15 +65,15 @@
             </div>
             <div class="item-body">
               <div class="detail-row">
-                <span class="label">充值金额：</span>
+                <span class="label">Số tiền nạp:</span>
                 <span class="value">{{ formatNumber(item.rechargeAmount) }}</span>
               </div>
               <div class="detail-row">
-                <span class="label">有效投注：</span>
+                <span class="label">Cược hợp lệ:</span>
                 <span class="value">{{ formatNumber(item.validBet) }}</span>
               </div>
               <div class="detail-row">
-                <span class="label">最后登录：</span>
+                <span class="label">Đăng nhập cuối:</span>
                 <span class="value">{{ item.lastLogin }}</span>
               </div>
             </div>
@@ -88,11 +88,11 @@
             </div>
             <div class="item-body">
               <div class="detail-row">
-                <span class="label">投注次数：</span>
+                <span class="label">Số lần cược:</span>
                 <span class="value">{{ item.betCount }}</span>
               </div>
               <div class="detail-row">
-                <span class="label">输赢金额：</span>
+                <span class="label">Số tiền thắng thua:</span>
                 <span class="value" :class="item.winLoss >= 0 ? 'green' : 'red'">
                   {{ item.winLoss >= 0 ? '+' : '' }}{{ formatNumber(item.winLoss) }}
                 </span>
@@ -109,15 +109,15 @@
             </div>
             <div class="item-body">
               <div class="detail-row">
-                <span class="label">充值次数：</span>
+                <span class="label">Số lần nạp:</span>
                 <span class="value">{{ item.rechargeCount }}</span>
               </div>
               <div class="detail-row">
-                <span class="label">提现金额：</span>
+                <span class="label">Số tiền rút:</span>
                 <span class="value">{{ formatNumber(item.withdrawAmount) }}</span>
               </div>
               <div class="detail-row">
-                <span class="label">提现次数：</span>
+                <span class="label">Số lần rút:</span>
                 <span class="value">{{ item.withdrawCount }}</span>
               </div>
             </div>
@@ -132,11 +132,11 @@
             </div>
             <div class="item-body">
               <div class="detail-row">
-                <span class="label">领取类型：</span>
+                <span class="label">Loại nhận:</span>
                 <span class="value">{{ item.claimType }}</span>
               </div>
               <div class="detail-row">
-                <span class="label">领取时间：</span>
+                <span class="label">Thời gian nhận:</span>
                 <span class="value">{{ item.claimTime }}</span>
               </div>
             </div>
@@ -146,7 +146,7 @@
 
       <div class="empty-state" v-if="!loading && list.length === 0">
         <img src="/assets/img/img_none_sj.avif" class="empty-icon" />
-        <p>暂无记录</p>
+        <p>Chưa có bản ghi</p>
       </div>
     </div>
   </div>
@@ -168,28 +168,28 @@ const timeOptions = timeOptionsWithAll
 
 const sortOptionsMap = {
   info: [
-    { label: '登录日期排序', value: 'loginDate' },
-    { label: '下级人数排序', value: 'subCount' },
-    { label: '充值金额排序', value: 'rechargeAmount' },
-    { label: '有效投注排序', value: 'validBet' }
+    { label: 'Sắp xếp theo ngày đăng nhập', value: 'loginDate' },
+    { label: 'Sắp xếp theo số cấp dưới', value: 'subCount' },
+    { label: 'Sắp xếp theo số tiền nạp', value: 'rechargeAmount' },
+    { label: 'Sắp xếp theo cược hợp lệ', value: 'validBet' }
   ],
   bets: [
-    { label: '有效投注排序', value: 'validBet' },
-    { label: '累计输赢排序', value: 'winLoss' }
+    { label: 'Sắp xếp theo cược hợp lệ', value: 'validBet' },
+    { label: 'Sắp xếp theo tổng thắng thua', value: 'winLoss' }
   ],
   finance: [
-    { label: '充值金额排序', value: 'rechargeAmount' },
-    { label: '充值次数排序', value: 'rechargeCount' },
-    { label: '提现金额排序', value: 'withdrawAmount' },
-    { label: '提现次数排序', value: 'withdrawCount' },
-    { label: '余额排序', value: 'balance' }
+    { label: 'Sắp xếp theo số tiền nạp', value: 'rechargeAmount' },
+    { label: 'Sắp xếp theo số lần nạp', value: 'rechargeCount' },
+    { label: 'Sắp xếp theo số tiền rút', value: 'withdrawAmount' },
+    { label: 'Sắp xếp theo số lần rút', value: 'withdrawCount' },
+    { label: 'Sắp xếp theo số dư', value: 'balance' }
   ],
   claims: [
-    { label: '合计领取排序', value: 'totalClaim' },
-    { label: '返水领取排序', value: 'rebateClaim' },
-    { label: '活动领取排序', value: 'activityClaim' },
-    { label: '任务领取排序', value: 'taskClaim' },
-    { label: '代理佣金排序', value: 'agentCommission' }
+    { label: 'Sắp xếp theo tổng nhận', value: 'totalClaim' },
+    { label: 'Sắp xếp theo hoàn trả nhận', value: 'rebateClaim' },
+    { label: 'Sắp xếp theo hoạt động nhận', value: 'activityClaim' },
+    { label: 'Sắp xếp theo nhiệm vụ nhận', value: 'taskClaim' },
+    { label: 'Sắp xếp theo hoa hồng đại lý', value: 'agentCommission' }
   ]
 }
 
@@ -207,15 +207,15 @@ const page = ref(1)
 
 const currentTimeLabel = computed(() => {
   const item = timeOptions.find(t => t.value === currentTime.value)
-  return item ? item.label : '今日'
+  return item ? item.label : 'Hôm nay'
 })
 
 const currentSortLabel = computed(() => {
   if (!currentSort.value) {
-    return sortOptions.value[0]?.label || '排序'
+    return sortOptions.value[0]?.label || 'Sắp xếp'
   }
   const item = sortOptions.value.find(s => s.value === currentSort.value)
-  return item ? item.label : '排序'
+  return item ? item.label : 'Sắp xếp'
 })
 
 const formatNumber = (num) => {

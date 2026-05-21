@@ -5,7 +5,7 @@ import { homeApi } from '@/api/home'
 
 export const useConfigStore = defineStore('config', () => {
 
-  const siteName = ref('TIMI')
+  const siteName = ref('CỔNG OKWINK6 HOT NHẤT')
 
   const siteLogo = ref('')
 

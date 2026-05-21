@@ -2,44 +2,44 @@
   <van-popup v-model:show="visible" round class="record-detail-popup" :style="{ width: '92%' }">
     <div class="popup-content" v-if="record">
       <div class="popup-header">
-        <div class="popup-title">提现详情</div>
+        <div class="popup-title">Chi tiết rút tiền</div>
       </div>
       <div class="detail-body">
         <div class="detail-row">
-          <span class="detail-label">提现类型</span>
+          <span class="detail-label">Loại rút</span>
           <span class="detail-value">{{ getRecordTypeName(record) }}</span>
         </div>
         <div class="detail-row">
-          <span class="detail-label">提现金额</span>
+          <span class="detail-label">Số tiền rút</span>
           <span class="detail-value amount" :class="{ 'refund': record.state === 2 || record.state === 3 }">{{ (record.state === 2 || record.state === 3) ? '+' : '-' }}{{ Number(record.amount).toFixed(2) }} USDT</span>
         </div>
         <div class="detail-row">
-          <span class="detail-label">提现状态</span>
+          <span class="detail-label">Trạng thái</span>
           <span class="detail-value" :class="'status-' + record.state">{{ getRecordStatusText(record.state) }}</span>
         </div>
         <div class="detail-row">
-          <span class="detail-label">申请时间</span>
+          <span class="detail-label">Thời gian yêu cầu</span>
           <span class="detail-value">{{ record.createTime }}</span>
         </div>
         <div class="detail-row" v-if="record.updateTime && record.state !== 0">
-          <span class="detail-label">处理时间</span>
+          <span class="detail-label">Thời gian xử lý</span>
           <span class="detail-value">{{ record.updateTime }}</span>
         </div>
         <div class="detail-row" v-if="record.orderNo">
-          <span class="detail-label">订单编号</span>
+          <span class="detail-label">Mã đơn hàng</span>
           <span class="detail-value order-no">{{ record.orderNo }}</span>
         </div>
         <div class="detail-row" v-if="record.address">
-          <span class="detail-label">提现地址</span>
+          <span class="detail-label">Địa chỉ rút</span>
           <span class="detail-value address">{{ record.address }}</span>
         </div>
         <div class="detail-row" v-if="record.remark">
-          <span class="detail-label">备注</span>
+          <span class="detail-label">Ghi chú</span>
           <span class="detail-value">{{ record.remark }}</span>
         </div>
       </div>
       <div class="detail-footer" v-if="record.state === 0">
-        <div class="detail-btn cancel-btn" @click="handleCancel">取消提现</div>
+        <div class="detail-btn cancel-btn" @click="handleCancel">Hủy rút tiền</div>
       </div>
     </div>
     <div class="close-circle-wrapper">
