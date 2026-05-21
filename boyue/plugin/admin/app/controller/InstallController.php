@@ -21,7 +21,7 @@ class InstallController extends Base
     protected $noNeedLogin = ['step1', 'step2'];
 
     /**
-     * 设置数据库
+     * Cài đặtdữ liệu库
      * @param Request $request
      * @return Response
      * @throws BusinessException|\Throwable
@@ -31,7 +31,7 @@ class InstallController extends Base
         $database_config_file = base_path() . '/plugin/admin/config/database.php';
         clearstatcache();
         if (is_file($database_config_file)) {
-            return $this->json(1, '管理后台已经安装！如需重新安装，请删除该插件数据库配置文件并重启');
+            return $this->json(1, '管理后台已经安装！如需重新安装，请Xóa该插件dữ liệu库配置文件并重启');
         }
 
         if (!class_exists(CaptchaBuilder::class) || !class_exists(Manager::class)) {
@@ -56,13 +56,13 @@ class InstallController extends Base
             $tables = $smt->fetchAll();
         } catch (\Throwable $e) {
             if (stripos($e, 'Access denied for user')) {
-                return $this->json(1, '数据库用户名或密码错误');
+                return $this->json(1, 'dữ liệu库Tên người dùnghoặcMật khẩu sai');
             }
             if (stripos($e, 'Connection refused')) {
-                return $this->json(1, 'Connection refused. 请确认数据库IP端口是否正确，数据库已经启动');
+                return $this->json(1, 'Connection refused. 请Xác nhậndữ liệu库IP端口是否正确，dữ liệu库已经启动');
             }
             if (stripos($e, 'timed out')) {
-                return $this->json(1, '数据库连接超时，请确认数据库IP端口是否正确，安全组及防火墙已经放行端口');
+                return $this->json(1, 'dữ liệu库连接超时，请Xác nhậndữ liệu库IP端口是否正确，安全组及防火墙已经放行端口');
             }
             throw $e;
         }
@@ -84,7 +84,7 @@ class InstallController extends Base
         $tables_conflict = array_intersect($tables_to_install, $tables_exist);
         if (!$overwrite) {
             if ($tables_conflict) {
-                return $this->json(1, '以下表' . implode(',', $tables_conflict) . '已经存在，如需覆盖请选择强制覆盖');
+                return $this->json(1, '以下表' . implode(',', $tables_conflict) . '已经存在，如需覆盖Vui lòng chọn强制覆盖');
             }
         } else {
             foreach ($tables_conflict as $table) {
@@ -94,7 +94,7 @@ class InstallController extends Base
 
         $sql_file = base_path() . '/plugin/admin/install.sql';
         if (!is_file($sql_file)) {
-            return $this->json(1, '数据库SQL文件不存在');
+            return $this->json(1, 'dữ liệu库SQL文件không tồn tại');
         }
 
         $sql_query = file_get_contents($sql_file);
@@ -106,7 +106,7 @@ class InstallController extends Base
 
         // 导入菜单
         $menus = include base_path() . '/plugin/admin/config/menu.php';
-        // 安装过程中没有数据库配置，无法使用api\Menu::import()方法
+        // 安装过程中没有dữ liệu库配置，无法使用api\Menu::import()方法
         $this->importMenu($menus, $db);
 
         $config_content = <<<EOF
@@ -139,26 +139,26 @@ return [
     'default' => 'mysql',
     'connections' => [
         'mysql' => [
-            // 数据库类型
+            // dữ liệu库类型
             'type' => 'mysql',
             // 服务器地址
             'hostname' => '$host',
-            // 数据库名
+            // dữ liệu库名
             'database' => '$database',
-            // 数据库用户名
+            // dữ liệu库Tên người dùng
             'username' => '$user',
-            // 数据库密码
+            // dữ liệu库Mật khẩu
             'password' => '$password',
-            // 数据库连接端口
+            // dữ liệu库连接端口
             'hostport' => $port,
-            // 数据库连接参数
+            // dữ liệu库连接参数
             'params' => [
                 // 连接超时3秒
                 \PDO::ATTR_TIMEOUT => 3,
             ],
-            // 数据库编码默认采用utf8
+            // dữ liệu库编码默认采用utf8
             'charset' => 'utf8mb4',
-            // 数据库表前缀
+            // dữ liệu库表前缀
             'prefix' => '',
             // 断线重连
             'break_reconnect' => true,
@@ -184,7 +184,7 @@ EOF;
     }
 
     /**
-     * 设置管理员
+     * Cài đặt管理员
      * @param Request $request
      * @return Response
      * @throws BusinessException
@@ -195,10 +195,10 @@ EOF;
         $password = $request->post('password');
         $password_confirm = $request->post('password_confirm');
         if ($password != $password_confirm) {
-            return $this->json(1, '两次密码不一致');
+            return $this->json(1, '两次Mật khẩu不一致');
         }
         if (!is_file($config_file = base_path() . '/plugin/admin/config/database.php')) {
-            return $this->json(1, '请先完成第一步数据库配置');
+            return $this->json(1, '请先完成第一步dữ liệu库配置');
         }
         $config = include $config_file;
         $connection = $config['connections']['mysql'];
@@ -233,7 +233,7 @@ EOF;
     }
 
     /**
-     * 添加菜单
+     * Thêm菜单
      * @param array $menu
      * @param \PDO $pdo
      * @return int
@@ -364,7 +364,7 @@ EOF;
     }
 
     /**
-     * 获取pdo连接
+     * Lấypdo连接
      * @param $host
      * @param $username
      * @param $password

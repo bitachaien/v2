@@ -43,7 +43,7 @@ class Base
     protected $dataLimitField = 'admin_id';
 
     /**
-     * 返回格式化json数据
+     * 返回格式化jsondữ liệu
      *
      * @param int $code
      * @param string $msg
@@ -59,12 +59,12 @@ class Base
         return json($result);
     }
 
-    protected function success(string $msg = '成功', array $data = []): Response
+    protected function success(string $msg = 'Thành công', array $data = []): Response
     {
         return $this->json(0, $msg, $data);
     }
 
-    protected function fail(string $msg = '失败', array $data = []): Response
+    protected function fail(string $msg = 'Thất bại', array $data = []): Response
     {
         return $this->json(1, $msg, $data);
     }

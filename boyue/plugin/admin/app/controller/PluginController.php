@@ -57,7 +57,7 @@ class PluginController extends Base
             $msg = "/api/app/list return $content";
             echo "msg\r\n";
             Log::error($msg);
-            return $this->json(1, '获取数据出错');
+            return $this->json(1, 'Lấy dữ liệu出错');
         }
         $disabled = is_phar();
         foreach ($data['data']['items'] as $key => $item) {
@@ -87,10 +87,10 @@ class PluginController extends Base
 
         $user = session('app-plugin-user');
         if (!$user) {
-            return $this->json(-1, '请登录');
+            return $this->json(-1, '请Đăng nhập');
         }
 
-        // 获取下载zip文件url
+        // Lấy下载zip文件url
         $data = $this->getDownloadUrl($name, $version);
         if ($data['code'] != 0) {
             return $this->json($data['code'], $data['msg'], $data['data'] ?? []);
@@ -106,10 +106,10 @@ class PluginController extends Base
         if (!$has_zip_archive) {
             $cmd = $this->getUnzipCmd($zip_file, $extract_to);
             if (!$cmd) {
-                throw new BusinessException('请给php安装zip模块或者给系统安装unzip命令');
+                throw new BusinessException('请给php安装zip模块hoặc者给系统安装unzip命令');
             }
             if (!function_exists('proc_open')) {
-                throw new BusinessException('请解除proc_open函数的禁用或者给php安装zip模块');
+                throw new BusinessException('请解除proc_open函数的禁用hoặc者给php安装zip模块');
             }
         }
 
@@ -169,14 +169,14 @@ class PluginController extends Base
         $name = $request->post('name');
         $version = $request->post('version');
         if (!$name || !preg_match('/^[a-zA-Z0-9_]+$/', $name)) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
         // 获得插件路径
         clearstatcache();
         $path = get_realpath(base_path() . "/plugin/$name");
         if (!$path || !is_dir($path)) {
-            return $this->json(1, '已经删除');
+            return $this->json(1, '已经Xóa');
         }
 
         // 执行uninstall卸载
@@ -185,7 +185,7 @@ class PluginController extends Base
             call_user_func([$install_class, 'uninstall'], $version);
         }
 
-        // 删除目录
+        // Xóa目录
         clearstatcache();
         if (is_dir($path)) {
             $monitor_support_pause = method_exists(Monitor::class, 'pause');
@@ -208,7 +208,7 @@ class PluginController extends Base
     }
 
     /**
-     * 支付
+     * Thanh toán
      * @param Request $request
      * @return string|Response
      * @throws GuzzleException
@@ -229,7 +229,7 @@ class PluginController extends Base
     }
 
     /**
-     * 登录验证码
+     * Đăng nhập验证码
      * @param Request $request
      * @return Response
      * @throws GuzzleException
@@ -247,7 +247,7 @@ class PluginController extends Base
     }
 
     /**
-     * 登录官网
+     * Đăng nhập官网
      * @param Request $request
      * @return Response|string
      * @throws GuzzleException
@@ -273,7 +273,7 @@ class PluginController extends Base
             $msg = "/api/user/login return $content";
             echo "msg\r\n";
             Log::error($msg);
-            return $this->json(1, '发生错误');
+            return $this->json(1, '发生Lỗi');
         }
         if ($data['code'] != 0) {
             return $this->json($data['code'], $data['msg']);
@@ -285,7 +285,7 @@ class PluginController extends Base
     }
 
     /**
-     * 获取zip下载url
+     * Lấyzip下载url
      * @param $name
      * @param $version
      * @return mixed
@@ -302,13 +302,13 @@ class PluginController extends Base
         if (!$data) {
             $msg = "/api/app/download return $content";
             Log::error($msg);
-            throw new BusinessException('访问官方接口失败 ' . $response->getStatusCode() . ' ' . $response->getReasonPhrase());
+            throw new BusinessException('访问官方接口Thất bại ' . $response->getStatusCode() . ' ' . $response->getReasonPhrase());
         }
         if ($data['code'] && $data['code'] != -1 && $data['code'] != -2) {
             throw new BusinessException($data['msg']);
         }
         if ($data['code'] == 0 && !isset($data['data']['url'])) {
-            throw new BusinessException('官方接口返回数据错误');
+            throw new BusinessException('官方接口返回dữ liệuLỗi');
         }
         return $data;
     }
@@ -328,17 +328,17 @@ class PluginController extends Base
         $body = $response->getBody();
         $status = $response->getStatusCode();
         if ($status == 404) {
-            throw new BusinessException('安装包不存在');
+            throw new BusinessException('安装包không tồn tại');
         }
         $zip_content = $body->getContents();
         if (empty($zip_content)) {
-            throw new BusinessException('安装包不存在');
+            throw new BusinessException('安装包không tồn tại');
         }
         file_put_contents($file, $zip_content);
     }
 
     /**
-     * 获取系统支持的解压命令
+     * Lấy系统支持的解压命令
      * @param $zip_file
      * @param $extract_to
      * @return mixed|string|null
@@ -370,7 +370,7 @@ class PluginController extends Base
         ];
         $handler = proc_open($cmd, $desc, $pipes);
         if (!is_resource($handler)) {
-            throw new BusinessException("解压zip时出错:proc_open调用失败");
+            throw new BusinessException("解压zip时出错:proc_open调用Thất bại");
         }
         $err = fread($pipes[2], 1024);
         fclose($pipes[2]);
@@ -381,7 +381,7 @@ class PluginController extends Base
     }
 
     /**
-     * 获取已安装的插件列表
+     * Lấy已安装的插件列表
      * @return array
      */
     protected function getLocalPlugins(): array
@@ -398,7 +398,7 @@ class PluginController extends Base
     }
 
     /**
-     * 获取已安装的插件列表
+     * Lấy已安装的插件列表
      * @param Request $request
      * @return Response
      */
@@ -409,7 +409,7 @@ class PluginController extends Base
     
 
     /**
-     * 获取本地插件版本
+     * Lấy本地插件版本
      * @param $name
      * @return array|mixed|null
      */
@@ -423,7 +423,7 @@ class PluginController extends Base
     }
 
     /**
-     * 获取webman/admin版本
+     * Lấywebman/admin版本
      * @return string
      */
     protected function getAdminVersion(): string
@@ -432,7 +432,7 @@ class PluginController extends Base
     }
 
     /**
-     * 删除目录
+     * Xóa目录
      * @param $src
      * @return void
      */
@@ -454,7 +454,7 @@ class PluginController extends Base
     }
 
     /**
-     * 获取httpclient
+     * Lấyhttpclient
      * @return Client
      */
     protected function httpClient(): Client
@@ -479,7 +479,7 @@ class PluginController extends Base
     }
 
     /**
-     * 获取下载httpclient
+     * Lấy下载httpclient
      * @return Client
      */
     protected function downloadClient(): Client

@@ -2,7 +2,7 @@
 
 return [
     [
-        'title' => '数据库',
+        'title' => 'dữ liệu库',
         'key' => 'database',
         'icon' => 'layui-icon-template-1',
         'weight' => 1000,
@@ -25,7 +25,7 @@ return [
         'type' => 0,
         'children' => [
             [
-                'title' => '账户管理',
+                'title' => 'tài khoản管理',
                 'key' => 'plugin\\admin\\app\\controller\\AdminController',
                 'href' => '/app/admin/admin/index',
                 'type' => 1,
@@ -48,21 +48,21 @@ return [
         ]
     ],
     [
-        'title' => '会员管理',
+        'title' => 'Thành viên管理',
         'key' => 'user',
         'icon' => 'layui-icon-username',
         'weight' => 800,
         'type' => 0,
         'children' => [
             [
-                'title' => '用户',
+                'title' => 'Người dùng',
                 'key' => 'plugin\\admin\\app\\controller\\UserController',
                 'href' => '/app/admin/user/index',
                 'type' => 1,
                 'weight' => 800,
             ],
             [
-                'title' => '提现账户',
+                'title' => 'Rút tiềntài khoản',
                 'key' => 'plugin\\admin\\app\\controller\\WithdrawAccountController',
                 'href' => '/app/admin/withdraw-account/index',
                 'type' => 1,
@@ -71,7 +71,7 @@ return [
         ]
     ],
     [
-        'title' => '通用设置',
+        'title' => '通用Cài đặt',
         'key' => 'common',
         'icon' => 'layui-icon-set',
         'weight' => 700,
@@ -92,14 +92,14 @@ return [
                 'weight' => 700,
             ],
             [
-                'title' => '字典设置',
+                'title' => '字典Cài đặt',
                 'key' => 'plugin\\admin\\app\\controller\\DictController',
                 'href' => '/app/admin/dict/index',
                 'type' => 1,
                 'weight' => 600,
             ],
             [
-                'title' => '系统设置',
+                'title' => '系统Cài đặt',
                 'key' => 'plugin\\admin\\app\\controller\\ConfigController',
                 'href' => '/app/admin/config/index',
                 'type' => 1,
@@ -161,7 +161,7 @@ return [
                         'href' => '/app/admin/demos/console/console1.html'
                     ], [
                         'key' => 'demo13',
-                        'title' => '数据分析',
+                        'title' => 'dữ liệu分析',
                         'icon' => 'layui-icon-console',
                         'type' => 1,
                         'href' => '/app/admin/demos/console/console2.html'
@@ -219,7 +219,7 @@ return [
                         'href' => '/app/admin/demos/document/tag.html'
                     ], [
                         'key' => 'demo2031',
-                        'title' => '数据表格',
+                        'title' => 'dữ liệu表格',
                         'icon' => 'layui-icon-face-cry',
                         'type' => 1,
                         'href' => '/app/admin/demos/document/table.html'
@@ -261,7 +261,7 @@ return [
                         'href' => '/app/admin/demos/document/drawer.html'
                     ], [
                         'key' => 'demo2022',
-                        'title' => '消息通知',
+                        'title' => 'Tin nhắnThông báo',
                         'icon' => 'layui-icon-face-cry',
                         'type' => 1,
                         'href' => '/app/admin/demos/document/notice.html'
@@ -285,7 +285,7 @@ return [
                         'href' => '/app/admin/demos/document/tab.html'
                     ], [
                         'key' => 'demo60132',
-                        'title' => '数据菜单',
+                        'title' => 'dữ liệu菜单',
                         'icon' => 'layui-icon-face-cry',
                         'type' => 1,
                         'href' => '/app/admin/demos/document/menu.html'
@@ -331,13 +331,13 @@ return [
                 'children' => [
                     [
                         'key' => 'demo667',
-                        'title' => '成功',
+                        'title' => 'Thành công',
                         'icon' => 'layui-icon-face-smile',
                         'type' => 1,
                         'href' => '/app/admin/demos/result/success.html'
                     ], [
                         'key' => 'demo668',
-                        'title' => '失败',
+                        'title' => 'Thất bại',
                         'icon' => 'layui-icon-face-cry',
                         'type' => 1,
                         'href' => '/app/admin/demos/result/error.html'
@@ -346,7 +346,7 @@ return [
             ],
             [
                 'key' => 'demo-error',
-                'title' => '错误页面',
+                'title' => 'Lỗi页面',
                 'icon' => 'layui-icon-face-cry',
                 'type' => 0,
                 'href' => '',
@@ -382,7 +382,7 @@ return [
                 'children' => [
                     [
                         'key' => 'demo601',
-                        'title' => '用户管理',
+                        'title' => 'Người dùng管理',
                         'icon' => 'layui-icon-face-smile',
                         'type' => 1,
                         'href' => '/app/admin/demos/system/user.html'
@@ -412,7 +412,7 @@ return [
                         'href' => '/app/admin/demos/system/log.html'
                     ], [
                         'key' => 'demo606',
-                        'title' => '数据字典',
+                        'title' => 'dữ liệu字典',
                         'icon' => 'layui-icon-face-cry',
                         'type' => 1,
                         'href' => '/app/admin/demos/system/dict.html'

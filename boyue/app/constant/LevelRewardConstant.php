@@ -41,8 +41,8 @@ class LevelRewardConstant
 
     
     public const STATUS_MAP = [
-        self::STATUS_PENDING  => '审核中',
-        self::STATUS_APPROVED => '已通过',
+        self::STATUS_PENDING  => 'Đang duyệt',
+        self::STATUS_APPROVED => 'Đã duyệt',
         self::STATUS_REJECTED => '未通过',
     ];
 
@@ -56,7 +56,7 @@ class LevelRewardConstant
 
     
     public const RECORD_TYPE_MAP = [
-        self::RECORD_TYPE_LEVEL_UP => '晋级奖励',
+        self::RECORD_TYPE_LEVEL_UP => 'Thăng cấp奖励',
         self::RECORD_TYPE_JUMP     => '跳级奖励',
     ];
 
@@ -66,7 +66,7 @@ class LevelRewardConstant
     public const MONEYLOG_TYPE = 'jinjishenhe';
 
     
-    public const MONEYLOG_TYPE_NAME = '晋级奖励';
+    public const MONEYLOG_TYPE_NAME = 'Thăng cấp奖励';
 
     
 

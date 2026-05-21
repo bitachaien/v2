@@ -16,7 +16,7 @@ class IpCheckController extends Base
     }
     
     /**
-     * 获取同IP会员列表数据（登录IP）
+     * Lấy同IPThành viên列表dữ liệu（Đăng nhậpIP）
      */
     public function getData(Request $request)
     {
@@ -24,7 +24,7 @@ class IpCheckController extends Base
         $limit = $request->get('limit', 20);
         $ip = $request->get('ip', '');
         $username = $request->get('username', '');
-        $type = $request->get('type', 'login'); // login 或 reg
+        $type = $request->get('type', 'login'); // login hoặc reg
         
         $ipField = $type === 'reg' ? 'regip' : 'loginip';
         $timeField = $type === 'reg' ? 'regtime' : 'logintime';
@@ -38,7 +38,7 @@ class IpCheckController extends Base
             $params[] = "%$ip%";
         }
         
-        // 查询相同IP的会员
+        // Tra cứu相同IP的Thành viên
         $sql = "
             SELECT 
                 $ipField as ip,
@@ -57,7 +57,7 @@ class IpCheckController extends Base
         
         $result = [];
         foreach ($list as $item) {
-            // 如果有用户名筛选，检查是否包含该用户
+            // 如果有Tên người dùng筛选，检查是否包含该Người dùng
             if ($username) {
                 $usernameList = explode(',', $item->usernames);
                 $found = false;
@@ -93,12 +93,12 @@ class IpCheckController extends Base
     }
     
     /**
-     * 获取指定IP的会员详情列表
+     * Lấy指定IP的Thành viênChi tiết列表
      */
     public function getMembersByIp(Request $request)
     {
         $ip = $request->get('ip', '');
-        $type = $request->get('type', 'login'); // login 或 reg
+        $type = $request->get('type', 'login'); // login hoặc reg
         
         if (!$ip) {
             return json(['code' => 1, 'msg' => '请提供IP地址', 'data' => []]);
@@ -136,11 +136,11 @@ class IpCheckController extends Base
     }
     
     /**
-     * 获取统计数据
+     * Lấy统计dữ liệu
      */
     public function getStats(Request $request)
     {
-        // 登录IP重复统计
+        // Đăng nhậpIP重复统计
         $loginIpStats = Db::select("
             SELECT COUNT(*) as ip_count, SUM(cnt) as user_count FROM (
                 SELECT loginip, COUNT(*) as cnt 
@@ -151,7 +151,7 @@ class IpCheckController extends Base
             ) t
         ");
         
-        // 注册IP重复统计
+        // Đăng kýIP重复统计
         $regIpStats = Db::select("
             SELECT COUNT(*) as ip_count, SUM(cnt) as user_count FROM (
                 SELECT regip, COUNT(*) as cnt 

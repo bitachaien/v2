@@ -39,15 +39,15 @@ class RechargeController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => $result
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取充值方式失败: ' . $e->getMessage());
+            \support\Log::error('Lấy phương thức nạp tiền thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败',
+                'message' => 'Lấy dữ liệu thất bại',
                 'data' => null
             ]);
         }
@@ -64,7 +64,7 @@ class RechargeController
             if (!$config) {
                 return json([
                     'code' => 404,
-                    'message' => '支付方式不存在或已关闭',
+                    'message' => 'Phương thức thanh toán không tồn tại hoặc đã đóng',
                     'data' => null
                 ]);
             }
@@ -111,15 +111,15 @@ class RechargeController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => $data
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取支付配置失败: ' . $e->getMessage());
+            \support\Log::error('Lấy thanh toáncấu hình thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败',
+                'message' => 'Lấy dữ liệuThất bại',
                 'data' => null
             ]);
         }
@@ -132,7 +132,7 @@ class RechargeController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '请先登录',
+                'message' => 'Vui lòng đăng nhập',
                 'data' => null
             ]);
         }
@@ -144,11 +144,11 @@ class RechargeController
             $chain = $request->post('chain', '');
             
             if (empty($paytype)) {
-                return json(['code' => 400, 'message' => '请选择支付方式', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Vui lòng chọnPhương thức thanh toán', 'data' => null]);
             }
             
             if ($amount <= 0) {
-                return json(['code' => 400, 'message' => '请输入正确的金额', 'data' => null]);
+                return json(['code' => 400, 'message' => '请输入正确的Số tiền', 'data' => null]);
             }
             
             $config = Db::table('caipiao_payset')
@@ -157,19 +157,19 @@ class RechargeController
                 ->first();
             
             if (!$config) {
-                return json(['code' => 400, 'message' => '支付方式不可用', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Phương thức thanh toánkhông khả dụng', 'data' => null]);
             }
             
             if ($amount < $config->minmoney) {
-                return json(['code' => 400, 'message' => "最低充值金额为 {$config->minmoney} 元", 'data' => null]);
+                return json(['code' => 400, 'message' => "最低Nạp tiềnSố tiền为 {$config->minmoney} 元", 'data' => null]);
             }
             if ($amount > $config->maxmoney) {
-                return json(['code' => 400, 'message' => "最高充值金额为 {$config->maxmoney} 元", 'data' => null]);
+                return json(['code' => 400, 'message' => "最高Nạp tiềnSố tiền为 {$config->maxmoney} 元", 'data' => null]);
             }
             
             $user = Db::table('caipiao_member')->where('id', $userId)->first();
             if (!$user) {
-                return json(['code' => 400, 'message' => '用户不存在', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Người dùng không tồn tại', 'data' => null]);
             }
             
             $trano = date('YmdHis') . str_pad($userId, 6, '0', STR_PAD_LEFT) . mt_rand(1000, 9999);
@@ -226,16 +226,16 @@ class RechargeController
             }else{
                 return json([
                     'code' => 0,
-                    'message' => '订单创建成功',
+                    'message' => '订单创建Thành công',
                     'data' => $responseData
                 ]);
             }
             
         } catch (\Exception $e) {
-            \support\Log::error('创建充值订单失败: ' . $e->getMessage());
+            \support\Log::error('创建Nạp tiền订单Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '创建订单失败: ' . $e->getMessage(),
+                'message' => '创建订单Thất bại: ' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -256,7 +256,7 @@ class RechargeController
         // $this->write_log($params);
         $res = $payService->curl_request('http://pay.lbpal.click/api/pay/create_order',http_build_query($params),'POST',array("Content-Type:application/x-www-form-urlencoded"));
         // $this->write_log($res);
-        $message = '提交失败';
+        $message = 'GửiThất bại';
         if($res){
             $result = json_decode($res,true);
             if($result && $result['retCode'] == 'SUCCESS'){
@@ -272,14 +272,14 @@ class RechargeController
         $userId = $request->userId ?? 0;
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '请先登录', 'data' => null]);
+            return json(['code' => 401, 'message' => 'Vui lòng đăng nhập', 'data' => null]);
         }
         
         try {
             $trano = $request->post('trano');
             
             if (empty($trano)) {
-                return json(['code' => 400, 'message' => '订单号不能为空', 'data' => null]);
+                return json(['code' => 400, 'message' => '订单号không được để trống', 'data' => null]);
             }
             
             $order = Db::table('caipiao_recharge')
@@ -288,7 +288,7 @@ class RechargeController
                 ->first();
             
             if (!$order) {
-                return json(['code' => 404, 'message' => '订单不存在', 'data' => null]);
+                return json(['code' => 404, 'message' => '订单không tồn tại', 'data' => null]);
             }
             
             if ($order->state != 0) {
@@ -300,26 +300,26 @@ class RechargeController
                 ->update([
                     'state' => 1,
                     'sdtype' => 1,
-                    'remark' => ($order->remark ? $order->remark . ' | ' : '') . '用户已确认支付',
+                    'remark' => ($order->remark ? $order->remark . ' | ' : '') . 'Người dùng已Xác nhậnThanh toán',
                 ]);
             
             return json([
                 'code' => 0,
-                'message' => '确认成功，请等待审核',
+                'message' => 'Xác nhậnThành công，请等Chờ duyệt',
                 'data' => null
             ]);
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '操作失败', 'data' => null]);
+            return json(['code' => 500, 'message' => 'Thao tác thất bại', 'data' => null]);
         }
     }
     
     private static $stateMap = [
         0 => ['status' => 'pending', 'name' => '待处理'],
-        1 => ['status' => 'confirming', 'name' => '确认中'],
-        2 => ['status' => 'success', 'name' => '成功'],
-        3 => ['status' => 'failed', 'name' => '失败'],
-        4 => ['status' => 'cancelled', 'name' => '已取消'],
+        1 => ['status' => 'confirming', 'name' => 'Xác nhận中'],
+        2 => ['status' => 'success', 'name' => 'Thành công'],
+        3 => ['status' => 'failed', 'name' => 'Thất bại'],
+        4 => ['status' => 'cancelled', 'name' => 'Đã hủy'],
         5 => ['status' => 'timeout', 'name' => '超时'],
     ];
     
@@ -333,7 +333,7 @@ class RechargeController
         $userId = $request->userId ?? 0;
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '请先登录', 'data' => null]);
+            return json(['code' => 401, 'message' => 'Vui lòng đăng nhập', 'data' => null]);
         }
         
         try {
@@ -343,14 +343,14 @@ class RechargeController
                 ->first();
             
             if (!$order) {
-                return json(['code' => 404, 'message' => '订单不存在', 'data' => null]);
+                return json(['code' => 404, 'message' => '订单không tồn tại', 'data' => null]);
             }
             
             $stateInfo = self::getStateInfo($order->state);
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'trano' => $order->trano,
                     'amount' => floatval($order->amount),
@@ -362,7 +362,7 @@ class RechargeController
             ]);
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '获取状态失败', 'data' => null]);
+            return json(['code' => 500, 'message' => 'Lấy状态Thất bại', 'data' => null]);
         }
     }
     
@@ -371,7 +371,7 @@ class RechargeController
         $userId = $request->userId ?? 0;
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '请先登录', 'data' => null]);
+            return json(['code' => 401, 'message' => 'Vui lòng đăng nhập', 'data' => null]);
         }
         
         try {
@@ -421,7 +421,7 @@ class RechargeController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'total' => $total,
                     'page' => $page,
@@ -431,7 +431,7 @@ class RechargeController
             ]);
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '获取记录失败', 'data' => null]);
+            return json(['code' => 500, 'message' => 'Lấylịch sử thất bại', 'data' => null]);
         }
     }
     
@@ -460,7 +460,7 @@ class RechargeController
     
     public function lbpalNotify(Request $request){
 	    $data = $request->all();
-	    \support\Log::error('充值和回调数据: ' . json_encode($data,JSON_UNESCAPED_UNICODE));
+	    \support\Log::error('Nạp tiền和回调dữ liệu: ' . json_encode($data,JSON_UNESCAPED_UNICODE));
         if(!is_array($data) || count($data) == 0) exit('error');
 		$recharge = Db::table('caipiao_recharge')->where('trano', $data['mchOrderNo'])->where('state', 0)->first();
 		if(!$recharge){

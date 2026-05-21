@@ -13,7 +13,7 @@ class AgentController
         $userId = $request->userId ?? 0;
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '未登录', 'data' => null]);
+            return json(['code' => 401, 'message' => '未Đăng nhập', 'data' => null]);
         }
         
         try {
@@ -22,7 +22,7 @@ class AgentController
                 ->first();
             
             if (!$user) {
-                return json(['code' => 404, 'message' => '用户不存在', 'data' => null]);
+                return json(['code' => 404, 'message' => 'Người dùng không tồn tại', 'data' => null]);
             }
             
             
@@ -47,8 +47,8 @@ class AgentController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取代理信息失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '获取失败', 'data' => null]);
+            \support\Log::error('LấyĐại lý信息Thất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại', 'data' => null]);
         }
     }
 
@@ -58,7 +58,7 @@ class AgentController
         $userId = $request->userId ?? 0;
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '未登录', 'data' => null]);
+            return json(['code' => 401, 'message' => '未Đăng nhập', 'data' => null]);
         }
         
         try {
@@ -67,7 +67,7 @@ class AgentController
                 ->first();
             
             if (!$user) {
-                return json(['code' => 404, 'message' => '用户不存在', 'data' => null]);
+                return json(['code' => 404, 'message' => 'Người dùng không tồn tại', 'data' => null]);
             }
             
             
@@ -97,8 +97,8 @@ class AgentController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取邀请信息失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '获取失败', 'data' => null]);
+            \support\Log::error('LấyMời信息Thất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại', 'data' => null]);
         }
     }
 
@@ -108,7 +108,7 @@ class AgentController
         $userId = $request->userId ?? 0;
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '未登录', 'data' => null]);
+            return json(['code' => 401, 'message' => '未Đăng nhập', 'data' => null]);
         }
         
         try {
@@ -172,8 +172,8 @@ class AgentController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取概览数据失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '获取失败', 'data' => null]);
+            \support\Log::error('Lấy概览dữ liệuThất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại', 'data' => null]);
         }
     }
 
@@ -184,7 +184,7 @@ class AgentController
         $dateType = $request->get('dateType', 'today');
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '未登录', 'data' => null]);
+            return json(['code' => 401, 'message' => '未Đăng nhập', 'data' => null]);
         }
         
         try {
@@ -282,7 +282,7 @@ class AgentController
             if (!empty($directIds)) {
                 $directClaimTotal = Db::table('caipiao_fuddetail')
                     ->whereIn('uid', $directIds)
-                    ->whereIn('type', ['活动奖励', '晋级奖励', '签到奖励', '返水'])
+                    ->whereIn('type', ['Hoạt động奖励', 'Thăng cấp奖励', '签到奖励', 'Hoàn trả'])
                     ->sum('amount') ?? 0;
             }
             
@@ -358,8 +358,8 @@ class AgentController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取我的数据失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '获取失败', 'data' => null]);
+            \support\Log::error('Lấy我的dữ liệuThất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại', 'data' => null]);
         }
     }
 
@@ -372,7 +372,7 @@ class AgentController
         $pageSize = min(50, max(1, (int)$request->get('pageSize', 20)));
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '未登录', 'data' => null]);
+            return json(['code' => 401, 'message' => '未Đăng nhập', 'data' => null]);
         }
         
         try {
@@ -427,8 +427,8 @@ class AgentController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取业绩失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '获取失败', 'data' => null]);
+            \support\Log::error('Lấy业绩Thất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại', 'data' => null]);
         }
     }
 
@@ -441,7 +441,7 @@ class AgentController
         $pageSize = min(50, max(1, (int)$request->get('pageSize', 20)));
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '未登录', 'data' => null]);
+            return json(['code' => 401, 'message' => '未Đăng nhập', 'data' => null]);
         }
         
         try {
@@ -488,8 +488,8 @@ class AgentController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取佣金列表失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '获取失败', 'data' => null]);
+            \support\Log::error('LấyHoa hồng列表Thất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại', 'data' => null]);
         }
     }
 
@@ -499,7 +499,7 @@ class AgentController
         $userId = $request->userId ?? 0;
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '未登录', 'data' => null]);
+            return json(['code' => 401, 'message' => '未Đăng nhập', 'data' => null]);
         }
         
         try {
@@ -524,7 +524,7 @@ class AgentController
             
             if ($pendingRecords->isEmpty()) {
                 Db::rollBack();
-                return json(['code' => 400, 'message' => '暂无可领取佣金', 'data' => null]);
+                return json(['code' => 400, 'message' => '暂无可领取Hoa hồng', 'data' => null]);
             }
             
             
@@ -536,8 +536,8 @@ class AgentController
             if ($pending <= 0) {
                 Db::rollBack();
                 $msg = $negativeAmount > 0 
-                    ? "负盈利{$negativeAmount}元待抵扣，暂无可领取佣金" 
-                    : '暂无可领取佣金';
+                    ? "负盈利{$negativeAmount}元待抵扣，暂无可领取Hoa hồng" 
+                    : '暂无可领取Hoa hồng';
                 return json(['code' => 400, 'message' => $msg, 'data' => null]);
             }
             
@@ -550,7 +550,7 @@ class AgentController
                 Db::rollBack();
                 return json([
                     'code' => 400, 
-                    'message' => "需完成{$requiredBet}元投注流水后才能领取", 
+                    'message' => "需完成{$requiredBet}元Đặt cượcVòng cược后才能领取", 
                     'data' => null
                 ]);
             }
@@ -572,7 +572,7 @@ class AgentController
             
             if (!$user) {
                 Db::rollBack();
-                return json(['code' => 400, 'message' => '用户不存在', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Người dùng không tồn tại', 'data' => null]);
             }
             
             $oldBalance = $user->balance ?? 0;
@@ -589,13 +589,13 @@ class AgentController
                 'trano' => $trano,
                 'uid' => $userId,
                 'username' => $user->username ?? '',
-                'type' => '代理佣金',
-                'typename' => '代理佣金领取',
+                'type' => 'Đại lýHoa hồng',
+                'typename' => 'Đại lýHoa hồng领取',
                 'amount' => $pending,
                 'amountbefor' => $oldBalance,
                 'amountafter' => $newBalance,
                 'oddtime' => time(),
-                'remark' => '领取代理佣金，共' . count($recordIds) . '笔'
+                'remark' => '领取Đại lýHoa hồng，共' . count($recordIds) . '笔'
             ]);
             
             Db::commit();
@@ -604,14 +604,14 @@ class AgentController
             
             return json([
                 'code' => 0,
-                'message' => '领取成功',
+                'message' => '领取Thành công',
                 'data' => ['amount' => number_format($pending, 2, '.', '')]
             ]);
             
         } catch (\Exception $e) {
             Db::rollBack();
-            \support\Log::error('领取佣金失败: ' . $e->getMessage() . ' | userId=' . $userId);
-            return json(['code' => 500, 'message' => '领取失败', 'data' => null]);
+            \support\Log::error('领取Hoa hồngThất bại: ' . $e->getMessage() . ' | userId=' . $userId);
+            return json(['code' => 500, 'message' => '领取Thất bại', 'data' => null]);
         }
     }
 
@@ -626,7 +626,7 @@ class AgentController
         $pageSize = min(50, max(1, (int)$request->get('pageSize', 20)));
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '未登录', 'data' => null]);
+            return json(['code' => 401, 'message' => '未Đăng nhập', 'data' => null]);
         }
         
         try {
@@ -672,7 +672,7 @@ class AgentController
                     'registerTime' => date('Y-m-d', $item->regtime),
                     'rechargeAmount' => number_format($item->recharge_amount, 2, '.', ''),
                     'validBet' => number_format($item->valid_bet, 2, '.', ''),
-                    'lastLogin' => $item->logintime ? date('Y-m-d H:i', $item->logintime) : '从未登录'
+                    'lastLogin' => $item->logintime ? date('Y-m-d H:i', $item->logintime) : '从未Đăng nhập'
                 ];
             }
             
@@ -683,8 +683,8 @@ class AgentController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取下级列表失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '获取失败', 'data' => null]);
+            \support\Log::error('LấyCấp dưới列表Thất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại', 'data' => null]);
         }
     }
 
@@ -699,7 +699,7 @@ class AgentController
         $pageSize = min(50, max(1, (int)$request->get('pageSize', 20)));
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '未登录', 'data' => null]);
+            return json(['code' => 401, 'message' => '未Đăng nhập', 'data' => null]);
         }
         
         try {
@@ -768,8 +768,8 @@ class AgentController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取下级投注失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '获取失败', 'data' => null]);
+            \support\Log::error('LấyCấp dướiĐặt cượcThất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại', 'data' => null]);
         }
     }
 
@@ -784,7 +784,7 @@ class AgentController
         $pageSize = min(50, max(1, (int)$request->get('pageSize', 20)));
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '未登录', 'data' => null]);
+            return json(['code' => 401, 'message' => '未Đăng nhập', 'data' => null]);
         }
         
         try {
@@ -841,8 +841,8 @@ class AgentController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取下级财务失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '获取失败', 'data' => null]);
+            \support\Log::error('LấyCấp dưới财务Thất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại', 'data' => null]);
         }
     }
 
@@ -857,7 +857,7 @@ class AgentController
         $pageSize = min(50, max(1, (int)$request->get('pageSize', 20)));
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '未登录', 'data' => null]);
+            return json(['code' => 401, 'message' => '未Đăng nhập', 'data' => null]);
         }
         
         try {
@@ -882,7 +882,7 @@ class AgentController
                 ->whereIn('caipiao_fuddetail.uid', $subIds)
                 ->where('caipiao_fuddetail.oddtime', '>=', $startTime)
                 ->where('caipiao_fuddetail.oddtime', '<=', $endTime)
-                ->whereIn('caipiao_fuddetail.type', ['活动奖励', '晋级奖励', '签到奖励', '返水'])
+                ->whereIn('caipiao_fuddetail.type', ['Hoạt động奖励', 'Thăng cấp奖励', '签到奖励', 'Hoàn trả'])
                 ->selectRaw('
                     caipiao_member.id,
                     caipiao_member.username,
@@ -913,8 +913,8 @@ class AgentController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取下级领取记录失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '获取失败', 'data' => null]);
+            \support\Log::error('LấyCấp dưới领取lịch sử thất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại', 'data' => null]);
         }
     }
 
@@ -926,26 +926,26 @@ class AgentController
         $password = $request->post('password', '');
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '未登录', 'data' => null]);
+            return json(['code' => 401, 'message' => '未Đăng nhập', 'data' => null]);
         }
         
         try {
             
             if (empty($username) || strlen($username) < 4 || strlen($username) > 16) {
-                return json(['code' => 400, 'message' => '用户名需4-16位', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Tên người dùngcần từ 4-16 ký tự', 'data' => null]);
             }
             
             if (!preg_match('/^[a-zA-Z0-9]+$/', $username)) {
-                return json(['code' => 400, 'message' => '用户名只能包含字母和数字', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Tên người dùngchỉ được chứa chữ cái và số', 'data' => null]);
             }
             
             
             if (empty($password) || strlen($password) < 8 || strlen($password) > 16) {
-                return json(['code' => 400, 'message' => '密码需8-16位', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Mật khẩu需8-16位', 'data' => null]);
             }
             
             if (!preg_match('/[a-zA-Z]/', $password) || !preg_match('/[0-9]/', $password)) {
-                return json(['code' => 400, 'message' => '密码需包含字母和数字', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Mật khẩu需包含字母和数字', 'data' => null]);
             }
             
             
@@ -954,7 +954,7 @@ class AgentController
                 ->first();
             
             if ($exists) {
-                return json(['code' => 400, 'message' => '用户名已存在', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Tên người dùngđã tồn tại', 'data' => null]);
             }
             
             
@@ -980,13 +980,13 @@ class AgentController
                 'balance' => 0,
                 'regtime' => $now,
                 'regip' => $ip,
-                'source' => '代理开户',
+                'source' => 'Đại lý开户',
                 'islock' => 0
             ]);
             
             return json([
                 'code' => 0,
-                'message' => '开户成功',
+                'message' => '开户Thành công',
                 'data' => [
                     'userId' => $newUserId,
                     'username' => $username
@@ -994,8 +994,8 @@ class AgentController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('直属开户失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '开户失败', 'data' => null]);
+            \support\Log::error('直属开户Thất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => '开户Thất bại', 'data' => null]);
         }
     }
 
@@ -1035,7 +1035,7 @@ class AgentController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取返佣比例失败: ' . $e->getMessage());
+            \support\Log::error('Lấy返佣比例Thất bại: ' . $e->getMessage());
             
             return json([
                 'code' => 0,
@@ -1083,7 +1083,7 @@ class AgentController
             ]);
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '计算失败', 'data' => null]);
+            return json(['code' => 500, 'message' => '计算Thất bại', 'data' => null]);
         }
     }
 

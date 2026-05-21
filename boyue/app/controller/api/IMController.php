@@ -24,7 +24,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         try {
@@ -39,8 +39,8 @@ class IMController
                 ]
             ]);
         } catch (\Exception $e) {
-            Log::error('[IM] 获取会话失败: ' . $e->getMessage());
-            return json(['code' => 9999, 'message' => '系统错误']);
+            Log::error('[IM] Lấy会话Thất bại: ' . $e->getMessage());
+            return json(['code' => 9999, 'message' => 'Lỗi hệ thống']);
         }
     }
     
@@ -49,7 +49,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $targetType = (int)$request->get('targetType', 1);
@@ -58,7 +58,7 @@ class IMController
         $limit = min(50, max(10, (int)$request->get('limit', 20)));
         
         if (!$targetId) {
-            return json(['code' => 1001, 'message' => '参数错误']);
+            return json(['code' => 1001, 'message' => 'Tham số không hợp lệ']);
         }
         
         try {
@@ -72,8 +72,8 @@ class IMController
                 'data' => $messages
             ]);
         } catch (\Exception $e) {
-            Log::error('[IM] 获取消息失败: ' . $e->getMessage());
-            return json(['code' => 9999, 'message' => '系统错误']);
+            Log::error('[IM] LấyTin nhắnThất bại: ' . $e->getMessage());
+            return json(['code' => 9999, 'message' => 'Lỗi hệ thống']);
         }
     }
     
@@ -82,7 +82,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $data = $this->getPostData($request);
@@ -92,11 +92,11 @@ class IMController
         $msgType = (int)($data['msgType'] ?? 1);
         
         if (!$targetId || empty($content)) {
-            return json(['code' => 1001, 'message' => '参数错误']);
+            return json(['code' => 1001, 'message' => 'Tham số không hợp lệ']);
         }
         
         if (mb_strlen($content) > 2000) {
-            return json(['code' => 1001, 'message' => '消息过长']);
+            return json(['code' => 1001, 'message' => 'Tin nhắn过长']);
         }
         
         try {
@@ -112,8 +112,8 @@ class IMController
                 return json(['code' => 1002, 'message' => $result['error']]);
             }
         } catch (\Exception $e) {
-            Log::error('[IM] 发送失败: ' . $e->getMessage());
-            return json(['code' => 9999, 'message' => '系统错误']);
+            Log::error('[IM] 发送Thất bại: ' . $e->getMessage());
+            return json(['code' => 9999, 'message' => 'Lỗi hệ thống']);
         }
     }
     
@@ -122,7 +122,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $count = IMService::getUnreadCount($userId);
@@ -135,7 +135,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $data = $this->getPostData($request);
@@ -154,12 +154,12 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $targetUid = (int)$request->get('userId', 0);
         if (!$targetUid) {
-            return json(['code' => 1001, 'message' => '参数错误']);
+            return json(['code' => 1001, 'message' => 'Tham số không hợp lệ']);
         }
         
         $user = \support\Db::table('caipiao_member')
@@ -167,7 +167,7 @@ class IMController
             ->first();
         
         if (!$user) {
-            return json(['code' => 1002, 'message' => '用户不存在']);
+            return json(['code' => 1002, 'message' => 'Người dùng không tồn tại']);
         }
         
         return json([
@@ -185,7 +185,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         
@@ -201,14 +201,14 @@ class IMController
         }
         
         if (!$serviceUser) {
-            return json(['code' => 1002, 'message' => '暂无在线客服']);
+            return json(['code' => 1002, 'message' => '暂无在线CSKH']);
         }
         
         return json([
             'code' => 0,
             'data' => [
                 'userId' => $serviceUser->id,
-                'nickname' => $serviceUser->nickname ?: '在线客服',
+                'nickname' => $serviceUser->nickname ?: '在线CSKH',
                 'avatar' => $serviceUser->face ?? '',
             ]
         ]);
@@ -221,7 +221,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $keyword = trim($request->get('keyword', ''));
@@ -238,7 +238,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $list = IMService::getContacts($userId);
@@ -250,7 +250,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $list = IMService::getFriendRequests($userId);
@@ -262,7 +262,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $data = $this->getPostData($request);
@@ -270,7 +270,7 @@ class IMController
         $remark = trim($data['remark'] ?? '');
         
         if (!$toUid) {
-            return json(['code' => 1001, 'message' => '参数错误']);
+            return json(['code' => 1001, 'message' => 'Tham số không hợp lệ']);
         }
         
         $result = IMService::sendFriendRequest($userId, $toUid, $remark);
@@ -286,7 +286,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $data = $this->getPostData($request);
@@ -313,7 +313,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $data = $this->getPostData($request);
@@ -329,7 +329,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $data = $this->getPostData($request);
@@ -345,7 +345,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $data = $this->getPostData($request);
@@ -362,7 +362,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $list = IMService::getGroups($userId);
@@ -374,7 +374,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $data = $this->getPostData($request);
@@ -390,7 +390,7 @@ class IMController
         if ($result['success']) {
             return json(['code' => 0, 'data' => ['groupId' => $result['groupId']]]);
         }
-        return json(['code' => 1002, 'message' => '创建失败']);
+        return json(['code' => 1002, 'message' => '创建Thất bại']);
     }
     
     
@@ -398,7 +398,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $members = IMService::getGroupMembers($id);
@@ -410,7 +410,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $data = $this->getPostData($request);
@@ -429,7 +429,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $data = $this->getPostData($request);
@@ -448,7 +448,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $data = $this->getPostData($request);
@@ -468,7 +468,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $result = IMService::quitGroup($userId, $id);
@@ -486,7 +486,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $data = $this->getPostData($request);
@@ -503,7 +503,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $data = $this->getPostData($request);
@@ -519,7 +519,7 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $data = $this->getPostData($request);
@@ -538,12 +538,12 @@ class IMController
     {
         $userId = $request->userId ?? 0;
         if (!$userId) {
-            return json(['code' => 2001, 'message' => '未登录']);
+            return json(['code' => 2001, 'message' => '未Đăng nhập']);
         }
         
         $file = $request->file('file');
         if (!$file || !$file->isValid()) {
-            return json(['code' => 1001, 'message' => '请选择文件']);
+            return json(['code' => 1001, 'message' => 'Vui lòng chọn文件']);
         }
         
         try {
@@ -596,8 +596,8 @@ class IMController
             ]);
             
         } catch (\Exception $e) {
-            Log::error('[IM] 文件上传失败: ' . $e->getMessage());
-            return json(['code' => 9999, 'message' => '文件上传失败: ' . $e->getMessage()]);
+            Log::error('[IM] 文件上传Thất bại: ' . $e->getMessage());
+            return json(['code' => 9999, 'message' => '文件上传Thất bại: ' . $e->getMessage()]);
         }
     }
 }

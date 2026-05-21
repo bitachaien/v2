@@ -21,39 +21,39 @@ class MaintenanceApiController extends Base
      */
     private $cleanTypes = [
         'user_inactive' => [
-            'name' => '长期未登录且余额低会员',
+            'name' => '长期未Đăng nhập且Số dư低Thành viên',
             'table' => 'caipiao_member',
         ],
         'user_register' => [
-            'name' => '注册后长期未登录',
+            'name' => 'Đăng ký后长期未Đăng nhập',
             'table' => 'caipiao_member',
         ],
         'user_test' => [
-            'name' => '内部测试账户',
+            'name' => '内部测试tài khoản',
             'table' => 'caipiao_member',
         ],
         'lottery_result' => [
-            'name' => '开奖数据',
+            'name' => 'Mở thưởngdữ liệu',
             'table' => 'caipiao_kaijiang',
         ],
         'bet_record' => [
-            'name' => '投注记录',
+            'name' => 'Đặt cượclịch sử',
             'table' => 'caipiao_touzhu',
         ],
         'recharge_record' => [
-            'name' => '充值记录',
+            'name' => 'Nạp tiềnlịch sử',
             'table' => 'caipiao_chongzhi',
         ],
         'withdraw_record' => [
-            'name' => '提现记录',
+            'name' => 'Rút tiềnlịch sử',
             'table' => 'caipiao_tikuan',
         ],
         'balance_log' => [
-            'name' => '账变记录',
+            'name' => '账变lịch sử',
             'table' => 'caipiao_fuddetail',
         ],
         'member_log' => [
-            'name' => '会员日志',
+            'name' => 'Thành viên日志',
             'table' => 'caipiao_memberlog',
         ],
         'admin_log' => [
@@ -63,7 +63,7 @@ class MaintenanceApiController extends Base
     ];
 
     /**
-     * 执行数据清理
+     * 执行dữ liệu清理
      * POST /app/admin/api/maintenance/clear-data
      */
     public function clearData(Request $request)
@@ -92,7 +92,7 @@ class MaintenanceApiController extends Base
 
             switch ($type) {
                 case 'user_inactive':
-                    // 长期未登录且余额低会员
+                    // 长期未Đăng nhập且Số dư低Thành viên
                     $count = Db::table('caipiao_member')
                         ->where('lastlogintime', '<', $cutoffTime)
                         ->where('balance', '<=', $amount)
@@ -101,7 +101,7 @@ class MaintenanceApiController extends Base
                     break;
 
                 case 'user_register':
-                    // 注册后长期未登录（从未登录或注册后未登录）
+                    // Đăng ký后长期未Đăng nhập（从未Đăng nhậphoặcĐăng ký后未Đăng nhập）
                     $count = Db::table('caipiao_member')
                         ->where('regtime', '<', $cutoffTime)
                         ->where(function($query) {
@@ -113,24 +113,24 @@ class MaintenanceApiController extends Base
                     break;
 
                 case 'user_test':
-                    // 内部测试账户
+                    // 内部测试tài khoản
                     $query = Db::table('caipiao_member')
                         ->where('regtime', '<', $cutoffTime);
                     if ($isInner == 1) {
-                        $query->where('isnb', 1); // 只删除机器人/测试账户
+                        $query->where('isnb', 1); // 只Xóa机器人/测试tài khoản
                     }
                     $count = $query->delete();
                     break;
 
                 case 'lottery_result':
-                    // 开奖数据
+                    // Mở thưởngdữ liệu
                     $count = Db::table('caipiao_kaijiang')
                         ->where('addtime', '<', $cutoffTime)
                         ->delete();
                     break;
 
                 case 'bet_record':
-                    // 投注记录
+                    // Đặt cượclịch sử
                     $query = Db::table('caipiao_touzhu')
                         ->where('oddtime', '<', $cutoffTime);
                     if ($state != 999) {
@@ -140,7 +140,7 @@ class MaintenanceApiController extends Base
                     break;
 
                 case 'recharge_record':
-                    // 充值记录
+                    // Nạp tiềnlịch sử
                     $query = Db::table('caipiao_chongzhi')
                         ->where('addtime', '<', $cutoffTime);
                     if ($state != 999) {
@@ -150,7 +150,7 @@ class MaintenanceApiController extends Base
                     break;
 
                 case 'withdraw_record':
-                    // 提现记录
+                    // Rút tiềnlịch sử
                     $query = Db::table('caipiao_tikuan')
                         ->where('addtime', '<', $cutoffTime);
                     if ($state != 999) {
@@ -160,14 +160,14 @@ class MaintenanceApiController extends Base
                     break;
 
                 case 'balance_log':
-                    // 账变记录
+                    // 账变lịch sử
                     $count = Db::table('caipiao_fuddetail')
                         ->where('addtime', '<', $cutoffTime)
                         ->delete();
                     break;
 
                 case 'member_log':
-                    // 会员日志
+                    // Thành viên日志
                     $count = Db::table('caipiao_memberlog')
                         ->where('addtime', '<', $cutoffTime)
                         ->delete();
@@ -183,9 +183,9 @@ class MaintenanceApiController extends Base
 
             Db::commit();
 
-            // 记录操作日志
+            // lịch sử操作日志
             $admin = admin();
-            Log::info("数据清理操作", [
+            Log::info("dữ liệu清理操作", [
                 'admin' => $admin['username'] ?? 'unknown',
                 'type' => $type,
                 'type_name' => $config['name'],
@@ -193,19 +193,19 @@ class MaintenanceApiController extends Base
                 'deleted_count' => $count,
             ]);
 
-            return $this->json(0, "清理完成，共删除 {$count} 条{$config['name']}", [
+            return $this->json(0, "清理完成，共Xóa {$count} 条{$config['name']}", [
                 'deleted_count' => $count,
             ]);
 
         } catch (\Exception $e) {
             Db::rollBack();
-            Log::error("数据清理失败: " . $e->getMessage());
+            Log::error("dữ liệu清理Thất bại: " . $e->getMessage());
             return $this->json(1, '清理失败: ' . $e->getMessage());
         }
     }
 
     /**
-     * 获取清理类型选项
+     * Lấy清理类型选项
      * GET /app/admin/api/maintenance/clear-type-options
      */
     public function clearTypeOptions(Request $request)
@@ -221,7 +221,7 @@ class MaintenanceApiController extends Base
     }
 
     /**
-     * 获取数据统计（预览清理数量）
+     * Lấy dữ liệu统计（预览清理数量）
      * GET /app/admin/api/maintenance/preview-count
      */
     public function previewCount(Request $request)
@@ -327,12 +327,12 @@ class MaintenanceApiController extends Base
             ]);
 
         } catch (\Exception $e) {
-            return $this->json(1, '查询失败: ' . $e->getMessage());
+            return $this->json(1, 'Tra cứuThất bại: ' . $e->getMessage());
         }
     }
 
     /**
-     * 获取状态选项（用于投注/充值/提现记录）
+     * Lấy状态选项（用于Đặt cược/Nạp tiền/Rút tiềnlịch sử）
      * GET /app/admin/api/maintenance/state-options
      */
     public function stateOptions(Request $request)
@@ -346,9 +346,9 @@ class MaintenanceApiController extends Base
         switch ($type) {
             case 'bet_record':
                 $options = array_merge($options, [
-                    ['value' => 0, 'label' => '未开奖'],
-                    ['value' => 1, 'label' => '已中奖'],
-                    ['value' => -1, 'label' => '未中奖'],
+                    ['value' => 0, 'label' => '未Mở thưởng'],
+                    ['value' => 1, 'label' => '已Trúng thưởng'],
+                    ['value' => -1, 'label' => '未Trúng thưởng'],
                     ['value' => -2, 'label' => '已撤单'],
                 ]);
                 break;
@@ -357,8 +357,8 @@ class MaintenanceApiController extends Base
             case 'withdraw_record':
                 $options = array_merge($options, [
                     ['value' => 0, 'label' => '待处理'],
-                    ['value' => 1, 'label' => '已完成'],
-                    ['value' => -1, 'label' => '已拒绝'],
+                    ['value' => 1, 'label' => 'Đã hoàn thành'],
+                    ['value' => -1, 'label' => 'Đã từ chối'],
                 ]);
                 break;
         }
@@ -368,12 +368,12 @@ class MaintenanceApiController extends Base
 
     /**
      * ============================================
-     * 公告管理
+     * Công bố管理
      * ============================================
      */
 
     /**
-     * 获取公告列表
+     * LấyCông bố列表
      * GET /app/admin/api/maintenance/notice/list
      */
     public function noticeList(Request $request)
@@ -385,7 +385,7 @@ class MaintenanceApiController extends Base
 
         $query = Db::table('caipiao_gonggao');
 
-        // 标题模糊搜索
+        // 标题模糊Tìm kiếm
         if (!empty($title)) {
             $query->where('title', 'like', "%{$title}%");
         }
@@ -421,7 +421,7 @@ class MaintenanceApiController extends Base
     }
 
     /**
-     * 创建公告
+     * 创建Công bố
      * POST /app/admin/api/maintenance/notice/create
      */
     public function noticeCreate(Request $request)
@@ -431,11 +431,11 @@ class MaintenanceApiController extends Base
         $type = $request->post('type', 'system');
 
         if (empty($title)) {
-            return $this->json(1, '公告标题不能为空');
+            return $this->json(1, 'Công bố标题không được để trống');
         }
 
         if (empty($content)) {
-            return $this->json(1, '公告内容不能为空');
+            return $this->json(1, 'Công bố内容không được để trống');
         }
 
         try {
@@ -446,16 +446,16 @@ class MaintenanceApiController extends Base
                 'oddtime' => time(),
             ]);
 
-            return $this->json(0, '创建成功', ['id' => $id]);
+            return $this->json(0, '创建Thành công', ['id' => $id]);
 
         } catch (\Exception $e) {
-            Log::error("创建公告失败: " . $e->getMessage());
-            return $this->json(1, '创建失败: ' . $e->getMessage());
+            Log::error("创建Công bốThất bại: " . $e->getMessage());
+            return $this->json(1, '创建Thất bại: ' . $e->getMessage());
         }
     }
 
     /**
-     * 更新公告
+     * 更新Công bố
      * POST /app/admin/api/maintenance/notice/update
      */
     public function noticeUpdate(Request $request)
@@ -466,13 +466,13 @@ class MaintenanceApiController extends Base
         $type = $request->post('type', '');
 
         if (empty($id)) {
-            return $this->json(1, '公告ID不能为空');
+            return $this->json(1, 'Công bốIDkhông được để trống');
         }
 
-        // 检查公告是否存在
+        // 检查Công bố是否存在
         $notice = Db::table('caipiao_gonggao')->where('id', $id)->first();
         if (!$notice) {
-            return $this->json(1, '公告不存在');
+            return $this->json(1, 'Công bốkhông tồn tại');
         }
 
         $updateData = [];
@@ -495,16 +495,16 @@ class MaintenanceApiController extends Base
                 ->where('id', $id)
                 ->update($updateData);
 
-            return $this->json(0, '更新成功');
+            return $this->json(0, '更新Thành công');
 
         } catch (\Exception $e) {
             Log::error("更新公告失败: " . $e->getMessage());
-            return $this->json(1, '更新失败: ' . $e->getMessage());
+            return $this->json(1, '更新Thất bại: ' . $e->getMessage());
         }
     }
 
     /**
-     * 删除公告
+     * XóaCông bố
      * POST /app/admin/api/maintenance/notice/delete
      */
     public function noticeDelete(Request $request)
@@ -512,39 +512,39 @@ class MaintenanceApiController extends Base
         $id = $request->post('id');
 
         if (empty($id)) {
-            return $this->json(1, '公告ID不能为空');
+            return $this->json(1, 'Công bốIDkhông được để trống');
         }
 
-        // 检查公告是否存在
+        // 检查Công bố是否存在
         $notice = Db::table('caipiao_gonggao')->where('id', $id)->first();
         if (!$notice) {
-            return $this->json(1, '公告不存在');
+            return $this->json(1, 'Công bốkhông tồn tại');
         }
 
         try {
-            // 删除公告
+            // XóaCông bố
             Db::table('caipiao_gonggao')->where('id', $id)->delete();
-            // 同时删除已读记录
+            // 同时Xóa已读lịch sử
             Db::table('caipiao_notice_read')->where('notice_id', $id)->delete();
 
-            return $this->json(0, '删除成功');
+            return $this->json(0, 'XóaThành công');
 
         } catch (\Exception $e) {
-            Log::error("删除公告失败: " . $e->getMessage());
-            return $this->json(1, '删除失败: ' . $e->getMessage());
+            Log::error("XóaCông bốThất bại: " . $e->getMessage());
+            return $this->json(1, 'XóaThất bại: ' . $e->getMessage());
         }
     }
 
     /**
-     * 获取公告类型选项
+     * LấyCông bố类型选项
      * GET /app/admin/api/maintenance/notice/type-options
      */
     public function noticeTypeOptions(Request $request)
     {
         $options = [
-            ['value' => 'system', 'label' => '系统公告'],
-            ['value' => 'activity', 'label' => '活动公告'],
-            ['value' => 'notice', 'label' => '通知公告'],
+            ['value' => 'system', 'label' => '系统Công bố'],
+            ['value' => 'activity', 'label' => 'Hoạt độngCông bố'],
+            ['value' => 'notice', 'label' => 'Thông báoCông bố'],
         ];
         return $this->json(0, 'ok', $options);
     }
@@ -559,51 +559,51 @@ class MaintenanceApiController extends Base
      * 计划任务配置
      */
     private $taskConfig = [
-        // 活动任务（时间配置）
+        // Hoạt động任务（Thời gian配置）
         'jihua_rixiaofei' => [
-            'name' => '日消费赠送活动',
-            'remark' => '赠送前一天消费达标用户',
+            'name' => '日消费赠送Hoạt động',
+            'remark' => '赠送前一天消费达标Người dùng',
             'type' => 'time',
         ],
         'jihua_rikuisun' => [
-            'name' => '日亏损赠送活动',
-            'remark' => '补偿前一天亏损用户',
+            'name' => '日亏损赠送Hoạt động',
+            'remark' => '补偿前一天亏损Người dùng',
             'type' => 'time',
         ],
         'jihua_yuexiaofei' => [
-            'name' => '月消费赠送活动',
-            'remark' => '每月1号执行，赠送上月消费达标用户',
+            'name' => '月消费赠送Hoạt động',
+            'remark' => '每月1号执行，赠送上月消费达标Người dùng',
             'type' => 'time',
         ],
         'jihua_yuekuisun' => [
-            'name' => '月亏损赠送活动',
-            'remark' => '每月1号执行，补偿上月亏损用户',
+            'name' => '月亏损赠送Hoạt động',
+            'remark' => '每月1号执行，补偿上月亏损Người dùng',
             'type' => 'time',
         ],
         'jihua_dailifandian' => [
-            'name' => '代理返点结算',
-            'remark' => '结算代理返点',
+            'name' => 'Đại lý返点结算',
+            'remark' => '结算Đại lý返点',
             'type' => 'time',
         ],
-        // 数据清理任务（天数配置）
+        // dữ liệu清理任务（天数配置）
         'jihua_kaijiang' => [
-            'name' => '开奖数据清理',
-            'remark' => '清理N天前的开奖数据',
+            'name' => 'Mở thưởngdữ liệu清理',
+            'remark' => '清理N天前的Mở thưởngdữ liệu',
             'type' => 'days',
         ],
         'jihua_touzhu' => [
-            'name' => '投注数据清理',
-            'remark' => '清理N天前的投注记录',
+            'name' => 'Đặt cượcdữ liệu清理',
+            'remark' => '清理N天前的Đặt cượclịch sử',
             'type' => 'days',
         ],
         'jihua_fuddetail' => [
-            'name' => '账变数据清理',
-            'remark' => '清理N天前的账变记录',
+            'name' => '账变dữ liệu清理',
+            'remark' => '清理N天前的账变lịch sử',
             'type' => 'days',
         ],
         'jihua_memlog' => [
-            'name' => '会员日志清理',
-            'remark' => '清理N天前的会员日志',
+            'name' => 'Thành viên日志清理',
+            'remark' => '清理N天前的Thành viên日志',
             'type' => 'days',
         ],
         'jihua_adminlog' => [
@@ -612,24 +612,24 @@ class MaintenanceApiController extends Base
             'type' => 'days',
         ],
         'jihua_fandian' => [
-            'name' => '返点数据清理',
-            'remark' => '清理N天前的返点数据',
+            'name' => '返点dữ liệu清理',
+            'remark' => '清理N天前的返点dữ liệu',
             'type' => 'days',
         ],
         'jihua_jinjijiangli' => [
-            'name' => '晋级奖励清理',
-            'remark' => '清理N天前的晋级奖励',
+            'name' => 'Thăng cấp奖励清理',
+            'remark' => '清理N天前的Thăng cấp奖励',
             'type' => 'days',
         ],
         'jihua_fanshui' => [
-            'name' => '返水数据清理',
-            'remark' => '清理N天前的返水数据',
+            'name' => 'Hoàn trảdữ liệu清理',
+            'remark' => '清理N天前的Hoàn trảdữ liệu',
             'type' => 'days',
         ],
     ];
 
     /**
-     * 获取计划任务列表
+     * Lấy计划任务列表
      * GET /app/admin/api/maintenance/task/list
      */
     public function taskList(Request $request)
@@ -645,7 +645,7 @@ class MaintenanceApiController extends Base
             ];
 
             if ($config['type'] === 'time') {
-                // 时间配置类型
+                // Thời gian配置类型
                 $hourValue = Db::table('caipiao_setting')
                     ->where('name', $key . '_shi')
                     ->value('value');
@@ -684,7 +684,7 @@ class MaintenanceApiController extends Base
         $days = $request->post('days');
 
         if (empty($name)) {
-            return $this->json(1, '任务标识不能为空');
+            return $this->json(1, '任务标识không được để trống');
         }
 
         if (!isset($this->taskConfig[$name])) {
@@ -695,7 +695,7 @@ class MaintenanceApiController extends Base
 
         try {
             if ($config['type'] === 'time') {
-                // 更新时间配置
+                // 更新Thời gian配置
                 if ($hour === null || $minute === null) {
                     return $this->json(1, '请提供小时和分钟参数');
                 }
@@ -729,16 +729,16 @@ class MaintenanceApiController extends Base
                 $this->updateSetting($name . '_days', $days);
             }
 
-            return $this->json(0, '更新成功');
+            return $this->json(0, '更新Thành công');
 
         } catch (\Exception $e) {
             Log::error("更新计划任务失败: " . $e->getMessage());
-            return $this->json(1, '更新失败: ' . $e->getMessage());
+            return $this->json(1, '更新Thất bại: ' . $e->getMessage());
         }
     }
 
     /**
-     * 更新设置项
+     * 更新Cài đặt项
      */
     private function updateSetting($name, $value)
     {
@@ -765,7 +765,7 @@ class MaintenanceApiController extends Base
      */
 
     /**
-     * 获取服务器监控信息
+     * Lấy服务器监控信息
      * GET /app/admin/api/monitor/server
      */
     public function monitorServer(Request $request)
@@ -782,24 +782,24 @@ class MaintenanceApiController extends Base
             return $this->json(0, 'success', $data);
 
         } catch (\Exception $e) {
-            Log::error("获取服务器监控信息失败: " . $e->getMessage());
-            return $this->json(1, '获取失败: ' . $e->getMessage());
+            Log::error("Lấy服务器监控信息Thất bại: " . $e->getMessage());
+            return $this->json(1, 'Lấy dữ liệu thất bại: ' . $e->getMessage());
         }
     }
 
     /**
-     * 获取详细 CPU 信息
+     * Lấy详细 CPU 信息
      */
     private function getDetailedCpuInfo()
     {
-        // 获取 CPU 核心数
+        // Lấy CPU 核心数
         $cpuNum = 1;
         if (is_readable('/proc/cpuinfo')) {
             $cpuInfo = file_get_contents('/proc/cpuinfo');
             $cpuNum = substr_count($cpuInfo, 'processor');
         }
 
-        // 获取 CPU 使用率详情
+        // Lấy CPU 使用率Chi tiết
         $stat1 = file_get_contents('/proc/stat');
         usleep(100000);
         $stat2 = file_get_contents('/proc/stat');
@@ -847,7 +847,7 @@ class MaintenanceApiController extends Base
     }
 
     /**
-     * 获取详细内存信息
+     * Lấy详细内存信息
      */
     private function getDetailedMemInfo()
     {
@@ -880,15 +880,15 @@ class MaintenanceApiController extends Base
     }
 
     /**
-     * 获取 PHP 信息（替代 JVM）
+     * Lấy PHP 信息（替代 JVM）
      */
     private function getPhpInfo()
     {
-        // 获取 webman 启动时间
+        // Lấy webman 启动Thời gian
         $startTime = null;
         $runTime = '';
 
-        // 尝试获取主进程启动时间
+        // 尝试Lấy主进程启动Thời gian
         $pid = getmypid();
         if ($pid && is_readable("/proc/$pid/stat")) {
             $stat = file_get_contents("/proc/$pid/stat");
@@ -953,7 +953,7 @@ class MaintenanceApiController extends Base
     }
 
     /**
-     * 格式化运行时间
+     * 格式化运行Thời gian
      */
     private function formatRunTime($seconds)
     {
@@ -982,7 +982,7 @@ class MaintenanceApiController extends Base
     {
         $hostname = gethostname() ?: 'Unknown';
         
-        // 获取 IP 地址
+        // Lấy IP 地址
         $ip = '127.0.0.1';
         $interfaces = @file_get_contents('/proc/net/fib_trie');
         if (function_exists('shell_exec')) {
@@ -999,13 +999,13 @@ class MaintenanceApiController extends Base
     }
 
     /**
-     * 获取磁盘信息
+     * Lấy磁盘信息
      */
     private function getSysFiles()
     {
         $sysFiles = [];
 
-        // 获取挂载点
+        // Lấy挂载点
         $mounts = [];
         if (is_readable('/proc/mounts')) {
             $mountsContent = file_get_contents('/proc/mounts');
@@ -1081,12 +1081,12 @@ class MaintenanceApiController extends Base
 
     /**
      * ============================================
-     * 在线用户管理
+     * 在线Người dùng管理
      * ============================================
      */
 
     /**
-     * 获取在线用户列表
+     * Lấy在线Người dùng列表
      * GET /app/admin/api/monitor/online/list
      */
     public function onlineList(Request $request)
@@ -1096,7 +1096,7 @@ class MaintenanceApiController extends Base
         $ipaddr = $request->get('ipaddr', '');
         $loginName = $request->get('loginName', '');
 
-        // 清理过期的在线记录（超过30分钟未活动的）
+        // 清理过期的在线lịch sử（超过30分钟未Hoạt động的）
         $expireTime = date('Y-m-d H:i:s', time() - 1800);
         Db::table('yzz_online_admin')
             ->where('last_access_time', '<', $expireTime)
@@ -1143,7 +1143,7 @@ class MaintenanceApiController extends Base
     }
 
     /**
-     * 强退用户
+     * 强退Người dùng
      * POST /app/admin/api/monitor/online/batchForceLogout
      */
     public function batchForceLogout(Request $request)
@@ -1151,7 +1151,7 @@ class MaintenanceApiController extends Base
         $ids = $request->post('ids', '');
 
         if (empty($ids)) {
-            return $this->json(1, '请选择要强退的用户');
+            return $this->json(1, 'Vui lòng chọn要强退的Người dùng');
         }
 
         $sessionIds = array_filter(explode(',', $ids));
@@ -1161,7 +1161,7 @@ class MaintenanceApiController extends Base
         }
 
         try {
-            // 删除在线记录
+            // Xóa在线lịch sử
             $deleted = Db::table('yzz_online_admin')
                 ->whereIn('session_id', $sessionIds)
                 ->delete();
@@ -1169,16 +1169,16 @@ class MaintenanceApiController extends Base
             // 同时使 JWT Token 失效（如果有黑名单机制的话）
             // 这里可以将 token 加入黑名单
 
-            return $this->json(0, "成功强退 {$deleted} 个用户");
+            return $this->json(0, "Thành công强退 {$deleted} 个Người dùng");
 
         } catch (\Exception $e) {
-            Log::error("强退用户失败: " . $e->getMessage());
+            Log::error("强退Người dùngThất bại: " . $e->getMessage());
             return $this->json(1, '操作失败: ' . $e->getMessage());
         }
     }
 
     /**
-     * 记录用户上线（供登录时调用）
+     * lịch sửNgười dùng上线（供Đăng nhập时调用）
      */
     public static function recordOnline($adminId, $username, $request)
     {
@@ -1189,20 +1189,20 @@ class MaintenanceApiController extends Base
         $browser = self::parseBrowser($userAgent);
         $os = self::parseOs($userAgent);
 
-        // 获取 IP
+        // Lấy IP
         $ip = $request->getRealIp();
 
-        // 获取登录地点（简单实现，可以接入 IP 库）
+        // LấyĐăng nhập地点（简单实现，可以接入 IP 库）
         $location = self::getIpLocation($ip);
 
         $now = date('Y-m-d H:i:s');
 
-        // 删除该用户之前的在线记录
+        // Xóa该Người dùng之前的在线lịch sử
         Db::table('yzz_online_admin')
             ->where('admin_id', $adminId)
             ->delete();
 
-        // 插入新记录
+        // 插入新lịch sử
         Db::table('yzz_online_admin')->insert([
             'session_id' => $sessionId,
             'admin_id' => $adminId,
@@ -1221,7 +1221,7 @@ class MaintenanceApiController extends Base
     }
 
     /**
-     * 更新最后访问时间
+     * 更新最后访问Thời gian
      */
     public static function updateLastAccess($adminId)
     {
@@ -1231,7 +1231,7 @@ class MaintenanceApiController extends Base
     }
 
     /**
-     * 记录用户下线
+     * lịch sửNgười dùng下线
      */
     public static function recordOffline($adminId)
     {
@@ -1286,7 +1286,7 @@ class MaintenanceApiController extends Base
     }
 
     /**
-     * 获取 IP 地点（简单实现）
+     * Lấy IP 地点（简单实现）
      */
     private static function getIpLocation($ip)
     {

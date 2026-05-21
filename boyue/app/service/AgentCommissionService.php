@@ -52,7 +52,7 @@ class AgentCommissionService
             $commission = 0;
             $type = 1; 
             
-            if ($agentMode === '有效投注' || $agentMode === '流水模式') {
+            if ($agentMode === '有效Đặt cược' || $agentMode === 'Vòng cược模式') {
                 
                 $commission = round($betAmount * $rate / 100, 2);
             } else {
@@ -69,7 +69,7 @@ class AgentCommissionService
             self::recordRealTimeCommission($agent->id, $userId, $commission, $type, $betAmount, $winAmount);
             
         } catch (\Exception $e) {
-            \support\Log::error('佣金计算失败: ' . $e->getMessage(), [
+            \support\Log::error('Hoa hồng计算Thất bại: ' . $e->getMessage(), [
                 'userId' => $userId,
                 'betAmount' => $betAmount,
                 'winAmount' => $winAmount
@@ -191,7 +191,7 @@ class AgentCommissionService
             ]);
         }
         
-        \support\Log::info('实时佣金记录', [
+        \support\Log::info('实时Hoa hồnglịch sử', [
             'agent_id' => $agentId,
             'sub_id' => $subId,
             'commission' => $commission,

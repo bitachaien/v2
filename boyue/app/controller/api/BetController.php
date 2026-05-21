@@ -15,7 +15,7 @@ class BetController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -93,7 +93,7 @@ class BetController
             
             $t3 = microtime(true);
             
-            \support\Log::info('[BetRecords] 查询耗时', [
+            \support\Log::info('[BetRecords] Tra cứu耗时', [
                 'userId' => $userId,
                 'build' => round(($t1 - $startTime) * 1000) . 'ms',
                 'count' => round(($t2 - $t1) * 1000) . 'ms',
@@ -141,7 +141,7 @@ class BetController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'total' => $total,
                     'page' => (int)$page,
@@ -151,10 +151,10 @@ class BetController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取投注记录失败: ' . $e->getMessage());
+            \support\Log::error('LấyĐặt cượclịch sử thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -168,7 +168,7 @@ class BetController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -182,7 +182,7 @@ class BetController
             if (!$order) {
                 return json([
                     'code' => 404,
-                    'message' => '订单不存在',
+                    'message' => '订单không tồn tại',
                     'data' => null
                 ]);
             }
@@ -199,21 +199,21 @@ class BetController
             
             if ($isdraw == 0) {
                 $status = 'pending';
-                $statusText = '待开奖';
+                $statusText = '待Mở thưởng';
             } else if ($isdraw == -2) {
                 $status = 'cancelled';
                 $statusText = '已撤单';
             } else if ($winAmount > 0) {
                 $status = 'win';
-                $statusText = '已中奖';
+                $statusText = '已Trúng thưởng';
             } else {
                 $status = 'lose';
-                $statusText = '未中奖';
+                $statusText = '未Trúng thưởng';
             }
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'trano' => $order->trano ?? '',
                     'expect' => $order->expect ?? '',
@@ -242,10 +242,10 @@ class BetController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取投注详情失败: ' . $e->getMessage());
+            \support\Log::error('LấyĐặt cượcChi tiếtThất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }

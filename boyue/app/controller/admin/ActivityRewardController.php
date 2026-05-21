@@ -56,16 +56,16 @@ class ActivityRewardController
             
             return json([
                 'code' => 0,
-                'msg' => '获取成功',
+                'msg' => 'Lấy dữ liệu thành công',
                 'count' => count($data),
                 'data' => $data
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取活动奖励列表失败: ' . $e->getMessage());
+            \support\Log::error('LấyHoạt động奖励列表Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 1,
-                'msg' => '获取失败：' . $e->getMessage(),
+                'msg' => 'Lấy dữ liệu thất bại：' . $e->getMessage(),
                 'data' => []
             ]);
         }
@@ -77,7 +77,7 @@ class ActivityRewardController
         $id = $request->get('id', 0);
         
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误', 'data' => null]);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ', 'data' => null]);
         }
         
         try {
@@ -86,7 +86,7 @@ class ActivityRewardController
                 ->first();
             
             if (!$reward) {
-                return json(['code' => 1, 'msg' => '配置不存在', 'data' => null]);
+                return json(['code' => 1, 'msg' => '配置không tồn tại', 'data' => null]);
             }
             
             $data = [
@@ -107,11 +107,11 @@ class ActivityRewardController
                 'status' => $reward->status
             ];
             
-            return json(['code' => 0, 'msg' => '获取成功', 'data' => $data]);
+            return json(['code' => 0, 'msg' => 'Lấy dữ liệu thành công', 'data' => $data]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取奖励详情失败: ' . $e->getMessage());
-            return json(['code' => 1, 'msg' => '获取失败：' . $e->getMessage(), 'data' => null]);
+            \support\Log::error('Lấy奖励Chi tiếtThất bại: ' . $e->getMessage());
+            return json(['code' => 1, 'msg' => 'Lấy dữ liệu thất bại：' . $e->getMessage(), 'data' => null]);
         }
     }
     
@@ -131,7 +131,7 @@ class ActivityRewardController
                 } elseif ($rewardType === 'loss_rescue') {
                     $levelName = '亏损≥' . number_format($conditionMin, 0);
                 } else {
-                    $levelName = '投注≥' . number_format($conditionMin, 0);
+                    $levelName = 'Đặt cược≥' . number_format($conditionMin, 0);
                 }
             }
             
@@ -161,11 +161,11 @@ class ActivityRewardController
             
             $id = Db::table('caipiao_activity_reward')->insertGetId($data);
             
-            return json(['code' => 0, 'msg' => '添加成功', 'data' => ['id' => $id]]);
+            return json(['code' => 0, 'msg' => 'ThêmThành công', 'data' => ['id' => $id]]);
             
         } catch (\Exception $e) {
-            \support\Log::error('添加奖励配置失败: ' . $e->getMessage());
-            return json(['code' => 1, 'msg' => '添加失败：' . $e->getMessage(), 'data' => null]);
+            \support\Log::error('Thêm奖励cấu hình thất bại: ' . $e->getMessage());
+            return json(['code' => 1, 'msg' => 'ThêmThất bại：' . $e->getMessage(), 'data' => null]);
         }
     }
     
@@ -175,7 +175,7 @@ class ActivityRewardController
         $id = $request->post('id', 0);
         
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误', 'data' => null]);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ', 'data' => null]);
         }
         
         try {
@@ -203,18 +203,18 @@ class ActivityRewardController
             });
             
             if (empty($data)) {
-                return json(['code' => 1, 'msg' => '没有需要更新的数据', 'data' => null]);
+                return json(['code' => 1, 'msg' => '没有需要更新的dữ liệu', 'data' => null]);
             }
             
             Db::table('caipiao_activity_reward')
                 ->where('id', $id)
                 ->update($data);
             
-            return json(['code' => 0, 'msg' => '更新成功', 'data' => null]);
+            return json(['code' => 0, 'msg' => '更新Thành công', 'data' => null]);
             
         } catch (\Exception $e) {
-            \support\Log::error('编辑奖励配置失败: ' . $e->getMessage());
-            return json(['code' => 1, 'msg' => '更新失败：' . $e->getMessage(), 'data' => null]);
+            \support\Log::error('编辑奖励cấu hình thất bại: ' . $e->getMessage());
+            return json(['code' => 1, 'msg' => '更新Thất bại：' . $e->getMessage(), 'data' => null]);
         }
     }
     
@@ -224,17 +224,17 @@ class ActivityRewardController
         $id = $request->post('id', 0);
         
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误', 'data' => null]);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ', 'data' => null]);
         }
         
         try {
             Db::table('caipiao_activity_reward')->where('id', $id)->delete();
             
-            return json(['code' => 0, 'msg' => '删除成功', 'data' => null]);
+            return json(['code' => 0, 'msg' => 'XóaThành công', 'data' => null]);
             
         } catch (\Exception $e) {
-            \support\Log::error('删除奖励配置失败: ' . $e->getMessage());
-            return json(['code' => 1, 'msg' => '删除失败：' . $e->getMessage(), 'data' => null]);
+            \support\Log::error('Xóa奖励cấu hình thất bại: ' . $e->getMessage());
+            return json(['code' => 1, 'msg' => 'XóaThất bại：' . $e->getMessage(), 'data' => null]);
         }
     }
     
@@ -278,7 +278,7 @@ class ActivityRewardController
             
             $data = [];
             foreach ($list as $item) {
-                $statusText = ['待审核', '已发放', '已拒绝'][$item->status] ?? '未知';
+                $statusText = ['Chờ duyệt', '已发放', 'Đã từ chối'][$item->status] ?? '未知';
                 
                 $data[] = [
                     'id' => $item->id,
@@ -304,16 +304,16 @@ class ActivityRewardController
             
             return json([
                 'code' => 0,
-                'msg' => '获取成功',
+                'msg' => 'Lấy dữ liệu thành công',
                 'count' => $total,
                 'data' => $data
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取参与记录失败: ' . $e->getMessage());
+            \support\Log::error('Lấy参与lịch sử thất bại: ' . $e->getMessage());
             return json([
                 'code' => 1,
-                'msg' => '获取失败：' . $e->getMessage(),
+                'msg' => 'Lấy dữ liệu thất bại：' . $e->getMessage(),
                 'count' => 0,
                 'data' => []
             ]);
@@ -329,7 +329,7 @@ class ActivityRewardController
         $adminName = $request->adminName ?? 'admin';
         
         if (empty($ids) || !in_array($status, [1, 2])) {
-            return json(['code' => 1, 'msg' => '参数错误', 'data' => null]);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ', 'data' => null]);
         }
         
         try {
@@ -339,7 +339,7 @@ class ActivityRewardController
                 ->get();
             
             if ($records->isEmpty()) {
-                return json(['code' => 1, 'msg' => '没有可审核的记录', 'data' => null]);
+                return json(['code' => 1, 'msg' => '没有可审核的lịch sử', 'data' => null]);
             }
             
             $successCount = 0;
@@ -365,13 +365,13 @@ class ActivityRewardController
             
             return json([
                 'code' => 0,
-                'msg' => "审核成功，共处理{$successCount}条记录",
+                'msg' => "审核Thành công，共处理{$successCount}条lịch sử",
                 'data' => ['count' => $successCount]
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('审核参与记录失败: ' . $e->getMessage());
-            return json(['code' => 1, 'msg' => '审核失败：' . $e->getMessage(), 'data' => null]);
+            \support\Log::error('审核参与lịch sử thất bại: ' . $e->getMessage());
+            return json(['code' => 1, 'msg' => '审核Thất bại：' . $e->getMessage(), 'data' => null]);
         }
     }
     
@@ -430,7 +430,7 @@ class ActivityRewardController
             
             return json([
                 'code' => 0,
-                'msg' => '获取成功',
+                'msg' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'overview' => [
                         'totalCount' => $totalCount,
@@ -445,8 +445,8 @@ class ActivityRewardController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取统计数据失败: ' . $e->getMessage());
-            return json(['code' => 1, 'msg' => '获取失败：' . $e->getMessage(), 'data' => null]);
+            \support\Log::error('Lấy统计dữ liệuThất bại: ' . $e->getMessage());
+            return json(['code' => 1, 'msg' => 'Lấy dữ liệu thất bại：' . $e->getMessage(), 'data' => null]);
         }
     }
     
@@ -476,13 +476,13 @@ class ActivityRewardController
             'uid' => $record->uid,
             'username' => $record->username,
             'type' => 'activity_reward',
-            'typename' => '活动奖励',
+            'typename' => 'Hoạt động奖励',
             'trano' => $orderId,
             'amount' => $record->reward_amount,
             'before' => $user->balance,
             'after' => $user->balance + $record->reward_amount,
             'oddtime' => time(),
-            'remark' => '活动奖励-' . $record->reward_type
+            'remark' => 'Hoạt động奖励-' . $record->reward_type
         ]);
     }
 }

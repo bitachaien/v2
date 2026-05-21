@@ -19,19 +19,19 @@ class JwtAuthMiddleware implements MiddlewareInterface
         $controller = $request->controller;
         $action = $request->action;
         
-        // 获取控制器鉴权信息
+        // Lấy控制器鉴权信息
         if ($controller) {
             $class = new \ReflectionClass($controller);
             $properties = $class->getDefaultProperties();
             $noNeedLogin = $properties['noNeedLogin'] ?? [];
             
-            // 不需要登录的方法直接放行
+            // 不需要Đăng nhập的方法直接放行
             if (in_array($action, $noNeedLogin)) {
                 return $handler($request);
             }
         }
         
-        // 获取 token
+        // Lấy token
         $token = $this->getToken($request);
         
         if (empty($token)) {
@@ -43,22 +43,22 @@ class JwtAuthMiddleware implements MiddlewareInterface
         
         if (!$result['valid']) {
             $code = str_contains($result['error'] ?? '', '过期') ? 401 : 401;
-            return $this->unauthorized($result['error'] ?? '认证失败', $code);
+            return $this->unauthorized($result['error'] ?? 'Xác thựcThất bại', $code);
         }
         
         $payload = $result['payload'];
         
-        // 从数据库获取最新的管理员信息
+        // 从dữ liệu库Lấy最新的管理员信息
         $admin = Admin::find($payload->admin_id);
         if (!$admin) {
-            return $this->unauthorized('账户不存在', 401);
+            return $this->unauthorized('tài khoản不存在', 401);
         }
         
         if ($admin->status != 0) {
-            return $this->unauthorized('账户已被禁用', 401);
+            return $this->unauthorized('tài khoảnđã bị khóa', 401);
         }
         
-        // 获取角色
+        // Lấy角色
         $roles = AdminRole::where('admin_id', $admin->id)->pluck('role_id')->toArray();
         
         // 将管理员信息存入请求
@@ -77,17 +77,17 @@ class JwtAuthMiddleware implements MiddlewareInterface
     }
     
     /**
-     * 从请求中获取 Token
+     * 从请求中Lấy Token
      */
     protected function getToken(Request $request): string
     {
-        // 优先从 Authorization 头获取
+        // 优先从 Authorization 头Lấy
         $token = $request->header('Authorization', '');
         if (str_starts_with($token, 'Bearer ')) {
             return substr($token, 7);
         }
         
-        // 其他方式
+        // 其他phương thức
         if (empty($token)) {
             $token = $request->header('token', '');
         }

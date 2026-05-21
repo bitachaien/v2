@@ -15,7 +15,7 @@ class LiveController
      */
     public function merchant(Request $request)
     {
-        // 调用 AG 服务获取所有平台余额
+        // 调用 AG 服务Lấy所有平台Số dư
         $agService = new \plugin\admin\app\service\AgService();
         $result = $agService->getAllCredit();
         
@@ -25,11 +25,11 @@ class LiveController
         if ($result['code'] == 1) {
             $balances = $result['data'];
         } else {
-            $errorMsg = $result['msg'] ?? '获取余额失败';
-            \support\Log::error('商户余额获取失败: ' . $errorMsg);
+            $errorMsg = $result['msg'] ?? 'Lấy số dưThất bại';
+            \support\Log::error('商户Số dưLấy dữ liệu thất bại: ' . $errorMsg);
         }
         
-        // 平台列表
+        // danh sách nền tảng
         $platforms = [
             'tyscore' => '通用额度',
             'ag' => 'AG',
@@ -55,7 +55,7 @@ class LiveController
             'sa' => 'SA',
             'ibc' => 'IBC',
             'ss' => 'SS',
-            'ky' => '开元棋牌',
+            'ky' => '开元Bài',
             'mw' => 'MW',
             'cq9' => 'CQ9',
             'vr' => 'VR',
@@ -114,14 +114,14 @@ class LiveController
     }
 
     /**
-     * 获取额度转让列表数据
+     * Lấy额度转让列表dữ liệu
      */
     public function transferList(Request $request)
     {
         $page = $request->get('page', 1);
         $limit = $request->get('limit', 20);
         
-        // 搜索条件
+        // Tìm kiếm条件
         $sDate = $request->get('sDate', '');
         $eDate = $request->get('eDate', '');
         $username = $request->get('username', '');
@@ -130,7 +130,7 @@ class LiveController
             ->leftJoin('caipiao_member as m', 't.uid', '=', 'm.id')
             ->select('t.*', 'm.username');
 
-        // 时间筛选
+        // Thời gian筛选
         if ($sDate) {
             $query->where('t.transTime', '>=', $sDate . ' 00:00:00');
         }
@@ -138,25 +138,25 @@ class LiveController
             $query->where('t.transTime', '<=', $eDate . ' 23:59:59');
         }
 
-        // 用户名筛选
+        // Tên người dùng筛选
         if ($username) {
             $query->where('m.username', 'like', "%{$username}%");
         }
 
-        // 获取总数
+        // Lấy总数
         $count = $query->count();
 
-        // 分页查询
+        // 分页Tra cứu
         $list = $query->orderBy('t.transID', 'desc')
             ->offset(($page - 1) * $limit)
             ->limit($limit)
             ->get();
 
-        // 处理数据
+        // 处理dữ liệu
         $data = [];
         foreach ($list as $item) {
             $row = (array)$item;
-            // 格式化时间
+            // 格式化Thời gian
             if ($row['transTime']) {
                 $row['transTime'] = date('Y-m-d H:i:s', strtotime($row['transTime']));
             }
@@ -172,7 +172,7 @@ class LiveController
     }
 
     /**
-     * 投注记录页面
+     * Đặt cượclịch sử页面
      */
     public function betrecord(Request $request)
     {
@@ -180,26 +180,26 @@ class LiveController
     }
 
     /**
-     * 获取投注记录列表数据
+     * LấyĐặt cượclịch sử列表dữ liệu
      */
     public function betrecordList(Request $request)
     {
         $page = $request->get('page', 1);
         $limit = $request->get('limit', 20);
         
-        // 平台类型：ag 或 bbin，默认 ag
+        // 平台类型：ag hoặc bbin，默认 ag
         $platform = $request->get('platform', 'ag');
         
-        // 搜索条件
+        // Tìm kiếm条件
         $sDate = $request->get('sDate', '');
         $eDate = $request->get('eDate', '');
         $username = $request->get('username', '');
 
         if ($platform === 'bbin') {
-            // BBIN 投注记录
+            // BBIN Đặt cượclịch sử
             $query = Db::table('caipiao_bbbetrecord');
             
-            // 时间筛选
+            // Thời gian筛选
             if ($sDate) {
                 $query->where('WagersDate', '>=', $sDate . ' 00:00:00');
             }
@@ -207,35 +207,35 @@ class LiveController
                 $query->where('WagersDate', '<=', $eDate . ' 23:59:59');
             }
             
-            // 用户名筛选
+            // Tên người dùng筛选
             if ($username) {
                 $query->where('UserName', 'like', "%{$username}%");
             }
             
-            // 获取总数
+            // Lấy总数
             $count = $query->count();
             
-            // 分页查询
+            // 分页Tra cứu
             $list = $query->orderBy('bbId', 'desc')
                 ->offset(($page - 1) * $limit)
                 ->limit($limit)
                 ->get();
             
-            // 处理数据
+            // 处理dữ liệu
             $data = [];
             foreach ($list as $item) {
                 $row = (array)$item;
-                // 格式化时间
+                // 格式化Thời gian
                 if ($row['WagersDate']) {
                     $row['WagersDate'] = date('Y-m-d H:i:s', strtotime($row['WagersDate']));
                 }
                 $data[] = $row;
             }
         } else {
-            // AG 投注记录
+            // AG Đặt cượclịch sử
             $query = Db::table('caipiao_agbetrecord');
             
-            // 时间筛选
+            // Thời gian筛选
             if ($sDate) {
                 $query->where('betTime', '>=', $sDate . ' 00:00:00');
             }
@@ -243,25 +243,25 @@ class LiveController
                 $query->where('betTime', '<=', $eDate . ' 23:59:59');
             }
             
-            // 用户名筛选
+            // Tên người dùng筛选
             if ($username) {
                 $query->where('username', 'like', "%{$username}%");
             }
             
-            // 获取总数
+            // Lấy总数
             $count = $query->count();
             
-            // 分页查询
+            // 分页Tra cứu
             $list = $query->orderBy('id', 'desc')
                 ->offset(($page - 1) * $limit)
                 ->limit($limit)
                 ->get();
             
-            // 处理数据
+            // 处理dữ liệu
             $data = [];
             foreach ($list as $item) {
                 $row = (array)$item;
-                // 格式化时间
+                // 格式化Thời gian
                 if ($row['betTime']) {
                     $row['betTime'] = date('Y-m-d H:i:s', strtotime($row['betTime']));
                 }
@@ -281,7 +281,7 @@ class LiveController
     }
 
     /**
-     * 真人采集页面
+     * Live Casino采集页面
      */
     public function collect(Request $request)
     {
@@ -289,7 +289,7 @@ class LiveController
     }
 
     /**
-     * 获取 AG 投注记录（采集数据）
+     * Lấy AG Đặt cượclịch sử（采集dữ liệu）
      */
     public function getAgRecord(Request $request)
     {
@@ -297,11 +297,11 @@ class LiveController
             date_default_timezone_set("UTC");
             $n = 0;
             
-            // 设置查询时间范围（当天数据）
+            // Cài đặtTra cứuThời gian范围（当天dữ liệu）
             $startDate = date("Y-m-d 00:00:00");
             $endDate = date("Y-m-d H:i:s");
             
-            // 调用 AG 服务获取投注记录
+            // 调用 AG 服务LấyĐặt cượclịch sử
             $agService = new \plugin\admin\app\service\AgService();
             $recordList = $agService->getBetRecord($startDate, $endDate, 1, 500);
             
@@ -309,18 +309,18 @@ class LiveController
                 return json([
                     'code' => 0,
                     'nums' => 0,
-                    'ascn' => '获取记录失败'
+                    'ascn' => 'Lấylịch sử thất bại'
                 ]);
             }
             
             $zxrecordList = $recordList['data']['record'];
             $dataList = [];
             
-            // 遍历记录，检查是否已存在
+            // 遍历lịch sử，检查是否đã tồn tại
             foreach ($zxrecordList as $record) {
                 $betId = $record['betId'];
                 
-                // 判断记录是否存在
+                // 判断lịch sử是否存在
                 $exists = Db::table('caipiao_agbetrecord')
                     ->where('betId', $betId)
                     ->count();
@@ -345,7 +345,7 @@ class LiveController
                 }
             }
             
-            // 批量插入数据
+            // 批量插入dữ liệu
             if (!empty($dataList)) {
                 Db::table('caipiao_agbetrecord')->insert($dataList);
             }
@@ -353,20 +353,20 @@ class LiveController
             return json([
                 'code' => 1,
                 'nums' => $n,
-                'ascn' => '成功'
+                'ascn' => 'Thành công'
             ]);
         } catch (\Exception $e) {
-            \support\Log::error('AG采集失败: ' . $e->getMessage());
+            \support\Log::error('AG采集Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 0,
                 'nums' => 0,
-                'ascn' => '失败：' . $e->getMessage()
+                'ascn' => 'Thất bại：' . $e->getMessage()
             ]);
         }
     }
 
     /**
-     * 获取 BBIN 投注记录（采集数据）
+     * Lấy BBIN Đặt cượclịch sử（采集dữ liệu）
      */
     public function getBbinRecord(Request $request)
     {
@@ -374,11 +374,11 @@ class LiveController
             date_default_timezone_set("UTC");
             $n = 0;
             
-            // 设置查询时间（当天数据）
+            // Cài đặtTra cứuThời gian（当天dữ liệu）
             $nDate = date("Y-m-d");
             $nTime = date("H:i:s");
             
-            // 调用 BBIN 服务获取投注记录
+            // 调用 BBIN 服务LấyĐặt cượclịch sử
             $bbinService = new \plugin\admin\app\service\BbinService();
             $recordList = $bbinService->getGameRecord($nDate, "00:00:00", $nTime, 3, '', '', 1, 500);
             
@@ -386,18 +386,18 @@ class LiveController
                 return json([
                     'code' => 0,
                     'nums' => 0,
-                    'ascn' => '获取记录失败'
+                    'ascn' => 'Lấylịch sử thất bại'
                 ]);
             }
             
             $zxrecordList = $recordList['Data'];
             $dataList = [];
             
-            // 遍历记录，检查是否已存在
+            // 遍历lịch sử，检查是否đã tồn tại
             foreach ($zxrecordList as $record) {
                 $WagersID = $record['WagersID'];
                 
-                // 判断记录是否存在
+                // 判断lịch sử是否存在
                 $exists = Db::table('caipiao_bbbetrecord')
                     ->where('WagersID', $WagersID)
                     ->count();
@@ -424,7 +424,7 @@ class LiveController
                 }
             }
             
-            // 批量插入数据
+            // 批量插入dữ liệu
             if (!empty($dataList)) {
                 Db::table('caipiao_bbbetrecord')->insert($dataList);
             }
@@ -432,14 +432,14 @@ class LiveController
             return json([
                 'code' => 1,
                 'nums' => $n,
-                'ascn' => '成功'
+                'ascn' => 'Thành công'
             ]);
         } catch (\Exception $e) {
-            \support\Log::error('BBIN采集失败: ' . $e->getMessage());
+            \support\Log::error('BBIN采集Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 0,
                 'nums' => 0,
-                'ascn' => '失败：' . $e->getMessage()
+                'ascn' => 'Thất bại：' . $e->getMessage()
             ]);
         }
     }

@@ -38,41 +38,41 @@ class ErrorCode
     
     public static $messages = [
         
-        self::SUCCESS => '操作成功',
-        self::SYSTEM_ERROR => '系统错误，请稍后重试',
-        self::INVALID_PARAMS => '参数错误',
+        self::SUCCESS => 'Thao tác thành công',
+        self::SYSTEM_ERROR => 'Lỗi hệ thống，请稍后重试',
+        self::INVALID_PARAMS => 'Tham số không hợp lệ',
         
         
-        self::UNAUTHORIZED => '未登录',
+        self::UNAUTHORIZED => '未Đăng nhập',
         self::FORBIDDEN => '无权限访问',
-        self::TOKEN_EXPIRED => 'Token已过期，请重新登录',
-        self::TOKEN_INVALID => 'Token无效或已被注销',
-        self::TOKEN_MISSING => '缺少认证信息',
+        self::TOKEN_EXPIRED => 'Token已过期，请重新Đăng nhập',
+        self::TOKEN_INVALID => 'Token无效hoặc已被注销',
+        self::TOKEN_MISSING => '缺少Xác thực信息',
         
-        self::LOGIN_FAILED => '登录失败',
-        self::PASSWORD_ERROR => '密码错误',
-        self::ACCOUNT_LOCKED => '账号已被锁定',
-        self::ACCOUNT_NOT_FOUND => '账号不存在',
+        self::LOGIN_FAILED => 'Đăng nhậpThất bại',
+        self::PASSWORD_ERROR => 'Mật khẩu sai',
+        self::ACCOUNT_LOCKED => 'Tài khoản đã bị锁定',
+        self::ACCOUNT_NOT_FOUND => 'Tài khoảnkhông tồn tại',
         
         
-        self::USER_NOT_FOUND => '用户不存在',
-        self::INSUFFICIENT_BALANCE => '余额不足',
-        self::OPERATION_FAILED => '操作失败',
-        self::DATA_NOT_FOUND => '数据不存在',
-        self::ALREADY_EXISTS => '数据已存在',
+        self::USER_NOT_FOUND => 'Người dùng không tồn tại',
+        self::INSUFFICIENT_BALANCE => 'Số dư không đủ',
+        self::OPERATION_FAILED => 'Thao tác thất bại',
+        self::DATA_NOT_FOUND => 'Dữ liệu không tồn tại',
+        self::ALREADY_EXISTS => 'dữ liệuđã tồn tại',
         self::OPERATION_TOO_FREQUENT => '操作过于频繁，请稍后再试',
         
         
-        self::BET_INSUFFICIENT_BALANCE => '余额不足',
+        self::BET_INSUFFICIENT_BALANCE => 'Số dư không đủ',
         self::BET_EXPECT_CLOSED => '期号已截止',
-        self::BET_INVALID_DATA => '投注数据无效',
+        self::BET_INVALID_DATA => 'Đặt cượcdữ liệu无效',
         self::BET_OVER_LIMIT => '超出限额',
     ];
     
     
     public static function getMessage(int $code): string
     {
-        return self::$messages[$code] ?? '未知错误';
+        return self::$messages[$code] ?? '未知Lỗi';
     }
     
     

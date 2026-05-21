@@ -85,11 +85,11 @@ class LotteryController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('彩种列表获取失败: ' . $e->getMessage());
+            \support\Log::error('彩种列表Lấy dữ liệu thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '获取数据失败',
+                'message' => 'Lấy dữ liệuThất bại',
                 'data' => null
             ]);
         }
@@ -108,7 +108,7 @@ class LotteryController
                 return json([
                     'code' => 404,
                     'sign' => false,
-                    'message' => '彩种不存在',
+                    'message' => '彩种không tồn tại',
                     'data' => null
                 ]);
             }
@@ -118,7 +118,7 @@ class LotteryController
                 return json([
                     'code' => 400,
                     'sign' => false,
-                    'message' => '该彩种已关闭',
+                    'message' => '该彩种đã đóng',
                     'data' => null
                 ]);
             }
@@ -228,11 +228,11 @@ class LotteryController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('彩种信息获取失败: ' . $e->getMessage());
+            \support\Log::error('彩种信息Lấy dữ liệu thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -344,11 +344,11 @@ class LotteryController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('开奖历史获取失败: ' . $e->getMessage());
+            \support\Log::error('Mở thưởng历史Lấy dữ liệu thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '获取数据失败',
+                'message' => 'Lấy dữ liệuThất bại',
                 'data' => []
             ]);
         }
@@ -380,7 +380,7 @@ class LotteryController
                 return json([
                     'code' => 404,
                     'sign' => false,
-                    'message' => '暂无开奖数据',
+                    'message' => '暂无Mở thưởngdữ liệu',
                     'data' => null
                 ]);
             }
@@ -388,7 +388,7 @@ class LotteryController
             return json([
                 'code' => 0,
                 'sign' => true,
-                'message' => !empty($expect) ? '该期已开奖' : '最新开奖',
+                'message' => !empty($expect) ? '该期已Mở thưởng' : '最新Mở thưởng',
                 'data' => [
                     'expect' => $kj->expect,
                     'opencode' => $kj->opencode,
@@ -398,11 +398,11 @@ class LotteryController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('最新开奖获取失败: ' . $e->getMessage());
+            \support\Log::error('最新Mở thưởngLấy dữ liệu thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '获取数据失败',
+                'message' => 'Lấy dữ liệuThất bại',
                 'data' => null
             ]);
         }
@@ -421,7 +421,7 @@ class LotteryController
                 return json([
                     'code' => 404,
                     'sign' => false,
-                    'message' => '彩种不存在',
+                    'message' => '彩种không tồn tại',
                     'data' => null
                 ]);
             }
@@ -455,11 +455,11 @@ class LotteryController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('玩法赔率获取失败: ' . $e->getMessage());
+            \support\Log::error('玩法赔率Lấy dữ liệu thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '获取数据失败',
+                'message' => 'Lấy dữ liệuThất bại',
                 'data' => null
             ]);
         }
@@ -478,7 +478,7 @@ class LotteryController
                 return json([
                     'code' => 404,
                     'sign' => false,
-                    'message' => '彩种不存在',
+                    'message' => '彩种không tồn tại',
                     'data' => null
                 ]);
             }
@@ -634,11 +634,11 @@ class LotteryController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('双面玩法获取失败: ' . $e->getMessage());
+            \support\Log::error('双面玩法Lấy dữ liệu thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '获取数据失败',
+                'message' => 'Lấy dữ liệuThất bại',
                 'data' => null
             ]);
         }
@@ -653,7 +653,7 @@ class LotteryController
                 return json([
                     'code' => 401,
                     'sign' => false,
-                    'message' => '请先登录',
+                    'message' => 'Vui lòng đăng nhập',
                     'data' => null
                 ]);
             }
@@ -691,7 +691,7 @@ class LotteryController
                 return json([
                     'code' => 400,
                     'sign' => false,
-                    'message' => '该彩种不可用',
+                    'message' => '该彩种không khả dụng',
                     'data' => null
                 ]);
             }
@@ -716,7 +716,7 @@ class LotteryController
                 }
                 
                 if (empty($betItems)) {
-                    return json(['code' => 400, 'message' => '投注内容不能为空']);
+                    return json(['code' => 400, 'message' => 'Đặt cược内容không được để trống']);
                 }
                 
                 
@@ -763,12 +763,12 @@ class LotteryController
                 
                 $user = Db::table('caipiao_member')->where('id', $userId)->first();
                 if (!$user) {
-                    return json(['code' => 404, 'message' => '用户不存在']);
+                    return json(['code' => 404, 'message' => 'Người dùng không tồn tại']);
                 }
                 
                 
                 if ($user->balance < $totalAmount) {
-                    return json(['code' => 400, 'message' => '余额不足']);
+                    return json(['code' => 400, 'message' => 'Số dư không đủ']);
                 }
                 
                 
@@ -815,12 +815,12 @@ class LotteryController
                         'uid' => $userId,
                         'username' => $user->username,
                         'type' => 9,
-                        'typename' => '投注',
+                        'typename' => 'Đặt cược',
                         'trano' => $trano,
                         'amount' => -$totalAmount,
                         'before' => $user->balance,
                         'after' => $user->balance - $totalAmount,
-                        'remark' => "投注 {$caipiao->title} 第{$expect}期",
+                        'remark' => "Đặt cược {$caipiao->title} 第{$expect}期",
                         'addtime' => $now,
                         'ip' => $request->getRemoteIp()
                     ]);
@@ -830,7 +830,7 @@ class LotteryController
                     return json([
                         'code' => 0,
                         'sign' => true,
-                        'message' => '投注成功',
+                        'message' => 'Đặt cượcThành công',
                         'data' => [
                             'trano' => $trano,
                             'balance' => number_format($user->balance - $totalAmount, 2, '.', ''),
@@ -930,11 +930,11 @@ class LotteryController
             }
             
             if ($expect != $currFullExpect) {
-                \support\Log::info("期号验证失败: 提交={$expect}, 当前={$currFullExpect}, 第三方=" . ($isThirdParty ? 'Y' : 'N'));
+                \support\Log::info("期号验证Thất bại: Gửi={$expect}, 当前={$currFullExpect}, 第三方=" . ($isThirdParty ? 'Y' : 'N'));
                 return json([
                     'code' => 400,
                     'sign' => false,
-                    'message' => '期号错误或已过期',
+                    'message' => '期号Lỗihoặc已过期',
                     'data' => null
                 ]);
             }
@@ -959,7 +959,7 @@ class LotteryController
                 return json([
                     'code' => 400,
                     'sign' => false,
-                    'message' => '玩法不存在',
+                    'message' => '玩法không tồn tại',
                     'data' => null
                 ]);
             }
@@ -979,7 +979,7 @@ class LotteryController
                 return json([
                     'code' => 400,
                     'sign' => false,
-                    'message' => "投注金额须在 {$play->minxf} - {$play->maxxf} 之间",
+                    'message' => "Đặt cượcSố tiền须在 {$play->minxf} - {$play->maxxf} 之间",
                     'data' => null
                 ]);
             }
@@ -993,7 +993,7 @@ class LotteryController
                 return json([
                     'code' => 404,
                     'sign' => false,
-                    'message' => '用户不存在',
+                    'message' => 'Người dùng không tồn tại',
                     'data' => null
                 ]);
             }
@@ -1003,7 +1003,7 @@ class LotteryController
                 return json([
                     'code' => 400,
                     'sign' => false,
-                    'message' => '余额不足',
+                    'message' => 'Số dư không đủ',
                     'data' => null
                 ]);
             }
@@ -1051,12 +1051,12 @@ class LotteryController
                     'uid' => $userId,
                     'username' => $user->username,
                     'type' => 9, 
-                    'typename' => '投注',
+                    'typename' => 'Đặt cược',
                     'trano' => $trano,
                     'amount' => -$totalAmount,
                     'before' => $user->balance,
                     'after' => $user->balance - $totalAmount,
-                    'remark' => "投注 {$caipiao->title} 第{$expect}期",
+                    'remark' => "Đặt cược {$caipiao->title} 第{$expect}期",
                     'addtime' => $now,
                     'ip' => $request->getRealIp()
                 ]);
@@ -1085,7 +1085,7 @@ class LotteryController
                 return json([
                     'code' => 0,
                     'sign' => true,
-                    'message' => '投注成功',
+                    'message' => 'Đặt cượcThành công',
                     'data' => [
                         'trano' => $trano,
                         'balance' => number_format($user->balance - $totalAmount, 2, '.', '')
@@ -1098,11 +1098,11 @@ class LotteryController
             }
             
         } catch (\Exception $e) {
-            \support\Log::error('投注失败: ' . $e->getMessage());
+            \support\Log::error('Đặt cượcThất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '投注失败：' . $e->getMessage(),
+                'message' => 'Đặt cượcThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -1126,7 +1126,7 @@ class LotteryController
                 return json([
                     'code' => 401,
                     'sign' => false,
-                    'message' => '请先登录',
+                    'message' => 'Vui lòng đăng nhập',
                     'data' => []
                 ]);
             }
@@ -1158,13 +1158,13 @@ class LotteryController
                 $statusText = '';
                 $statusColor = 'blue';
                 if ($item->isdraw == 1) {
-                    $statusText = '已中奖';
+                    $statusText = '已Trúng thưởng';
                     $statusColor = 'green';
                 } elseif ($item->isdraw == 0) {
-                    $statusText = '未开奖';
+                    $statusText = '未Mở thưởng';
                     $statusColor = 'blue';
                 } elseif ($item->isdraw == -1) {
-                    $statusText = '未中奖';
+                    $statusText = '未Trúng thưởng';
                     $statusColor = 'gray';
                 } elseif ($item->isdraw == -2) {
                     $statusText = '已撤单';
@@ -1198,11 +1198,11 @@ class LotteryController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('今日投注记录获取失败: ' . $e->getMessage());
+            \support\Log::error('Hôm nayĐặt cượclịch sửLấy dữ liệu thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '获取数据失败',
+                'message' => 'Lấy dữ liệuThất bại',
                 'count' => 0,
                 'data' => []
             ]);
@@ -1218,7 +1218,7 @@ class LotteryController
                 return json([
                     'code' => 401,
                     'sign' => false,
-                    'message' => '请先登录',
+                    'message' => 'Vui lòng đăng nhập',
                     'data' => null
                 ]);
             }
@@ -1255,7 +1255,7 @@ class LotteryController
                 return json([
                     'code' => 400,
                     'sign' => false,
-                    'message' => '该彩种不可用',
+                    'message' => '该彩种không khả dụng',
                     'data' => null
                 ]);
             }
@@ -1269,7 +1269,7 @@ class LotteryController
                 return json([
                     'code' => 400,
                     'sign' => false,
-                    'message' => '玩法不存在',
+                    'message' => '玩法không tồn tại',
                     'data' => null
                 ]);
             }
@@ -1283,7 +1283,7 @@ class LotteryController
                 return json([
                     'code' => 404,
                     'sign' => false,
-                    'message' => '用户不存在',
+                    'message' => 'Người dùng không tồn tại',
                     'data' => null
                 ]);
             }
@@ -1307,7 +1307,7 @@ class LotteryController
                 return json([
                     'code' => 400,
                     'sign' => false,
-                    'message' => '余额不足',
+                    'message' => 'Số dư không đủ',
                     'data' => null
                 ]);
             }
@@ -1396,7 +1396,7 @@ class LotteryController
                 return json([
                     'code' => 0,
                     'sign' => true,
-                    'message' => '追号成功',
+                    'message' => '追号Thành công',
                     'data' => [
                         'chaseNo' => $chaseNo,
                         'betIds' => $betIds,
@@ -1411,11 +1411,11 @@ class LotteryController
             }
             
         } catch (\Exception $e) {
-            \support\Log::error('追号失败: ' . $e->getMessage());
+            \support\Log::error('追号Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '追号失败：' . $e->getMessage(),
+                'message' => '追号Thất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -1430,7 +1430,7 @@ class LotteryController
                 return json([
                     'code' => 401,
                     'sign' => false,
-                    'message' => '请先登录',
+                    'message' => 'Vui lòng đăng nhập',
                     'data' => null
                 ]);
             }
@@ -1442,7 +1442,7 @@ class LotteryController
                 return json([
                     'code' => 400,
                     'sign' => false,
-                    'message' => '订单号不能为空',
+                    'message' => '订单号không được để trống',
                     'data' => null
                 ]);
             }
@@ -1457,7 +1457,7 @@ class LotteryController
                 return json([
                     'code' => 404,
                     'sign' => false,
-                    'message' => '订单不存在',
+                    'message' => '订单không tồn tại',
                     'data' => null
                 ]);
             }
@@ -1533,7 +1533,7 @@ class LotteryController
                 return json([
                     'code' => 0,
                     'sign' => true,
-                    'message' => '撤单成功',
+                    'message' => '撤单Thành công',
                     'data' => [
                         'refund' => number_format($bet->amount, 2, '.', ''),
                         'balance' => number_format($user->balance + $bet->amount, 2, '.', '')
@@ -1546,11 +1546,11 @@ class LotteryController
             }
             
         } catch (\Exception $e) {
-            \support\Log::error('撤单失败: ' . $e->getMessage());
+            \support\Log::error('撤单Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '撤单失败：' . $e->getMessage(),
+                'message' => '撤单Thất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -1645,11 +1645,11 @@ class LotteryController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('号码统计获取失败: ' . $e->getMessage());
+            \support\Log::error('号码统计Lấy dữ liệu thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '获取数据失败',
+                'message' => 'Lấy dữ liệuThất bại',
                 'data' => null
             ]);
         }
@@ -1664,7 +1664,7 @@ class LotteryController
                 return json([
                     'code' => 401,
                     'sign' => false,
-                    'message' => '请先登录',
+                    'message' => 'Vui lòng đăng nhập',
                     'data' => null
                 ]);
             }
@@ -1689,7 +1689,7 @@ class LotteryController
                 return json([
                     'code' => 400,
                     'sign' => false,
-                    'message' => '投注数据格式错误',
+                    'message' => 'Đặt cượcdữ liệu格式Lỗi',
                     'data' => null
                 ]);
             }
@@ -1703,7 +1703,7 @@ class LotteryController
                 return json([
                     'code' => 400,
                     'sign' => false,
-                    'message' => '该彩种不可用',
+                    'message' => '该彩种không khả dụng',
                     'data' => null
                 ]);
             }
@@ -1716,7 +1716,7 @@ class LotteryController
                 return json([
                     'code' => 400,
                     'sign' => false,
-                    'message' => '期号错误或已过期',
+                    'message' => '期号Lỗihoặc已过期',
                     'data' => null
                 ]);
             }
@@ -1742,7 +1742,7 @@ class LotteryController
                 return json([
                     'code' => 400,
                     'sign' => false,
-                    'message' => '投注金额不一致',
+                    'message' => 'Đặt cượcSố tiền不一致',
                     'data' => null
                 ]);
             }
@@ -1753,7 +1753,7 @@ class LotteryController
                 return json([
                     'code' => 400,
                     'sign' => false,
-                    'message' => '余额不足',
+                    'message' => 'Số dư không đủ',
                     'data' => null
                 ]);
             }
@@ -1772,7 +1772,7 @@ class LotteryController
             return json([
                 'code' => 0,
                 'sign' => true,
-                'message' => '投注成功',
+                'message' => 'Đặt cượcThành công',
                 'data' => [
                     'order_id' => $orderId,
                     'total_bets' => count($bets),
@@ -1782,11 +1782,11 @@ class LotteryController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('双面投注失败: ' . $e->getMessage());
+            \support\Log::error('双面Đặt cượcThất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '投注失败：' . $e->getMessage(),
+                'message' => 'Đặt cượcThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }

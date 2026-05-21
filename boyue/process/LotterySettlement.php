@@ -13,7 +13,7 @@ class LotterySettlement
     
     public function onWorkerStart($worker)
     {
-        Log::info('彩票结算进程启动');
+        Log::info('Xổ số结算进程启动');
         
         
         $this->settleAll();
@@ -56,7 +56,7 @@ class LotterySettlement
                 return;
             }
             
-            Log::info("开始结算 " . count($bets) . " 条投注记录");
+            Log::info("开始结算 " . count($bets) . " 条Đặt cượclịch sử");
             
             $settledCount = 0;
             $errorCount = 0;
@@ -69,7 +69,7 @@ class LotterySettlement
                     if ($result['success']) {
                         $settledCount++;
                         if ($result['is_win']) {
-                            Log::info("用户 {$bet->userid} 中奖 {$result['win_amount']} 元，订单：{$bet->tzcode}");
+                            Log::info("Người dùng {$bet->userid} Trúng thưởng {$result['win_amount']} 元，订单：{$bet->tzcode}");
                         }
                     } else {
                         $errorCount++;
@@ -77,12 +77,12 @@ class LotterySettlement
                     
                 } catch (\Exception $e) {
                     $errorCount++;
-                    Log::error("结算投注失败 ID:{$bet->id}, 错误: " . $e->getMessage());
+                    Log::error("结算Đặt cượcThất bại ID:{$bet->id}, Lỗi: " . $e->getMessage());
                 }
             }
             
             if ($settledCount > 0) {
-                Log::info("结算完成，成功: {$settledCount}, 失败: {$errorCount}");
+                Log::info("结算完成，Thành công: {$settledCount}, Thất bại: {$errorCount}");
             }
             
         } catch (\Exception $e) {
@@ -109,9 +109,9 @@ class LotterySettlement
                 ->first();
             
             if (!$wanfa) {
-                Log::warning("玩法不存在: typeid={$bet->typeid}, playid={$bet->playid}");
+                Log::warning("玩法không tồn tại: typeid={$bet->typeid}, playid={$bet->playid}");
                 Db::rollBack();
-                return ['success' => false, 'message' => '玩法不存在'];
+                return ['success' => false, 'message' => '玩法không tồn tại'];
             }
             
             
@@ -140,13 +140,13 @@ class LotterySettlement
                     'uid' => $bet->uid,
                     'username' => $bet->username,
                     'type' => 10,
-                    'typename' => '中奖',
+                    'typename' => 'Trúng thưởng',
                     'trano' => $bet->trano,
                     'amount' => $winAmount,
                     'before' => $userBalance - $winAmount,
                     'after' => $userBalance,
                     'addtime' => time(),
-                    'remark' => "期号:{$bet->expect} 中奖{$winCount}注",
+                    'remark' => "期号:{$bet->expect} Trúng thưởng{$winCount}注",
                 ]);
             }
             
@@ -173,7 +173,7 @@ class LotterySettlement
                 );
             } catch (\Exception $e) {
                 
-                Log::warning("[代理佣金] 计算失败: " . $e->getMessage());
+                Log::warning("[Đại lýHoa hồng] 计算Thất bại: " . $e->getMessage());
             }
             
             
@@ -188,7 +188,7 @@ class LotterySettlement
                 );
             } catch (\Exception $e) {
                 
-                Log::warning("[反水] 计算失败: " . $e->getMessage());
+                Log::warning("[反水] 计算Thất bại: " . $e->getMessage());
             }
             
             
@@ -224,7 +224,7 @@ class LotterySettlement
                 }
             } catch (\Exception $e) {
                 
-                Log::warning("[WebSocket] 推送失败: " . $e->getMessage());
+                Log::warning("[WebSocket] 推送Thất bại: " . $e->getMessage());
             }
             
             return [
@@ -235,7 +235,7 @@ class LotterySettlement
             
         } catch (\Exception $e) {
             Db::rollBack();
-            Log::error("结算失败 ID:{$bet->id}, 错误: " . $e->getMessage());
+            Log::error("结算Thất bại ID:{$bet->id}, Lỗi: " . $e->getMessage());
             return [
                 'success' => false,
                 'message' => $e->getMessage()
@@ -251,7 +251,7 @@ class LotterySettlement
             $betItems = json_decode($bet->tzcode, true);
             if (empty($betItems)) {
                 Db::rollBack();
-                return ['success' => false, 'message' => '投注明细解析失败'];
+                return ['success' => false, 'message' => 'Đặt cược明细解析Thất bại'];
             }
             
             
@@ -271,7 +271,7 @@ class LotterySettlement
                 
                 
                 if (empty($playid) || $betAmount <= 0) {
-                    Log::warning("跳过无效投注项: playid={$playid}, amount={$betAmount}");
+                    Log::warning("跳过无效Đặt cược项: playid={$playid}, amount={$betAmount}");
                     continue;
                 }
                 
@@ -326,13 +326,13 @@ class LotterySettlement
                     'uid' => $bet->uid,
                     'username' => $bet->username,
                     'type' => 10,
-                    'typename' => '中奖',
+                    'typename' => 'Trúng thưởng',
                     'trano' => $bet->trano,
                     'amount' => $totalWinAmount,
                     'before' => $userBalance - $totalWinAmount,
                     'after' => $userBalance,
                     'addtime' => time(),
-                    'remark' => "期号:{$bet->expect} 合并投注中奖{$winCount}项",
+                    'remark' => "期号:{$bet->expect} 合并Đặt cượcTrúng thưởng{$winCount}项",
                 ]);
             }
             
@@ -359,10 +359,10 @@ class LotterySettlement
                     4              
                 );
             } catch (\Exception $e) {
-                Log::warning("[反水] 合并投注反水计算失败: " . $e->getMessage());
+                Log::warning("[反水] 合并Đặt cược反水计算Thất bại: " . $e->getMessage());
             }
             
-            Log::info("合并投注结算完成 ID:{$bet->id}, 结果: " . implode('/', $resultDetails));
+            Log::info("合并Đặt cược结算完成 ID:{$bet->id}, 结果: " . implode('/', $resultDetails));
             
             return [
                 'success' => true,
@@ -372,7 +372,7 @@ class LotterySettlement
             
         } catch (\Exception $e) {
             Db::rollBack();
-            Log::error("合并投注结算失败 ID:{$bet->id}, 错误: " . $e->getMessage());
+            Log::error("合并Đặt cược结算Thất bại ID:{$bet->id}, Lỗi: " . $e->getMessage());
             return [
                 'success' => false,
                 'message' => $e->getMessage()
@@ -431,7 +431,7 @@ class LotterySettlement
                     return ['count' => 0];
             }
         } catch (\Exception $e) {
-            Log::error("中奖判断异常: " . $e->getMessage());
+            Log::error("Trúng thưởng判断异常: " . $e->getMessage());
             return ['count' => 0];
         }
     }
@@ -1686,7 +1686,7 @@ class LotterySettlement
             
             $ranks = explode(',', $opencode);
             if (count($ranks) != 6) {
-                Log::warning("动物彩开奖号码格式错误: {$opencode}");
+                Log::warning("动物彩Mở thưởng号码格式Lỗi: {$opencode}");
                 return ['count' => 0];
             }
             
@@ -1720,7 +1720,7 @@ class LotterySettlement
             return ['count' => $winCount];
             
         } catch (\Exception $e) {
-            Log::error("动物彩中奖判断异常: " . $e->getMessage());
+            Log::error("动物彩Trúng thưởng判断异常: " . $e->getMessage());
             return ['count' => 0];
         }
     }
@@ -1795,12 +1795,12 @@ class LotterySettlement
                         ]);
                     
                 } catch (\Exception $e) {
-                    Log::error("机器人投注结算失败 ID:{$bet->id}: " . $e->getMessage());
+                    Log::error("机器人Đặt cược结算Thất bại ID:{$bet->id}: " . $e->getMessage());
                 }
             }
             
         } catch (\Exception $e) {
-            Log::error("机器人投注批量结算异常: " . $e->getMessage());
+            Log::error("机器人Đặt cược批量结算异常: " . $e->getMessage());
         }
     }
     

@@ -57,8 +57,13 @@ Route::group('/api/v1', function () {
     Route::get('/lottery/categories', [app\controller\api\LotteryController::class, 'list']);
     
     
-    Route::get('/game/categories', [app\controller\api\GameController::class, 'categories']);
-    Route::get('/game/platforms', [app\controller\api\GameController::class, 'platforms']);
+    // Game Launch Routes (GSC+ Integration) - Public access
+    Route::post('/game/launch', [app\controller\api\GameLaunchController::class, 'launch']);
+    Route::get('/game/gscplus/list', [app\controller\api\GameLaunchController::class, 'list']);
+    Route::get('/game/gscplus/platforms', [app\controller\api\GameLaunchController::class, 'platforms']);
+    Route::get('/game/gscplus/categories', [app\controller\api\GameLaunchController::class, 'categories']);
+    
+    // Legacy Game Routes (Keep for backward compatibility)
     Route::get('/game/hot', [app\controller\api\GameController::class, 'hot']);
     Route::get('/game/search', [app\controller\api\GameController::class, 'search']);
     
@@ -78,6 +83,15 @@ Route::group('/api/v1', function () {
     Route::get('/lottery/{code}/hot-cold', [app\controller\api\XY28Controller::class, 'hotCold']); 
     
     Route::post('/lbpalNotify',[app\controller\api\RechargeController::class,'lbpalNotify']);
+    
+    // GSC+ Seamless Wallet Callback Routes
+    Route::get('/gscplus/health', [app\controller\api\GscPlusCallbackController::class, 'health']);
+    Route::post('/gscplus/test', [app\controller\api\GscPlusCallbackController::class, 'test']);
+    Route::get('/gscplus/config', [app\controller\api\GscPlusCallbackController::class, 'config']);
+    Route::post('/gscplus/seamless/balance', [app\controller\api\GscPlusCallbackController::class, 'balance']);
+    Route::post('/gscplus/seamless/withdraw', [app\controller\api\GscPlusCallbackController::class, 'withdraw']);
+    Route::post('/gscplus/seamless/deposit', [app\controller\api\GscPlusCallbackController::class, 'deposit']);
+    Route::post('/gscplus/seamless/pushbetdata', [app\controller\api\GscPlusCallbackController::class, 'pushBetData']);
 });
 
 Route::group('/api/v1', function () {
@@ -219,7 +233,8 @@ Route::group('/api/v1', function () {
     Route::post('/security/verify-fund-pwd', [app\controller\api\SecurityController::class, 'verifyFundPwd']);
     
     
-    Route::get('/game/list', [app\controller\api\GameController::class, 'list']);
+    // Legacy Game Routes - Moved to authenticated section
+    // Route::get('/game/list', [app\controller\api\GameController::class, 'list']); // Commented - conflicts with GSC+ routes
     Route::post('/game/enter', [app\controller\api\GameController::class, 'enter']);
     Route::get('/game/balance/{platform}', [app\controller\api\GameController::class, 'balance']);
     Route::post('/game/transfer/in', [app\controller\api\GameController::class, 'transferIn']);

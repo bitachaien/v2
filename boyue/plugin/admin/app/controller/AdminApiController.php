@@ -41,7 +41,7 @@ class AdminApiController extends Base
             $query->where('name', 'like', "%{$name}%");
         }
 
-        // 获取总数
+        // Lấy总数
         $count = $query->count();
 
         // 分页
@@ -63,19 +63,19 @@ class AdminApiController extends Base
     }
 
     /**
-     * 角色详情
+     * 角色Chi tiết
      * GET /app/admin/api/admin/role-detail
      */
     public function roleDetail(Request $request)
     {
         $id = $request->get('id');
         if (!$id) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
         $role = Db::table('wa_roles')->where('id', $id)->first();
         if (!$role) {
-            return $this->json(1, '角色不存在');
+            return $this->json(1, '角色không tồn tại');
         }
 
         $data = (array)$role;
@@ -85,7 +85,7 @@ class AdminApiController extends Base
     }
 
     /**
-     * 添加角色
+     * Thêm角色
      * POST /app/admin/api/admin/role-add
      */
     public function roleAdd(Request $request)
@@ -95,13 +95,13 @@ class AdminApiController extends Base
         $rules = $request->post('rules', '');
 
         if (!$name) {
-            return $this->json(1, '角色名称不能为空');
+            return $this->json(1, '角色名称không được để trống');
         }
 
         // 检查名称是否重复
         $exists = Db::table('wa_roles')->where('name', $name)->first();
         if ($exists) {
-            return $this->json(1, '角色名称已存在');
+            return $this->json(1, '角色名称đã tồn tại');
         }
 
         $id = Db::table('wa_roles')->insertGetId([
@@ -112,7 +112,7 @@ class AdminApiController extends Base
             'updated_at' => date('Y-m-d H:i:s'),
         ]);
 
-        return $this->json(0, '添加成功', ['id' => $id]);
+        return $this->json(0, 'ThêmThành công', ['id' => $id]);
     }
 
     /**
@@ -127,15 +127,15 @@ class AdminApiController extends Base
         $rules = $request->post('rules');
 
         if (!$id) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
         $role = Db::table('wa_roles')->where('id', $id)->first();
         if (!$role) {
-            return $this->json(1, '角色不存在');
+            return $this->json(1, '角色không tồn tại');
         }
 
-        // 超级管理员角色不允许修改权限
+        // 超级管理员角色不允许Sửa权限
         if ($role->rules === '*') {
             $data = [
                 'name' => $name ?: $role->name,
@@ -152,11 +152,11 @@ class AdminApiController extends Base
 
         Db::table('wa_roles')->where('id', $id)->update($data);
 
-        return $this->json(0, '修改成功');
+        return $this->json(0, 'SửaThành công');
     }
 
     /**
-     * 删除角色
+     * Xóa角色
      * POST /app/admin/api/admin/role-delete
      */
     public function roleDelete(Request $request)
@@ -164,26 +164,26 @@ class AdminApiController extends Base
         $id = $request->post('id');
 
         if (!$id) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
         if ($id == 1) {
-            return $this->json(1, '超级管理员角色不能删除');
+            return $this->json(1, '超级管理员角色不能Xóa');
         }
 
         // 检查是否有管理员使用该角色
         $count = Db::table('wa_admin_roles')->where('role_id', $id)->count();
         if ($count > 0) {
-            return $this->json(1, '该角色下有管理员，无法删除');
+            return $this->json(1, '该角色下有管理员，无法Xóa');
         }
 
         Db::table('wa_roles')->where('id', $id)->delete();
 
-        return $this->json(0, '删除成功');
+        return $this->json(0, 'XóaThành công');
     }
 
     /**
-     * 获取所有角色（下拉选择用）
+     * Lấy所有角色（下拉选择用）
      * GET /app/admin/api/admin/role-options
      */
     public function roleOptions(Request $request)
@@ -232,7 +232,7 @@ class AdminApiController extends Base
             $query->where('status', $status);
         }
 
-        // 获取总数
+        // Lấy总数
         $count = $query->count();
 
         // 分页
@@ -242,7 +242,7 @@ class AdminApiController extends Base
             ->limit($limit)
             ->get();
 
-        // 获取角色关联
+        // Lấy角色关联
         $adminIds = array_column($list->toArray(), 'id');
         $roleMap = [];
         if (!empty($adminIds)) {
@@ -254,13 +254,13 @@ class AdminApiController extends Base
             }
         }
 
-        // 获取角色名称
+        // Lấy角色名称
         $roles = Db::table('wa_roles')->pluck('name', 'id');
 
         $result = [];
         foreach ($list as $item) {
             $row = (array)$item;
-            unset($row['password']); // 不返回密码
+            unset($row['password']); // 不返回Mật khẩu
 
             $row['status_text'] = $row['status'] == 0 ? '正常' : '禁用';
             $row['role_ids'] = $roleMap[$row['id']] ?? [];
@@ -281,25 +281,25 @@ class AdminApiController extends Base
     }
 
     /**
-     * 管理员详情
+     * 管理员Chi tiết
      * GET /app/admin/api/admin/detail
      */
     public function detail(Request $request)
     {
         $id = $request->get('id');
         if (!$id) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
         $admin = Db::table('wa_admins')->where('id', $id)->first();
         if (!$admin) {
-            return $this->json(1, '管理员不存在');
+            return $this->json(1, '管理员không tồn tại');
         }
 
         $data = (array)$admin;
         unset($data['password']);
 
-        // 获取角色
+        // Lấy角色
         $roleIds = Db::table('wa_admin_roles')
             ->where('admin_id', $id)
             ->pluck('role_id')
@@ -310,7 +310,7 @@ class AdminApiController extends Base
     }
 
     /**
-     * 添加管理员
+     * Thêm管理员
      * POST /app/admin/api/admin/add
      */
     public function add(Request $request)
@@ -325,21 +325,21 @@ class AdminApiController extends Base
         $roleIds = $request->post('role_ids', []);
 
         if (!$username) {
-            return $this->json(1, '用户名不能为空');
+            return $this->json(1, 'Tên người dùngkhông được để trống');
         }
 
         if (!$password) {
-            return $this->json(1, '密码不能为空');
+            return $this->json(1, 'Mật khẩu không được để trống');
         }
 
         if (empty($roleIds)) {
-            return $this->json(1, '请选择角色');
+            return $this->json(1, 'Vui lòng chọn角色');
         }
 
-        // 检查用户名是否重复
+        // 检查Tên người dùng是否重复
         $exists = Db::table('wa_admins')->where('username', $username)->first();
         if ($exists) {
-            return $this->json(1, '用户名已存在');
+            return $this->json(1, 'Tên người dùngđã tồn tại');
         }
 
         $now = date('Y-m-d H:i:s');
@@ -355,7 +355,7 @@ class AdminApiController extends Base
             'updated_at' => $now,
         ]);
 
-        // 添加角色关联
+        // Thêm角色关联
         foreach ($roleIds as $roleId) {
             Db::table('wa_admin_roles')->insert([
                 'admin_id' => $id,
@@ -363,7 +363,7 @@ class AdminApiController extends Base
             ]);
         }
 
-        return $this->json(0, '添加成功', ['id' => $id]);
+        return $this->json(0, 'ThêmThành công', ['id' => $id]);
     }
 
     /**
@@ -383,12 +383,12 @@ class AdminApiController extends Base
         $roleIds = $request->post('role_ids');
 
         if (!$id) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
         $admin = Db::table('wa_admins')->where('id', $id)->first();
         if (!$admin) {
-            return $this->json(1, '管理员不存在');
+            return $this->json(1, '管理员không tồn tại');
         }
 
         // 不能禁用自己
@@ -399,13 +399,13 @@ class AdminApiController extends Base
         $data = ['updated_at' => date('Y-m-d H:i:s')];
 
         if ($username !== null) {
-            // 检查用户名是否重复
+            // 检查Tên người dùng是否重复
             $exists = Db::table('wa_admins')
                 ->where('username', $username)
                 ->where('id', '!=', $id)
                 ->first();
             if ($exists) {
-                return $this->json(1, '用户名已存在');
+                return $this->json(1, 'Tên người dùngđã tồn tại');
             }
             $data['username'] = $username;
         }
@@ -433,11 +433,11 @@ class AdminApiController extends Base
             }
         }
 
-        return $this->json(0, '修改成功');
+        return $this->json(0, 'SửaThành công');
     }
 
     /**
-     * 删除管理员
+     * Xóa管理员
      * POST /app/admin/api/admin/delete
      */
     public function delete(Request $request)
@@ -445,19 +445,19 @@ class AdminApiController extends Base
         $id = $request->post('id');
 
         if (!$id) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
         if ($id == admin_id()) {
-            return $this->json(1, '不能删除自己');
+            return $this->json(1, '不能Xóa自己');
         }
 
-        // 删除管理员
+        // Xóa管理员
         Db::table('wa_admins')->where('id', $id)->delete();
-        // 删除角色关联
+        // Xóa角色关联
         Db::table('wa_admin_roles')->where('admin_id', $id)->delete();
 
-        return $this->json(0, '删除成功');
+        return $this->json(0, 'XóaThành công');
     }
 
     /**
@@ -470,7 +470,7 @@ class AdminApiController extends Base
         $status = $request->post('status');
 
         if (!$id || $status === null) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
         if ($id == admin_id() && $status == 1) {
@@ -482,7 +482,7 @@ class AdminApiController extends Base
             'updated_at' => date('Y-m-d H:i:s'),
         ]);
 
-        return $this->json(0, '状态更新成功');
+        return $this->json(0, '状态更新Thành công');
     }
 
     /**
@@ -504,7 +504,7 @@ class AdminApiController extends Base
         $startDate = $request->get('start_date', '');
         $endDate = $request->get('end_date', '');
 
-        // 尝试查询 wa_admin_log 表，如果不存在则使用 caipiao_adminlog
+        // 尝试Tra cứu wa_admin_log 表，如果không tồn tại则使用 caipiao_adminlog
         $tableName = 'wa_admin_log';
         try {
             Db::table($tableName)->first();
@@ -513,7 +513,7 @@ class AdminApiController extends Base
             try {
                 Db::table($tableName)->first();
             } catch (\Exception $e2) {
-                // 两个表都不存在，返回空数据
+                // 两个表都không tồn tại，返回空dữ liệu
                 return $this->json(0, 'ok', [], 0);
             }
         }
@@ -544,7 +544,7 @@ class AdminApiController extends Base
             }
         }
 
-        // 获取总数
+        // Lấy总数
         $count = $query->count();
 
         // 分页
@@ -558,7 +558,7 @@ class AdminApiController extends Base
         foreach ($list as $item) {
             $row = (array)$item;
             
-            // 统一时间格式
+            // 统一Thời gian格式
             if (isset($row['time']) && is_numeric($row['time'])) {
                 $row['created_at'] = date('Y-m-d H:i:s', $row['time']);
             }
@@ -570,7 +570,7 @@ class AdminApiController extends Base
     }
 
     /**
-     * 删除管理员日志
+     * Xóa管理员日志
      * POST /app/admin/api/admin/log-delete
      */
     public function logDelete(Request $request)
@@ -579,12 +579,12 @@ class AdminApiController extends Base
         $ids = $request->post('ids', []);
 
         if (!$id && empty($ids)) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
         $deleteIds = $id ? [$id] : $ids;
 
-        // 尝试删除
+        // 尝试Xóa
         $tableName = 'wa_admin_log';
         try {
             Db::table($tableName)->whereIn('id', $deleteIds)->delete();
@@ -592,11 +592,11 @@ class AdminApiController extends Base
             try {
                 Db::table('caipiao_adminlog')->whereIn('id', $deleteIds)->delete();
             } catch (\Exception $e2) {
-                return $this->json(1, '删除失败');
+                return $this->json(1, 'XóaThất bại');
             }
         }
 
-        return $this->json(0, '删除成功');
+        return $this->json(0, 'XóaThành công');
     }
 
     /**
@@ -625,11 +625,11 @@ class AdminApiController extends Base
                     Db::table($tableName)->truncate();
                 }
             } catch (\Exception $e2) {
-                return $this->json(1, '清空失败');
+                return $this->json(1, '清空Thất bại');
             }
         }
 
-        return $this->json(0, '清空成功');
+        return $this->json(0, '清空Thành công');
     }
 
     /**
@@ -647,14 +647,14 @@ class AdminApiController extends Base
     {
         $roleId = $request->get('role_id'); // 可选，传入则返回该角色已选中的权限
 
-        // 只获取业务权限（id >= 1000）
+        // 只Lấy业务权限（id >= 1000）
         $rules = Db::table('wa_rules')
             ->where('id', '>=', 1000)
             ->orderBy('weight', 'asc')
             ->orderBy('id', 'asc')
             ->get();
 
-        // 获取角色已有权限
+        // Lấy角色已有权限
         $checkedIds = [];
         if ($roleId) {
             $role = Db::table('wa_roles')->where('id', $roleId)->first();
@@ -684,7 +684,7 @@ class AdminApiController extends Base
 
     /**
      * 构建权限树（业务权限专用）
-     * 顶级菜单 pid = 0 或 NULL
+     * 顶级菜单 pid = 0 hoặc NULL
      */
     private function buildRuleTree(array $rules, $parentId = null, array $checkedIds = []): array
     {
@@ -692,7 +692,7 @@ class AdminApiController extends Base
         foreach ($rules as $rule) {
             $rule = (array)$rule;
             
-            // 判断是否为顶级菜单（pid = 0, NULL, 或空字符串）
+            // 判断是否为顶级菜单（pid = 0, NULL, hoặc空字符串）
             $isTopLevel = ($parentId === null && (empty($rule['pid']) || $rule['pid'] == 0));
             $isChild = ($parentId !== null && $rule['pid'] == $parentId);
             
@@ -722,7 +722,7 @@ class AdminApiController extends Base
     }
 
     /**
-     * 获取权限列表（扁平结构）
+     * Lấy权限列表（扁平结构）
      * GET /app/admin/api/admin/rule-list
      * 只返回业务权限（id >= 1000）
      */
@@ -753,7 +753,7 @@ class AdminApiController extends Base
     }
 
     /**
-     * 保存角色权限
+     * Lưu角色权限
      * POST /app/admin/api/admin/role-rules
      */
     public function roleRules(Request $request)
@@ -762,17 +762,17 @@ class AdminApiController extends Base
         $ruleIds = $request->post('rule_ids', []);
 
         if (!$roleId) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
         $role = Db::table('wa_roles')->where('id', $roleId)->first();
         if (!$role) {
-            return $this->json(1, '角色不存在');
+            return $this->json(1, '角色không tồn tại');
         }
 
-        // 超级管理员角色不允许修改权限
+        // 超级管理员角色不允许Sửa权限
         if ($role->rules === '*') {
-            return $this->json(1, '超级管理员角色权限不可修改');
+            return $this->json(1, '超级管理员角色权限不可Sửa');
         }
 
         // 验证权限 ID 是否存在
@@ -795,7 +795,7 @@ class AdminApiController extends Base
             'updated_at' => date('Y-m-d H:i:s'),
         ]);
 
-        return $this->json(0, '权限保存成功');
+        return $this->json(0, '权限LưuThành công');
     }
 
     /**
@@ -808,12 +808,12 @@ class AdminApiController extends Base
         $roleId = $request->get('role_id');
 
         if (!$roleId) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
         $role = Db::table('wa_roles')->where('id', $roleId)->first();
         if (!$role) {
-            return $this->json(1, '角色不存在');
+            return $this->json(1, '角色không tồn tại');
         }
 
         $ruleIds = [];
@@ -842,7 +842,7 @@ class AdminApiController extends Base
      */
 
     /**
-     * 获取 IP 归属地
+     * Lấy IP 归属地
      * GET /app/admin/api/admin/ip-location
      */
     public function ipLocation(Request $request)
@@ -850,7 +850,7 @@ class AdminApiController extends Base
         $ip = $request->get('ip');
         
         if (!$ip) {
-            return $this->json(1, 'IP地址不能为空');
+            return $this->json(1, 'IP地址không được để trống');
         }
 
         if (!filter_var($ip, FILTER_VALIDATE_IP)) {
@@ -866,7 +866,7 @@ class AdminApiController extends Base
     }
 
     /**
-     * 批量更新会员归属地（修复历史数据）
+     * 批量更新Thành viên归属地（修复历史dữ liệu）
      * POST /app/admin/api/admin/batch-update-location
      */
     public function batchUpdateLocation(Request $request)

@@ -55,7 +55,7 @@ class RebateSettlement
             Log::info('反水结算完成', $result);
             
         } catch (\Exception $e) {
-            Log::error('反水结算失败: ' . $e->getMessage());
+            Log::error('反水结算Thất bại: ' . $e->getMessage());
         }
     }
 
@@ -73,7 +73,7 @@ class RebateSettlement
                 ->update(['can_claim' => 1]);
             
             if ($affected > 0) {
-                Log::info("反水兜底结算：处理了 {$affected} 条过期记录");
+                Log::info("反水兜底结算：处理了 {$affected} 条过期lịch sử");
             }
             
         } catch (\Exception $e) {

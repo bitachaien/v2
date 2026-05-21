@@ -55,7 +55,7 @@ class Tree
     }
 
     /**
-     * 获取子孙节点
+     * Lấy子孙节点
      * @param array $include
      * @param bool $with_self
      * @return array
@@ -84,7 +84,7 @@ class Tree
     }
 
     /**
-     * 获取哈希树
+     * Lấy哈希树
      * @param array $data
      * @return array
      */
@@ -104,7 +104,7 @@ class Tree
     }
 
     /**
-     * 获取树
+     * Lấy树
      * @param array $include
      * @param int $type
      * @return array|null

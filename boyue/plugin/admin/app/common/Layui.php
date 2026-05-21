@@ -20,7 +20,7 @@ class Layui
     protected $jsContent = '';
 
     /**
-     * 获取生成的html代码
+     * Lấy生成的html代码
      * @param $indent
      * @return string
      */
@@ -30,7 +30,7 @@ class Layui
     }
 
     /**
-     * 获取生成的js代码
+     * Lấy生成的js代码
      * @param $indent
      * @return string
      */
@@ -40,7 +40,7 @@ class Layui
     }
 
     /**
-     * 获取控件及相关参数
+     * Lấy控件及相关参数
      * @param $options
      * @return array
      */
@@ -129,7 +129,7 @@ EOF;
     }
 
     /**
-     * 输入框模糊查询
+     * 输入框模糊Tra cứu
      * @param $options
      * @return void
      */
@@ -165,7 +165,7 @@ EOF;
     }
 
     /**
-     * 数字输入框模糊查询
+     * 数字输入框模糊Tra cứu
      * @param $options
      * @return void
      */
@@ -176,7 +176,7 @@ EOF;
     }
 
     /**
-     * 密码输入框
+     * Mật khẩu输入框
      * @param $options
      * @return void
      */
@@ -470,7 +470,7 @@ layui.use(["upload", "layer"], function() {
             area: ["95%", "90%"],
             success: function (layero, index) {
                 parent.layui.$("#layui-layer" + index).data("callback", function (data) {
-                            //上传完毕
+                            // 上传完毕
        $('#uploader-list-$id').append(
            '<div class="file-iteme">' +
            '<div class="handle"><i class="layui-icon layui-icon-delete"></i></div>' +
@@ -478,7 +478,7 @@ layui.use(["upload", "layer"], function() {
            '</div>'
        );
 
-       //追加图片成功追加文件名至图片容器
+       // 追加图片Thành công追加文件名至图片容器
        multiple_images.push(data.url);
        $('#$id').val(multiple_images);
                 });
@@ -496,8 +496,8 @@ layui.use(["upload", "layer"], function() {
        })
    },
    done: function(res){
-       layer.close(layer.msg());//关闭上传提示窗口
-       //上传完毕
+       layer.close(layer.msg());// 关闭上传Lưu ý窗口
+       // 上传完毕
        $('#uploader-list-$id').append(
            '<div class="file-iteme">' +
            '<div class="handle"><i class="layui-icon layui-icon-delete"></i></div>' +
@@ -505,38 +505,38 @@ layui.use(["upload", "layer"], function() {
            '</div>'
        );
 
-       //追加图片成功追加文件名至图片容器
+       // 追加图片Thành công追加文件名至图片容器
        multiple_images.push(res.data.url);
        $('#$id').val(multiple_images);
    }
 });
 
-//鼠标悬浮事件
+// 鼠标悬浮事件
 $(document).on("mouseenter mouseleave", ".file-iteme", function(event){
    if(event.type === "mouseenter"){
-       //鼠标悬浮
+       // 鼠标悬浮
        $(this).children(".info").fadeIn("fast");
        $(this).children(".handle").fadeIn("fast");
    }else if(event.type === "mouseleave") {
-       //鼠标离开
+       // 鼠标离开
        $(this).children(".info").hide();
        $(this).children(".handle").hide();
    }
 });
 
-// 删除图片
+// Xóa图片
 $(document).on("click", ".file-iteme .handle", function(event){
    var delImg = $(this).parent().children("img").attr("src")
    var index = multiple_images.indexOf(delImg);
    if (index !== -1) {
        multiple_images.splice(index, 1);
    }
-   //重新赋值
+   // 重新赋值
    $('#$id').val(multiple_images);
-   //删除标签
+   // Xóa标签
    $(this).parent().remove();
 });
-//多图上传 end
+// 多图上传 end
 
 });
 
@@ -547,7 +547,7 @@ EOF;
     }
 
     /**
-     * 日期时间选择组件
+     * NgàyThời gian选择组件
      * @param $options
      * @return void
      */
@@ -558,7 +558,7 @@ EOF;
     }
 
     /**
-     * 日期选择组件
+     * Ngày选择组件
      * @param $options
      * @return void
      */
@@ -595,7 +595,7 @@ EOF;
     }
 
     /**
-     * 日期时间范围选择组件
+     * NgàyThời gian范围选择组件
      * @param $options
      * @return void
      */
@@ -606,7 +606,7 @@ EOF;
     }
 
     /**
-     * 日期范围选择组件
+     * Ngày范围选择组件
      * @param $options
      * @return void
      */
@@ -629,9 +629,9 @@ EOF;
     $label
     <div class="$class">
         <div class="layui-input-block" id="$id">
-            <input type="text" autocomplete="off" name="{$field}[]" id="$id_start" class="layui-input inline-block" placeholder="开始时间">
+            <input type="text" autocomplete="off" name="{$field}[]" id="$id_start" class="layui-input inline-block" placeholder="开始Thời gian">
             -
-            <input type="text" autocomplete="off" name="{$field}[]" id="$id_end" class="layui-input inline-block" placeholder="结束时间">
+            <input type="text" autocomplete="off" name="{$field}[]" id="$id_end" class="layui-input inline-block" placeholder="结束Thời gian">
         </div>
     </div>
 </div>
@@ -926,7 +926,7 @@ EOF;
             $default = $columns[$key]['default'];
             $control = strtolower($info['control']);
             $auto_increment = $columns[$key]['auto_increment'];
-            // 搜索框里上传组件替换为input
+            // Tìm kiếm框里上传组件替换为input
             if ($type == 'search' && in_array($control, ['upload', 'uploadimg'])) {
                 $control = 'input';
                 $info['control_args'] = '';
@@ -941,7 +941,7 @@ EOF;
             }
 
             $props = Util::getControlProps($control, $info['control_args']);
-            // 增加修改记录验证必填项
+            // 增加Sửalịch sử验证必填项
             if ($filter == 'form_show' && !$columns[$key]['nullable'] && $default === null && ($field !== 'password' || $type === 'insert')) {
                 if (!isset($props['lay-verify'])) {
                     $props['lay-verify'] = 'required';
@@ -951,15 +951,15 @@ EOF;
                     $props['lay-verify'] = 'required|' . $props['lay-verify'];
                 }
             }
-            // 增加记录显示默认值
+            // 增加lịch sử显示默认值
             if ($type === 'insert' && !isset($props['value']) && $default !== null) {
                 $props['value'] = $default;
             }
-            // 主键是自增字段或者表单是更新类型不显示主键
+            // 主键是自增字段hoặc者表单是更新类型不显示主键
             if ($primary_key && $field == $primary_key && (($type == 'insert' && $auto_increment) || $type == 'update')) {
                 continue;
             }
-            // 查询类型
+            // Tra cứu类型
             if ($type == 'search') {
                 if ($info['search_type'] == 'between' && method_exists($form, "{$control}Range")) {
                     $control = "{$control}Range";
@@ -967,7 +967,7 @@ EOF;
                     $control = "{$control}Like";
                 }
             }
-            // 查询类型移除lay-verify
+            // Tra cứu类型移除lay-verify
             if ($type == 'search' && !empty($props['lay-verify'])) {
                 $props['lay-verify'] = '';
             }
@@ -1033,7 +1033,7 @@ EOF;
                             form.render();
                         });
                     }
-					return layui.popup.success("操作成功");
+					return layui.popup.success("Thao tác thành công");
 				})
 			});
 			let checked = d[field] === 1 ? "checked" : "";
@@ -1149,17 +1149,17 @@ let cols = [
 EOF;
         if (!$api && $api_result) {
             $codes = <<<EOF
-// 获取表格中下拉或树形组件数据
+// Lấy表格中下拉hoặc树形组件dữ liệu
 let apiResults = {};$api_result
 EOF;
         } else if ($api && !$api_result) {
             $codes = <<<EOF
-// 获取表格中下拉或树形组件数据
+// Lấy表格中下拉hoặc树形组件dữ liệu
 let apis = [];$api
 EOF;
         } else if ($api && $api_result) {
             $codes = <<<EOF
-// 获取表格中下拉或树形组件数据
+// Lấy表格中下拉hoặc树形组件dữ liệu
 let apis = [];$api
 let apiResults = {};$api_result
 EOF;
@@ -1181,7 +1181,7 @@ function render()
         toolbar: "#table-toolbar",
         autoSort: false,
         defaultToolbar: [{
-            title: "刷新",
+            title: "Làm mới",
             layEvent: "refresh",
             icon: "layui-icon-refresh",
         }, "filter", "print", "exports"],
@@ -1240,7 +1240,7 @@ table.render({
     toolbar: "#table-toolbar",
     autoSort: false,
     defaultToolbar: [{
-        title: "刷新",
+        title: "Làm mới",
         layEvent: "refresh",
         icon: "layui-icon-refresh",
     }, "filter", "print", "exports"],

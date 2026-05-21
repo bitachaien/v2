@@ -24,7 +24,7 @@ class AgentSettlementTask
         
         $initialDelay = $nextSettleTime - $now;
         
-        Log::info("[代理结算] 定时任务启动，下次结算时间: " . date('Y-m-d H:i:s', $nextSettleTime));
+        Log::info("[Đại lý结算] 定时任务启动，下次结算Thời gian: " . date('Y-m-d H:i:s', $nextSettleTime));
         
         
         Timer::add($initialDelay, function() {
@@ -59,7 +59,7 @@ class AgentSettlementTask
             ->exists();
         
         if (!$hasSettled) {
-            Log::info("[代理结算] 检测到今日未结算，执行补充结算");
+            Log::info("[Đại lý结算] 检测到Hôm nay未结算，执行补充结算");
             $this->runSettlement();
         }
     }
@@ -68,7 +68,7 @@ class AgentSettlementTask
     private function runSettlement()
     {
         $startTime = microtime(true);
-        Log::info("[代理结算] ========== 开始执行代理佣金结算 ==========");
+        Log::info("[Đại lý结算] ========== 开始执行Đại lýHoa hồng结算 ==========");
         
         try {
             $today = date('Y-m-d');
@@ -86,7 +86,7 @@ class AgentSettlementTask
                 ->where('name', 'agent_mode')
                 ->value('value') ?? '一级净盈利';
             
-            Log::info("[代理结算] 结算周期: {$settlementCycle}, 代理模式: {$agentMode}");
+            Log::info("[Đại lý结算] 结算周期: {$settlementCycle}, Đại lý模式: {$agentMode}");
             
             
             switch ($settlementCycle) {
@@ -97,7 +97,7 @@ class AgentSettlementTask
                 case 'weekly':
                     
                     if (date('N') != 1) {
-                        Log::info("[代理结算] 周结算模式，今天非周一，跳过");
+                        Log::info("[Đại lý结算] 周结算模式，今天非周一，跳过");
                         return;
                     }
                     $startDate = strtotime('monday last week');
@@ -106,7 +106,7 @@ class AgentSettlementTask
                 case 'monthly':
                     
                     if (date('j') != 1) {
-                        Log::info("[代理结算] 月结算模式，今天非1号，跳过");
+                        Log::info("[Đại lý结算] 月结算模式，今天非1号，跳过");
                         return;
                     }
                     $startDate = strtotime('first day of last month');
@@ -117,7 +117,7 @@ class AgentSettlementTask
                     $endDate = $yesterdayEnd;
             }
             
-            Log::info("[代理结算] 结算时间范围: " . date('Y-m-d H:i:s', $startDate) . " ~ " . date('Y-m-d H:i:s', $endDate));
+            Log::info("[Đại lý结算] 结算Thời gian范围: " . date('Y-m-d H:i:s', $startDate) . " ~ " . date('Y-m-d H:i:s', $endDate));
             
             
             $agents = Db::table('caipiao_member')
@@ -144,21 +144,21 @@ class AgentSettlementTask
                     
                 } catch (\Exception $e) {
                     $errorCount++;
-                    Log::error("[代理结算] 代理{$agent->id}结算异常: " . $e->getMessage());
+                    Log::error("[Đại lý结算] Đại lý{$agent->id}结算异常: " . $e->getMessage());
                 }
             }
             
             $duration = round(microtime(true) - $startTime, 2);
             
-            Log::info("[代理结算] ========== 结算完成 ==========");
-            Log::info("[代理结算] 成功: {$successCount}, 跳过: {$skipCount}, 失败: {$errorCount}");
-            Log::info("[代理结算] 总佣金: {$totalCommission}, 耗时: {$duration}秒");
+            Log::info("[Đại lý结算] ========== 结算完成 ==========");
+            Log::info("[Đại lý结算] Thành công: {$successCount}, 跳过: {$skipCount}, Thất bại: {$errorCount}");
+            Log::info("[Đại lý结算] 总Hoa hồng: {$totalCommission}, 耗时: {$duration}秒");
             
             
             $this->recordSettlementLog($today, $successCount, $skipCount, $errorCount, $totalCommission, $duration);
             
         } catch (\Exception $e) {
-            Log::error("[代理结算] 结算过程异常: " . $e->getMessage());
+            Log::error("[Đại lý结算] 结算过程异常: " . $e->getMessage());
         }
     }
     
@@ -182,13 +182,13 @@ class AgentSettlementTask
             ->toArray();
         
         if (empty($subIds)) {
-            return ['status' => 'skip', 'reason' => '无下级', 'commission' => 0];
+            return ['status' => 'skip', 'reason' => '无Cấp dưới', 'commission' => 0];
         }
         
         
         $performance = 0;
         
-        if ($agentMode === '有效投注' || $agentMode === '流水模式') {
+        if ($agentMode === '有效Đặt cược' || $agentMode === 'Vòng cược模式') {
             
             $performance = Db::table('caipiao_touzhu')
                 ->whereIn('uid', $subIds)
@@ -219,7 +219,7 @@ class AgentSettlementTask
         $effectiveCount = $this->getEffectiveSubordinateCount($subIds);
         
         if ($effectiveCount <= 0) {
-            return ['status' => 'skip', 'reason' => '无有效下级', 'commission' => 0];
+            return ['status' => 'skip', 'reason' => '无有效Cấp dưới', 'commission' => 0];
         }
         
         
@@ -246,7 +246,7 @@ class AgentSettlementTask
             
             if ($doubleCheck) {
                 Db::rollBack();
-                return ['status' => 'skip', 'reason' => '并发检查已存在', 'commission' => 0];
+                return ['status' => 'skip', 'reason' => '并发检查đã tồn tại', 'commission' => 0];
             }
             
             Db::table('caipiao_agent_commission')->insert([
@@ -263,7 +263,7 @@ class AgentSettlementTask
             
             Db::commit();
             
-            Log::info("[代理结算] 代理{$agent->id}({$agent->username}) 业绩:{$performance} 比例:{$rate}% 佣金:{$commission}");
+            Log::info("[Đại lý结算] Đại lý{$agent->id}({$agent->username}) 业绩:{$performance} 比例:{$rate}% Hoa hồng:{$commission}");
             
             return ['status' => 'success', 'commission' => $commission];
             
@@ -341,7 +341,7 @@ class AgentSettlementTask
             ]);
         } catch (\Exception $e) {
             
-            Log::warning("[代理结算] 记录结算日志失败: " . $e->getMessage());
+            Log::warning("[Đại lý结算] lịch sử结算日志Thất bại: " . $e->getMessage());
         }
     }
 }

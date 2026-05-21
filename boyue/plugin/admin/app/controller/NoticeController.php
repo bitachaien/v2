@@ -16,7 +16,7 @@ class NoticeController extends Base
     }
     
     /**
-     * 获取通知列表数据
+     * LấyThông báo列表dữ liệu
      */
     public function list(Request $request)
     {
@@ -25,7 +25,7 @@ class NoticeController extends Base
         
         $query = Db::table('caipiao_notice');
         
-        // 获取总数
+        // Lấy总数
         $count = $query->count();
         
         // 分页
@@ -35,12 +35,12 @@ class NoticeController extends Base
                      ->limit($limit)
                      ->get();
         
-        // 处理数据
+        // 处理dữ liệu
         $result = [];
         foreach ($list as $item) {
             $row = (array)$item;
             
-            // 格式化时间
+            // 格式化Thời gian
             if (isset($row['add_time']) && is_numeric($row['add_time'])) {
                 $row['add_time_text'] = date('Y-m-d H:i:s', $row['add_time']);
             } else {
@@ -59,7 +59,7 @@ class NoticeController extends Base
     }
     
     /**
-     * 添加通知
+     * ThêmThông báo
      */
     public function add(Request $request)
     {
@@ -72,15 +72,15 @@ class NoticeController extends Base
             ];
             
             if (!$data['title'] || !$data['content']) {
-                return json(['code' => 1, 'msg' => '标题和内容不能为空']);
+                return json(['code' => 1, 'msg' => '标题和内容không được để trống']);
             }
             
             $id = Db::table('caipiao_notice')->insertGetId($data);
             
             if ($id) {
-                return json(['code' => 0, 'msg' => '添加成功']);
+                return json(['code' => 0, 'msg' => 'ThêmThành công']);
             } else {
-                return json(['code' => 1, 'msg' => '添加失败']);
+                return json(['code' => 1, 'msg' => 'ThêmThất bại']);
             }
         }
         
@@ -88,20 +88,20 @@ class NoticeController extends Base
     }
     
     /**
-     * 编辑通知
+     * 编辑Thông báo
      */
     public function edit(Request $request)
     {
         $id = $request->get('id');
         
         if (!$id) {
-            return '<script>alert("参数错误");history.back();</script>';
+            return '<script>alert("Tham số không hợp lệ");history.back();</script>';
         }
         
         $info = Db::table('caipiao_notice')->where('id', $id)->first();
         
         if (!$info) {
-            return '<script>alert("通知不存在");history.back();</script>';
+            return '<script>alert("Thông báokhông tồn tại");history.back();</script>';
         }
         
         if ($request->method() === 'POST') {
@@ -112,7 +112,7 @@ class NoticeController extends Base
             ];
             
             if (!$data['title'] || !$data['content']) {
-                return json(['code' => 1, 'msg' => '标题和内容不能为空']);
+                return json(['code' => 1, 'msg' => '标题和内容không được để trống']);
             }
             
             $result = Db::table('caipiao_notice')
@@ -120,9 +120,9 @@ class NoticeController extends Base
                 ->update($data);
             
             if ($result !== false) {
-                return json(['code' => 0, 'msg' => '修改成功']);
+                return json(['code' => 0, 'msg' => 'SửaThành công']);
             } else {
-                return json(['code' => 1, 'msg' => '修改失败']);
+                return json(['code' => 1, 'msg' => 'SửaThất bại']);
             }
         }
         
@@ -130,22 +130,22 @@ class NoticeController extends Base
     }
     
     /**
-     * 删除通知
+     * XóaThông báo
      */
     public function delete(Request $request)
     {
         $id = $request->post('id');
         
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
         
         $result = Db::table('caipiao_notice')->where('id', $id)->delete();
         
         if ($result) {
-            return json(['code' => 0, 'msg' => '删除成功']);
+            return json(['code' => 0, 'msg' => 'XóaThành công']);
         } else {
-            return json(['code' => 1, 'msg' => '删除失败']);
+            return json(['code' => 1, 'msg' => 'XóaThất bại']);
         }
     }
 }

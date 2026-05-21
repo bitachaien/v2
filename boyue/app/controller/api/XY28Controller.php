@@ -31,7 +31,7 @@ class XY28Controller
         try {
             $lottery = $this->validateLottery($code);
             if (!$lottery) {
-                return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '彩种不存在或已关闭', 'data' => null]);
+                return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '彩种không tồn tạihoặcđã đóng', 'data' => null]);
             }
             
             $now = time();
@@ -113,7 +113,7 @@ class XY28Controller
             
             return json([
                 'code' => ErrorCode::SUCCESS,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'lotteryCode' => $code,
                     'lotteryTitle' => $lottery->title ?? $code,  
@@ -129,8 +129,8 @@ class XY28Controller
                 ]
             ]);
         } catch (\Exception $e) {
-            \support\Log::error('获取期号失败: ' . $e->getMessage());
-            return json(['code' => ErrorCode::SYSTEM_ERROR, 'message' => '获取失败', 'data' => null]);
+            \support\Log::error('Lấy期号Thất bại: ' . $e->getMessage());
+            return json(['code' => ErrorCode::SYSTEM_ERROR, 'message' => 'Lấy dữ liệu thất bại', 'data' => null]);
         }
     }
     
@@ -145,7 +145,7 @@ class XY28Controller
                 ->first();
             
             if (!$result) {
-                return json(['code' => ErrorCode::DATA_NOT_FOUND, 'message' => '暂无开奖数据', 'data' => null]);
+                return json(['code' => ErrorCode::DATA_NOT_FOUND, 'message' => '暂无Mở thưởngdữ liệu', 'data' => null]);
             }
             
             $openCode = explode(',', $result->opencode);
@@ -153,7 +153,7 @@ class XY28Controller
             
             return json([
                 'code' => ErrorCode::SUCCESS,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'expect' => $result->expect,  
                     'openCode' => $openCode,
@@ -162,8 +162,8 @@ class XY28Controller
                 ]
             ]);
         } catch (\Exception $e) {
-            \support\Log::error('获取开奖结果失败: ' . $e->getMessage());
-            return json(['code' => ErrorCode::SYSTEM_ERROR, 'message' => '获取失败', 'data' => null]);
+            \support\Log::error('LấyMở thưởng结果Thất bại: ' . $e->getMessage());
+            return json(['code' => ErrorCode::SYSTEM_ERROR, 'message' => 'Lấy dữ liệu thất bại', 'data' => null]);
         }
     }
     
@@ -204,7 +204,7 @@ class XY28Controller
             
             return json([
                 'code' => ErrorCode::SUCCESS,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'list' => $data,
                     'pagination' => [
@@ -216,8 +216,8 @@ class XY28Controller
                 ]
             ]);
         } catch (\Exception $e) {
-            \support\Log::error('获取开奖历史失败: ' . $e->getMessage());
-            return json(['code' => ErrorCode::SYSTEM_ERROR, 'message' => '获取失败', 'data' => null]);
+            \support\Log::error('LấyMở thưởng历史Thất bại: ' . $e->getMessage());
+            return json(['code' => ErrorCode::SYSTEM_ERROR, 'message' => 'Lấy dữ liệu thất bại', 'data' => null]);
         }
     }
     
@@ -227,7 +227,7 @@ class XY28Controller
         try {
             $lottery = Db::table('caipiao_caipiao')->where('name', $code)->first();
             if (!$lottery) {
-                return json(['code' => ErrorCode::DATA_NOT_FOUND, 'message' => '彩种不存在', 'data' => null]);
+                return json(['code' => ErrorCode::DATA_NOT_FOUND, 'message' => '彩种không tồn tại', 'data' => null]);
             }
             
             $plays = Db::table('caipiao_wanfa')
@@ -250,7 +250,7 @@ class XY28Controller
             
             return json([
                 'code' => ErrorCode::SUCCESS,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'lotteryCode' => $code,
                     'lotteryName' => $lottery->title,
@@ -258,8 +258,8 @@ class XY28Controller
                 ]
             ]);
         } catch (\Exception $e) {
-            \support\Log::error('获取玩法失败: ' . $e->getMessage());
-            return json(['code' => ErrorCode::SYSTEM_ERROR, 'message' => '获取失败', 'data' => null]);
+            \support\Log::error('Lấy玩法Thất bại: ' . $e->getMessage());
+            return json(['code' => ErrorCode::SYSTEM_ERROR, 'message' => 'Lấy dữ liệu thất bại', 'data' => null]);
         }
     }
     
@@ -267,21 +267,21 @@ class XY28Controller
     {
         $userId = $request->userId;
         if (!$userId) {
-            return json(['code' => 401, 'message' => '请先登录']);
+            return json(['code' => 401, 'message' => 'Vui lòng đăng nhập']);
         }
         
         try {
             $user = Db::table('caipiao_member')->where('id', $userId)->first();
             if (!$user) {
-                return json(['code' => 1, 'message' => '用户不存在']);
+                return json(['code' => 1, 'message' => 'Người dùng không tồn tại']);
             }
             
             $settings = $user->settings ? json_decode($user->settings, true) : [];
             $defaults = ['hot_cold_period' => 50, 'game_music' => true, 'autoLogoutDays' => 365];
             
-            return json(['code' => 0, 'message' => '获取成功', 'data' => array_merge($defaults, $settings)]);
+            return json(['code' => 0, 'message' => 'Lấy dữ liệu thành công', 'data' => array_merge($defaults, $settings)]);
         } catch (\Exception $e) {
-            return json(['code' => 1, 'message' => '获取失败']);
+            return json(['code' => 1, 'message' => 'Lấy dữ liệu thất bại']);
         }
     }
     
@@ -289,20 +289,20 @@ class XY28Controller
     {
         $userId = $request->userId;
         if (!$userId) {
-            return json(['code' => 401, 'message' => '请先登录']);
+            return json(['code' => 401, 'message' => 'Vui lòng đăng nhập']);
         }
         
         $key = $request->post('key');
         $value = $request->post('value');
         
         if (empty($key)) {
-            return json(['code' => 1, 'message' => '参数错误']);
+            return json(['code' => 1, 'message' => 'Tham số không hợp lệ']);
         }
         
         try {
             $user = Db::table('caipiao_member')->where('id', $userId)->first();
             if (!$user) {
-                return json(['code' => 1, 'message' => '用户不存在']);
+                return json(['code' => 1, 'message' => 'Người dùng không tồn tại']);
             }
             
             $settings = $user->settings ? json_decode($user->settings, true) : [];
@@ -310,9 +310,9 @@ class XY28Controller
             
             Db::table('caipiao_member')->where('id', $userId)->update(['settings' => json_encode($settings)]);
             
-            return json(['code' => 0, 'message' => '保存成功', 'data' => $settings]);
+            return json(['code' => 0, 'message' => 'LưuThành công', 'data' => $settings]);
         } catch (\Exception $e) {
-            return json(['code' => 1, 'message' => '保存失败']);
+            return json(['code' => 1, 'message' => 'LưuThất bại']);
         }
     }
     
@@ -333,7 +333,7 @@ class XY28Controller
                 ->get();
             
             if ($history->isEmpty()) {
-                return json(['code' => 0, 'message' => '暂无数据', 'data' => ['stats' => [], 'numbers' => []]]);
+                return json(['code' => 0, 'message' => '暂无dữ liệu', 'data' => ['stats' => [], 'numbers' => []]]);
             }
             
             
@@ -462,7 +462,7 @@ class XY28Controller
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'total' => $limit,
                     'stats' => $stats,
@@ -470,8 +470,8 @@ class XY28Controller
                 ]
             ]);
         } catch (\Exception $e) {
-            \support\Log::error('获取冷热遗漏失败: ' . $e->getMessage());
-            return json(['code' => 1, 'message' => '获取失败', 'data' => null]);
+            \support\Log::error('Lấy冷热遗漏Thất bại: ' . $e->getMessage());
+            return json(['code' => 1, 'message' => 'Lấy dữ liệu thất bại', 'data' => null]);
         }
     }
     
@@ -552,14 +552,14 @@ class XY28Controller
         try {
             $lottery = $this->validateLottery($code);
             if (!$lottery) {
-                return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '彩种不存在或已关闭', 'data' => null]);
+                return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '彩种không tồn tạihoặcđã đóng', 'data' => null]);
             }
             
             $config = require config_path() . '/xy28_bose.php';
             
             return json([
                 'code' => ErrorCode::SUCCESS,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'lotteryCode' => $code,
                     'boseConfig' => [
@@ -582,8 +582,8 @@ class XY28Controller
                 ]
             ]);
         } catch (\Exception $e) {
-            \support\Log::error('获取波色配置失败: ' . $e->getMessage());
-            return json(['code' => ErrorCode::SYSTEM_ERROR, 'message' => '获取失败', 'data' => null]);
+            \support\Log::error('Lấy màu sắccấu hình thất bại: ' . $e->getMessage());
+            return json(['code' => ErrorCode::SYSTEM_ERROR, 'message' => 'Lấy dữ liệu thất bại', 'data' => null]);
         }
     }
     

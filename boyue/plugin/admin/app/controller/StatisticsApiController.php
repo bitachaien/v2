@@ -20,7 +20,7 @@ class StatisticsApiController extends Base
                              'teamPerformanceTrend', 'teamRank'];
 
     /**
-     * 获取排除的测试用户ID
+     * Lấy排除的测试Người dùngID
      */
     private function getTestUserIds(): array
     {
@@ -31,7 +31,7 @@ class StatisticsApiController extends Base
     }
 
     /**
-     * 1. 统计概况 - 今日核心数据
+     * 1. 统计概况 - Hôm nay核心dữ liệu
      * GET /app/admin/statistics/overview
      */
     public function overview(Request $request)
@@ -42,34 +42,34 @@ class StatisticsApiController extends Base
         $yesterdayStart = $todayStart - 86400;
         $yesterdayEnd = $todayStart - 1;
 
-        // 今日注册
+        // Hôm nayĐăng ký
         $todayRegister = Db::table('caipiao_member')
             ->where('isnb', 0)
             ->where('regtime', '>=', $todayStart)
             ->where('regtime', '<=', $todayEnd)
             ->count();
         
-        // 昨日注册
+        // Hôm quaĐăng ký
         $yesterdayRegister = Db::table('caipiao_member')
             ->where('isnb', 0)
             ->where('regtime', '>=', $yesterdayStart)
             ->where('regtime', '<=', $yesterdayEnd)
             ->count();
 
-        // 今日活跃（有登录或投注）
+        // Hôm nay活跃（有Đăng nhậphoặcĐặt cược）
         $todayActive = Db::table('caipiao_member')
             ->where('isnb', 0)
             ->where('onlinetime', '>=', $todayStart)
             ->count();
         
-        // 昨日活跃
+        // Hôm qua活跃
         $yesterdayActive = Db::table('caipiao_member')
             ->where('isnb', 0)
             ->where('onlinetime', '>=', $yesterdayStart)
             ->where('onlinetime', '<=', $yesterdayEnd)
             ->count();
 
-        // 今日充值
+        // Hôm nayNạp tiền
         $todayRecharge = Db::table('caipiao_recharge')
             ->where('state', 1)
             ->where('oddtime', '>=', $todayStart)
@@ -77,7 +77,7 @@ class StatisticsApiController extends Base
             ->when(!empty($testUsers), fn($q) => $q->whereNotIn('uid', $testUsers))
             ->sum('amount') ?? 0;
         
-        // 昨日充值
+        // Hôm quaNạp tiền
         $yesterdayRecharge = Db::table('caipiao_recharge')
             ->where('state', 1)
             ->where('oddtime', '>=', $yesterdayStart)
@@ -85,7 +85,7 @@ class StatisticsApiController extends Base
             ->when(!empty($testUsers), fn($q) => $q->whereNotIn('uid', $testUsers))
             ->sum('amount') ?? 0;
 
-        // 今日提现
+        // Hôm nayRút tiền
         $todayWithdraw = Db::table('caipiao_withdraw')
             ->where('state', 1)
             ->where('oddtime', '>=', $todayStart)
@@ -93,7 +93,7 @@ class StatisticsApiController extends Base
             ->when(!empty($testUsers), fn($q) => $q->whereNotIn('uid', $testUsers))
             ->sum('amount') ?? 0;
         
-        // 昨日提现
+        // Hôm quaRút tiền
         $yesterdayWithdraw = Db::table('caipiao_withdraw')
             ->where('state', 1)
             ->where('oddtime', '>=', $yesterdayStart)
@@ -101,7 +101,7 @@ class StatisticsApiController extends Base
             ->when(!empty($testUsers), fn($q) => $q->whereNotIn('uid', $testUsers))
             ->sum('amount') ?? 0;
 
-        // 今日投注（排除机器人投注）
+        // Hôm nayĐặt cược（排除机器人Đặt cược）
         $todayBet = Db::table('caipiao_touzhu')
             ->whereIn('isdraw', [1, -1])
             ->where('oddtime', '>=', $todayStart)
@@ -110,7 +110,7 @@ class StatisticsApiController extends Base
             ->where(function($q) { $q->whereNull('source')->orWhere('source', '!=', 'robot'); })
             ->sum('amount') ?? 0;
         
-        // 昨日投注（排除机器人投注）
+        // Hôm quaĐặt cược（排除机器人Đặt cược）
         $yesterdayBet = Db::table('caipiao_touzhu')
             ->whereIn('isdraw', [1, -1])
             ->where('oddtime', '>=', $yesterdayStart)
@@ -119,7 +119,7 @@ class StatisticsApiController extends Base
             ->where(function($q) { $q->whereNull('source')->orWhere('source', '!=', 'robot'); })
             ->sum('amount') ?? 0;
 
-        // 今日派奖（排除机器人投注）
+        // Hôm nayTrả thưởng（排除机器人Đặt cược）
         $todayPrize = Db::table('caipiao_touzhu')
             ->where('isdraw', 1)
             ->where('oddtime', '>=', $todayStart)
@@ -128,7 +128,7 @@ class StatisticsApiController extends Base
             ->where(function($q) { $q->whereNull('source')->orWhere('source', '!=', 'robot'); })
             ->sum('okamount') ?? 0;
         
-        // 昨日派奖（排除机器人投注）
+        // Hôm quaTrả thưởng（排除机器人Đặt cược）
         $yesterdayPrize = Db::table('caipiao_touzhu')
             ->where('isdraw', 1)
             ->where('oddtime', '>=', $yesterdayStart)
@@ -137,11 +137,11 @@ class StatisticsApiController extends Base
             ->where(function($q) { $q->whereNull('source')->orWhere('source', '!=', 'robot'); })
             ->sum('okamount') ?? 0;
 
-        // 今日盈亏
+        // Hôm nay盈亏
         $todayProfit = $todayBet - $todayPrize;
         $yesterdayProfit = $yesterdayBet - $yesterdayPrize;
 
-        // 平台余额
+        // 平台Số dư
         $platformBalance = Db::table('caipiao_member')
             ->where('isnb', 0)
             ->sum('balance') ?? 0;
@@ -189,7 +189,7 @@ class StatisticsApiController extends Base
         $limit = $request->get('limit', 20);
         $testUsers = $this->getTestUserIds();
 
-        // 最近的充值记录
+        // 最近的Nạp tiềnlịch sử
         $recharges = Db::table('caipiao_recharge as r')
             ->leftJoin('caipiao_member as m', 'r.uid', '=', 'm.id')
             ->where('r.state', 1)
@@ -199,7 +199,7 @@ class StatisticsApiController extends Base
             ->select(['r.id', 'm.username', 'r.amount', 'r.oddtime', Db::raw("'recharge' as type")])
             ->get();
 
-        // 最近的提现记录
+        // 最近的Rút tiềnlịch sử
         $withdraws = Db::table('caipiao_withdraw as w')
             ->leftJoin('caipiao_member as m', 'w.uid', '=', 'm.id')
             ->where('w.state', 1)
@@ -209,7 +209,7 @@ class StatisticsApiController extends Base
             ->select(['w.id', 'm.username', 'w.amount', 'w.oddtime', Db::raw("'withdraw' as type")])
             ->get();
 
-        // 最近的中奖记录（排除机器人投注）
+        // 最近的Trúng thưởnglịch sử（排除机器人Đặt cược）
         $wins = Db::table('caipiao_touzhu as t')
             ->leftJoin('caipiao_member as m', 't.uid', '=', 'm.id')
             ->where('t.isdraw', 1)
@@ -229,18 +229,18 @@ class StatisticsApiController extends Base
                 $username = $this->maskUsername($item->username ?? '');
                 $amount = round($item->amount, 2);
                 $typeName = match($item->type) {
-                    'recharge' => '充值',
-                    'withdraw' => '提现',
-                    'win' => '中奖',
+                    'recharge' => 'Nạp tiền',
+                    'withdraw' => 'Rút tiền',
+                    'win' => 'Trúng thưởng',
                     default => '未知'
                 };
                 
                 // 生成内容描述
                 $content = match($item->type) {
-                    'recharge' => "用户 {$username} 充值 {$amount} 元",
-                    'withdraw' => "用户 {$username} 提现 {$amount} 元",
-                    'win' => "用户 {$username} 中奖 {$amount} 元",
-                    default => "用户 {$username} 操作 {$amount} 元"
+                    'recharge' => "Người dùng {$username} Nạp tiền {$amount} 元",
+                    'withdraw' => "Người dùng {$username} Rút tiền {$amount} 元",
+                    'win' => "Người dùng {$username} Trúng thưởng {$amount} 元",
+                    default => "Người dùng {$username} 操作 {$amount} 元"
                 };
                 
                 return [
@@ -259,7 +259,7 @@ class StatisticsApiController extends Base
     }
 
     /**
-     * 充提趋势图数据
+     * 充提趋势图dữ liệu
      * GET /app/admin/statistics/recharge-trend
      */
     public function rechargeTrend(Request $request)
@@ -298,14 +298,14 @@ class StatisticsApiController extends Base
         return $this->json(0, 'ok', [
             'xAxis' => $xAxis,
             'series' => [
-                ['name' => '充值', 'data' => $rechargeData],
-                ['name' => '提现', 'data' => $withdrawData],
+                ['name' => 'Nạp tiền', 'data' => $rechargeData],
+                ['name' => 'Rút tiền', 'data' => $withdrawData],
             ]
         ]);
     }
 
     /**
-     * 投注趋势图数据
+     * Đặt cược趋势图dữ liệu
      * GET /app/admin/statistics/bet-trend
      */
     public function betTrend(Request $request)
@@ -346,14 +346,14 @@ class StatisticsApiController extends Base
         return $this->json(0, 'ok', [
             'xAxis' => $xAxis,
             'series' => [
-                ['name' => '投注', 'data' => $betData],
-                ['name' => '中奖', 'data' => $prizeData],
+                ['name' => 'Đặt cược', 'data' => $betData],
+                ['name' => 'Trúng thưởng', 'data' => $prizeData],
             ]
         ]);
     }
 
     /**
-     * 用户增长趋势
+     * Người dùng增长趋势
      * GET /app/admin/statistics/user-growth
      */
     public function userGrowth(Request $request)
@@ -389,14 +389,14 @@ class StatisticsApiController extends Base
         return $this->json(0, 'ok', [
             'xAxis' => $xAxis,
             'series' => [
-                ['name' => '新增用户', 'data' => $newUsersData],
-                ['name' => '活跃用户', 'data' => $activeUsersData],
+                ['name' => '新增Người dùng', 'data' => $newUsersData],
+                ['name' => '活跃Người dùng', 'data' => $activeUsersData],
             ]
         ]);
     }
 
     /**
-     * 2.1 资金流水统计
+     * 2.1 资金Vòng cược统计
      * GET /app/admin/statistics/finance
      * 返回结构匹配前端 Api.Statistics.FinanceStats 类型
      */
@@ -408,7 +408,7 @@ class StatisticsApiController extends Base
         $endTime = strtotime($endDate) + 86400 - 1;
         $testUsers = $this->getTestUserIds();
 
-        // ========== 充值数据 ==========
+        // ========== Nạp tiềndữ liệu ==========
         $totalRecharge = Db::table('caipiao_recharge')
             ->where('state', 1)
             ->where('oddtime', '>=', $startTime)
@@ -431,7 +431,7 @@ class StatisticsApiController extends Base
             ->distinct()
             ->count('uid');
 
-        // 首充用户数据 (在时间段内首次充值的用户)
+        // 首充Người dùngdữ liệu (在Thời gian段内首次Nạp tiền的Người dùng)
         $firstRechargeAmount = Db::table('caipiao_recharge as r1')
             ->where('r1.state', 1)
             ->where('r1.oddtime', '>=', $startTime)
@@ -461,7 +461,7 @@ class StatisticsApiController extends Base
             ->distinct()
             ->count('r1.uid');
 
-        // ========== 提现数据 ==========
+        // ========== Rút tiềndữ liệu ==========
         $totalWithdraw = Db::table('caipiao_withdraw')
             ->where('state', 1)
             ->where('oddtime', '>=', $startTime)
@@ -484,7 +484,7 @@ class StatisticsApiController extends Base
             ->distinct()
             ->count('uid');
 
-        // 待审核
+        // Chờ duyệt
         $pendingWithdraw = Db::table('caipiao_withdraw')
             ->where('state', 0)
             ->when(!empty($testUsers), fn($q) => $q->whereNotIn('uid', $testUsers))
@@ -495,7 +495,7 @@ class StatisticsApiController extends Base
             ->when(!empty($testUsers), fn($q) => $q->whereNotIn('uid', $testUsers))
             ->count();
 
-        // ========== 趋势数据 (TrendData 格式) ==========
+        // ========== 趋势dữ liệu (TrendData 格式) ==========
         $days = ceil(($endTime - $startTime) / 86400);
         $xAxis = [];
         $rechargeData = [];
@@ -560,7 +560,7 @@ class StatisticsApiController extends Base
                 'username' => $this->maskUsername($item->username ?? ''),
                 'amount' => round($item->amount, 2),
                 'type' => $item->type,
-                'typeName' => $item->type === 'recharge' ? '充值' : '提现',
+                'typeName' => $item->type === 'recharge' ? 'Nạp tiền' : 'Rút tiền',
                 'time' => date('Y-m-d H:i:s', $item->oddtime),
             ])
             ->values()
@@ -584,17 +584,17 @@ class StatisticsApiController extends Base
                 'pendingAmount' => round($pendingWithdraw, 2),
                 'pendingCount' => $pendingCount,
             ],
-            'channels' => [], // 暂无渠道数据，需要支付渠道表支持
+            'channels' => [], // 暂无渠道dữ liệu，需要Thanh toán渠道表支持
             'trendData' => [
                 'xAxis' => $xAxis,
                 'series' => [
-                    ['name' => '充值', 'data' => $rechargeData],
-                    ['name' => '提现', 'data' => $withdrawData],
+                    ['name' => 'Nạp tiền', 'data' => $rechargeData],
+                    ['name' => 'Rút tiền', 'data' => $withdrawData],
                     ['name' => '差额', 'data' => $diffData],
                 ],
             ],
             'largeTransactions' => $largeTransactions,
-            'channelTrend' => null, // 暂无渠道趋势数据
+            'channelTrend' => null, // 暂无渠道趋势dữ liệu
             // 兼容旧结构
             'summary' => [
                 'totalRecharge' => round($totalRecharge, 2),
@@ -628,7 +628,7 @@ class StatisticsApiController extends Base
         $endTime = strtotime($endDate) + 86400 - 1;
         $testUsers = $this->getTestUserIds();
 
-        // 投注总额（排除机器人投注）
+        // Đặt cược总额（排除机器人Đặt cược）
         $betQuery = Db::table('caipiao_touzhu')
             ->whereIn('isdraw', [1, -1])
             ->where('oddtime', '>=', $startTime)
@@ -639,7 +639,7 @@ class StatisticsApiController extends Base
 
         $totalBet = (clone $betQuery)->sum('amount') ?? 0;
 
-        // 中奖总额（排除机器人投注）
+        // Trúng thưởng总额（排除机器人Đặt cược）
         $totalPrize = Db::table('caipiao_touzhu')
             ->where('isdraw', 1)
             ->where('oddtime', '>=', $startTime)
@@ -649,7 +649,7 @@ class StatisticsApiController extends Base
             ->where(function($q) { $q->whereNull('source')->orWhere('source', '!=', 'robot'); })
             ->sum('okamount') ?? 0;
 
-        // 返水总额
+        // Hoàn trả总额
         $totalRebate = Db::table('caipiao_fuddetail')
             ->where('type', 'fanshui')
             ->where('oddtime', '>=', $startTime)
@@ -657,7 +657,7 @@ class StatisticsApiController extends Base
             ->when(!empty($testUsers), fn($q) => $q->whereNotIn('uid', $testUsers))
             ->sum('amount') ?? 0;
 
-        // 活动支出
+        // Hoạt động支出
         $totalActivity = Db::table('caipiao_fuddetail')
             ->whereIn('type', ['activity_bindcard', 'activity_czzs', 'activity_rxf', 
                               'activity_rks', 'activity_yxf', 'activity_yks'])
@@ -704,7 +704,7 @@ class StatisticsApiController extends Base
             ];
         }
 
-        // 彩种盈亏占比（排除机器人投注）
+        // 彩种盈亏占比（排除机器人Đặt cược）
         $lotteryProfit = Db::table('caipiao_touzhu as t')
             ->leftJoin('caipiao_caipiao as c', 't.cpname', '=', 'c.name')
             ->whereIn('t.isdraw', [1, -1])
@@ -735,8 +735,8 @@ class StatisticsApiController extends Base
         $dailyData = [
             'xAxis' => array_column($dailyTrend, 'date'),
             'series' => [
-                ['name' => '投注', 'data' => array_column($dailyTrend, 'bet')],
-                ['name' => '中奖', 'data' => array_column($dailyTrend, 'prize')],
+                ['name' => 'Đặt cược', 'data' => array_column($dailyTrend, 'bet')],
+                ['name' => 'Trúng thưởng', 'data' => array_column($dailyTrend, 'prize')],
                 ['name' => '盈亏', 'data' => array_column($dailyTrend, 'profit')],
             ],
         ];
@@ -749,12 +749,12 @@ class StatisticsApiController extends Base
 
         // 构造 costData (成本结构饼图)
         $costData = [
-            ['name' => '中奖派彩', 'value' => round($totalPrize, 2)],
-            ['name' => '返水', 'value' => round(abs($totalRebate), 2)],
-            ['name' => '活动支出', 'value' => round(abs($totalActivity), 2)],
+            ['name' => 'Trúng thưởng派彩', 'value' => round($totalPrize, 2)],
+            ['name' => 'Hoàn trả', 'value' => round(abs($totalRebate), 2)],
+            ['name' => 'Hoạt động支出', 'value' => round(abs($totalActivity), 2)],
         ];
 
-        // 构造 hourlyData (按小时统计盈亏，排除机器人投注)
+        // 构造 hourlyData (按小时统计盈亏，排除机器人Đặt cược)
         $hourlyProfit = [];
         $weekAgo = time() - 86400 * 7;
         for ($h = 0; $h < 24; $h++) {
@@ -781,13 +781,13 @@ class StatisticsApiController extends Base
             ],
         ];
 
-        // ========== 计算环比数据 ==========
-        // 上一周期的时间范围
+        // ========== 计算环比dữ liệu ==========
+        // 上一周期的Thời gian范围
         $periodDays = $days;
         $prevStartTime = $startTime - 86400 * $periodDays;
         $prevEndTime = $startTime - 1;
 
-        // 上周期投注总额（排除机器人投注）
+        // 上周期Đặt cược总额（排除机器人Đặt cược）
         $prevTotalBet = Db::table('caipiao_touzhu')
             ->whereIn('isdraw', [1, -1])
             ->where('oddtime', '>=', $prevStartTime)
@@ -797,7 +797,7 @@ class StatisticsApiController extends Base
             ->where(function($q) { $q->whereNull('source')->orWhere('source', '!=', 'robot'); })
             ->sum('amount') ?? 0;
 
-        // 上周期中奖总额（排除机器人投注）
+        // 上周期Trúng thưởng总额（排除机器人Đặt cược）
         $prevTotalPrize = Db::table('caipiao_touzhu')
             ->where('isdraw', 1)
             ->where('oddtime', '>=', $prevStartTime)
@@ -807,7 +807,7 @@ class StatisticsApiController extends Base
             ->where(function($q) { $q->whereNull('source')->orWhere('source', '!=', 'robot'); })
             ->sum('okamount') ?? 0;
 
-        // 上周期返水总额
+        // 上周期Hoàn trả总额
         $prevTotalRebate = Db::table('caipiao_fuddetail')
             ->where('type', 'fanshui')
             ->where('oddtime', '>=', $prevStartTime)
@@ -815,7 +815,7 @@ class StatisticsApiController extends Base
             ->when(!empty($testUsers), fn($q) => $q->whereNotIn('uid', $testUsers))
             ->sum('amount') ?? 0;
 
-        // 上周期活动支出
+        // 上周期Hoạt động支出
         $prevTotalActivity = Db::table('caipiao_fuddetail')
             ->whereIn('type', ['activity_bindcard', 'activity_czzs', 'activity_rxf', 
                               'activity_rks', 'activity_yxf', 'activity_yks'])
@@ -851,7 +851,7 @@ class StatisticsApiController extends Base
             'totalActivity' => round(abs($totalActivity), 2),
             'netProfit' => round($netProfit, 2),
             'profitRate' => $profitRate,
-            // 环比数据
+            // 环比dữ liệu
             'totalBetChange' => $totalBetChange,
             'totalPrizeChange' => $totalPrizeChange,
             'totalRebateChange' => $totalRebateChange,
@@ -877,7 +877,7 @@ class StatisticsApiController extends Base
     }
 
     /**
-     * 3.1 用户统计
+     * 3.1 Người dùng统计
      * GET /app/admin/statistics/user
      */
     public function user(Request $request)
@@ -887,24 +887,24 @@ class StatisticsApiController extends Base
         $startTime = strtotime($startDate);
         $endTime = strtotime($endDate) + 86400 - 1;
 
-        // 总用户数
+        // 总Người dùng数
         $totalUsers = Db::table('caipiao_member')->where('isnb', 0)->count();
 
-        // 新增用户
+        // 新增Người dùng
         $newUsers = Db::table('caipiao_member')
             ->where('isnb', 0)
             ->where('regtime', '>=', $startTime)
             ->where('regtime', '<=', $endTime)
             ->count();
 
-        // 活跃用户
+        // 活跃Người dùng
         $activeUsers = Db::table('caipiao_member')
             ->where('isnb', 0)
             ->where('onlinetime', '>=', $startTime)
             ->where('onlinetime', '<=', $endTime)
             ->count();
 
-        // 充值用户数
+        // Nạp tiềnNgười dùng数
         $rechargeUsers = Db::table('caipiao_recharge')
             ->where('state', 1)
             ->where('oddtime', '>=', $startTime)
@@ -912,7 +912,7 @@ class StatisticsApiController extends Base
             ->distinct()
             ->count('uid');
 
-        // 投注用户数
+        // Đặt cượcNgười dùng数
         $betUsers = Db::table('caipiao_touzhu')
             ->whereIn('isdraw', [1, -1])
             ->where('oddtime', '>=', $startTime)
@@ -920,7 +920,7 @@ class StatisticsApiController extends Base
             ->distinct()
             ->count('uid');
 
-        // 首充用户数
+        // 首充Người dùng数
         $firstRechargeUsers = Db::table('caipiao_recharge as r1')
             ->where('r1.state', 1)
             ->where('r1.oddtime', '>=', $startTime)
@@ -935,7 +935,7 @@ class StatisticsApiController extends Base
             ->distinct()
             ->count('r1.uid');
 
-        // 用户增长趋势
+        // Người dùng增长趋势
         $days = ceil(($endTime - $startTime) / 86400);
         $growthTrend = [];
         for ($i = 0; $i < $days; $i++) {
@@ -976,13 +976,13 @@ class StatisticsApiController extends Base
     }
 
     /**
-     * 3.2 代理/团队统计（分页列表）
+     * 3.2 Đại lý/Đội nhóm统计（分页列表）
      * GET /app/admin/api/statistics/team
-     * 兼容参数: startDate/endDate (YYYY-MM-DD) 或 sDate/eDate (YYYYMMDD)
+     * 兼容参数: startDate/endDate (YYYY-MM-DD) hoặc sDate/eDate (YYYYMMDD)
      */
     public function team(Request $request)
     {
-        // 兼容两种日期参数格式
+        // 兼容两种Ngày参数格式
         $startDate = $request->get('startDate') ?: $request->get('sDate');
         $endDate = $request->get('endDate') ?: $request->get('eDate');
         
@@ -1000,13 +1000,13 @@ class StatisticsApiController extends Base
         $username = $request->get('username', '');
         $pid = $request->get('pid', 0);
         
-        // 构建代理查询
+        // 构建Đại lýTra cứu
         $query = Db::table('caipiao_member as m')->where('m.isnb', 0);
         
         if (!empty($pid)) {
             $query->where('m.parentid', $pid);
         } else {
-            $query->where('m.proxy', 1); // 只查代理
+            $query->where('m.proxy', 1); // 只查Đại lý
         }
         
         if ($username) {
@@ -1016,7 +1016,7 @@ class StatisticsApiController extends Base
         // 总数
         $total = (clone $query)->count();
         
-        // 分页查询代理列表
+        // 分页Tra cứuĐại lý列表
         $agents = $query
             ->select(['m.id', 'm.username', 'm.proxy'])
             ->orderBy('m.id', 'desc')
@@ -1024,27 +1024,27 @@ class StatisticsApiController extends Base
             ->limit($size)
             ->get();
         
-        // 计算时间范围
+        // 计算Thời gian范围
         $startTime = !empty($startDate) ? strtotime($startDate) : 0;
         $endTime = !empty($endDate) ? strtotime($endDate) + 86400 - 1 : time();
         
-        // 填充业绩数据 (匹配前端表格字段)
+        // 填充业绩dữ liệu (匹配前端表格字段)
         $records = $agents->map(function ($agent) use ($startTime, $endTime) {
-            // 递归获取所有下线用户ID
+            // 递归Lấy所有下线Người dùngID
             $downlineIds = $this->getAllDownlineIds($agent->id);
             $downlineIds[] = $agent->id; // 包含自己
             
-            // 团队总数 (不包含自己)
+            // Đội nhóm总数 (不包含自己)
             $totalcount = count($downlineIds) - 1;
             
-            // 团队代理数
+            // Đội nhómĐại lý数
             $agentcount = Db::table('caipiao_member')
                 ->whereIn('id', $downlineIds)
                 ->where('id', '!=', $agent->id)
                 ->where('proxy', 1)
                 ->count();
             
-            // 普通用户数
+            // 普通Người dùng数
             $usercount = $totalcount - $agentcount;
             
             // 在线数（最近30分钟）
@@ -1053,7 +1053,7 @@ class StatisticsApiController extends Base
                 ->where('onlinetime', '>=', time() - 1800)
                 ->count();
             
-            // 自动充值
+            // 自动Nạp tiền
             $zdrecharge = Db::table('caipiao_recharge')
                 ->whereIn('uid', $downlineIds)
                 ->where('state', 1)
@@ -1082,7 +1082,7 @@ class StatisticsApiController extends Base
                 ->when($endTime, fn($q) => $q->where('oddtime', '<=', $endTime))
                 ->sum('amount') ?? 0;
             
-            // 提款
+            // Rút tiền
             $withdraw = Db::table('caipiao_withdraw')
                 ->whereIn('uid', $downlineIds)
                 ->where('state', 1)
@@ -1090,7 +1090,7 @@ class StatisticsApiController extends Base
                 ->when($endTime, fn($q) => $q->where('oddtime', '<=', $endTime))
                 ->sum('amount') ?? 0;
             
-            // 投注（排除机器人投注）
+            // Đặt cược（排除机器人Đặt cược）
             $touzhu = Db::table('caipiao_touzhu')
                 ->whereIn('uid', $downlineIds)
                 ->whereIn('isdraw', [1, -1])
@@ -1099,7 +1099,7 @@ class StatisticsApiController extends Base
                 ->where(function($q) { $q->whereNull('source')->orWhere('source', '!=', 'robot'); })
                 ->sum('amount') ?? 0;
             
-            // 中奖（排除机器人投注）
+            // Trúng thưởng（排除机器人Đặt cược）
             $zhongjiang = Db::table('caipiao_touzhu')
                 ->whereIn('uid', $downlineIds)
                 ->where('isdraw', 1)
@@ -1108,7 +1108,7 @@ class StatisticsApiController extends Base
                 ->where(function($q) { $q->whereNull('source')->orWhere('source', '!=', 'robot'); })
                 ->sum('okamount') ?? 0;
             
-            // 活动
+            // Hoạt động
             $huodong = Db::table('caipiao_fuddetail')
                 ->whereIn('uid', $downlineIds)
                 ->whereIn('type', ['pointexchange', 'fanshui', 'yongjinshenhe', 'jinjishenhe',
@@ -1146,7 +1146,7 @@ class StatisticsApiController extends Base
     }
     
     /**
-     * 递归获取所有下级ID (不限层级)
+     * 递归Lấy所有Cấp dướiID (不限层级)
      */
     private function getAllDownlineIds(int $parentId, array &$result = []): array
     {
@@ -1177,7 +1177,7 @@ class StatisticsApiController extends Base
         $endTime = strtotime($endDate) + 86400 - 1;
         $testUsers = $this->getTestUserIds();
 
-        // 彩种详细数据（排除机器人投注）
+        // 彩种详细dữ liệu（排除机器人Đặt cược）
         $lotteryQuery = Db::table('caipiao_touzhu as t')
             ->leftJoin('caipiao_caipiao as c', 't.cpname', '=', 'c.name')
             ->whereIn('t.isdraw', [1, -1])
@@ -1216,7 +1216,7 @@ class StatisticsApiController extends Base
             ->values()
             ->toArray();
 
-        // 热门玩法排行（排除机器人投注）
+        // 热门玩法排行（排除机器人Đặt cược）
         $playRank = Db::table('caipiao_touzhu as t')
             ->whereIn('t.isdraw', [1, -1])
             ->where('t.oddtime', '>=', $startTime)
@@ -1245,7 +1245,7 @@ class StatisticsApiController extends Base
             ])
             ->toArray();
 
-        // 大额中奖榜（排除机器人投注）
+        // 大额Trúng thưởng榜（排除机器人Đặt cược）
         $bigWinList = Db::table('caipiao_touzhu as t')
             ->leftJoin('caipiao_member as m', 't.uid', '=', 'm.id')
             ->leftJoin('caipiao_caipiao as c', 't.cpname', '=', 'c.name')
@@ -1274,7 +1274,7 @@ class StatisticsApiController extends Base
         $totalBet = array_sum(array_column($lotteryList, 'betAmount'));
         $totalPrize = array_sum(array_column($lotteryList, 'prizeAmount'));
 
-        // 构造 pieData (彩种投注占比饼图)
+        // 构造 pieData (彩种Đặt cược占比饼图)
         $pieData = array_map(fn($item) => [
             'name' => $item['name'],
             'value' => $item['betAmount'],
@@ -1284,11 +1284,11 @@ class StatisticsApiController extends Base
         $hotPlay = [
             'xAxis' => array_column($playRank, 'name'),
             'series' => [
-                ['name' => '投注金额', 'data' => array_column($playRank, 'betAmount')],
+                ['name' => 'Đặt cượcSố tiền', 'data' => array_column($playRank, 'betAmount')],
             ],
         ];
 
-        // 构造 peakHours (高峰时段分析，排除机器人投注)
+        // 构造 peakHours (高峰时段分析，排除机器人Đặt cược)
         $hourlyBets = [];
         $weekAgo = time() - 86400 * 7;
         for ($h = 0; $h < 24; $h++) {
@@ -1304,7 +1304,7 @@ class StatisticsApiController extends Base
         $peakHours = [
             'xAxis' => array_map(fn($h) => sprintf('%02d:00', $h), range(0, 23)),
             'series' => [
-                ['name' => '投注数', 'data' => $hourlyBets],
+                ['name' => 'Đặt cược数', 'data' => $hourlyBets],
             ],
         ];
 
@@ -1351,12 +1351,12 @@ class StatisticsApiController extends Base
     }
 
     /**
-     * 5. 用户留存率分析
+     * 5. Người dùng留存率分析
      * GET /app/admin/statistics/retention
      */
     public function retention(Request $request)
     {
-        $days = $request->get('days', 7); // 分析最近N天注册用户的留存
+        $days = $request->get('days', 7); // 分析最近N天Đăng kýNgười dùng的留存
         
         $retentionData = [];
         
@@ -1365,7 +1365,7 @@ class StatisticsApiController extends Base
             $regStart = strtotime($regDate);
             $regEnd = $regStart + 86400 - 1;
             
-            // 当天注册用户数
+            // 当天Đăng kýNgười dùng数
             $newUsers = Db::table('caipiao_member')
                 ->where('isnb', 0)
                 ->where('regtime', '>=', $regStart)
@@ -1388,7 +1388,7 @@ class StatisticsApiController extends Base
                 continue;
             }
             
-            // 次日留存（注册后第2天活跃）
+            // 次日留存（Đăng ký后第2天活跃）
             $day1Start = $regStart + 86400;
             $day1End = $day1Start + 86400 - 1;
             $day1Active = Db::table('caipiao_member')
@@ -1444,7 +1444,7 @@ class StatisticsApiController extends Base
     }
 
     /**
-     * 6. RFM 用户价值分析
+     * 6. RFM Người dùng价值分析
      * GET /app/admin/statistics/value-analysis
      */
     public function valueAnalysis(Request $request)
@@ -1453,7 +1453,7 @@ class StatisticsApiController extends Base
         $now = time();
         $day30 = $now - 86400 * 30;
         
-        // 获取所有真实用户的 RFM 数据
+        // Lấy所有真实Người dùng的 RFM dữ liệu
         $users = Db::table('caipiao_member as m')
             ->where('m.isnb', 0)
             ->select([
@@ -1473,14 +1473,14 @@ class StatisticsApiController extends Base
                 ->max('oddtime');
             $recency = $lastBet ? ceil(($now - $lastBet) / 86400) : 999;
             
-            // F - Frequency: 30天内投注次数
+            // F - Frequency: 30天内Đặt cược次数
             $frequency = Db::table('caipiao_touzhu')
                 ->where('uid', $user->id)
                 ->whereIn('isdraw', [1, -1])
                 ->where('oddtime', '>=', $day30)
                 ->count();
             
-            // M - Monetary: 30天内投注金额
+            // M - Monetary: 30天内Đặt cượcSố tiền
             $monetary = Db::table('caipiao_touzhu')
                 ->where('uid', $user->id)
                 ->whereIn('isdraw', [1, -1])
@@ -1500,14 +1500,14 @@ class StatisticsApiController extends Base
         $fMedian = $this->getMedian(array_column($rfmData, 'frequency'));
         $mMedian = $this->getMedian(array_column($rfmData, 'monetary'));
         
-        // 用户分层统计
+        // Người dùng分层统计
         $segments = [
-            'vip' => 0,        // 重要价值用户 (R低F高M高)
-            'important' => 0,  // 重要发展用户 (R低F低M高)
-            'active' => 0,     // 一般价值用户 (R低F高M低)
-            'new' => 0,        // 新用户 (R低F低M低)
-            'sleeping' => 0,   // 沉睡用户 (R高F高M高)
-            'lost' => 0,       // 流失用户 (R高F低M低)
+            'vip' => 0,        // 重要价值Người dùng (R低F高M高)
+            'important' => 0,  // 重要发展Người dùng (R低F低M高)
+            'active' => 0,     // 一般价值Người dùng (R低F高M低)
+            'new' => 0,        // 新Người dùng (R低F低M低)
+            'sleeping' => 0,   // 沉睡Người dùng (R高F高M高)
+            'lost' => 0,       // 流失Người dùng (R高F低M低)
         ];
         
         foreach ($rfmData as $item) {
@@ -1540,12 +1540,12 @@ class StatisticsApiController extends Base
                 'avgMonetary' => $totalUsers > 0 ? round(array_sum(array_column($rfmData, 'monetary')) / $totalUsers, 2) : 0,
             ],
             'segments' => [
-                ['name' => '重要价值用户', 'value' => $segments['vip'], 'key' => 'vip'],
-                ['name' => '重要发展用户', 'value' => $segments['important'], 'key' => 'important'],
-                ['name' => '一般活跃用户', 'value' => $segments['active'], 'key' => 'active'],
-                ['name' => '新用户', 'value' => $segments['new'], 'key' => 'new'],
-                ['name' => '沉睡用户', 'value' => $segments['sleeping'], 'key' => 'sleeping'],
-                ['name' => '流失用户', 'value' => $segments['lost'], 'key' => 'lost'],
+                ['name' => '重要价值Người dùng', 'value' => $segments['vip'], 'key' => 'vip'],
+                ['name' => '重要发展Người dùng', 'value' => $segments['important'], 'key' => 'important'],
+                ['name' => '一般活跃Người dùng', 'value' => $segments['active'], 'key' => 'active'],
+                ['name' => '新Người dùng', 'value' => $segments['new'], 'key' => 'new'],
+                ['name' => '沉睡Người dùng', 'value' => $segments['sleeping'], 'key' => 'sleeping'],
+                ['name' => '流失Người dùng', 'value' => $segments['lost'], 'key' => 'lost'],
             ],
         ]);
     }
@@ -1570,7 +1570,7 @@ class StatisticsApiController extends Base
     {
         $totalUsers = Db::table('caipiao_member')->where('isnb', 0)->count();
         
-        // 从 source 或 loginsource 字段分析设备来源
+        // 从 source hoặc loginsource 字段分析设备来源
         $fromAppUsers = Db::table('caipiao_member')
             ->where('isnb', 0)
             ->where(function($q) {
@@ -1603,7 +1603,7 @@ class StatisticsApiController extends Base
             })
             ->count();
         
-        // 计算已识别和未识别的用户
+        // 计算已识别和未识别的Người dùng
         $identified = $fromAppUsers + $fromH5Users + $fromPCUsers;
         $unknown = max(0, $totalUsers - $identified);
         
@@ -1630,7 +1630,7 @@ class StatisticsApiController extends Base
         $weekAgo = time() - 86400 * 7;
         
         for ($h = 0; $h < 24; $h++) {
-            // 统计该小时段的活跃用户数
+            // 统计该小时段的活跃Người dùng数
             $count = Db::table('caipiao_touzhu')
                 ->where('oddtime', '>=', $weekAgo)
                 ->whereRaw("HOUR(FROM_UNIXTIME(oddtime)) = ?", [$h])
@@ -1651,23 +1651,23 @@ class StatisticsApiController extends Base
     }
 
     /**
-     * 8. 团队概览（给顶部卡片）
+     * 8. Đội nhóm概览（给顶部卡片）
      * GET /app/admin/api/statistics/team/overview
      */
     public function teamOverview(Request $request)
     {
-        // 用户总数（排除测试用户）
+        // Người dùng总数（排除测试Người dùng）
         $totalUsers = Db::table('caipiao_member')
             ->where('isnb', 0)
             ->count();
         
-        // 代理总数
+        // Đại lý总数
         $totalAgents = Db::table('caipiao_member')
             ->where('isnb', 0)
             ->where('proxy', 1)
             ->count();
         
-        // 会员数（非代理用户）
+        // Thành viên数（非Đại lýNgười dùng）
         $totalMembers = Db::table('caipiao_member')
             ->where('isnb', 0)
             ->where('proxy', 0)
@@ -1680,20 +1680,20 @@ class StatisticsApiController extends Base
             ->where('onlinetime', '>=', $onlineTime)
             ->count();
         
-        // 直属会员数（有上级代理的用户）
+        // 直属Thành viên数（有上级Đại lý的Người dùng）
         $directMembers = Db::table('caipiao_member')
             ->where('isnb', 0)
             ->where('parentid', '>', 0)
             ->where('proxy', 0)
             ->count();
         
-        // 团队总人数（所有有上级的用户）
+        // Đội nhóm总人数（所有有上级的Người dùng）
         $teamMembers = Db::table('caipiao_member')
             ->where('isnb', 0)
             ->where('parentid', '>', 0)
             ->count();
         
-        // 团队充值（本月）
+        // Đội nhómNạp tiền（Tháng này）
         $monthStart = strtotime(date('Y-m-01'));
         $teamRecharge = Db::table('caipiao_recharge as r')
             ->join('caipiao_member as m', 'r.uid', '=', 'm.id')
@@ -1703,7 +1703,7 @@ class StatisticsApiController extends Base
             ->where('r.oddtime', '>=', $monthStart)
             ->sum('r.amount') ?? 0;
         
-        // 团队投注（本月）
+        // Đội nhómĐặt cược（Tháng này）
         $teamBet = Db::table('caipiao_touzhu as t')
             ->join('caipiao_member as m', 't.uid', '=', 'm.id')
             ->where('m.isnb', 0)
@@ -1712,7 +1712,7 @@ class StatisticsApiController extends Base
             ->where('t.oddtime', '>=', $monthStart)
             ->sum('t.amount') ?? 0;
         
-        // 团队盈利（本月投注 - 派奖）
+        // Đội nhóm盈利（Tháng nàyĐặt cược - Trả thưởng）
         $teamPrize = Db::table('caipiao_touzhu as t')
             ->join('caipiao_member as m', 't.uid', '=', 'm.id')
             ->where('m.isnb', 0)
@@ -1722,7 +1722,7 @@ class StatisticsApiController extends Base
             ->sum('t.okamount') ?? 0;
         $teamProfit = $teamBet - $teamPrize;
         
-        // 已发放佣金（本月）
+        // 已发放Hoa hồng（Tháng này）
         $commissionPaid = Db::table('caipiao_fuddetail')
             ->whereIn('type', ['yongjinshenhe', 'jinjishenhe', 'yongjin', 'commission'])
             ->where('oddtime', '>=', $monthStart)
@@ -1732,21 +1732,21 @@ class StatisticsApiController extends Base
         $lastMonthStart = strtotime(date('Y-m-01', strtotime('-1 month')));
         $lastMonthEnd = strtotime(date('Y-m-01')) - 1;
         
-        // 上月代理数
+        // 上月Đại lý数
         $lastMonthAgents = Db::table('caipiao_member')
             ->where('isnb', 0)
             ->where('proxy', 1)
             ->where('regtime', '<=', $lastMonthEnd)
             ->count();
         
-        // 上月团队人数
+        // 上月Đội nhóm人数
         $lastMonthTeam = Db::table('caipiao_member')
             ->where('isnb', 0)
             ->where('parentid', '>', 0)
             ->where('regtime', '<=', $lastMonthEnd)
             ->count();
         
-        // 上月团队充值
+        // 上月Đội nhómNạp tiền
         $lastTeamRecharge = Db::table('caipiao_recharge as r')
             ->join('caipiao_member as m', 'r.uid', '=', 'm.id')
             ->where('m.isnb', 0)
@@ -1756,7 +1756,7 @@ class StatisticsApiController extends Base
             ->where('r.oddtime', '<=', $lastMonthEnd)
             ->sum('r.amount') ?? 0;
         
-        // 上月团队投注
+        // 上月Đội nhómĐặt cược
         $lastTeamBet = Db::table('caipiao_touzhu as t')
             ->join('caipiao_member as m', 't.uid', '=', 'm.id')
             ->where('m.isnb', 0)
@@ -1766,7 +1766,7 @@ class StatisticsApiController extends Base
             ->where('t.oddtime', '<=', $lastMonthEnd)
             ->sum('t.amount') ?? 0;
         
-        // 上月佣金
+        // 上月Hoa hồng
         $lastCommission = Db::table('caipiao_fuddetail')
             ->whereIn('type', ['yongjinshenhe', 'jinjishenhe', 'yongjin', 'commission'])
             ->where('oddtime', '>=', $lastMonthStart)
@@ -1790,7 +1790,7 @@ class StatisticsApiController extends Base
             'teamBet' => round($teamBet, 2),
             'teamProfit' => round($teamProfit, 2),
             'commissionPaid' => round(abs($commissionPaid), 2),
-            // 环比数据
+            // 环比dữ liệu
             'totalAgentsChange' => $calcChange($totalAgents, $lastMonthAgents),
             'directMembersChange' => $calcChange($directMembers, $lastMonthTeam * 0.3), // 估算
             'teamMembersChange' => $calcChange($teamMembers, $lastMonthTeam),
@@ -1801,19 +1801,19 @@ class StatisticsApiController extends Base
     }
 
     /**
-     * 9. 代理层级分布（饼图）
+     * 9. Đại lý层级分布（饼图）
      * GET /app/admin/api/statistics/team/levels
      */
     public function teamLevels(Request $request)
     {
-        // 一级代理（没有上级的代理）
+        // 一级Đại lý（没有上级的Đại lý）
         $level1 = Db::table('caipiao_member')
             ->where('isnb', 0)
             ->where('proxy', 1)
             ->where('parentid', 0)
             ->count();
         
-        // 二级代理（上级是一级代理）
+        // 二级Đại lý（上级是一级Đại lý）
         $level1Ids = Db::table('caipiao_member')
             ->where('isnb', 0)
             ->where('proxy', 1)
@@ -1837,7 +1837,7 @@ class StatisticsApiController extends Base
                 ->toArray();
         }
         
-        // 三级及以下代理
+        // 三级及以下Đại lý
         $level3Plus = 0;
         if (!empty($level2Ids)) {
             $level3Plus = Db::table('caipiao_member')
@@ -1847,7 +1847,7 @@ class StatisticsApiController extends Base
                 ->count();
         }
         
-        // 普通会员（非代理但有上级）
+        // 普通Thành viên（非Đại lý但有上级）
         $normalMembers = Db::table('caipiao_member')
             ->where('isnb', 0)
             ->where('proxy', 0)
@@ -1855,15 +1855,15 @@ class StatisticsApiController extends Base
             ->count();
         
         return $this->json(0, 'ok', [
-            ['name' => '一级代理', 'value' => $level1],
-            ['name' => '二级代理', 'value' => $level2],
-            ['name' => '三级代理', 'value' => $level3Plus],
-            ['name' => '普通会员', 'value' => $normalMembers],
+            ['name' => '一级Đại lý', 'value' => $level1],
+            ['name' => '二级Đại lý', 'value' => $level2],
+            ['name' => '三级Đại lý', 'value' => $level3Plus],
+            ['name' => '普通Thành viên', 'value' => $normalMembers],
         ]);
     }
 
     /**
-     * 10. 佣金发放趋势（柱状图）
+     * 10. Hoa hồng发放趋势（柱状图）
      * GET /app/admin/api/statistics/team/commission-trend
      */
     public function teamCommissionTrend(Request $request)
@@ -1896,13 +1896,13 @@ class StatisticsApiController extends Base
         return $this->json(0, 'ok', [
             'xAxis' => $xAxis,
             'series' => [
-                ['name' => '佣金', 'data' => $commissionData]
+                ['name' => 'Hoa hồng', 'data' => $commissionData]
             ],
         ]);
     }
 
     /**
-     * 11. 团队业绩趋势（折线图）
+     * 11. Đội nhóm业绩趋势（折线图）
      * GET /app/admin/api/statistics/team/performance-trend
      */
     public function teamPerformanceTrend(Request $request)
@@ -1921,7 +1921,7 @@ class StatisticsApiController extends Base
             $dayStart = $current;
             $dayEnd = $current + 86400 - 1;
             
-            // 团队充值
+            // Đội nhómNạp tiền
             $recharge = Db::table('caipiao_recharge as r')
                 ->join('caipiao_member as m', 'r.uid', '=', 'm.id')
                 ->where('m.isnb', 0)
@@ -1931,7 +1931,7 @@ class StatisticsApiController extends Base
                 ->where('r.oddtime', '<=', $dayEnd)
                 ->sum('r.amount') ?? 0;
             
-            // 团队投注
+            // Đội nhómĐặt cược
             $bet = Db::table('caipiao_touzhu as t')
                 ->join('caipiao_member as m', 't.uid', '=', 'm.id')
                 ->where('m.isnb', 0)
@@ -1951,14 +1951,14 @@ class StatisticsApiController extends Base
         return $this->json(0, 'ok', [
             'xAxis' => $xAxis,
             'series' => [
-                ['name' => '团队充值', 'data' => $rechargeData],
-                ['name' => '团队投注', 'data' => $betData],
+                ['name' => 'Đội nhómNạp tiền', 'data' => $rechargeData],
+                ['name' => 'Đội nhómĐặt cược', 'data' => $betData],
             ],
         ]);
     }
 
     /**
-     * 12. 代理排行榜
+     * 12. Đại lý排行榜
      * GET /app/admin/api/statistics/team/rank
      */
     public function teamRank(Request $request)
@@ -1970,7 +1970,7 @@ class StatisticsApiController extends Base
         $startTime = strtotime($startDate);
         $endTime = strtotime($endDate) + 86400 - 1;
         
-        // 获取所有代理
+        // Lấy所有Đại lý
         $agents = Db::table('caipiao_member')
             ->where('isnb', 0)
             ->where('proxy', 1)
@@ -1979,14 +1979,14 @@ class StatisticsApiController extends Base
         
         $rankData = [];
         foreach ($agents as $agent) {
-            // 获取下级ID（包括自己）
+            // LấyCấp dướiID（包括自己）
             $downlineIds = $this->getAllDownlineIds($agent->id);
             $downlineIds[] = $agent->id;
             
-            // 团队人数
+            // Đội nhóm人数
             $teamCount = count($downlineIds) - 1; // 不包括自己
             
-            // 团队业绩（投注金额）
+            // Đội nhóm业绩（Đặt cượcSố tiền）
             $performance = Db::table('caipiao_touzhu')
                 ->whereIn('uid', $downlineIds)
                 ->whereIn('isdraw', [1, -1])
@@ -2013,7 +2013,7 @@ class StatisticsApiController extends Base
     }
 
     /**
-     * 用户名脱敏
+     * Tên người dùng脱敏
      */
     private function maskUsername(string $username): string
     {

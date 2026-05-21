@@ -15,7 +15,7 @@ class WithdrawAccountController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -61,17 +61,17 @@ class WithdrawAccountController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'list' => $list
                 ]
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取提现账户失败: ' . $e->getMessage());
+            \support\Log::error('Lấy rút tiềntài khoảnThất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -85,7 +85,7 @@ class WithdrawAccountController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -101,7 +101,7 @@ class WithdrawAccountController
             if (empty($bankName) || empty($bankAccount) || empty($accountName)) {
                 return json([
                     'code' => 1003,
-                    'message' => '请填写完整的银行卡信息',
+                    'message' => '请填写完整的Thẻ ngân hàng信息',
                     'data' => null
                 ]);
             }
@@ -117,7 +117,7 @@ class WithdrawAccountController
             if ($exists) {
                 return json([
                     'code' => 1004,
-                    'message' => '该银行卡已添加',
+                    'message' => '该Thẻ ngân hàng已Thêm',
                     'data' => null
                 ]);
             }
@@ -145,7 +145,7 @@ class WithdrawAccountController
             
             return json([
                 'code' => 0,
-                'message' => '添加成功',
+                'message' => 'ThêmThành công',
                 'data' => [
                     'id' => $id,
                     'type' => 'bank',
@@ -159,10 +159,10 @@ class WithdrawAccountController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('添加银行卡失败: ' . $e->getMessage());
+            \support\Log::error('ThêmThẻ ngân hàngThất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '添加失败：' . $e->getMessage(),
+                'message' => 'ThêmThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -176,7 +176,7 @@ class WithdrawAccountController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -206,7 +206,7 @@ class WithdrawAccountController
             if ($exists) {
                 return json([
                     'code' => 1004,
-                    'message' => '该USDT地址已添加',
+                    'message' => '该USDT地址已Thêm',
                     'data' => null
                 ]);
             }
@@ -232,7 +232,7 @@ class WithdrawAccountController
             
             return json([
                 'code' => 0,
-                'message' => '添加成功',
+                'message' => 'ThêmThành công',
                 'data' => [
                     'id' => $id,
                     'type' => 'usdt',
@@ -244,10 +244,10 @@ class WithdrawAccountController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('添加USDT地址失败: ' . $e->getMessage());
+            \support\Log::error('ThêmUSDT地址Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '添加失败：' . $e->getMessage(),
+                'message' => 'ThêmThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -256,13 +256,13 @@ class WithdrawAccountController
     
     public function addAlipay(Request $request)
     {
-        return $this->addThirdPartyAccount($request, 'alipay', '支付宝');
+        return $this->addThirdPartyAccount($request, 'alipay', 'Alipay');
     }
     
     
     public function addWechat(Request $request)
     {
-        return $this->addThirdPartyAccount($request, 'wechat', '微信');
+        return $this->addThirdPartyAccount($request, 'wechat', 'WeChat');
     }
     
     
@@ -273,7 +273,7 @@ class WithdrawAccountController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -303,7 +303,7 @@ class WithdrawAccountController
             if ($exists) {
                 return json([
                     'code' => 1004,
-                    'message' => "该{$typeName}账户已添加",
+                    'message' => "该{$typeName}tài khoản已Thêm",
                     'data' => null
                 ]);
             }
@@ -329,7 +329,7 @@ class WithdrawAccountController
             
             return json([
                 'code' => 0,
-                'message' => '添加成功',
+                'message' => 'ThêmThành công',
                 'data' => [
                     'id' => $id,
                     'type' => $type,
@@ -341,10 +341,10 @@ class WithdrawAccountController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error("添加{$typeName}账户失败: " . $e->getMessage());
+            \support\Log::error("Thêm{$typeName}tài khoảnThất bại: " . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '添加失败：' . $e->getMessage(),
+                'message' => 'ThêmThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -358,7 +358,7 @@ class WithdrawAccountController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -374,7 +374,7 @@ class WithdrawAccountController
             if (!$account) {
                 return json([
                     'code' => 1005,
-                    'message' => '账户不存在',
+                    'message' => 'tài khoảnkhông tồn tại',
                     'data' => null
                 ]);
             }
@@ -394,15 +394,15 @@ class WithdrawAccountController
             
             return json([
                 'code' => 0,
-                'message' => '设置成功',
+                'message' => 'Cài đặtThành công',
                 'data' => null
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('设置默认账户失败: ' . $e->getMessage());
+            \support\Log::error('Cài đặt默认tài khoảnThất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '设置失败：' . $e->getMessage(),
+                'message' => 'Cài đặtThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -416,7 +416,7 @@ class WithdrawAccountController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -432,7 +432,7 @@ class WithdrawAccountController
             if (!$account) {
                 return json([
                     'code' => 1005,
-                    'message' => '账户不存在',
+                    'message' => 'tài khoảnkhông tồn tại',
                     'data' => null
                 ]);
             }
@@ -441,7 +441,7 @@ class WithdrawAccountController
             if ($account->is_default == 1) {
                 return json([
                     'code' => 1006,
-                    'message' => '不能删除默认账户，请先设置其他账户为默认',
+                    'message' => '不能Xóa默认tài khoản，请先Cài đặt其他tài khoản为默认',
                     'data' => null
                 ]);
             }
@@ -456,15 +456,15 @@ class WithdrawAccountController
             
             return json([
                 'code' => 0,
-                'message' => '删除成功',
+                'message' => 'XóaThành công',
                 'data' => null
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('删除提现账户失败: ' . $e->getMessage());
+            \support\Log::error('XóaRút tiềntài khoảnThất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '删除失败：' . $e->getMessage(),
+                'message' => 'XóaThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }

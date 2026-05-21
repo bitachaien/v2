@@ -138,7 +138,7 @@ class MemberController extends Base
                 if (isset($row['parentid']) && $row['parentid'] > 0) {
                     $row['parent_username'] = $parentMap[$row['parentid']] ?? '';
                 }
-                $row['proxy_text'] = $row['proxy'] == 1 ? '代理' : '会员';
+                $row['proxy_text'] = $row['proxy'] == 1 ? 'Đại lý' : 'Thành viên';
                 if (isset($row['jinjijilu']) && $row['jinjijilu'] > 0) {
                     $jinji_group = $groupMap[$row['jinjijilu']] ?? 'VIP' . $row['jinjijilu'];
                     $row['jinjijilu'] = $jinji_group;
@@ -162,7 +162,7 @@ class MemberController extends Base
             
             return $this->json(0, 'success', ['list' => $result, 'total' => $count]);
         } catch (\Exception $e) {
-            return $this->json(1, '查询失败: ' . $e->getMessage());
+            return $this->json(1, 'Tra cứuThất bại: ' . $e->getMessage());
         }
     }
 
@@ -170,11 +170,11 @@ class MemberController extends Base
     {
         $id = $request->get('id');
         if (!$id) {
-            return '<script>alert("参数错误");history.back();</script>';
+            return '<script>alert("Tham số không hợp lệ");history.back();</script>';
         }
         $info = Db::table('caipiao_member')->where('id', $id)->first();
         if (!$info) {
-            return '<script>alert("会员不存在");history.back();</script>';
+            return '<script>alert("Thành viênkhông tồn tại");history.back();</script>';
         }
         return view('member/info', ['info' => (array)$info]);
     }
@@ -186,7 +186,7 @@ class MemberController extends Base
         if ($uid) {
             $info = Db::table('caipiao_member')->where('id', $uid)->first();
             if (!$info) {
-                return '<script>alert("会员不存在");history.back();</script>';
+                return '<script>alert("Thành viênkhông tồn tại");history.back();</script>';
             }
             $info = (array)$info;
         }
@@ -236,11 +236,11 @@ class MemberController extends Base
     {
         $parentid = $request->get('parentid');
         if (!$parentid) {
-            return '<script>alert("参数错误");history.back();</script>';
+            return '<script>alert("Tham số không hợp lệ");history.back();</script>';
         }
         $parent = Db::table('caipiao_member')->where('id', $parentid)->first();
         if (!$parent) {
-            return '<script>alert("上级会员不存在");history.back();</script>';
+            return '<script>alert("上级Thành viênkhông tồn tại");history.back();</script>';
         }
         return view('member/children', ['parent' => (array)$parent]);
     }
@@ -249,18 +249,18 @@ class MemberController extends Base
     {
         $id = $request->get('id');
         if (!$id) {
-            return '<script>alert("参数错误");history.back();</script>';
+            return '<script>alert("Tham số không hợp lệ");history.back();</script>';
         }
         $info = Db::table('caipiao_member')->where('id', $id)->first();
         if (!$info) {
-            return '<script>alert("会员不存在");history.back();</script>';
+            return '<script>alert("Thành viênkhông tồn tại");history.back();</script>';
         }
         $grouplist = Db::table('caipiao_membergroup')->get();
         
         if ($request->method() === 'POST') {
             $data = $request->post();
             if (empty($data['groupid']) || $data['groupid'] == 0) {
-                return json(['code' => 1, 'msg' => '请选择会员组']);
+                return json(['code' => 1, 'msg' => 'Vui lòng chọnThành viên组']);
             }
             $fandian = [];
             if (isset($data['fandian']) && is_array($data['fandian'])) {
@@ -273,9 +273,9 @@ class MemberController extends Base
             ];
             $result = Db::table('caipiao_member')->where('id', $id)->update($updateData);
             if ($result !== false) {
-                return json(['code' => 0, 'msg' => '修改成功']);
+                return json(['code' => 0, 'msg' => 'SửaThành công']);
             } else {
-                return json(['code' => 1, 'msg' => '修改失败']);
+                return json(['code' => 1, 'msg' => 'SửaThất bại']);
             }
         }
         
@@ -286,11 +286,11 @@ class MemberController extends Base
     {
         $id = $request->post('id');
         if (!$id) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
         $info = Db::table('caipiao_member')->where('id', $id)->first();
         if (!$info) {
-            return $this->json(1, '会员不存在');
+            return $this->json(1, 'Thành viênkhông tồn tại');
         }
         
         $updateData = [];
@@ -316,14 +316,14 @@ class MemberController extends Base
         }
         
         if (empty($updateData)) {
-            return $this->json(1, '没有需要更新的数据');
+            return $this->json(1, '没有需要更新的dữ liệu');
         }
         
         $result = Db::table('caipiao_member')->where('id', $id)->update($updateData);
         if ($result !== false) {
-            return $this->json(0, '修改成功');
+            return $this->json(0, 'SửaThành công');
         } else {
-            return $this->json(1, '修改失败');
+            return $this->json(1, 'SửaThất bại');
         }
     }
     
@@ -331,17 +331,17 @@ class MemberController extends Base
     {
         $id = $request->post('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
         $info = Db::table('caipiao_member')->where('id', $id)->first();
         if (!$info) {
-            return json(['code' => 1, 'msg' => '会员不存在']);
+            return json(['code' => 1, 'msg' => 'Thành viênkhông tồn tại']);
         }
         $result = Db::table('caipiao_member')->where('id', $id)->delete();
         if ($result) {
-            return json(['code' => 0, 'msg' => '删除成功']);
+            return json(['code' => 0, 'msg' => 'XóaThành công']);
         } else {
-            return json(['code' => 1, 'msg' => '删除失败']);
+            return json(['code' => 1, 'msg' => 'XóaThất bại']);
         }
     }
     
@@ -349,7 +349,7 @@ class MemberController extends Base
     {
         $id = $request->post('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
         Db::table('caipiao_membersession')->where('userid', $id)->delete();
         return json(['code' => 0, 'msg' => '已踢出']);
@@ -359,11 +359,11 @@ class MemberController extends Base
     {
         $id = $request->get('id');
         if (!$id) {
-            return '<script>alert("参数错误");history.back();</script>';
+            return '<script>alert("Tham số không hợp lệ");history.back();</script>';
         }
         $info = Db::table('caipiao_member')->where('id', $id)->first();
         if (!$info) {
-            return '<script>alert("会员不存在");history.back();</script>';
+            return '<script>alert("Thành viênkhông tồn tại");history.back();</script>';
         }
         
         if ($request->method() === 'POST') {
@@ -372,10 +372,10 @@ class MemberController extends Base
             $remark = $request->post('remark', '');
             
             if (!in_array($type, ['1', '-1'])) {
-                return json(['code' => 1, 'msg' => '金额类型错误']);
+                return json(['code' => 1, 'msg' => 'Số tiền类型Lỗi']);
             }
             if ($balance <= 0) {
-                return json(['code' => 1, 'msg' => '金额应大于0']);
+                return json(['code' => 1, 'msg' => 'Số tiền应大于0']);
             }
             
             $trano = 'CZ' . date('YmdHis') . rand(1000, 9999);
@@ -394,7 +394,7 @@ class MemberController extends Base
                 ]);
             } elseif ($type == '-1') {
                 if ($oldbalance < abs($balance)) {
-                    return json(['code' => 1, 'msg' => '余额不足']);
+                    return json(['code' => 1, 'msg' => 'Số dư không đủ']);
                 }
                 $newbalance = $oldbalance - abs($balance);
                 Db::table('caipiao_member')->where('id', $id)->update([
@@ -407,7 +407,7 @@ class MemberController extends Base
                     'remark' => $remark ?: '管理员手动减少', 'oddtime' => time()
                 ]);
             }
-            return json(['code' => 0, 'msg' => '操作成功']);
+            return json(['code' => 0, 'msg' => 'Thao tác thành công']);
         }
         
         return view('member/edit-balance', ['info' => (array)$info]);
@@ -417,11 +417,11 @@ class MemberController extends Base
     {
         $id = $request->get('id');
         if (!$id) {
-            return '<script>alert("参数错误");history.back();</script>';
+            return '<script>alert("Tham số không hợp lệ");history.back();</script>';
         }
         $info = Db::table('caipiao_member')->where('id', $id)->first();
         if (!$info) {
-            return '<script>alert("会员不存在");history.back();</script>';
+            return '<script>alert("Thành viênkhông tồn tại");history.back();</script>';
         }
         
         if ($request->method() === 'POST') {
@@ -430,10 +430,10 @@ class MemberController extends Base
             $remark = $request->post('remark', '');
             
             if (!in_array($type, ['1', '-1'])) {
-                return json(['code' => 1, 'msg' => '类型错误']);
+                return json(['code' => 1, 'msg' => '类型Lỗi']);
             }
             if ($xima <= 0) {
-                return json(['code' => 1, 'msg' => '洗码金额应大于0']);
+                return json(['code' => 1, 'msg' => '洗码Số tiền应大于0']);
             }
             
             $trano = 'XM' . date('YmdHis') . rand(1000, 9999);
@@ -452,7 +452,7 @@ class MemberController extends Base
                 ]);
             } elseif ($type == '-1') {
                 if ($oldxima < abs($xima)) {
-                    return json(['code' => 1, 'msg' => '洗码余额不足']);
+                    return json(['code' => 1, 'msg' => '洗码Số dư không đủ']);
                 }
                 $newxima = $oldxima - abs($xima);
                 Db::table('caipiao_member')->where('id', $id)->update([
@@ -465,7 +465,7 @@ class MemberController extends Base
                     'remark' => $remark ?: '管理员减少洗码', 'oddtime' => time()
                 ]);
             }
-            return json(['code' => 0, 'msg' => '操作成功']);
+            return json(['code' => 0, 'msg' => 'Thao tác thành công']);
         }
         
         return view('member/edit-xima', ['info' => (array)$info]);
@@ -478,12 +478,12 @@ class MemberController extends Base
         $limit = (int)$request->get('limit', 20);
         
         if (!$parentid) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
         
         $parent = Db::table('caipiao_member')->where('id', $parentid)->first();
         if (!$parent) {
-            return $this->json(1, '上级会员不存在');
+            return $this->json(1, '上级Thành viênkhông tồn tại');
         }
         
         $query = Db::table('caipiao_member')->where('parentid', $parentid)->where('is_rebet', 0);
@@ -501,7 +501,7 @@ class MemberController extends Base
         foreach ($list as $item) {
             $row = (array)$item;
             $row['groupname'] = $groupMap[$row['groupid']] ?? '';
-            $row['proxy_text'] = $row['proxy'] == 1 ? '代理' : '会员';
+            $row['proxy_text'] = $row['proxy'] == 1 ? 'Đại lý' : 'Thành viên';
             $row['islock_text'] = $row['islock'] == 1 ? '锁定' : '正常';
             if (isset($row['regtime']) && $row['regtime']) {
                 $row['regtime_text'] = date('Y-m-d H:i', $row['regtime']);
@@ -522,18 +522,18 @@ class MemberController extends Base
         $islock = $request->post('islock');
         
         if (!$id) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
         $info = Db::table('caipiao_member')->where('id', $id)->first();
         if (!$info) {
-            return $this->json(1, '会员不存在');
+            return $this->json(1, 'Thành viênkhông tồn tại');
         }
         
         $result = Db::table('caipiao_member')->where('id', $id)->update(['islock' => $islock ? 1 : 0]);
         if ($result !== false) {
             return $this->json(0, $islock ? '已锁定' : '已解锁');
         } else {
-            return $this->json(1, '操作失败');
+            return $this->json(1, 'Thao tác thất bại');
         }
     }
     
@@ -545,18 +545,18 @@ class MemberController extends Base
         $proxy = $request->post('proxy', 0);
         $parentid = $request->post('parentid', 0);
         
-        if (empty($username)) { return $this->json(1, '请输入用户名'); }
-        if (empty($password)) { return $this->json(1, '请输入密码'); }
+        if (empty($username)) { return $this->json(1, '请输入Tên người dùng'); }
+        if (empty($password)) { return $this->json(1, '请输入Mật khẩu'); }
         if (strlen($username) < 4 || strlen($username) > 16) {
-            return $this->json(1, '用户名长度应为4-16位');
+            return $this->json(1, 'Tên người dùng长度应为4-16位');
         }
         if (!preg_match('/^[a-zA-Z0-9]+$/', $username)) {
-            return $this->json(1, '用户名只能包含字母和数字');
+            return $this->json(1, 'Tên người dùngchỉ được chứa chữ cái và số');
         }
         
         $exists = Db::table('caipiao_member')->where('username', $username)->exists();
         if ($exists) {
-            return $this->json(1, '用户名已存在');
+            return $this->json(1, 'Tên người dùngđã tồn tại');
         }
         
         $data = [
@@ -577,9 +577,9 @@ class MemberController extends Base
         
         $id = Db::table('caipiao_member')->insertGetId($data);
         if ($id) {
-            return $this->json(0, '添加成功');
+            return $this->json(0, 'ThêmThành công');
         } else {
-            return $this->json(1, '添加失败');
+            return $this->json(1, 'ThêmThất bại');
         }
     }
     
@@ -590,11 +590,11 @@ class MemberController extends Base
         $type = $request->post('type');
         $remark = $request->post('remark', '');
         
-        if (!$id) { return $this->json(1, '参数错误'); }
+        if (!$id) { return $this->json(1, 'Tham số không hợp lệ'); }
         $info = Db::table('caipiao_member')->where('id', $id)->first();
-        if (!$info) { return $this->json(1, '会员不存在'); }
-        if (!in_array($type, ['1', '-1', 1, -1])) { return $this->json(1, '金额类型错误'); }
-        if ($balance <= 0) { return $this->json(1, '金额应大于0'); }
+        if (!$info) { return $this->json(1, 'Thành viênkhông tồn tại'); }
+        if (!in_array($type, ['1', '-1', 1, -1])) { return $this->json(1, 'Số tiền类型Lỗi'); }
+        if ($balance <= 0) { return $this->json(1, 'Số tiền应大于0'); }
         
         $trano = 'CZ' . date('YmdHis') . rand(1000, 9999);
         $oldbalance = $info->balance;
@@ -611,7 +611,7 @@ class MemberController extends Base
                 'remark' => $remark ?: '管理员手动增加', 'oddtime' => time()
             ]);
         } else {
-            if ($oldbalance < abs($balance)) { return $this->json(1, '余额不足'); }
+            if ($oldbalance < abs($balance)) { return $this->json(1, 'Số dư không đủ'); }
             $newbalance = $oldbalance - abs($balance);
             Db::table('caipiao_member')->where('id', $id)->update([
                 'balance' => Db::raw('balance - ' . abs($balance))
@@ -623,7 +623,7 @@ class MemberController extends Base
                 'remark' => $remark ?: '管理员手动减少', 'oddtime' => time()
             ]);
         }
-        return $this->json(0, '操作成功');
+        return $this->json(0, 'Thao tác thành công');
     }
     
     public function editXimaSave(Request $request)
@@ -633,10 +633,10 @@ class MemberController extends Base
         $type = $request->post('type');
         $remark = $request->post('remark', '');
         
-        if (!$id) { return $this->json(1, '参数错误'); }
+        if (!$id) { return $this->json(1, 'Tham số không hợp lệ'); }
         $info = Db::table('caipiao_member')->where('id', $id)->first();
-        if (!$info) { return $this->json(1, '会员不存在'); }
-        if (!in_array($type, ['1', '-1', 1, -1])) { return $this->json(1, '洗码类型错误'); }
+        if (!$info) { return $this->json(1, 'Thành viênkhông tồn tại'); }
+        if (!in_array($type, ['1', '-1', 1, -1])) { return $this->json(1, '洗码类型Lỗi'); }
         if ($xima <= 0) { return $this->json(1, '洗码应大于0'); }
         
         $trano = 'XM' . date('YmdHis') . rand(1000, 9999);
@@ -654,7 +654,7 @@ class MemberController extends Base
                 'remark' => $remark ?: '管理员增加洗码', 'oddtime' => time()
             ]);
         } else {
-            if ($oldxima < abs($xima)) { return $this->json(1, '洗码余额不足'); }
+            if ($oldxima < abs($xima)) { return $this->json(1, '洗码Số dư không đủ'); }
             $newxima = $oldxima - abs($xima);
             Db::table('caipiao_member')->where('id', $id)->update([
                 'xima' => Db::raw('xima - ' . abs($xima))
@@ -666,7 +666,7 @@ class MemberController extends Base
                 'remark' => $remark ?: '管理员减少洗码', 'oddtime' => time()
             ]);
         }
-        return $this->json(0, '操作成功');
+        return $this->json(0, 'Thao tác thành công');
     }
     
     public function agentLinkList(Request $request)
@@ -697,7 +697,7 @@ class MemberController extends Base
             
             return json(['code' => 0, 'msg' => 'success', 'count' => $count, 'data' => $result]);
         } catch (\Exception $e) {
-            return json(['code' => 1, 'msg' => '获取列表失败: ' . $e->getMessage()]);
+            return json(['code' => 1, 'msg' => 'Lấy列表Thất bại: ' . $e->getMessage()]);
         }
     }
     
@@ -711,12 +711,12 @@ class MemberController extends Base
             $template = trim($request->post('template', 'default'));
             
             if (empty($username)) {
-                return json(['code' => 1, 'msg' => '用户名不能为空']);
+                return json(['code' => 1, 'msg' => 'Tên người dùngkhông được để trống']);
             }
             
             $member = Db::table('caipiao_member')->where('username', $username)->first();
             if (!$member) {
-                return json(['code' => 1, 'msg' => '用户不存在']);
+                return json(['code' => 1, 'msg' => 'Người dùng không tồn tại']);
             }
             
             $now = time();
@@ -724,7 +724,7 @@ class MemberController extends Base
             if ($id) {
                 $exists = Db::table('caipiao_agent_link')->where('id', $id)->first();
                 if (!$exists) {
-                    return json(['code' => 1, 'msg' => '记录不存在']);
+                    return json(['code' => 1, 'msg' => 'lịch sửkhông tồn tại']);
                 }
                 Db::table('caipiao_agent_link')->where('id', $id)->update([
                     'uid' => $member->id, 'username' => $username, 'type' => $type,
@@ -739,9 +739,9 @@ class MemberController extends Base
                 ]);
             }
             
-            return json(['code' => 0, 'msg' => '操作成功']);
+            return json(['code' => 0, 'msg' => 'Thao tác thành công']);
         } catch (\Exception $e) {
-            return json(['code' => 1, 'msg' => '操作失败: ' . $e->getMessage()]);
+            return json(['code' => 1, 'msg' => 'Thao tác thất bại: ' . $e->getMessage()]);
         }
     }
     
@@ -750,22 +750,22 @@ class MemberController extends Base
         $id = $request->post('id');
         $password = $request->post('password', '');
         
-        if (!$id) { return $this->json(1, '参数错误'); }
+        if (!$id) { return $this->json(1, 'Tham số không hợp lệ'); }
         $info = Db::table('caipiao_member')->where('id', $id)->first();
-        if (!$info) { return $this->json(1, '会员不存在'); }
+        if (!$info) { return $this->json(1, 'Thành viênkhông tồn tại'); }
         
         if (empty($password)) {
             $result = Db::table('caipiao_member')->where('id', $id)->update(['tradepassword' => '']);
-            $msg = '资金密码已清除';
+            $msg = '资金Mật khẩu已清除';
         } else {
             $result = Db::table('caipiao_member')->where('id', $id)->update(['tradepassword' => md5($password)]);
-            $msg = '资金密码已重置';
+            $msg = '资金Mật khẩu已重置';
         }
         
         if ($result !== false) {
             return $this->json(0, $msg);
         } else {
-            return $this->json(1, '操作失败');
+            return $this->json(1, 'Thao tác thất bại');
         }
     }
     
@@ -773,11 +773,11 @@ class MemberController extends Base
     {
         $uid = $request->get('uid');
         if (!$uid) {
-            return '<script>alert("参数错误");history.back();</script>';
+            return '<script>alert("Tham số không hợp lệ");history.back();</script>';
         }
         $info = Db::table('caipiao_member')->where('id', $uid)->first();
         if (!$info) {
-            return '<script>alert("会员不存在");history.back();</script>';
+            return '<script>alert("Thành viênkhông tồn tại");history.back();</script>';
         }
         
         $accounts = Db::table('caipiao_withdraw_account')
@@ -788,7 +788,7 @@ class MemberController extends Base
             ->get();
         
         $list = [];
-        $typeMap = ['bank' => '银行卡', 'usdt' => 'USDT', 'alipay' => '支付宝', 'wechat' => '微信'];
+        $typeMap = ['bank' => 'Thẻ ngân hàng', 'usdt' => 'USDT', 'alipay' => 'Alipay', 'wechat' => 'WeChat'];
         foreach ($accounts as $account) {
             $row = (array)$account;
             $row['created_at_text'] = $row['created_at'] ? date('Y-m-d H:i:s', $row['created_at']) : '';
@@ -803,28 +803,28 @@ class MemberController extends Base
     {
         try {
             $id = $request->post('id');
-            if (!$id) { return json(['code' => 1, 'msg' => '参数错误']); }
+            if (!$id) { return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']); }
             
             $exists = Db::table('caipiao_agent_link')->where('id', $id)->first();
-            if (!$exists) { return json(['code' => 1, 'msg' => '记录不存在']); }
+            if (!$exists) { return json(['code' => 1, 'msg' => 'lịch sửkhông tồn tại']); }
             
             Db::table('caipiao_agent_link')->where('id', $id)->delete();
-            return json(['code' => 0, 'msg' => '删除成功']);
+            return json(['code' => 0, 'msg' => 'XóaThành công']);
         } catch (\Exception $e) {
-            return json(['code' => 1, 'msg' => '删除失败: ' . $e->getMessage()]);
+            return json(['code' => 1, 'msg' => 'XóaThất bại: ' . $e->getMessage()]);
         }
     }
     
     public function securityInfo(Request $request)
     {
         $id = $request->get('id');
-        if (!$id) { return $this->json(1, '参数错误'); }
+        if (!$id) { return $this->json(1, 'Tham số không hợp lệ'); }
         
         $user = Db::table('caipiao_member')
             ->where('id', $id)
             ->first(['id', 'username', 'phone', 'email', 'tradepassword', 'google_secret', 'google_bind', 'security_question']);
         
-        if (!$user) { return $this->json(1, '会员不存在'); }
+        if (!$user) { return $this->json(1, 'Thành viênkhông tồn tại'); }
         
         $defaultTradePwd = 'd93a5def7511da3d0f2d171d9c344e91';
         
@@ -844,64 +844,64 @@ class MemberController extends Base
     public function resetGoogle(Request $request)
     {
         $id = $request->post('id');
-        if (!$id) { return $this->json(1, '参数错误'); }
+        if (!$id) { return $this->json(1, 'Tham số không hợp lệ'); }
         
         $info = Db::table('caipiao_member')->where('id', $id)->first();
-        if (!$info) { return $this->json(1, '会员不存在'); }
+        if (!$info) { return $this->json(1, 'Thành viênkhông tồn tại'); }
         
         $result = Db::table('caipiao_member')->where('id', $id)->update(['google_secret' => '', 'google_bind' => 0]);
         if ($result !== false) {
             return $this->json(0, 'Google验证器已重置');
         } else {
-            return $this->json(1, '操作失败');
+            return $this->json(1, 'Thao tác thất bại');
         }
     }
     
     public function unbindPhone(Request $request)
     {
         $id = $request->post('id');
-        if (!$id) { return $this->json(1, '参数错误'); }
+        if (!$id) { return $this->json(1, 'Tham số không hợp lệ'); }
         
         $info = Db::table('caipiao_member')->where('id', $id)->first();
-        if (!$info) { return $this->json(1, '会员不存在'); }
+        if (!$info) { return $this->json(1, 'Thành viênkhông tồn tại'); }
         
         $result = Db::table('caipiao_member')->where('id', $id)->update(['phone' => '']);
         if ($result !== false) {
-            return $this->json(0, '手机绑定已解除');
+            return $this->json(0, '手机Liên kết已解除');
         } else {
-            return $this->json(1, '操作失败');
+            return $this->json(1, 'Thao tác thất bại');
         }
     }
     
     public function unbindEmail(Request $request)
     {
         $id = $request->post('id');
-        if (!$id) { return $this->json(1, '参数错误'); }
+        if (!$id) { return $this->json(1, 'Tham số không hợp lệ'); }
         
         $info = Db::table('caipiao_member')->where('id', $id)->first();
-        if (!$info) { return $this->json(1, '会员不存在'); }
+        if (!$info) { return $this->json(1, 'Thành viênkhông tồn tại'); }
         
         $result = Db::table('caipiao_member')->where('id', $id)->update(['email' => '']);
         if ($result !== false) {
-            return $this->json(0, '邮箱绑定已解除');
+            return $this->json(0, '邮箱Liên kết已解除');
         } else {
-            return $this->json(1, '操作失败');
+            return $this->json(1, 'Thao tác thất bại');
         }
     }
     
     public function resetQuestion(Request $request)
     {
         $id = $request->post('id');
-        if (!$id) { return $this->json(1, '参数错误'); }
+        if (!$id) { return $this->json(1, 'Tham số không hợp lệ'); }
         
         $info = Db::table('caipiao_member')->where('id', $id)->first();
-        if (!$info) { return $this->json(1, '会员不存在'); }
+        if (!$info) { return $this->json(1, 'Thành viênkhông tồn tại'); }
         
         $result = Db::table('caipiao_member')->where('id', $id)->update(['security_question' => '', 'security_answer' => '']);
         if ($result !== false) {
             return $this->json(0, '密保问题已重置');
         } else {
-            return $this->json(1, '操作失败');
+            return $this->json(1, 'Thao tác thất bại');
         }
     }
 
@@ -909,7 +909,7 @@ class MemberController extends Base
     {
         $id = $request->get('id');
         if (!$id) {
-            return $this->json(1, '缺少会员ID');
+            return $this->json(1, '缺少Thành viênID');
         }
 
         $devices = Db::table('caipiao_user_device')

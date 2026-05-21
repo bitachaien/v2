@@ -33,7 +33,7 @@ class UserLevelService
             
             $user = Db::table(self::TABLE_MEMBER)->where('id', $userId)->first();
             if (!$user) {
-                Log::warning('用户等级检查失败: 用户不存在', ['uid' => $userId]);
+                Log::warning('Người dùngCấp độ检查Thất bại: Người dùng không tồn tại', ['uid' => $userId]);
                 return $result;
             }
 
@@ -51,7 +51,7 @@ class UserLevelService
                 ->get();
 
             if ($levelConfigs->isEmpty()) {
-                Log::warning('用户等级检查失败: 未找到等级配置');
+                Log::warning('Người dùngCấp độ检查Thất bại: 未找到Cấp độ配置');
                 return $result;
             }
 
@@ -95,7 +95,7 @@ class UserLevelService
                     $result['to_level'] = $targetLevelId;
                     $result['reward'] = $totalReward;
 
-                    Log::info('用户等级升级成功', [
+                    Log::info('Người dùngCấp độThăng cấpThành công', [
                         'uid' => $userId,
                         'username' => $user->username,
                         'from_level' => $currentLevelId,
@@ -106,7 +106,7 @@ class UserLevelService
 
                 } catch (\Throwable $e) {
                     Db::rollBack();
-                    Log::error('用户等级升级失败', [
+                    Log::error('Người dùngCấp độThăng cấpThất bại', [
                         'uid' => $userId,
                         'error' => $e->getMessage(),
                     ]);
@@ -116,7 +116,7 @@ class UserLevelService
             return $result;
 
         } catch (\Throwable $e) {
-            Log::error('用户等级检查异常', [
+            Log::error('Người dùngCấp độ检查异常', [
                 'uid' => $userId,
                 'error' => $e->getMessage(),
             ]);
@@ -207,7 +207,7 @@ class UserLevelService
             ];
 
         } catch (\Throwable $e) {
-            Log::error('获取用户等级信息失败', [
+            Log::error('LấyNgười dùngCấp độ信息Thất bại', [
                 'uid' => $userId,
                 'error' => $e->getMessage(),
             ]);

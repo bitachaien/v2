@@ -18,25 +18,25 @@ class MemberGroupController extends Base
     }
 
     /**
-     * 获取会员组列表
+     * LấyThành viên组列表
      */
     public function list(Request $request)
     {
         $page = $request->get('page', 1);
         $limit = $request->get('limit', 20);
         
-        // 查询会员组列表
+        // Tra cứuThành viên组列表
         $query = Db::table('caipiao_membergroup')
             ->orderBy('groupid', 'asc');
         
-        // 获取总数
+        // Lấy总数
         $count = $query->count();
         
         // 分页
         $offset = ($page - 1) * $limit;
         $list = $query->offset($offset)->limit($limit)->get();
         
-        // 处理数据
+        // 处理dữ liệu
         $result = [];
         foreach ($list as $item) {
             $row = (array)$item;
@@ -51,7 +51,7 @@ class MemberGroupController extends Base
     }
 
     /**
-     * 添加会员组页面
+     * ThêmThành viên组页面
      */
     public function add(Request $request)
     {
@@ -63,7 +63,7 @@ class MemberGroupController extends Base
     }
 
     /**
-     * 编辑会员组页面
+     * 编辑Thành viên组页面
      */
     public function edit(Request $request)
     {
@@ -74,21 +74,21 @@ class MemberGroupController extends Base
         $id = $request->get('id');
         
         if (!$id) {
-            return '<script>alert("参数错误");history.back();</script>';
+            return '<script>alert("Tham số không hợp lệ");history.back();</script>';
         }
         
-        // 查询会员组信息
+        // Tra cứuThành viên组信息
         $info = Db::table('caipiao_membergroup')->where('groupid', $id)->first();
         
         if (!$info) {
-            return '<script>alert("会员组不存在");history.back();</script>';
+            return '<script>alert("Thành viên组không tồn tại");history.back();</script>';
         }
         
         return view('membergroup/add', ['info' => (array)$info]);
     }
 
     /**
-     * 保存会员组
+     * LưuThành viên组
      */
     public function save(Request $request)
     {
@@ -106,7 +106,7 @@ class MemberGroupController extends Base
         $monthlyBonus = $request->post('monthly_bonus');
         
         if (empty($groupname)) {
-            return $this->json(1, '会员组名称不能为空');
+            return $this->json(1, 'Thành viên组名称không được để trống');
         }
         
         $data = [
@@ -131,13 +131,13 @@ class MemberGroupController extends Base
                 ->update($data);
             
             if ($result !== false) {
-                return $this->json(0, '修改成功');
+                return $this->json(0, 'SửaThành công');
             } else {
-                return $this->json(1, '修改失败');
+                return $this->json(1, 'SửaThất bại');
             }
         } else {
-            // 添加
-            // 获取当前最大排序值，新增排在最后
+            // Thêm
+            // Lấy当前最大排序值，新增排在最后
             $maxOrder = Db::table('caipiao_membergroup')->max('listorder') ?? 0;
             
             $data['groupstatus'] = 1;
@@ -151,56 +151,56 @@ class MemberGroupController extends Base
             $result = Db::table('caipiao_membergroup')->insert($data);
             
             if ($result) {
-                return $this->json(0, '添加成功');
+                return $this->json(0, 'ThêmThành công');
             } else {
-                return $this->json(1, '添加失败');
+                return $this->json(1, 'ThêmThất bại');
             }
         }
     }
 
     /**
-     * 删除会员组
+     * XóaThành viên组
      */
     public function delete(Request $request)
     {
         $id = $request->post('id');
         
         if (!$id) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
         
-        // 检查是否有会员使用该组
+        // 检查是否有Thành viên使用该组
         $memberCount = Db::table('caipiao_member')->where('groupid', $id)->count();
         
         if ($memberCount > 0) {
-            return $this->json(1, '该会员组下还有会员，无法删除');
+            return $this->json(1, '该Thành viên组下还有Thành viên，无法Xóa');
         }
         
         $result = Db::table('caipiao_membergroup')->where('groupid', $id)->delete();
         
         if ($result) {
-            return $this->json(0, '删除成功');
+            return $this->json(0, 'XóaThành công');
         } else {
-            return $this->json(1, '删除失败');
+            return $this->json(1, 'XóaThất bại');
         }
     }
 
     /**
-     * 限额设置页面
+     * 限额Cài đặt页面
      */
     public function setLimit(Request $request)
     {
         $id = $request->get('id');
         
         if (!$id) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
         
-        // 查询会员组信息
+        // Tra cứuThành viên组信息
         $info = Db::table('caipiao_membergroup')->where('groupid', $id)->first();
         
         if (!$info) {
-            return $this->json(1, '会员组不存在');
+            return $this->json(1, 'Thành viên组không tồn tại');
         }
         
         $info = (array)$info;
@@ -214,7 +214,7 @@ class MemberGroupController extends Base
             }
         }
         
-        // 获取K3玩法列表（默认以K3为例）
+        // LấyK3玩法列表（默认以K3为例）
         $plays = Db::table('caipiao_wanfa')
             ->where('typeid', 'k3')
             ->orderBy('id', 'asc')
@@ -228,7 +228,7 @@ class MemberGroupController extends Base
     }
 
     /**
-     * 保存限额配置
+     * Lưu限额配置
      */
     public function saveLimitConfig(Request $request)
     {
@@ -236,10 +236,10 @@ class MemberGroupController extends Base
         $configs = $request->post('configs', []);
         
         if (!$id) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
         
-        // 处理配置数据（转为整数）
+        // 处理配置dữ liệu（转为整数）
         $configData = [];
         foreach ($configs as $key => $value) {
             $configData[$key] = intval($value);
@@ -253,14 +253,14 @@ class MemberGroupController extends Base
             ->update(['configs' => $configStr]);
         
         if ($result !== false) {
-            return $this->json(0, '设置成功');
+            return $this->json(0, 'Cài đặtThành công');
         } else {
-            return $this->json(1, '设置失败');
+            return $this->json(1, 'Cài đặtThất bại');
         }
     }
 
     /**
-     * 获取限额配置 (Art Design Pro 前端专用)
+     * Lấy限额配置 (Art Design Pro 前端专用)
      * GET /app/admin/membergroup/get-limit
      */
     public function getLimit(Request $request)
@@ -268,14 +268,14 @@ class MemberGroupController extends Base
         $id = $request->get('id');
         
         if (!$id) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
         
-        // 查询会员组信息
+        // Tra cứuThành viên组信息
         $info = Db::table('caipiao_membergroup')->where('groupid', $id)->first();
         
         if (!$info) {
-            return $this->json(1, '会员组不存在');
+            return $this->json(1, 'Thành viên组không tồn tại');
         }
         
         $info = (array)$info;
@@ -289,7 +289,7 @@ class MemberGroupController extends Base
             }
         }
         
-        // 获取玩法列表
+        // Lấy玩法列表
         $plays = Db::table('caipiao_wanfa')
             ->orderBy('typeid', 'asc')
             ->orderBy('id', 'asc')

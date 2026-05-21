@@ -40,7 +40,7 @@ class AdminEventTrigger
                     'type' => 'deposit',
                     'username' => $deposit['username'] ?? '',
                     'amount' => $amount,
-                    'warning' => "大额充值 {$amount} 元",
+                    'warning' => "大额Nạp tiền {$amount} 元",
                 ]);
             }
             
@@ -85,7 +85,7 @@ class AdminEventTrigger
                     'type' => 'withdraw',
                     'username' => $withdraw['username'] ?? '',
                     'amount' => $amount,
-                    'warning' => "大额提现 {$amount} 元",
+                    'warning' => "大额Rút tiền {$amount} 元",
                 ]);
             }
             

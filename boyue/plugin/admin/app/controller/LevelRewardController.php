@@ -28,10 +28,10 @@ class LevelRewardController extends Base
     private const TABLE_USER_LEVEL = 'yzz_user_level';
     private const TABLE_MEMBER = 'caipiao_member';
 
-    // ==================== 等级配置管理 ====================
+    // ==================== Cấp độ配置管理 ====================
 
     /**
-     * 等级配置列表页面
+     * Cấp độ配置列表页面
      *
      * @param Request $request
      * @return Response
@@ -42,7 +42,7 @@ class LevelRewardController extends Base
     }
 
     /**
-     * 获取等级配置列表数据
+     * LấyCấp độ配置列表dữ liệu
      *
      * @param Request $request
      * @return Response
@@ -62,7 +62,7 @@ class LevelRewardController extends Base
     }
 
     /**
-     * 保存等级配置
+     * LưuCấp độ配置
      *
      * @param Request $request
      * @return Response
@@ -84,19 +84,19 @@ class LevelRewardController extends Base
         try {
             if ($id > 0) {
                 Db::table(self::TABLE_LEVEL_CONFIG)->where('id', $id)->update($data);
-                return json(['code' => 0, 'msg' => '更新成功']);
+                return json(['code' => 0, 'msg' => '更新Thành công']);
             } else {
                 $data['level_id'] = (int)$request->post('level_id', 0);
                 Db::table(self::TABLE_LEVEL_CONFIG)->insert($data);
-                return json(['code' => 0, 'msg' => '添加成功']);
+                return json(['code' => 0, 'msg' => 'ThêmThành công']);
             }
         } catch (\Throwable $e) {
-            return json(['code' => 1, 'msg' => '操作失败: ' . $e->getMessage()]);
+            return json(['code' => 1, 'msg' => 'Thao tác thất bại: ' . $e->getMessage()]);
         }
     }
 
     /**
-     * 删除等级配置
+     * XóaCấp độ配置
      *
      * @param Request $request
      * @return Response
@@ -107,16 +107,16 @@ class LevelRewardController extends Base
 
         try {
             Db::table(self::TABLE_LEVEL_CONFIG)->where('id', $id)->delete();
-            return json(['code' => 0, 'msg' => '删除成功']);
+            return json(['code' => 0, 'msg' => 'XóaThành công']);
         } catch (\Throwable $e) {
-            return json(['code' => 1, 'msg' => '删除失败: ' . $e->getMessage()]);
+            return json(['code' => 1, 'msg' => 'XóaThất bại: ' . $e->getMessage()]);
         }
     }
 
-    // ==================== 晋级记录管理 ====================
+    // ==================== Thăng cấplịch sử管理 ====================
 
     /**
-     * 晋级记录列表页面
+     * Thăng cấplịch sử列表页面
      *
      * @param Request $request
      * @return Response
@@ -127,7 +127,7 @@ class LevelRewardController extends Base
     }
 
     /**
-     * 获取晋级记录列表数据
+     * LấyThăng cấplịch sử列表dữ liệu
      *
      * @param Request $request
      * @return Response
@@ -170,10 +170,10 @@ class LevelRewardController extends Base
         ]);
     }
 
-    // ==================== 用户等级管理 ====================
+    // ==================== Người dùngCấp độ管理 ====================
 
     /**
-     * 用户等级列表页面
+     * Người dùngCấp độ列表页面
      *
      * @param Request $request
      * @return Response
@@ -184,7 +184,7 @@ class LevelRewardController extends Base
     }
 
     /**
-     * 获取用户等级列表数据
+     * LấyNgười dùngCấp độ列表dữ liệu
      *
      * @param Request $request
      * @return Response
@@ -218,7 +218,7 @@ class LevelRewardController extends Base
     }
 
     /**
-     * 手动发放晋级奖励
+     * 手动发放Thăng cấp奖励
      *
      * @param Request $request
      * @return Response
@@ -230,18 +230,18 @@ class LevelRewardController extends Base
         $remark = $request->post('remark', '管理员手动发放');
 
         if ($userId <= 0) {
-            return json(['code' => 1, 'msg' => '用户ID无效']);
+            return json(['code' => 1, 'msg' => 'Người dùngID无效']);
         }
         if ($amount <= 0) {
-            return json(['code' => 1, 'msg' => '金额必须大于0']);
+            return json(['code' => 1, 'msg' => 'Số tiền必须大于0']);
         }
 
         Db::beginTransaction();
         try {
-            // 获取用户信息
+            // LấyNgười dùng信息
             $user = Db::table(self::TABLE_MEMBER)->where('id', $userId)->first();
             if (!$user) {
-                throw new \Exception('用户不存在');
+                throw new \Exception('Người dùng không tồn tại');
             }
 
             // 更新待领取奖励
@@ -256,11 +256,11 @@ class LevelRewardController extends Base
                 ->update(['jinjijilu' => Db::raw("jinjijilu + {$amount}")]);
 
             Db::commit();
-            return json(['code' => 0, 'msg' => "成功发放 {$amount} 元晋级奖励"]);
+            return json(['code' => 0, 'msg' => "Thành công发放 {$amount} 元Thăng cấp奖励"]);
 
         } catch (\Throwable $e) {
             Db::rollBack();
-            return json(['code' => 1, 'msg' => '发放失败: ' . $e->getMessage()]);
+            return json(['code' => 1, 'msg' => '发放Thất bại: ' . $e->getMessage()]);
         }
     }
 
@@ -276,10 +276,10 @@ class LevelRewardController extends Base
         $amount = (float)$request->post('amount', 0);
 
         if (empty($userIds)) {
-            return json(['code' => 1, 'msg' => '请选择用户']);
+            return json(['code' => 1, 'msg' => 'Vui lòng chọnNgười dùng']);
         }
         if ($amount <= 0) {
-            return json(['code' => 1, 'msg' => '金额必须大于0']);
+            return json(['code' => 1, 'msg' => 'Số tiền必须大于0']);
         }
 
         if (is_string($userIds)) {
@@ -309,14 +309,14 @@ class LevelRewardController extends Base
 
         return json([
             'code' => 0,
-            'msg'  => "批量发放完成：成功 {$success} 个，失败 {$fail} 个"
+            'msg'  => "批量发放完成：Thành công {$success} 个，Thất bại {$fail} 个"
         ]);
     }
 
-    // ==================== 统计数据 ====================
+    // ==================== 统计dữ liệu ====================
 
     /**
-     * 获取统计数据
+     * Lấy统计dữ liệu
      *
      * @param Request $request
      * @return Response
@@ -326,21 +326,21 @@ class LevelRewardController extends Base
         $todayStart = date('Y-m-d 00:00:00');
         $todayEnd = date('Y-m-d 23:59:59');
 
-        // 今日领取金额
+        // Hôm nay领取Số tiền
         $todayAmount = Db::table(self::TABLE_LEVEL_REWARD_RECORD)
             ->where('claim_time', '>=', $todayStart)
             ->where('claim_time', '<=', $todayEnd)
             ->where('status', 1)
             ->sum('reward_amount') ?? 0;
 
-        // 今日领取次数
+        // Hôm nay领取次数
         $todayCount = Db::table(self::TABLE_LEVEL_REWARD_RECORD)
             ->where('claim_time', '>=', $todayStart)
             ->where('claim_time', '<=', $todayEnd)
             ->where('status', 1)
             ->count();
 
-        // 总领取金额
+        // 总领取Số tiền
         $totalAmount = Db::table(self::TABLE_LEVEL_REWARD_RECORD)
             ->where('status', 1)
             ->sum('reward_amount') ?? 0;
@@ -361,7 +361,7 @@ class LevelRewardController extends Base
     }
 
     /**
-     * 获取状态选项
+     * Lấy状态选项
      *
      * @param Request $request
      * @return Response

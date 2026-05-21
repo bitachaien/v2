@@ -33,7 +33,7 @@ class AccessControl implements MiddlewareInterface
                 ]);
             }
             
-            // 先尝试从 JWT 解析用户信息
+            // 先尝试从 JWT 解析Người dùng信息
             $this->tryJwtAuth($request);
             
             $controller = $request->controller;
@@ -42,7 +42,7 @@ class AccessControl implements MiddlewareInterface
             $code = 0;
             $msg = '';
             if (!Auth::canAccess($controller, $action, $code, $msg)) {
-                // 判断是否为 API 请求（AJAX、JSON 请求、或 API 路径）
+                // 判断是否为 API 请求（AJAX、JSON 请求、hoặc API 路径）
                 $path = $request->path();
                 $isApiRequest = $request->expectsJson() 
                     || $request->header('X-Requested-With') === 'XMLHttpRequest'
@@ -69,13 +69,13 @@ class AccessControl implements MiddlewareInterface
 
             return $response;
         } catch (\Throwable $e) {
-            \support\Log::error('AccessControl 错误: ' . $e->getMessage() . ' at ' . $e->getFile() . ':' . $e->getLine());
-            return json(['code' => 500, 'msg' => '服务器错误: ' . $e->getMessage(), 'data' => []]);
+            \support\Log::error('AccessControl Lỗi: ' . $e->getMessage() . ' at ' . $e->getFile() . ':' . $e->getLine());
+            return json(['code' => 500, 'msg' => 'Lỗi máy chủ: ' . $e->getMessage(), 'data' => []]);
         }
     }
     
     /**
-     * 尝试从 JWT Token 解析用户信息并存入 Session
+     * 尝试从 JWT Token 解析Người dùng信息并存入 Session
      */
     protected function tryJwtAuth(Request $request): void
     {
@@ -85,7 +85,7 @@ class AccessControl implements MiddlewareInterface
                 return;
             }
             
-            // 获取 Token
+            // Lấy Token
             $token = $this->getToken($request);
             if (empty($token)) {
                 return;
@@ -99,13 +99,13 @@ class AccessControl implements MiddlewareInterface
             
             $payload = $result['payload'];
             
-            // 从数据库获取管理员信息
+            // 从dữ liệu库Lấy管理员信息
             $admin = Admin::find($payload->admin_id);
             if (!$admin || $admin->status != 0) {
                 return;
             }
             
-            // 获取角色
+            // Lấy角色
             $roles = AdminRole::where('admin_id', $admin->id)->pluck('role_id')->toArray();
             
             // 存入 Session（兼容现有代码）
@@ -115,12 +115,12 @@ class AccessControl implements MiddlewareInterface
             
             $request->session()->set('admin', $adminData);
         } catch (\Throwable $e) {
-            \support\Log::error('tryJwtAuth 错误: ' . $e->getMessage() . ' at ' . $e->getFile() . ':' . $e->getLine());
+            \support\Log::error('tryJwtAuth Lỗi: ' . $e->getMessage() . ' at ' . $e->getFile() . ':' . $e->getLine());
         }
     }
     
     /**
-     * 从请求中获取 Token
+     * 从请求中Lấy Token
      */
     protected function getToken(Request $request): string
     {

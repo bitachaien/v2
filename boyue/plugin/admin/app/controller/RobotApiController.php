@@ -30,7 +30,7 @@ class RobotApiController extends Base
         $page = $request->get('page', 1);
         $limit = $request->get('limit', 20);
 
-        // 获取所有彩种
+        // Lấy所有彩种
         $query = Db::table('caipiao_caipiao')
             ->where('isopen', 1)
             ->where('iswh', 0)
@@ -43,7 +43,7 @@ class RobotApiController extends Base
             ->limit($limit)
             ->get();
 
-        // 获取玩法配置
+        // Lấy玩法配置
         $wanfaObj = new \Lib\wanfa_fadan();
         $wanfaConfig = [
             'ssc' => $wanfaObj->ssc(),
@@ -98,16 +98,16 @@ class RobotApiController extends Base
         $name = $request->post('name');
         
         if (empty($name)) {
-            return $this->json(1, '彩种标识不能为空');
+            return $this->json(1, '彩种标识không được để trống');
         }
 
         // 检查彩种是否存在
         $lottery = Db::table('caipiao_caipiao')->where('name', $name)->first();
         if (!$lottery) {
-            return $this->json(1, '彩种不存在');
+            return $this->json(1, '彩种không tồn tại');
         }
 
-        // 获取所有需要更新的字段
+        // Lấy所有需要更新的字段
         $allowFields = [
             'hemai_status',
             'hemai_danqi_sum',
@@ -142,11 +142,11 @@ class RobotApiController extends Base
             ->where('name', $name)
             ->update($updateData);
 
-        return $this->json(0, '设置成功');
+        return $this->json(0, 'Cài đặtThành công');
     }
 
     /**
-     * 获取玩法选项
+     * Lấy玩法选项
      * GET /app/admin/api/robot/send-order/wanfa-options
      */
     public function wanfaOptions(Request $request)
@@ -174,14 +174,14 @@ class RobotApiController extends Base
     }
 
     /**
-     * 获取保密类型选项
+     * Lấy保密类型选项
      * GET /app/admin/api/robot/send-order/baomi-options
      */
     public function baomiOptions(Request $request)
     {
         $options = [
             ['value' => 0, 'label' => '完全公开'],
-            ['value' => 1, 'label' => '开奖后公开'],
+            ['value' => 1, 'label' => 'Mở thưởng后公开'],
             ['value' => 2, 'label' => '仅跟单人可看'],
             ['value' => 3, 'label' => '完全保密'],
         ];
@@ -196,7 +196,7 @@ class RobotApiController extends Base
      */
 
     /**
-     * 获取合买列表
+     * Lấy合买列表
      * GET /app/admin/api/robot/hemai/list
      */
     public function hemaiList(Request $request)
@@ -286,9 +286,9 @@ class RobotApiController extends Base
             // 状态值和文本
             $isdraw = (int)$item['isdraw'];
             $statusText = match($isdraw) {
-                1 => '已中奖',
-                0 => '未开奖',
-                -1 => '未中奖',
+                1 => '已Trúng thưởng',
+                0 => '未Mở thưởng',
+                -1 => '未Trúng thưởng',
                 -2 => '撤单',
                 default => '未知'
             };
@@ -322,8 +322,8 @@ class RobotApiController extends Base
                 'type' => $typeText,
                 'status' => $statusText,           // 直接返回中文状态
                 'status_code' => $isdraw,          // 状态码备用
-                'oddtime' => date('Y-m-d H:i:s', $item['oddtime']),  // 直接返回格式化时间
-                'oddtime_ts' => $item['oddtime'],  // 时间戳备用
+                'oddtime' => date('Y-m-d H:i:s', $item['oddtime']),  // 直接返回格式化Thời gian
+                'oddtime_ts' => $item['oddtime'],  // Thời gian戳备用
                 'isnb' => (int)($item['isnb'] ?? 0),
                 'isnb_text' => ($item['isnb'] ?? 0) == 1 ? '是' : '否',
             ];
@@ -336,7 +336,7 @@ class RobotApiController extends Base
     }
 
     /**
-     * 获取合买详情
+     * Lấy合买Chi tiết
      * GET /app/admin/api/robot/hemai/detail
      */
     public function hemaiDetail(Request $request)
@@ -344,14 +344,14 @@ class RobotApiController extends Base
         $id = $request->get('id');
 
         if (empty($id)) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
-        // 查询主订单信息
+        // Tra cứu主订单信息
         $mainOrder = Db::table('caipiao_touzhu')->where('id', $id)->first();
 
         if (!$mainOrder) {
-            return $this->json(1, '订单不存在');
+            return $this->json(1, '订单không tồn tại');
         }
 
         $mainOrder = (array)$mainOrder;
@@ -359,14 +359,14 @@ class RobotApiController extends Base
         // 状态文本
         $isdraw = (int)$mainOrder['isdraw'];
         $statusText = match($isdraw) {
-            1 => '已中奖',
-            0 => '未开奖',
-            -1 => '未中奖',
+            1 => '已Trúng thưởng',
+            0 => '未Mở thưởng',
+            -1 => '未Trúng thưởng',
             -2 => '撤单',
             default => '未知'
         };
 
-        // 查询合买参与记录
+        // Tra cứu合买参与lịch sử
         $participants = Db::table('caipiao_touzhuhm')
             ->where('touzhuid', $id)
             ->get();
@@ -406,7 +406,7 @@ class RobotApiController extends Base
     }
 
     /**
-     * 获取彩种选项（用于下拉框）
+     * Lấy彩种选项（用于下拉框）
      * GET /app/admin/api/robot/hemai/lottery-options
      */
     public function lotteryOptions(Request $request)
@@ -429,16 +429,16 @@ class RobotApiController extends Base
     }
 
     /**
-     * 获取合买状态选项
+     * Lấy合买状态选项
      * GET /app/admin/api/robot/hemai/status-options
      */
     public function hemaiStatusOptions(Request $request)
     {
         $options = [
             ['value' => 999, 'label' => '全部'],
-            ['value' => 0, 'label' => '未开奖'],
-            ['value' => 1, 'label' => '已中奖'],
-            ['value' => -1, 'label' => '未中奖'],
+            ['value' => 0, 'label' => '未Mở thưởng'],
+            ['value' => 1, 'label' => '已Trúng thưởng'],
+            ['value' => -1, 'label' => '未Trúng thưởng'],
             ['value' => -2, 'label' => '撤单'],
         ];
 

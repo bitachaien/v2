@@ -35,12 +35,12 @@ class ActivityRewardController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => ['list' => $list]
             ]);
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '获取数据失败', 'data' => null]);
+            return json(['code' => 500, 'message' => 'Lấy dữ liệuThất bại', 'data' => null]);
         }
     }
     
@@ -51,7 +51,7 @@ class ActivityRewardController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -64,7 +64,7 @@ class ActivityRewardController
             if (!$activity) {
                 return json([
                     'code' => 404,
-                    'message' => '活动不存在',
+                    'message' => 'Hoạt độngkhông tồn tại',
                     'data' => null
                 ]);
             }
@@ -73,7 +73,7 @@ class ActivityRewardController
             if ($activity->end_time && $activity->end_time < $now) {
                 return json([
                     'code' => 400,
-                    'message' => '活动已结束',
+                    'message' => 'Hoạt động已结束',
                     'data' => null
                 ]);
             }
@@ -87,7 +87,7 @@ class ActivityRewardController
             if ($rewards->isEmpty()) {
                 return json([
                     'code' => 400,
-                    'message' => '活动暂无奖励配置',
+                    'message' => 'Hoạt động暂无奖励配置',
                     'data' => null
                 ]);
             }
@@ -97,12 +97,12 @@ class ActivityRewardController
             
             return json([
                 'code' => 0,
-                'message' => '查询成功',
+                'message' => 'Tra cứuThành công',
                 'data' => $result
             ]);
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '查询失败', 'data' => null]);
+            return json(['code' => 500, 'message' => 'Tra cứuThất bại', 'data' => null]);
         }
     }
     
@@ -111,7 +111,7 @@ class ActivityRewardController
         $userId = $request->userId ?? 0;
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '未登录或登录已过期', 'data' => null]);
+            return json(['code' => 401, 'message' => '未Đăng nhậphoặcĐăng nhập已过期', 'data' => null]);
         }
         
         $activityId = $request->post('activity_id', 0);
@@ -119,7 +119,7 @@ class ActivityRewardController
         $conditionValue = $request->post('condition_value', '');
         
         if (!$activityId || !$rewardId) {
-            return json(['code' => 400, 'message' => '参数错误', 'data' => null]);
+            return json(['code' => 400, 'message' => 'Tham số không hợp lệ', 'data' => null]);
         }
         
         $lockKey = "activity_claim:{$userId}:{$activityId}:{$rewardId}";
@@ -135,7 +135,7 @@ class ActivityRewardController
             $user = Db::table('caipiao_member')->where('id', $userId)->lockForUpdate()->first();
             
             if (!$user) {
-                throw new \Exception('用户不存在');
+                throw new \Exception('Người dùng không tồn tại');
             }
             
             $reward = Db::table('caipiao_activity_reward')
@@ -145,7 +145,7 @@ class ActivityRewardController
                 ->first();
             
             if (!$reward) {
-                throw new \Exception('奖励配置不存在');
+                throw new \Exception('奖励配置không tồn tại');
             }
             
             if ($reward->limit_times > 0) {
@@ -188,7 +188,7 @@ class ActivityRewardController
                     ->first();
                 
                 if (!$order) {
-                    throw new \Exception('注单不存在或未结算');
+                    throw new \Exception('注单không tồn tạihoặc未结算');
                 }
                 
                 $betAmount = floatval($order->amount);
@@ -224,7 +224,7 @@ class ActivityRewardController
             
             return json([
                 'code' => 0,
-                'message' => $reward->need_apply ? '申请成功，请等待审核' : '领取成功',
+                'message' => $reward->need_apply ? '申请Thành công，请等Chờ duyệt' : '领取Thành công',
                 'data' => [
                     'participationId' => $participationId,
                     'amount' => number_format($finalRewardAmount, 2, '.', ''),
@@ -246,7 +246,7 @@ class ActivityRewardController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -274,7 +274,7 @@ class ActivityRewardController
             
             $data = [];
             foreach ($list as $item) {
-                $statusText = ['待审核', '已发放', '已拒绝'][$item->status] ?? '未知';
+                $statusText = ['Chờ duyệt', '已发放', 'Đã từ chối'][$item->status] ?? '未知';
                 
                 $data[] = [
                     'id' => $item->id,
@@ -292,7 +292,7 @@ class ActivityRewardController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'total' => $total,
                     'page' => (int)$page,
@@ -302,7 +302,7 @@ class ActivityRewardController
             ]);
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '获取数据失败', 'data' => null]);
+            return json(['code' => 500, 'message' => 'Lấy dữ liệuThất bại', 'data' => null]);
         }
     }
     
@@ -634,7 +634,7 @@ class ActivityRewardController
                     ->first();
                 
                 if (!$order) {
-                    return ['valid' => false, 'message' => '注单不存在'];
+                    return ['valid' => false, 'message' => '注单không tồn tại'];
                 }
                 
                 $tail = $reward->condition_value;
@@ -676,7 +676,7 @@ class ActivityRewardController
             'uid' => $userId,
             'username' => $user->username,
             'type' => 'activity_reward',
-            'typename' => '活动奖励',
+            'typename' => 'Hoạt động奖励',
             'trano' => $orderId,
             'amount' => $amount,
             'before' => $user->balance,

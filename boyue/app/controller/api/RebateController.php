@@ -22,7 +22,7 @@ class RebateController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -40,7 +40,7 @@ class RebateController
         
         return json([
             'code' => 0,
-            'message' => '获取成功',
+            'message' => 'Lấy dữ liệu thành công',
             'data' => $result
         ]);
     }
@@ -53,7 +53,7 @@ class RebateController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -64,7 +64,7 @@ class RebateController
         
         return json([
             'code' => 0,
-            'message' => '获取成功',
+            'message' => 'Lấy dữ liệu thành công',
             'data' => $stats
         ]);
     }
@@ -77,7 +77,7 @@ class RebateController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -152,7 +152,7 @@ class RebateController
             
             return [
                 'code' => 0,
-                'message' => '领取成功',
+                'message' => '领取Thành công',
                 'data' => [
                     'amount' => round($totalAmount, 2),
                     'count' => count($claimedIds)
@@ -160,8 +160,8 @@ class RebateController
             ];
             
         } catch (\Exception $e) {
-            \support\Log::error('玩家反水领取失败: ' . $e->getMessage());
-            return ['code' => 500, 'message' => '领取失败: ' . $e->getMessage(), 'data' => null];
+            \support\Log::error('玩家反水领取Thất bại: ' . $e->getMessage());
+            return ['code' => 500, 'message' => '领取Thất bại: ' . $e->getMessage(), 'data' => null];
         }
     }
 
@@ -173,7 +173,7 @@ class RebateController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -188,22 +188,22 @@ class RebateController
                 ->first();
             
             if (!$user) {
-                return json(['code' => 404, 'message' => '用户不存在', 'data' => null]);
+                return json(['code' => 404, 'message' => 'Người dùng không tồn tại', 'data' => null]);
             }
             
             $rates = [
-                ['type' => 1, 'name' => '真人', 'rate' => floatval($user->fs_realperson)],
-                ['type' => 2, 'name' => '捕鱼', 'rate' => floatval($user->fs_fish)],
-                ['type' => 3, 'name' => '电子', 'rate' => floatval($user->fs_electron)],
-                ['type' => 4, 'name' => '彩票', 'rate' => floatval($user->fs_lottery)],
-                ['type' => 5, 'name' => '体育', 'rate' => floatval($user->fs_sport)],
-                ['type' => 6, 'name' => '棋牌', 'rate' => floatval($user->fs_chess)],
+                ['type' => 1, 'name' => 'Live Casino', 'rate' => floatval($user->fs_realperson)],
+                ['type' => 2, 'name' => 'Bắn cá', 'rate' => floatval($user->fs_fish)],
+                ['type' => 3, 'name' => 'Điện tử', 'rate' => floatval($user->fs_electron)],
+                ['type' => 4, 'name' => 'Xổ số', 'rate' => floatval($user->fs_lottery)],
+                ['type' => 5, 'name' => 'Thể thao', 'rate' => floatval($user->fs_sport)],
+                ['type' => 6, 'name' => 'Bài', 'rate' => floatval($user->fs_chess)],
                 ['type' => 7, 'name' => '电竞', 'rate' => floatval($user->fs_esport)],
             ];
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'vipLevel' => $user->groupname ?? 'VIP1',
                     'rates' => $rates
@@ -211,7 +211,7 @@ class RebateController
             ]);
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '获取失败: ' . $e->getMessage(), 'data' => null]);
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại: ' . $e->getMessage(), 'data' => null]);
         }
     }
 
@@ -293,7 +293,7 @@ class RebateController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'list' => $list,
                     'vendors' => $vendors
@@ -301,7 +301,7 @@ class RebateController
             ]);
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '获取失败: ' . $e->getMessage(), 'data' => null]);
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại: ' . $e->getMessage(), 'data' => null]);
         }
     }
 }

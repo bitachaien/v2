@@ -19,13 +19,13 @@ class PlayController extends Base
     }
 
     /**
-     * 获取玩法列表数据
+     * Lấy玩法列表dữ liệu
      */
     public function list(Request $request)
     {
         $typeid = $request->get('typeid', 'k3'); // 彩种类型：k3, ssc, pk10, keno, x5, dp3, lhc, xy28
         
-        // 查询该类型的所有玩法
+        // Tra cứu该类型的所有玩法
         $plays = Db::table('caipiao_wanfa')
             ->where('typeid', $typeid)
             ->orderBy('id', 'asc')
@@ -52,14 +52,14 @@ class PlayController extends Base
     }
 
     /**
-     * 保存玩法设置
+     * Lưu玩法Cài đặt
      */
     public function save(Request $request)
     {
         $playid = $request->post('playid');
         $typeid = $request->post('typeid');
         
-        \support\Log::info('玩法保存 - 接收到的POST数据: ' . json_encode($request->post(), JSON_UNESCAPED_UNICODE));
+        \support\Log::info('玩法Lưu - 接收到的POSTdữ liệu: ' . json_encode($request->post(), JSON_UNESCAPED_UNICODE));
         
         $data = [
             'title' => $request->post('title', ''),
@@ -71,7 +71,7 @@ class PlayController extends Base
             'maxxf' => $request->post('maxxf', 0),
         ];
         
-        // 如果记录存在则更新，否则插入
+        // 如果lịch sử存在则更新，否则插入
         $exists = Db::table('caipiao_wanfa')
             ->where('playid', $playid)
             ->where('typeid', $typeid)
@@ -82,20 +82,20 @@ class PlayController extends Base
                 ->where('playid', $playid)
                 ->where('typeid', $typeid)
                 ->update($data);
-            \support\Log::info('玩法保存 - 更新结果: playid=' . $playid . ', 影响行数=' . $result);
+            \support\Log::info('玩法Lưu - 更新结果: playid=' . $playid . ', 影响行数=' . $result);
         } else {
             $data['playid'] = $playid;
             $data['typeid'] = $typeid;
             $data['isopen'] = 1;
             $result = Db::table('caipiao_wanfa')->insert($data);
-            \support\Log::info('玩法保存 - 插入结果: playid=' . $playid . ', 成功=' . ($result ? 'true' : 'false'));
+            \support\Log::info('玩法Lưu - 插入结果: playid=' . $playid . ', Thành công=' . ($result ? 'true' : 'false'));
         }
         
-        return $this->json(0, '保存成功');
+        return $this->json(0, 'LưuThành công');
     }
 
     /**
-     * 设置玩法状态
+     * Cài đặt玩法状态
      */
     public function setStatus(Request $request)
     {
@@ -103,17 +103,17 @@ class PlayController extends Base
         $field = $request->post('field', 'isopen');
         $value = $request->post('value');
         
-        \support\Log::info('玩法状态设置: playid=' . $playid . ', field=' . $field . ', value=' . $value);
+        \support\Log::info('玩法状态Cài đặt: playid=' . $playid . ', field=' . $field . ', value=' . $value);
         
         if (empty($playid)) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
         
         $result = Db::table('caipiao_wanfa')
             ->where('playid', $playid)
             ->update([$field => $value]);
         
-        return $this->json(0, '操作成功');
+        return $this->json(0, 'Thao tác thành công');
     }
 }
 

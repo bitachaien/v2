@@ -86,7 +86,7 @@ class WebSocketServer
             self::$chatBotConfigTime = time();
             
         } catch (\Exception $e) {
-            Log::warning("[WebSocket] 获取聊天室机器人配置失败: " . $e->getMessage());
+            Log::warning("[WebSocket] Lấy聊天室机器人cấu hình thất bại: " . $e->getMessage());
             self::$chatBotConfig = [
                 'robot_name' => '',
                 'robot_avatar' => '',
@@ -188,7 +188,7 @@ class WebSocketServer
                 }
                 
             } catch (\Exception $e) {
-                Log::error("[WebSocket] Worker {$workerId} Redis 轮询错误: " . $e->getMessage());
+                Log::error("[WebSocket] Worker {$workerId} Redis 轮询Lỗi: " . $e->getMessage());
                 $redis = null; 
             }
         });
@@ -241,7 +241,7 @@ class WebSocketServer
             }
             
         } catch (\Exception $e) {
-            Log::error("[WebSocket] Worker {$workerId} 处理推送失败: " . $e->getMessage());
+            Log::error("[WebSocket] Worker {$workerId} 处理推送Thất bại: " . $e->getMessage());
         }
     }
     
@@ -284,7 +284,7 @@ class WebSocketServer
         $connection->send(json_encode([
             'type' => 'connected',
             'data' => [
-                'message' => '连接成功',
+                'message' => '连接Thành công',
                 'serverTime' => time(),
             ]
         ]));
@@ -301,7 +301,7 @@ class WebSocketServer
             if (!$message || !isset($message['type'])) {
                 $connection->send(json_encode([
                     'type' => 'error',
-                    'data' => ['message' => '无效的消息格式']
+                    'data' => ['message' => '无效的Tin nhắn格式']
                 ]));
                 return;
             }
@@ -360,15 +360,15 @@ class WebSocketServer
                 default:
                     $connection->send(json_encode([
                         'type' => 'error',
-                        'data' => ['message' => '未知的消息类型']
+                        'data' => ['message' => '未知的Tin nhắn类型']
                     ]));
             }
             
         } catch (\Exception $e) {
-            Log::error("[WebSocket] 消息处理错误: " . $e->getMessage());
+            Log::error("[WebSocket] Tin nhắn处理Lỗi: " . $e->getMessage());
             $connection->send(json_encode([
                 'type' => 'error',
-                'data' => ['message' => '服务器错误']
+                'data' => ['message' => 'Lỗi máy chủ']
             ]));
         }
     }
@@ -479,13 +479,13 @@ class WebSocketServer
             ]));
         } else {
             
-            Log::warning("[WebSocket] 获取期号信息失败，但仍返回 subscribed: {$lotteryCode}");
+            Log::warning("[WebSocket] Lấy期号信息Thất bại，但仍返回 subscribed: {$lotteryCode}");
             $connection->send(json_encode([
                 'type' => 'subscribed',
                 'data' => [
                     'lotteryCode' => $lotteryCode,
                     'current' => null,
-                    'error' => '获取期号信息失败'
+                    'error' => 'Lấy期号信息Thất bại'
                 ]
             ]));
         }
@@ -521,7 +521,7 @@ class WebSocketServer
         if (empty($token)) {
             $connection->send(json_encode([
                 'type' => 'auth_failed',
-                'data' => ['message' => 'Token不能为空']
+                'data' => ['message' => 'Tokenkhông được để trống']
             ]));
             return;
         }
@@ -538,7 +538,7 @@ class WebSocketServer
             $username = $decoded->username ?? '';
             
             if ($userId <= 0) {
-                throw new \Exception('无效的用户ID');
+                throw new \Exception('无效的Người dùngID');
             }
             
             
@@ -563,12 +563,12 @@ class WebSocketServer
                 $this->notifyFriendsOnline($userId);
             }
             
-            Log::info("[WebSocket] 用户认证成功 [JWT]: userId={$userId}, username={$username}, connectionId={$connectionId}");
+            Log::info("[WebSocket] Người dùngXác thựcThành công [JWT]: userId={$userId}, username={$username}, connectionId={$connectionId}");
             
             $connection->send(json_encode([
                 'type' => 'auth_success',
                 'data' => [
-                    'message' => '认证成功',
+                    'message' => 'Xác thựcThành công',
                     'userId' => $userId,
                     'username' => $username
                 ]
@@ -578,13 +578,13 @@ class WebSocketServer
             Log::warning("[WebSocket] Token已过期");
             $connection->send(json_encode([
                 'type' => 'auth_failed',
-                'data' => ['message' => 'Token已过期，请重新登录']
+                'data' => ['message' => 'Token已过期，请重新Đăng nhập']
             ]));
         } catch (\Exception $e) {
-            Log::warning("[WebSocket] 认证失败: " . $e->getMessage());
+            Log::warning("[WebSocket] Xác thựcThất bại: " . $e->getMessage());
             $connection->send(json_encode([
                 'type' => 'auth_failed',
-                'data' => ['message' => '认证失败: ' . $e->getMessage()]
+                'data' => ['message' => 'Xác thựcThất bại: ' . $e->getMessage()]
             ]));
         }
     }
@@ -601,7 +601,7 @@ class WebSocketServer
         if (!$userId) {
             $connection->send(json_encode([
                 'type' => 'im_error',
-                'data' => ['message' => '请先登录', 'tempId' => $tempId]
+                'data' => ['message' => 'Vui lòng đăng nhập', 'tempId' => $tempId]
             ]));
             return;
         }
@@ -614,7 +614,7 @@ class WebSocketServer
         if (empty($content) || !$targetId) {
             $connection->send(json_encode([
                 'type' => 'im_error',
-                'data' => ['message' => '参数错误', 'tempId' => $tempId]
+                'data' => ['message' => 'Tham số không hợp lệ', 'tempId' => $tempId]
             ]));
             return;
         }
@@ -643,10 +643,10 @@ class WebSocketServer
                 ]));
             }
         } catch (\Exception $e) {
-            Log::error('[IM] 发送失败: ' . $e->getMessage());
+            Log::error('[IM] 发送Thất bại: ' . $e->getMessage());
             $connection->send(json_encode([
                 'type' => 'im_error',
-                'data' => ['message' => '发送失败', 'tempId' => $tempId]
+                'data' => ['message' => '发送Thất bại', 'tempId' => $tempId]
             ]));
         }
     }
@@ -721,7 +721,7 @@ class WebSocketServer
         if (!$userId) {
             $connection->send(json_encode([
                 'type' => 'im_error',
-                'data' => ['message' => '请先登录']
+                'data' => ['message' => 'Vui lòng đăng nhập']
             ]));
             return;
         }
@@ -730,7 +730,7 @@ class WebSocketServer
         if (!$msgId) {
             $connection->send(json_encode([
                 'type' => 'im_error',
-                'data' => ['message' => '参数错误']
+                'data' => ['message' => 'Tham số không hợp lệ']
             ]));
             return;
         }
@@ -740,7 +740,7 @@ class WebSocketServer
         if (!$msg) {
             $connection->send(json_encode([
                 'type' => 'im_error',
-                'data' => ['message' => '消息不存在']
+                'data' => ['message' => 'Tin nhắnkhông tồn tại']
             ]));
             return;
         }
@@ -749,7 +749,7 @@ class WebSocketServer
         if ($msg->from_uid != $userId) {
             $connection->send(json_encode([
                 'type' => 'im_error',
-                'data' => ['message' => '只能撤回自己的消息']
+                'data' => ['message' => '只能撤回自己的Tin nhắn']
             ]));
             return;
         }
@@ -758,7 +758,7 @@ class WebSocketServer
         if (time() - $msg->created_at > 120) {
             $connection->send(json_encode([
                 'type' => 'im_error',
-                'data' => ['message' => '超过2分钟的消息不能撤回']
+                'data' => ['message' => '超过2分钟的Tin nhắn不能撤回']
             ]));
             return;
         }
@@ -857,7 +857,7 @@ class WebSocketServer
                     $redis->expire($preLockKey, 120); 
                     self::$sentSealedNotices[$sentKey . '_pre'] = true;
                     $this->pushPreSealedNotice($lotteryCode, $currentIssue, $timeToSealed);
-                    Log::info("[WebSocket] 封盘前提示: {$lotteryCode} 期号 {$currentIssue} 距封盘 {$timeToSealed} 秒");
+                    Log::info("[WebSocket] 封盘前Lưu ý: {$lotteryCode} 期号 {$currentIssue} 距封盘 {$timeToSealed} 秒");
                 }
             }
             
@@ -872,7 +872,7 @@ class WebSocketServer
                     $redis->expire($sealedLockKey, 120); 
                     self::$sentSealedNotices[$sentKey] = true;
                     $this->pushSealedLineNotice($lotteryCode, $currentIssue);
-                    Log::info("[WebSocket] 封盘线提示: {$lotteryCode} 期号 {$currentIssue}");
+                    Log::info("[WebSocket] 封盘线Lưu ý: {$lotteryCode} 期号 {$currentIssue}");
                 }
                 
                 
@@ -914,7 +914,7 @@ class WebSocketServer
                 'lottery_code' => $lotteryCode,
                 'issue' => $issue,
                 'userId' => 0,
-                'userName' => '系统公告',
+                'userName' => '系统Công bố',
                 'avatar' => '',
                 'honorLevel' => 0,
                 'content' => $content,
@@ -947,7 +947,7 @@ class WebSocketServer
             $expireTime = max(120, $kjsj * 2); 
             $redis->expire($cacheKey, $expireTime);
         } catch (\Exception $e) {
-            Log::warning("[WebSocket] 保存系统消息到Redis失败: " . $e->getMessage());
+            Log::warning("[WebSocket] Lưu系统Tin nhắn到RedisThất bại: " . $e->getMessage());
         }
     }
     
@@ -976,7 +976,7 @@ class WebSocketServer
                 'lottery_code' => $lotteryCode,
                 'issue' => $issue,
                 'userId' => 0,
-                'userName' => '系统公告',
+                'userName' => '系统Công bố',
                 'avatar' => '',
                 'honorLevel' => 0,
                 'content' => $content,
@@ -1056,7 +1056,7 @@ class WebSocketServer
                 ]
             ]);
             
-            Log::info("[WebSocket] 推送开奖: {$lotteryCode} 期号 {$lastDraw->expect}");
+            Log::info("[WebSocket] 推送Mở thưởng: {$lotteryCode} 期号 {$lastDraw->expect}");
             
             foreach ($connections as $connectionId => $connection) {
                 try {
@@ -1088,7 +1088,7 @@ class WebSocketServer
                 ->first();
             
             if (!$caipiao) {
-                Log::warning("[WebSocket] 彩种不存在: {$lotteryCode}");
+                Log::warning("[WebSocket] 彩种không tồn tại: {$lotteryCode}");
                 return null;
             }
             
@@ -1139,7 +1139,7 @@ class WebSocketServer
             ];
             
         } catch (\Exception $e) {
-            Log::error("[WebSocket] 获取期号信息失败: " . $e->getMessage());
+            Log::error("[WebSocket] Lấy期号信息Thất bại: " . $e->getMessage());
             return null;
         }
     }
@@ -1293,7 +1293,7 @@ class WebSocketServer
             return $info;
             
         } catch (\Exception $e) {
-            Log::error("[WebSocket] 获取动物彩信息失败: " . $e->getMessage());
+            Log::error("[WebSocket] Lấy动物彩信息Thất bại: " . $e->getMessage());
             return null;
         }
     }
@@ -1348,7 +1348,7 @@ class WebSocketServer
             return $result !== false;
             
         } catch (\Exception $e) {
-            Log::error("[WebSocket] Redis 标记期号失败: " . $e->getMessage());
+            Log::error("[WebSocket] Redis 标记期号Thất bại: " . $e->getMessage());
             
             $lastIssue = self::$lastIssues[$lotteryCode] ?? '';
             return $lastIssue !== $issue;
@@ -1456,7 +1456,7 @@ class WebSocketServer
         if (!$userId) {
             $connection->send(json_encode([
                 'type' => 'lottery_chat_error',
-                'data' => ['message' => '请先登录']
+                'data' => ['message' => 'Vui lòng đăng nhập']
             ]));
             return;
         }
@@ -1468,7 +1468,7 @@ class WebSocketServer
         if (empty($lotteryCode) || empty($content)) {
             $connection->send(json_encode([
                 'type' => 'lottery_chat_error',
-                'data' => ['message' => '参数错误']
+                'data' => ['message' => 'Tham số không hợp lệ']
             ]));
             return;
         }
@@ -1479,7 +1479,7 @@ class WebSocketServer
             if (!$user) {
                 $connection->send(json_encode([
                     'type' => 'lottery_chat_error',
-                    'data' => ['message' => '用户不存在']
+                    'data' => ['message' => 'Người dùng không tồn tại']
                 ]));
                 return;
             }
@@ -1489,7 +1489,7 @@ class WebSocketServer
                 'lottery_code' => $lotteryCode,
                 'issue' => $data['issue'] ?? '',
                 'user_id' => $userId,
-                'user_name' => $user->nickname ?? $user->username ?? '用户' . substr($userId, -4),
+                'user_name' => $user->nickname ?? $user->username ?? 'Người dùng' . substr($userId, -4),
                 'avatar' => $user->face ?? '',
                 'honor_level' => $this->calculateHonorLevel($userId),
                 'content' => $content,
@@ -1522,10 +1522,10 @@ class WebSocketServer
             self::broadcastLotteryChat($lotteryCode, $chatMsg);
             
         } catch (\Exception $e) {
-            Log::error('[WebSocket] 彩票聊天发送失败: ' . $e->getMessage());
+            Log::error('[WebSocket] Xổ số聊天发送Thất bại: ' . $e->getMessage());
             $connection->send(json_encode([
                 'type' => 'lottery_chat_error',
-                'data' => ['message' => '发送失败']
+                'data' => ['message' => '发送Thất bại']
             ]));
         }
     }
@@ -1564,7 +1564,7 @@ class WebSocketServer
             ];
             $redis->rPush('websocket_push_queue', json_encode($broadcastMsg));
         } catch (\Exception $e) {
-            Log::warning("[WebSocket] 广播聊天消息失败: " . $e->getMessage());
+            Log::warning("[WebSocket] 广播聊天Tin nhắnThất bại: " . $e->getMessage());
             
             self::broadcastLotteryChatLocal($lotteryCode, $chatMsg);
         }
@@ -1603,7 +1603,7 @@ class WebSocketServer
             'userName' => '系统',
             'avatar' => '',
             'honorLevel' => 0,
-            'content' => sprintf('第 %s 期开奖结果：%s = %d (%s)',
+            'content' => sprintf('第 %s 期Mở thưởng结果：%s = %d (%s)',
                 $resultData['issue'] ?? '',
                 implode('+', $resultData['openCode'] ?? []),
                 $resultData['sum'] ?? 0,
@@ -1635,7 +1635,7 @@ class WebSocketServer
         
         
         $lottery = Db::table('caipiao_caipiao')->where('name', $lotteryCode)->first();
-        $lotteryName = $lottery->title ?? '彩票';
+        $lotteryName = $lottery->title ?? 'Xổ số';
         
         
         $content = str_replace('{lottery_name}', $lotteryName, $botConfig['msg_draw_coming']);
@@ -1646,7 +1646,7 @@ class WebSocketServer
             'lottery_code' => $lotteryCode,
             'issue' => $issue,
             'userId' => 0,
-            'userName' => '系统公告',
+            'userName' => '系统Công bố',
             'avatar' => '',
             'honorLevel' => 0,
             'content' => $content,
@@ -1661,7 +1661,7 @@ class WebSocketServer
         $this->saveSystemMessageToRedis($lotteryCode, $chatMsg);
         
         self::broadcastLotteryChat($lotteryCode, $chatMsg);
-        Log::info("[WebSocket] 开奖提示: {$lotteryCode} 期号 {$issue}");
+        Log::info("[WebSocket] Mở thưởngLưu ý: {$lotteryCode} 期号 {$issue}");
     }
     
     
@@ -1673,7 +1673,7 @@ class WebSocketServer
         $robotAvatar = $botConfig['robot_avatar'];
         
         
-        $contentText = sprintf('第 %s 期开奖结果：%s = %d (%s)', $issue, implode('+', $openCode), $sum, $resultType);
+        $contentText = sprintf('第 %s 期Mở thưởng结果：%s = %d (%s)', $issue, implode('+', $openCode), $sum, $resultType);
         
         
         $extraData = json_encode([
@@ -1699,7 +1699,7 @@ class WebSocketServer
             ]);
         } catch (\Exception $e) {
             $insertId = time() . rand(1000, 9999);
-            Log::error("[WebSocket] 存储开奖消息失败: " . $e->getMessage());
+            Log::error("[WebSocket] 存储Mở thưởngTin nhắnThất bại: " . $e->getMessage());
         }
         
         $chatMsg = [
@@ -1720,7 +1720,7 @@ class WebSocketServer
         ];
         
         self::broadcastLotteryChat($lotteryCode, $chatMsg);
-        Log::info("[WebSocket] 机器人推送开奖: {$lotteryCode} 期号 {$issue}");
+        Log::info("[WebSocket] 机器人推送Mở thưởng: {$lotteryCode} 期号 {$issue}");
     }
     
     
@@ -1776,11 +1776,11 @@ class WebSocketServer
                     'items' => $winData['items']
                 ]);
                 
-                Log::info("[WebSocket] 推送中奖通知: userId={$userId}, issue={$issue}, win={$winData['totalWin']}");
+                Log::info("[WebSocket] 推送Trúng thưởngThông báo: userId={$userId}, issue={$issue}, win={$winData['totalWin']}");
             }
             
         } catch (\Exception $e) {
-            Log::error("[WebSocket] 推送中奖通知失败: " . $e->getMessage());
+            Log::error("[WebSocket] 推送Trúng thưởngThông báoThất bại: " . $e->getMessage());
         }
     }
     
@@ -1853,7 +1853,7 @@ class WebSocketServer
                 }
                 
                 $billDetails[] = [
-                    'name' => $bet->username ?? '用户' . substr($bet->uid, -4),
+                    'name' => $bet->username ?? 'Người dùng' . substr($bet->uid, -4),
                     'total' => floatval($bet->total_amount),
                     'bets' => $betItems
                 ];
@@ -1868,7 +1868,7 @@ class WebSocketServer
             
             $totalUsers = count($billDetails);
             $totalAmount = array_sum(array_column($billDetails, 'total'));
-            $contentSummary = sprintf('第 %s 期账单：共 %d 人投注，总金额 %.2f 元', $issue, $totalUsers, $totalAmount);
+            $contentSummary = sprintf('第 %s 期账单：共 %d 人Đặt cược，总Số tiền %.2f 元', $issue, $totalUsers, $totalAmount);
             
             try {
                 $insertId = Db::table('caipiao_lottery_chat')->insertGetId([
@@ -1886,7 +1886,7 @@ class WebSocketServer
                 ]);
             } catch (\Exception $e) {
                 $insertId = time() . rand(1000, 9999);
-                Log::error("[WebSocket] 存储账单消息失败: " . $e->getMessage());
+                Log::error("[WebSocket] 存储账单Tin nhắnThất bại: " . $e->getMessage());
             }
             
             
@@ -1910,7 +1910,7 @@ class WebSocketServer
             Log::info("[WebSocket] 机器人推送账单: {$lotteryCode} 期号 {$issue}, 共 " . count($billDetails) . " 条");
             
         } catch (\Exception $e) {
-            Log::error("[WebSocket] 推送账单失败: " . $e->getMessage());
+            Log::error("[WebSocket] 推送账单Thất bại: " . $e->getMessage());
         }
     }
     
@@ -1923,7 +1923,7 @@ class WebSocketServer
         $robotAvatar = $botConfig['robot_avatar'];
         
         try {
-            $contentSummary = sprintf('第 %s 期账单：本期无投注', $issue);
+            $contentSummary = sprintf('第 %s 期账单：本期无Đặt cược', $issue);
             
             $extraData = json_encode([
                 'issue' => $issue,
@@ -1946,7 +1946,7 @@ class WebSocketServer
                 ]);
             } catch (\Exception $e) {
                 $insertId = time() . rand(1000, 9999);
-                Log::error("[WebSocket] 存储空账单消息失败: " . $e->getMessage());
+                Log::error("[WebSocket] 存储空账单Tin nhắnThất bại: " . $e->getMessage());
             }
             
             
@@ -1968,7 +1968,7 @@ class WebSocketServer
             self::broadcastLotteryChat($lotteryCode, $chatMsg);
             
         } catch (\Exception $e) {
-            Log::error("[WebSocket] 推送空账单失败: " . $e->getMessage());
+            Log::error("[WebSocket] 推送空账单Thất bại: " . $e->getMessage());
         }
     }
     
@@ -2017,7 +2017,7 @@ class WebSocketServer
         $count = self::pushToUser($userId, 'bet_settled', $payload);
         
         if ($count > 0) {
-            Log::info("[WebSocket] 推送投注结算: userId={$userId}, orderId={$payload['orderId']}, status={$payload['status']}");
+            Log::info("[WebSocket] 推送Đặt cược结算: userId={$userId}, orderId={$payload['orderId']}, status={$payload['status']}");
         }
     }
     
@@ -2037,7 +2037,7 @@ class WebSocketServer
         $count = self::pushToUser($userId, 'balance_update', $payload);
         
         if ($count > 0) {
-            Log::info("[WebSocket] 推送余额变动: userId={$userId}, change={$payload['change']}, reason={$payload['reason']}");
+            Log::info("[WebSocket] 推送Số dư变动: userId={$userId}, change={$payload['change']}, reason={$payload['reason']}");
         }
     }
     
@@ -2057,7 +2057,7 @@ class WebSocketServer
         ];
         
         self::broadcastToAll('notification', $payload);
-        Log::info("[WebSocket] 广播系统通知: title={$payload['title']}");
+        Log::info("[WebSocket] 广播系统Thông báo: title={$payload['title']}");
     }
     
     
@@ -2117,7 +2117,7 @@ class WebSocketServer
         if (!$userId) {
             $connection->send(json_encode([
                 'type' => 'error',
-                'data' => ['message' => '请先登录']
+                'data' => ['message' => 'Vui lòng đăng nhập']
             ]));
             return;
         }
@@ -2235,7 +2235,7 @@ class WebSocketServer
         } catch (\Exception $e) {
             $connection->send(json_encode([
                 'type' => 'error',
-                'data' => ['message' => '刷新失败']
+                'data' => ['message' => 'Làm mớiThất bại']
             ]));
         }
     }

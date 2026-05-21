@@ -14,14 +14,14 @@ class WithdrawController
         $userId = $request->userId ?? 0;
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '请先登录', 'data' => null]);
+            return json(['code' => 401, 'message' => 'Vui lòng đăng nhập', 'data' => null]);
         }
         
         try {
             
             $user = Db::table('caipiao_member')->where('id', $userId)->first();
             if (!$user) {
-                return json(['code' => 400, 'message' => '用户不存在', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Người dùng không tồn tại', 'data' => null]);
             }
             
             
@@ -45,7 +45,7 @@ class WithdrawController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'name' => $user->userbankname ?: ($user->nickname ?: substr($user->username, 0, 1) . '**'),
                     'level' => $user->groupid ?? 1,
@@ -62,8 +62,8 @@ class WithdrawController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取提现配置失败: ' . $e->getMessage() . ' | Trace: ' . $e->getTraceAsString());
-            return json(['code' => 500, 'message' => '获取数据失败: ' . $e->getMessage(), 'data' => null]);
+            \support\Log::error('Lấy cấu hình rút tiền thất bại: ' . $e->getMessage() . ' | Trace: ' . $e->getTraceAsString());
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại: ' . $e->getMessage(), 'data' => null]);
         }
     }
     
@@ -73,7 +73,7 @@ class WithdrawController
         $userId = $request->userId ?? 0;
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '请先登录', 'data' => null]);
+            return json(['code' => 401, 'message' => 'Vui lòng đăng nhập', 'data' => null]);
         }
         
         try {
@@ -93,7 +93,7 @@ class WithdrawController
                 $network = '';
                 
                 if ($acc->type === 'bank') {
-                    $bankName = $acc->bank_name ?: '银行卡';
+                    $bankName = $acc->bank_name ?: 'Thẻ ngân hàng';
                     $fullAddress = $acc->bank_account ?: '';
                     $cardNo = $acc->bank_account ? substr($acc->bank_account, -4) : '';
                 } elseif ($acc->type === 'usdt') {
@@ -102,7 +102,7 @@ class WithdrawController
                     $fullAddress = $acc->usdt_address ?: '';
                     $cardNo = $acc->usdt_address ? substr($acc->usdt_address, -4) : '';
                 } else {
-                    $bankName = $acc->type === 'alipay' ? '支付宝' : '微信';
+                    $bankName = $acc->type === 'alipay' ? 'Alipay' : 'WeChat';
                     $fullAddress = $acc->bank_account ?: '';
                     $cardNo = $acc->bank_account ? substr($acc->bank_account, -4) : '';
                 }
@@ -142,13 +142,13 @@ class WithdrawController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => $result
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取提现账户失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '获取数据失败', 'data' => null]);
+            \support\Log::error('Lấy rút tiềntài khoảnThất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lấy dữ liệuThất bại', 'data' => null]);
         }
     }
     
@@ -158,7 +158,7 @@ class WithdrawController
         $userId = $request->userId ?? 0;
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '请先登录', 'data' => null]);
+            return json(['code' => 401, 'message' => 'Vui lòng đăng nhập', 'data' => null]);
         }
         
         try {
@@ -167,34 +167,34 @@ class WithdrawController
             $fundPassword = $request->post('fundPassword', '');
             
             if (empty($accountId)) {
-                return json(['code' => 400, 'message' => '请选择提现账户', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Vui lòng chọnRút tiềntài khoản', 'data' => null]);
             }
             
             if ($amount <= 0) {
-                return json(['code' => 400, 'message' => '请输入正确的金额', 'data' => null]);
+                return json(['code' => 400, 'message' => '请输入正确的Số tiền', 'data' => null]);
             }
             
             
             if ($amount != floor($amount)) {
-                return json(['code' => 400, 'message' => '提现金额必须为整数', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Rút tiềnSố tiền必须为整数', 'data' => null]);
             }
             
             
             $user = Db::table('caipiao_member')->where('id', $userId)->first();
             if (!$user) {
-                return json(['code' => 400, 'message' => '用户不存在', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Người dùng không tồn tại', 'data' => null]);
             }
             
             
             if (empty($user->tradepassword)) {
                 
-                return json(['code' => 400, 'message' => '请先设置资金密码', 'data' => ['needSetFundPwd' => true]]);
+                return json(['code' => 400, 'message' => '请先Cài đặt资金Mật khẩu', 'data' => ['needSetFundPwd' => true]]);
             }
             if (empty($fundPassword)) {
-                return json(['code' => 400, 'message' => '请输入资金密码', 'data' => null]);
+                return json(['code' => 400, 'message' => '请输入资金Mật khẩu', 'data' => null]);
             }
             if (md5($fundPassword) !== $user->tradepassword) {
-                return json(['code' => 400, 'message' => '资金密码错误', 'data' => null]);
+                return json(['code' => 400, 'message' => '资金Mật khẩu sai', 'data' => null]);
             }
             
             
@@ -202,16 +202,16 @@ class WithdrawController
             $maxWithdraw = $this->getConfig('tikuanMax') ?: 500000;
             
             if ($amount < $minWithdraw) {
-                return json(['code' => 400, 'message' => "最低提现金额为 {$minWithdraw} 元", 'data' => null]);
+                return json(['code' => 400, 'message' => "最低Rút tiềnSố tiền为 {$minWithdraw} 元", 'data' => null]);
             }
             if ($amount > $maxWithdraw) {
-                return json(['code' => 400, 'message' => "最高提现金额为 {$maxWithdraw} 元", 'data' => null]);
+                return json(['code' => 400, 'message' => "最高Rút tiềnSố tiền为 {$maxWithdraw} 元", 'data' => null]);
             }
             
             
             $balance = floatval($user->balance);
             if ($amount > $balance) {
-                return json(['code' => 400, 'message' => '余额不足', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Số dư không đủ', 'data' => null]);
             }
             
             
@@ -223,13 +223,13 @@ class WithdrawController
                 ->count();
             
             if ($todayCount >= $dailyWithdrawTimes) {
-                return json(['code' => 400, 'message' => '今日提现次数已达上限', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Hôm nayRút tiền次数已达上限', 'data' => null]);
             }
             
             
             $accountInfo = $this->getAccountInfo($accountId, $userId);
             if (!$accountInfo) {
-                return json(['code' => 400, 'message' => '提现账户不存在', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Rút tiềntài khoảnkhông tồn tại', 'data' => null]);
             }
             
             
@@ -255,7 +255,7 @@ class WithdrawController
                 $actualBalance = floatval($lockedUser->balance);
                 if ($actualBalance < $amount) {
                     Db::rollBack();
-                    return json(['code' => 400, 'message' => '余额不足（并发检查）', 'data' => null]);
+                    return json(['code' => 400, 'message' => 'Số dư không đủ（并发检查）', 'data' => null]);
                 }
                 
                 
@@ -294,19 +294,19 @@ class WithdrawController
                     'uid' => $userId,
                     'username' => $user->username,
                     'type' => 'withdraw',
-                    'typename' => '提现',
+                    'typename' => 'Rút tiền',
                     'amount' => -$amount,
                     'amountbefor' => $actualBalance,
                     'amountafter' => $newBalance,
                     'oddtime' => time(),
-                    'remark' => '提现申请',
+                    'remark' => 'Rút tiền申请',
                 ]);
                 
                 Db::commit();
                 
                 return json([
                     'code' => 0,
-                    'message' => '提现申请已提交',
+                    'message' => 'Rút tiền申请已Gửi',
                     'data' => [
                         'trano' => $trano,
                         'amount' => $amount,
@@ -321,8 +321,8 @@ class WithdrawController
             }
             
         } catch (\Exception $e) {
-            \support\Log::error('提现失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '提现失败: ' . $e->getMessage(), 'data' => null]);
+            \support\Log::error('Rút tiềnThất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Rút tiềnThất bại: ' . $e->getMessage(), 'data' => null]);
         }
     }
     
@@ -332,7 +332,7 @@ class WithdrawController
         $userId = $request->userId ?? 0;
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '请先登录', 'data' => null]);
+            return json(['code' => 401, 'message' => 'Vui lòng đăng nhập', 'data' => null]);
         }
         
         try {
@@ -372,7 +372,7 @@ class WithdrawController
             
             $result = [];
             
-            $stateMap = [0 => '出款中', 1 => '提现成功', 2 => '提现拒绝', 3 => '提现取消'];
+            $stateMap = [0 => '出款中', 1 => 'Rút tiềnThành công', 2 => 'Rút tiền拒绝', 3 => 'Rút tiềnHủy'];
             
             foreach ($list as $item) {
                 $result[] = [
@@ -396,7 +396,7 @@ class WithdrawController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'list' => $result,
                     'total' => $total,
@@ -407,8 +407,8 @@ class WithdrawController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取提现记录失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '获取数据失败', 'data' => null]);
+            \support\Log::error('Lấy rút tiềnlịch sử thất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lấy dữ liệuThất bại', 'data' => null]);
         }
     }
     
@@ -418,14 +418,14 @@ class WithdrawController
         $userId = $request->userId ?? 0;
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '请先登录', 'data' => null]);
+            return json(['code' => 401, 'message' => 'Vui lòng đăng nhập', 'data' => null]);
         }
         
         try {
             $id = $request->post('id');
             
             if (!$id) {
-                return json(['code' => 400, 'message' => '参数错误', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Tham số không hợp lệ', 'data' => null]);
             }
             
             
@@ -435,12 +435,12 @@ class WithdrawController
                 ->first();
             
             if (!$withdraw) {
-                return json(['code' => 400, 'message' => '提现记录不存在', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Rút tiềnlịch sửkhông tồn tại', 'data' => null]);
             }
             
             
             if ($withdraw->state != 0) {
-                return json(['code' => 400, 'message' => '只能取消出款中的订单', 'data' => null]);
+                return json(['code' => 400, 'message' => '只能Hủy出款中的订单', 'data' => null]);
             }
             
             
@@ -465,7 +465,7 @@ class WithdrawController
                     ->where('id', $id)
                     ->update([
                         'state' => 3, 
-                        'remark' => '用户自己取消',
+                        'remark' => 'Người dùng自己Hủy',
                         'updatetime' => time()
                     ]);
                 
@@ -476,17 +476,17 @@ class WithdrawController
                     'uid' => $userId,
                     'username' => $user->username,
                     'type' => 'withdraw_cancel',
-                    'typename' => '提现取消',
+                    'typename' => 'Rút tiềnHủy',
                     'amount' => $withdraw->amount,
                     'amountbefor' => $oldBalance,
                     'amountafter' => $newBalance,
                     'oddtime' => time(),
-                    'remark' => '用户取消提现，原单号：' . $withdraw->trano
+                    'remark' => 'Người dùngHủyRút tiền，原单号：' . $withdraw->trano
                 ]);
                 
                 Db::commit();
                 
-                return json(['code' => 0, 'message' => '取消成功', 'data' => null]);
+                return json(['code' => 0, 'message' => 'HủyThành công', 'data' => null]);
                 
             } catch (\Exception $e) {
                 Db::rollBack();
@@ -494,8 +494,8 @@ class WithdrawController
             }
             
         } catch (\Exception $e) {
-            \support\Log::error('取消提现失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '取消失败: ' . $e->getMessage(), 'data' => null]);
+            \support\Log::error('HủyRút tiềnThất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'HủyThất bại: ' . $e->getMessage(), 'data' => null]);
         }
     }
     
@@ -511,9 +511,9 @@ class WithdrawController
             
             if ($acc) {
                 $typeName = [
-                    'bank' => '银行卡',
-                    'alipay' => '支付宝',
-                    'wechat' => '微信',
+                    'bank' => 'Thẻ ngân hàng',
+                    'alipay' => 'Alipay',
+                    'wechat' => 'WeChat',
                     'usdt' => 'USDT',
                 ][$acc->type] ?? '其他';
                 
@@ -540,7 +540,7 @@ class WithdrawController
             if ($acc) {
                 return [
                     'type' => 'bank',
-                    'typeName' => '银行卡',
+                    'typeName' => 'Thẻ ngân hàng',
                     'bankName' => $acc->bankname,
                     'bankAccount' => $acc->banknumber,
                     'accountName' => $acc->accountname,
@@ -558,7 +558,7 @@ class WithdrawController
         $userId = $request->userId ?? 0;
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '请先登录', 'data' => null]);
+            return json(['code' => 401, 'message' => 'Vui lòng đăng nhập', 'data' => null]);
         }
         
         try {
@@ -568,19 +568,19 @@ class WithdrawController
             
             $user = Db::table('caipiao_member')->where('id', $userId)->first();
             if (!$user) {
-                return json(['code' => 400, 'message' => '用户不存在', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Người dùng không tồn tại', 'data' => null]);
             }
             
             
             if (empty($user->tradepassword)) {
                 
-                return json(['code' => 400, 'message' => '请先设置资金密码', 'data' => ['needSetFundPwd' => true]]);
+                return json(['code' => 400, 'message' => '请先Cài đặt资金Mật khẩu', 'data' => ['needSetFundPwd' => true]]);
             }
             if (empty($fundPassword)) {
-                return json(['code' => 400, 'message' => '请输入资金密码', 'data' => null]);
+                return json(['code' => 400, 'message' => '请输入资金Mật khẩu', 'data' => null]);
             }
             if (md5($fundPassword) !== $user->tradepassword) {
-                return json(['code' => 400, 'message' => '资金密码错误', 'data' => null]);
+                return json(['code' => 400, 'message' => '资金Mật khẩu sai', 'data' => null]);
             }
             
             $data = [
@@ -598,10 +598,10 @@ class WithdrawController
                 $bankBranch = $request->post('bankBranch', '');
                 
                 if (empty($bankName)) {
-                    return json(['code' => 400, 'message' => '请选择开户银行', 'data' => null]);
+                    return json(['code' => 400, 'message' => 'Vui lòng chọn开户银行', 'data' => null]);
                 }
                 if (empty($bankAccount)) {
-                    return json(['code' => 400, 'message' => '请输入银行卡号', 'data' => null]);
+                    return json(['code' => 400, 'message' => '请输入Thẻ ngân hàng号', 'data' => null]);
                 }
                 
                 
@@ -611,7 +611,7 @@ class WithdrawController
                     ->where('bank_account', $bankAccount)
                     ->exists();
                 if ($exists) {
-                    return json(['code' => 400, 'message' => '该银行卡已经添加过', 'data' => null]);
+                    return json(['code' => 400, 'message' => '该Thẻ ngân hàng已经Thêm过', 'data' => null]);
                 }
                 
                 $data['bank_name'] = $bankName;
@@ -634,13 +634,13 @@ class WithdrawController
                     ->where('usdt_address', $address)
                     ->exists();
                 if ($exists) {
-                    return json(['code' => 400, 'message' => '该地址已经添加过', 'data' => null]);
+                    return json(['code' => 400, 'message' => '该地址已经Thêm过', 'data' => null]);
                 }
                 
                 $data['usdt_network'] = $network;
                 $data['usdt_address'] = $address;
                 $data['bank_name'] = 'USDT-' . $network;
-                $data['account_name'] = $request->post('remark', 'USDT提现');
+                $data['account_name'] = $request->post('remark', 'USDTRút tiền');
                 
             } elseif ($type === 'alipay' || $type === 'wechat') {
                 $account = $request->post('account', '');
@@ -649,7 +649,7 @@ class WithdrawController
                 
                 
                 if ($type === 'alipay' && empty($account)) {
-                    return json(['code' => 400, 'message' => '请输入支付宝账号', 'data' => null]);
+                    return json(['code' => 400, 'message' => '请输入AlipayTài khoản', 'data' => null]);
                 }
                 if (empty($qrCode)) {
                     return json(['code' => 400, 'message' => '请上传收款码', 'data' => null]);
@@ -657,11 +657,11 @@ class WithdrawController
                 
                 $data['bank_account'] = $account ?: ($type === 'wechat' ? 'wechat_qr' : 'alipay_qr');
                 $data['account_name'] = $accountName;
-                $data['bank_name'] = $type === 'alipay' ? '支付宝' : '微信';
+                $data['bank_name'] = $type === 'alipay' ? 'Alipay' : 'WeChat';
                 $data['qr_code'] = $qrCode;
                 
             } else {
-                return json(['code' => 400, 'message' => '不支持的账户类型', 'data' => null]);
+                return json(['code' => 400, 'message' => '不支持的tài khoản类型', 'data' => null]);
             }
             
             
@@ -675,13 +675,13 @@ class WithdrawController
             
             return json([
                 'code' => 0,
-                'message' => '添加成功',
+                'message' => 'ThêmThành công',
                 'data' => ['id' => $id]
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('添加提现账户失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '添加失败: ' . $e->getMessage(), 'data' => null]);
+            \support\Log::error('ThêmRút tiềntài khoảnThất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'ThêmThất bại: ' . $e->getMessage(), 'data' => null]);
         }
     }
     
@@ -691,14 +691,14 @@ class WithdrawController
         $userId = $request->userId ?? 0;
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '请先登录', 'data' => null]);
+            return json(['code' => 401, 'message' => 'Vui lòng đăng nhập', 'data' => null]);
         }
         
         try {
             $id = $request->post('id');
             
             if (!$id) {
-                return json(['code' => 400, 'message' => '参数错误', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Tham số không hợp lệ', 'data' => null]);
             }
             
             $result = Db::table('caipiao_withdraw_account')
@@ -707,13 +707,13 @@ class WithdrawController
                 ->delete();
             
             if ($result) {
-                return json(['code' => 0, 'message' => '删除成功', 'data' => null]);
+                return json(['code' => 0, 'message' => 'XóaThành công', 'data' => null]);
             } else {
-                return json(['code' => 400, 'message' => '删除失败', 'data' => null]);
+                return json(['code' => 400, 'message' => 'XóaThất bại', 'data' => null]);
             }
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '删除失败', 'data' => null]);
+            return json(['code' => 500, 'message' => 'XóaThất bại', 'data' => null]);
         }
     }
     
@@ -723,14 +723,14 @@ class WithdrawController
         $userId = $request->userId ?? 0;
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '请先登录', 'data' => null]);
+            return json(['code' => 401, 'message' => 'Vui lòng đăng nhập', 'data' => null]);
         }
         
         try {
             $id = $request->post('id');
             
             if (!$id) {
-                return json(['code' => 400, 'message' => '参数错误', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Tham số không hợp lệ', 'data' => null]);
             }
             
             
@@ -745,13 +745,13 @@ class WithdrawController
                 ->update(['is_default' => 1]);
             
             if ($result) {
-                return json(['code' => 0, 'message' => '设置成功', 'data' => null]);
+                return json(['code' => 0, 'message' => 'Cài đặtThành công', 'data' => null]);
             } else {
-                return json(['code' => 400, 'message' => '设置失败', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Cài đặtThất bại', 'data' => null]);
             }
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '设置失败', 'data' => null]);
+            return json(['code' => 500, 'message' => 'Cài đặtThất bại', 'data' => null]);
         }
     }
     
@@ -761,13 +761,13 @@ class WithdrawController
         $userId = $request->userId ?? 0;
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '请先登录', 'data' => null]);
+            return json(['code' => 401, 'message' => 'Vui lòng đăng nhập', 'data' => null]);
         }
         
         try {
             $file = $request->file('file');
             if (!$file || !$file->isValid()) {
-                return json(['code' => 400, 'message' => '请选择要上传的图片', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Vui lòng chọn要上传的图片', 'data' => null]);
             }
             
             
@@ -803,15 +803,15 @@ class WithdrawController
             
             return json([
                 'code' => 0,
-                'message' => '上传成功',
+                'message' => '上传Thành công',
                 'data' => [
                     'url' => $url
                 ]
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('上传收款码失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '上传失败: ' . $e->getMessage(), 'data' => null]);
+            \support\Log::error('上传收款码Thất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => '上传Thất bại: ' . $e->getMessage(), 'data' => null]);
         }
     }
     

@@ -142,7 +142,7 @@ class BannerValidator
         $end   = is_numeric($endTime) ? (int)$endTime : strtotime($endTime);
 
         if ($start === false || $end === false) {
-            throw new BannerException('时间格式错误');
+            throw new BannerException('Thời gian格式Lỗi');
         }
 
         if ($start > $end) {
@@ -170,12 +170,12 @@ class BannerValidator
     public static function validateBatchIds(array $ids): void
     {
         if (empty($ids)) {
-            throw new BannerException('请选择要删除的轮播图');
+            throw new BannerException('Vui lòng chọn要Xóa的轮播图');
         }
 
         foreach ($ids as $id) {
             if (!is_numeric($id) || (int)$id <= 0) {
-                throw new BannerException('ID参数格式错误');
+                throw new BannerException('ID参数格式Lỗi');
             }
         }
     }

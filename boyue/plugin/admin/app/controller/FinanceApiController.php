@@ -20,12 +20,12 @@ class FinanceApiController extends Base
 
     /**
      * ============================================
-     * 提款银行管理
+     * Rút tiền银行管理
      * ============================================
      */
 
     /**
-     * 获取银行列表
+     * Lấy银行列表
      * GET /app/admin/finance/sysbank-list
      */
     public function sysbankList(Request $request)
@@ -36,7 +36,7 @@ class FinanceApiController extends Base
 
         $query = Db::table('caipiao_sysbank');
 
-        // 银行名称搜索
+        // 银行名称Tìm kiếm
         if (!empty($bankname)) {
             $query->where('bankname', 'like', "%{$bankname}%");
         }
@@ -80,20 +80,20 @@ class FinanceApiController extends Base
         $listorder = (int)$request->post('listorder', 0);
 
         if (empty($bankname)) {
-            return $this->json(1, '银行名称不能为空');
+            return $this->json(1, '银行名称không được để trống');
         }
 
         if (empty($bankcode)) {
-            return $this->json(1, '银行代码不能为空');
+            return $this->json(1, '银行代码không được để trống');
         }
 
-        // 检查银行代码是否已存在
+        // 检查银行代码是否đã tồn tại
         $exists = Db::table('caipiao_sysbank')
             ->where('bankcode', $bankcode)
             ->first();
 
         if ($exists) {
-            return $this->json(1, '银行代码已存在');
+            return $this->json(1, '银行代码đã tồn tại');
         }
 
         try {
@@ -106,16 +106,16 @@ class FinanceApiController extends Base
                 'listorder' => $listorder,
             ]);
 
-            return $this->json(0, '添加成功', ['id' => $id]);
+            return $this->json(0, 'ThêmThành công', ['id' => $id]);
 
         } catch (\Exception $e) {
-            Log::error("新增银行失败: " . $e->getMessage());
-            return $this->json(1, '添加失败: ' . $e->getMessage());
+            Log::error("新增银行Thất bại: " . $e->getMessage());
+            return $this->json(1, 'ThêmThất bại: ' . $e->getMessage());
         }
     }
 
     /**
-     * 修改银行信息
+     * Sửa银行信息
      * POST /app/admin/finance/sysbank-update
      */
     public function sysbankUpdate(Request $request)
@@ -123,12 +123,12 @@ class FinanceApiController extends Base
         $id = $request->post('id');
 
         if (empty($id)) {
-            return $this->json(1, '银行ID不能为空');
+            return $this->json(1, '银行IDkhông được để trống');
         }
 
         $bank = Db::table('caipiao_sysbank')->where('id', $id)->first();
         if (!$bank) {
-            return $this->json(1, '银行不存在');
+            return $this->json(1, '银行không tồn tại');
         }
 
         $allowFields = ['bankname', 'bankcode', 'banklogo', 'imgbg', 'state', 'listorder'];
@@ -142,10 +142,10 @@ class FinanceApiController extends Base
         }
 
         if (empty($updateData)) {
-            return $this->json(1, '没有需要更新的数据');
+            return $this->json(1, '没有需要更新的dữ liệu');
         }
 
-        // 检查银行代码是否与其他记录重复
+        // 检查银行代码是否与其他lịch sử重复
         if (isset($updateData['bankcode'])) {
             $exists = Db::table('caipiao_sysbank')
                 ->where('bankcode', $updateData['bankcode'])
@@ -162,16 +162,16 @@ class FinanceApiController extends Base
                 ->where('id', $id)
                 ->update($updateData);
 
-            return $this->json(0, '更新成功');
+            return $this->json(0, '更新Thành công');
 
         } catch (\Exception $e) {
             Log::error("更新银行失败: " . $e->getMessage());
-            return $this->json(1, '更新失败: ' . $e->getMessage());
+            return $this->json(1, '更新Thất bại: ' . $e->getMessage());
         }
     }
 
     /**
-     * 删除银行
+     * Xóa银行
      * POST /app/admin/finance/sysbank-delete
      */
     public function sysbankDelete(Request $request)
@@ -179,27 +179,27 @@ class FinanceApiController extends Base
         $id = $request->post('id');
 
         if (empty($id)) {
-            return $this->json(1, '银行ID不能为空');
+            return $this->json(1, '银行IDkhông được để trống');
         }
 
         $bank = Db::table('caipiao_sysbank')->where('id', $id)->first();
         if (!$bank) {
-            return $this->json(1, '银行不存在');
+            return $this->json(1, '银行không tồn tại');
         }
 
         try {
             Db::table('caipiao_sysbank')->where('id', $id)->delete();
 
-            return $this->json(0, '删除成功');
+            return $this->json(0, 'XóaThành công');
 
         } catch (\Exception $e) {
-            Log::error("删除银行失败: " . $e->getMessage());
-            return $this->json(1, '删除失败: ' . $e->getMessage());
+            Log::error("Xóa银行Thất bại: " . $e->getMessage());
+            return $this->json(1, 'XóaThất bại: ' . $e->getMessage());
         }
     }
 
     /**
-     * 修改银行状态
+     * Sửa银行状态
      * POST /app/admin/finance/sysbank-setstate
      */
     public function sysbankSetState(Request $request)
@@ -208,7 +208,7 @@ class FinanceApiController extends Base
         $state = $request->post('state');
 
         if (empty($id)) {
-            return $this->json(1, '银行ID不能为空');
+            return $this->json(1, '银行IDkhông được để trống');
         }
 
         if ($state === null || !in_array((int)$state, [0, 1])) {
@@ -217,7 +217,7 @@ class FinanceApiController extends Base
 
         $bank = Db::table('caipiao_sysbank')->where('id', $id)->first();
         if (!$bank) {
-            return $this->json(1, '银行不存在');
+            return $this->json(1, '银行không tồn tại');
         }
 
         try {
@@ -229,19 +229,19 @@ class FinanceApiController extends Base
             return $this->json(0, "{$stateText}成功");
 
         } catch (\Exception $e) {
-            Log::error("修改银行状态失败: " . $e->getMessage());
-            return $this->json(1, '操作失败: ' . $e->getMessage());
+            Log::error("Sửa银行状态Thất bại: " . $e->getMessage());
+            return $this->json(1, 'Thao tác thất bại: ' . $e->getMessage());
         }
     }
 
     /**
      * ============================================
-     * 会员银行卡管理
+     * Thành viênThẻ ngân hàng管理
      * ============================================
      */
 
     /**
-     * 获取会员银行卡列表
+     * LấyThành viênThẻ ngân hàng列表
      * GET /app/admin/member/bank-list
      */
     public function memberBankList(Request $request)
@@ -267,7 +267,7 @@ class FinanceApiController extends Base
                 $query->where('state', $state);
             }
             
-            // 获取总数
+            // Lấy总数
             $total = $query->count();
             
             // 分页
@@ -276,9 +276,9 @@ class FinanceApiController extends Base
                          ->limit($limit)
                          ->get();
             
-            // 处理数据
+            // 处理dữ liệu
             $result = [];
-            $stateText = ['审核中', '已审', '驳回'];
+            $stateText = ['Đang duyệt', '已审', '驳回'];
             foreach ($list as $item) {
                 $row = (array)$item;
                 $row['state_text'] = $stateText[$row['state']] ?? '未知';
@@ -287,13 +287,13 @@ class FinanceApiController extends Base
             
             return $this->json(0, 'success', $result, $total);
         } catch (\Exception $e) {
-            Log::error('memberBankList 错误: ' . $e->getMessage());
-            return $this->json(1, '获取列表失败: ' . $e->getMessage());
+            Log::error('memberBankList Lỗi: ' . $e->getMessage());
+            return $this->json(1, 'Lấy列表Thất bại: ' . $e->getMessage());
         }
     }
 
     /**
-     * 编辑会员银行卡
+     * 编辑Thành viênThẻ ngân hàng
      * POST /app/admin/member/bank-edit
      */
     public function memberBankEdit(Request $request)
@@ -301,13 +301,13 @@ class FinanceApiController extends Base
         $id = $request->post('id');
         
         if (!$id) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
         
         $info = Db::table('caipiao_banklist')->where('id', $id)->first();
         
         if (!$info) {
-            return $this->json(1, '银行信息不存在');
+            return $this->json(1, '银行信息không tồn tại');
         }
         
         $info = (array)$info;
@@ -330,7 +330,7 @@ class FinanceApiController extends Base
         }
         
         if (empty($data)) {
-            return $this->json(1, '没有需要更新的数据');
+            return $this->json(1, '没有需要更新的dữ liệu');
         }
         
         try {
@@ -349,22 +349,22 @@ class FinanceApiController extends Base
                         $member = Db::table('caipiao_member')->where('id', $info['uid'])->first();
                         $amountbefor = $member->balance;
                         
-                        // 增加余额
+                        // 增加Số dư
                         Db::table('caipiao_member')
                             ->where('id', $info['uid'])
                             ->increment('balance', $balance);
                         
-                        // 记录账变
+                        // lịch sử账变
                         $fuddetaildata = [
                             'trano' => date('YmdHis') . '4' . rand(1000, 9999),
                             'uid' => $info['uid'],
                             'username' => $info['username'],
                             'type' => 'activity_bindcard',
-                            'typename' => '绑定银行赠送活动',
+                            'typename' => 'Liên kết银行赠送Hoạt động',
                             'amount' => abs($balance),
                             'amountbefor' => $amountbefor,
                             'amountafter' => $amountbefor + abs($balance),
-                            'remark' => '绑定银行赠送',
+                            'remark' => 'Liên kết银行赠送',
                             'oddtime' => time()
                         ];
                         Db::table('caipiao_fuddetail')->insert($fuddetaildata);
@@ -376,15 +376,15 @@ class FinanceApiController extends Base
                 ->where('id', $id)
                 ->update($data);
             
-            return $this->json(0, '修改成功');
+            return $this->json(0, 'SửaThành công');
         } catch (\Exception $e) {
-            Log::error('memberBankEdit 错误: ' . $e->getMessage());
-            return $this->json(1, '修改失败: ' . $e->getMessage());
+            Log::error('memberBankEdit Lỗi: ' . $e->getMessage());
+            return $this->json(1, 'SửaThất bại: ' . $e->getMessage());
         }
     }
 
     /**
-     * 删除会员银行卡
+     * XóaThành viênThẻ ngân hàng
      * POST /app/admin/member/bank-delete
      */
     public function memberBankDelete(Request $request)
@@ -392,25 +392,25 @@ class FinanceApiController extends Base
         $id = $request->post('id');
         
         if (!$id) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
         
         try {
             $result = Db::table('caipiao_banklist')->where('id', $id)->delete();
             
             if ($result) {
-                return $this->json(0, '删除成功');
+                return $this->json(0, 'XóaThành công');
             } else {
-                return $this->json(1, '删除失败');
+                return $this->json(1, 'XóaThất bại');
             }
         } catch (\Exception $e) {
-            Log::error('memberBankDelete 错误: ' . $e->getMessage());
-            return $this->json(1, '删除失败: ' . $e->getMessage());
+            Log::error('memberBankDelete Lỗi: ' . $e->getMessage());
+            return $this->json(1, 'XóaThất bại: ' . $e->getMessage());
         }
     }
 
     /**
-     * 获取配置值
+     * Lấy配置值
      */
     private function getConfig($name)
     {
@@ -420,12 +420,12 @@ class FinanceApiController extends Base
 
     /**
      * ============================================
-     * 提现账户管理
+     * Rút tiềntài khoản管理
      * ============================================
      */
 
     /**
-     * 获取提现账户列表
+     * Lấy rút tiềntài khoản列表
      * GET /app/admin/withdraw-account/select
      */
     public function withdrawAccountList(Request $request)
@@ -441,7 +441,7 @@ class FinanceApiController extends Base
             $query = Db::table('caipiao_withdraw_account as wa')
                 ->leftJoin('caipiao_member as m', 'wa.uid', '=', 'm.id');
             
-            // 用户ID筛选
+            // Người dùngID筛选
             if ($uid !== null && $uid !== '') {
                 $query->where('wa.uid', (int)$uid);
             }
@@ -461,7 +461,7 @@ class FinanceApiController extends Base
                 $query->where('wa.status', 1);
             }
             
-            // 获取总数
+            // Lấy总数
             $total = $query->count();
             
             // 分页
@@ -471,11 +471,11 @@ class FinanceApiController extends Base
                          ->limit($limit)
                          ->get();
             
-            // 处理数据
+            // 处理dữ liệu
             $result = [];
             foreach ($list as $item) {
                 $row = (array)$item;
-                // 构建账户信息显示
+                // 构建tài khoản信息显示
                 $accountInfo = '';
                 if ($row['type'] === 'bank') {
                     $accountInfo = ($row['bank_name'] ?? '') . ' ' . ($row['bank_account'] ?? '');
@@ -491,13 +491,13 @@ class FinanceApiController extends Base
             
             return $this->json(0, 'success', $result, $total);
         } catch (\Exception $e) {
-            Log::error('withdrawAccountList 错误: ' . $e->getMessage());
-            return $this->json(1, '获取列表失败: ' . $e->getMessage());
+            Log::error('withdrawAccountList Lỗi: ' . $e->getMessage());
+            return $this->json(1, 'Lấy列表Thất bại: ' . $e->getMessage());
         }
     }
 
     /**
-     * 添加提现账户
+     * ThêmRút tiềntài khoản
      * POST /app/admin/withdraw-account/insert
      */
     public function withdrawAccountInsert(Request $request)
@@ -506,13 +506,13 @@ class FinanceApiController extends Base
         $type = $request->post('type', 'bank');
         
         if (empty($username)) {
-            return $this->json(1, '用户名不能为空');
+            return $this->json(1, 'Tên người dùngkhông được để trống');
         }
         
-        // 查找用户
+        // 查找Người dùng
         $member = Db::table('caipiao_member')->where('username', $username)->first();
         if (!$member) {
-            return $this->json(1, '用户不存在');
+            return $this->json(1, 'Người dùng không tồn tại');
         }
         
         try {
@@ -532,7 +532,7 @@ class FinanceApiController extends Base
                 $data['usdt_address'] = $request->post('usdt_address', '');
                 $data['usdt_network'] = $request->post('usdt_network', 'TRC20');
             } else {
-                // 支付宝/微信
+                // Alipay/WeChat
                 $data['bank_account'] = $request->post('bank_account', '');
                 $data['account_name'] = $request->post('account_name', '');
                 $data['qr_code'] = $request->post('qr_code', '');
@@ -540,15 +540,15 @@ class FinanceApiController extends Base
             
             $id = Db::table('caipiao_withdraw_account')->insertGetId($data);
             
-            return $this->json(0, '添加成功', ['id' => $id]);
+            return $this->json(0, 'ThêmThành công', ['id' => $id]);
         } catch (\Exception $e) {
-            Log::error('withdrawAccountInsert 错误: ' . $e->getMessage());
-            return $this->json(1, '添加失败: ' . $e->getMessage());
+            Log::error('withdrawAccountInsert Lỗi: ' . $e->getMessage());
+            return $this->json(1, 'ThêmThất bại: ' . $e->getMessage());
         }
     }
 
     /**
-     * 修改提现账户
+     * SửaRút tiềntài khoản
      * POST /app/admin/withdraw-account/update
      */
     public function withdrawAccountUpdate(Request $request)
@@ -556,12 +556,12 @@ class FinanceApiController extends Base
         $id = $request->post('id');
         
         if (!$id) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
         
         $account = Db::table('caipiao_withdraw_account')->where('id', $id)->first();
         if (!$account) {
-            return $this->json(1, '账户不存在');
+            return $this->json(1, 'tài khoảnkhông tồn tại');
         }
         
         try {
@@ -573,7 +573,7 @@ class FinanceApiController extends Base
             } elseif ($type === 'usdt') {
                 $allowFields = ['usdt_address', 'usdt_network', 'status'];
             } else {
-                // 支付宝/微信 - 包含收款码
+                // Alipay/WeChat - 包含收款码
                 $allowFields = ['bank_account', 'account_name', 'qr_code', 'status'];
             }
             
@@ -585,7 +585,7 @@ class FinanceApiController extends Base
             }
             
             if (empty($data)) {
-                return $this->json(1, '没有需要更新的数据');
+                return $this->json(1, '没有需要更新的dữ liệu');
             }
             
             $data['updated_at'] = date('Y-m-d H:i:s');
@@ -594,15 +594,15 @@ class FinanceApiController extends Base
                 ->where('id', $id)
                 ->update($data);
             
-            return $this->json(0, '修改成功');
+            return $this->json(0, 'SửaThành công');
         } catch (\Exception $e) {
-            Log::error('withdrawAccountUpdate 错误: ' . $e->getMessage());
-            return $this->json(1, '修改失败: ' . $e->getMessage());
+            Log::error('withdrawAccountUpdate Lỗi: ' . $e->getMessage());
+            return $this->json(1, 'SửaThất bại: ' . $e->getMessage());
         }
     }
 
     /**
-     * 删除提现账户
+     * XóaRút tiềntài khoản
      * POST /app/admin/withdraw-account/delete
      */
     public function withdrawAccountDelete(Request $request)
@@ -610,7 +610,7 @@ class FinanceApiController extends Base
         $ids = $request->post('ids', []);
         
         if (empty($ids)) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
         
         if (!is_array($ids)) {
@@ -621,18 +621,18 @@ class FinanceApiController extends Base
             $result = Db::table('caipiao_withdraw_account')->whereIn('id', $ids)->delete();
             
             if ($result) {
-                return $this->json(0, '删除成功');
+                return $this->json(0, 'XóaThành công');
             } else {
-                return $this->json(1, '删除失败');
+                return $this->json(1, 'XóaThất bại');
             }
         } catch (\Exception $e) {
-            Log::error('withdrawAccountDelete 错误: ' . $e->getMessage());
-            return $this->json(1, '删除失败: ' . $e->getMessage());
+            Log::error('withdrawAccountDelete Lỗi: ' . $e->getMessage());
+            return $this->json(1, 'XóaThất bại: ' . $e->getMessage());
         }
     }
 
     /**
-     * 设置默认提现账户
+     * Cài đặt默认Rút tiềntài khoản
      * POST /app/admin/withdraw-account/setDefault
      */
     public function withdrawAccountSetDefault(Request $request)
@@ -640,29 +640,29 @@ class FinanceApiController extends Base
         $id = $request->post('id');
         
         if (!$id) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
         
         $account = Db::table('caipiao_withdraw_account')->where('id', $id)->first();
         if (!$account) {
-            return $this->json(1, '账户不存在');
+            return $this->json(1, 'tài khoảnkhông tồn tại');
         }
         
         try {
-            // 取消该用户其他默认账户
+            // Hủy该Người dùng其他默认tài khoản
             Db::table('caipiao_withdraw_account')
                 ->where('uid', $account->uid)
                 ->update(['is_default' => 0]);
             
-            // 设置当前账户为默认
+            // Cài đặt当前tài khoản为默认
             Db::table('caipiao_withdraw_account')
                 ->where('id', $id)
                 ->update(['is_default' => 1]);
             
-            return $this->json(0, '设置成功');
+            return $this->json(0, 'Cài đặtThành công');
         } catch (\Exception $e) {
-            Log::error('withdrawAccountSetDefault 错误: ' . $e->getMessage());
-            return $this->json(1, '设置失败: ' . $e->getMessage());
+            Log::error('withdrawAccountSetDefault Lỗi: ' . $e->getMessage());
+            return $this->json(1, 'Cài đặtThất bại: ' . $e->getMessage());
         }
     }
 
@@ -681,7 +681,7 @@ class FinanceApiController extends Base
         $file = $request->file('file');
 
         if (!$file || !$file->isValid()) {
-            return $this->json(1, '请选择要上传的文件');
+            return $this->json(1, 'Vui lòng chọn要上传的文件');
         }
 
         // 允许的文件类型
@@ -718,12 +718,12 @@ class FinanceApiController extends Base
             // 生成访问 URL
             $url = '/uploads/' . $dateDir . '/' . $fileName;
 
-            return $this->json(0, '上传成功', [
+            return $this->json(0, '上传Thành công', [
                 'url' => $url,
             ]);
 
         } catch (\Exception $e) {
-            Log::error("文件上传失败: " . $e->getMessage());
+            Log::error("文件上传Thất bại: " . $e->getMessage());
             return $this->json(1, '上传失败: ' . $e->getMessage());
         }
     }

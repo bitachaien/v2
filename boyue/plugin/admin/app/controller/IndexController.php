@@ -47,13 +47,13 @@ class IndexController
      */
     public function dashboard(Request $request): Response
     {
-        // 今日新增用户数
+        // Hôm nay新增Người dùng数
         $today_user_count = User::where('created_at', '>', date('Y-m-d') . ' 00:00:00')->count();
-        // 7天内新增用户数
+        // 7天内新增Người dùng数
         $day7_user_count = User::where('created_at', '>', date('Y-m-d H:i:s', time() - 7 * 24 * 60 * 60))->count();
-        // 30天内新增用户数
+        // 30天内新增Người dùng数
         $day30_user_count = User::where('created_at', '>', date('Y-m-d H:i:s', time() - 30 * 24 * 60 * 60))->count();
-        // 总用户数
+        // 总Người dùng数
         $user_count = User::count();
         // mysql版本
         $version = Util::db()->select('select VERSION() as version');

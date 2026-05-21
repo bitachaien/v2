@@ -53,7 +53,7 @@ class TableController extends Base
     }
 
     /**
-     * 查询表
+     * Tra cứu表
      * @param Request $request
      * @return Response
      * @throws BusinessException
@@ -190,7 +190,7 @@ class TableController extends Base
     }
 
     /**
-     * 修改表
+     * Sửa表
      * @param Request $request
      * @return Response
      * @throws BusinessException|Throwable
@@ -314,7 +314,7 @@ class TableController extends Base
             }
         });
 
-        // 找到删除的字段
+        // 找到Xóa的字段
         $old_columns = Util::getSchema($table_name, 'columns');
         $exists_column_names = array_column($columns, 'field', 'field');
         $old_columns_names = array_column($old_columns, 'field');
@@ -329,7 +329,7 @@ class TableController extends Base
             foreach ($keys as $key) {
                 $key_name = $key['name'];
                 $old_key = $old_keys[$key_name] ?? [];
-                // 如果索引有变动，则删除索引，重新建立索引
+                // 如果索引有变动，则Xóa索引，重新建立索引
                 if ($old_key && ($key['type'] != $old_key['type'] || $key['columns'] != implode(',', $old_key['columns']))) {
                     $old_key = [];
                     unset($old_keys[$key_name]);
@@ -350,7 +350,7 @@ class TableController extends Base
                 }
             }
 
-            // 找到删除的索引
+            // 找到Xóa的索引
             $exists_key_names = array_column($keys, 'name', 'name');
             $old_keys_names = array_column($old_keys, 'name');
             $drop_keys_names = array_diff($old_keys_names, $exists_key_names);
@@ -371,7 +371,7 @@ class TableController extends Base
             }
         }
 
-        // 一个表只能有一个 auto_increment 字段，并且是key，所以需要在最后设置
+        // 一个表只能有一个 auto_increment 字段，并且是key，所以需要在最后Cài đặt
         if ($auto_increment_column) {
             $this->modifyColumn($auto_increment_column, $table_name);
         }
@@ -416,7 +416,7 @@ class TableController extends Base
         $model_file = '/' . trim($request->post('model', ''), '/');
         $overwrite = $request->post('overwrite');
         if ($controller_file === '/' || $model_file === '/') {
-            return $this->json(1, '控制器和model不能为空');
+            return $this->json(1, '控制器和modelkhông được để trống');
         }
 
         $controller_info = pathinfo($controller_file);
@@ -435,7 +435,7 @@ class TableController extends Base
         if ($pid) {
             $parent_menu = Rule::find($pid);
             if (!$parent_menu) {
-                return $this->json(1, '父菜单不存在');
+                return $this->json(1, '父菜单không tồn tại');
             }
         }
 
@@ -758,7 +758,7 @@ EOF;
             <div class="layui-form-item layui-inline">
                 <label class="layui-form-label"></label>
                 <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="table-query">
-                    <i class="layui-icon layui-icon-search"></i>查询
+                    <i class="layui-icon layui-icon-search"></i>Tra cứu
                 </button>
                 <button type="reset" class="pear-btn pear-btn-md" lay-submit lay-filter="table-reset">
                     <i class="layui-icon layui-icon-refresh"></i>重置
@@ -789,10 +789,10 @@ EOF
     </head>
     <body class="pear-container">
     
-        <!-- 顶部查询表单 -->
+        <!-- 顶部Tra cứu表单 -->
         $html
         
-        <!-- 数据表格 -->
+        <!-- dữ liệu表格 -->
         <div class="layui-card">
             <div class="layui-card-body">
                 <table id="data-table" lay-filter="data-table"></table>
@@ -805,14 +805,14 @@ EOF
                 <i class="layui-icon layui-icon-add-1"></i>新增
             </button>
             <button class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove" permission="$code_base.delete">
-                <i class="layui-icon layui-icon-delete"></i>删除
+                <i class="layui-icon layui-icon-delete"></i>Xóa
             </button>
         </script>
 
         <!-- 表格行工具栏 -->
         <script type="text/html" id="table-bar">
             <button class="pear-btn pear-btn-xs tool-btn" lay-event="edit" permission="$code_base.update">编辑</button>
-            <button class="pear-btn pear-btn-xs tool-btn" lay-event="remove" permission="$code_base.delete">删除</button>
+            <button class="pear-btn pear-btn-xs tool-btn" lay-event="remove" permission="$code_base.delete">Xóa</button>
         </script>
 
         <script src="/app/admin/component/layui/layui.js?v=2.8.12"></script>
@@ -838,7 +838,7 @@ EOF
                 let common = layui.common;
                 let util = layui.util;
                 $table_js
-                // 编辑或删除行事件
+                // 编辑hoặcXóa行事件
                 table.on("tool(data-table)", function(obj) {
                     if (obj.event === "remove") {
                         remove(obj);
@@ -858,7 +858,7 @@ EOF
                     }
                 });
 
-                // 表格顶部搜索事件
+                // 表格顶部Tìm kiếm事件
                 form.on("submit(table-query)", function(data) {
                     table.reload("data-table", {
                         page: {
@@ -869,7 +869,7 @@ EOF
                     return false;
                 });
                 
-                // 表格顶部搜索重置事件
+                // 表格顶部Tìm kiếm重置事件
                 form.on("submit(table-reset)", function(data) {
                     table.reload("data-table", {
                         where: []
@@ -882,7 +882,7 @@ EOF
                     email: [/(^$)|^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/, "邮箱格式不正确"],
                     url: [/(^$)|(^#)|(^http(s*):\/\/[^\s]+\.[^\s]+)/, "链接格式不正确"],
                     number: [/(^$)|^\d+$/,'只能填写数字'],
-                    date: [/(^$)|^(\d{4})[-\/](\d{1}|0\d{1}|1[0-2])([-\/](\d{1}|0\d{1}|[1-2][0-9]|3[0-1]))*$/, "日期格式不正确"],
+                    date: [/(^$)|^(\d{4})[-\/](\d{1}|0\d{1}|1[0-2])([-\/](\d{1}|0\d{1}|[1-2][0-9]|3[0-1]))*$/, "Ngày格式不正确"],
                     identity: [/(^$)|(^\d{15}$)|(^\d{17}(x|X|\d)$)/, "请输入正确的身份证号"]
                 });
 
@@ -898,7 +898,7 @@ EOF
                     });
                 });
 
-                // 表格新增数据
+                // 表格新增dữ liệu
                 let add = function() {
                     layer.open({
                         type: 2,
@@ -910,12 +910,12 @@ EOF
                     });
                 }
 
-                // 表格编辑数据
+                // 表格编辑dữ liệu
                 let edit = function(obj) {
                     let value = obj.data[PRIMARY_KEY];
                     layer.open({
                         type: 2,
-                        title: "修改",
+                        title: "Sửa",
                         shade: 0.1,
                         maxmin: true,
                         area: [common.isModile()?"100%":"500px", common.isModile()?"100%":"450px"],
@@ -923,28 +923,28 @@ EOF
                     });
                 }
 
-                // 删除一行
+                // Xóa一行
                 let remove = function(obj) {
                     return doRemove(obj.data[PRIMARY_KEY]);
                 }
 
-                // 删除多行
+                // Xóa多行
                 let batchRemove = function(obj) {
                     let checkIds = common.checkField(obj, PRIMARY_KEY);
                     if (checkIds === "") {
-                        layui.popup.warning("未选中数据");
+                        layui.popup.warning("未选中dữ liệu");
                         return false;
                     }
                     doRemove(checkIds.split(","));
                 }
 
-                // 执行删除
+                // 执行Xóa
                 let doRemove = function (ids) {
                     let data = {};
                     data[PRIMARY_KEY] = ids;
-                    layer.confirm("确定删除?", {
+                    layer.confirm("确定Xóa?", {
                         icon: 3,
-                        title: "提示"
+                        title: "Lưu ý"
                     }, function(index) {
                         layer.close(index);
                         let loading = layer.load();
@@ -958,13 +958,13 @@ EOF
                                 if (res.code) {
                                     return layui.popup.failure(res.msg);
                                 }
-                                return layui.popup.success("操作成功", refreshTable);
+                                return layui.popup.success("Thao tác thành công", refreshTable);
                             }
                         })
                     });
                 }
 
-                // 刷新表格数据
+                // Làm mới表格dữ liệu
                 window.refreshTable = function() {
                     table.reloadData("data-table", {
                         scrollPos: "fixed",
@@ -1017,7 +1017,7 @@ EOF;
                 <div class="button-container">
                     <button type="submit" class="pear-btn pear-btn-primary pear-btn-md" lay-submit=""
                         lay-filter="save">
-                        提交
+                        Gửi
                     </button>
                     <button type="reset" class="pear-btn pear-btn-md">
                         重置
@@ -1037,7 +1037,7 @@ EOF;
             // 相关接口
             const INSERT_API = "$url_path_base/insert";
             $js
-            //提交事件
+            // Gửi事件
             layui.use(["form", "popup"], function () {
                 // 字段验证允许为空
                 layui.form.verify({
@@ -1045,7 +1045,7 @@ EOF;
                     email: [/(^$)|^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/, "邮箱格式不正确"],
                     url: [/(^$)|(^#)|(^http(s*):\/\/[^\s]+\.[^\s]+)/, "链接格式不正确"],
                     number: [/(^$)|^\d+$/,'只能填写数字'],
-                    date: [/(^$)|^(\d{4})[-\/](\d{1}|0\d{1}|1[0-2])([-\/](\d{1}|0\d{1}|[1-2][0-9]|3[0-1]))*$/, "日期格式不正确"],
+                    date: [/(^$)|^(\d{4})[-\/](\d{1}|0\d{1}|1[0-2])([-\/](\d{1}|0\d{1}|[1-2][0-9]|3[0-1]))*$/, "Ngày格式不正确"],
                     identity: [/(^$)|(^\d{15}$)|(^\d{17}(x|X|\d)$)/, "请输入正确的身份证号"]
                 });
                 layui.form.on("submit(save)", function (data) {
@@ -1058,7 +1058,7 @@ EOF;
                             if (res.code) {
                                 return layui.popup.failure(res.msg);
                             }
-                            return layui.popup.success("操作成功", function () {
+                            return layui.popup.success("Thao tác thành công", function () {
                                 parent.refreshTable();
                                 parent.layer.close(parent.layer.getFrameIndex(window.name));
                             });
@@ -1106,7 +1106,7 @@ EOF;
             <div class="bottom">
                 <div class="button-container">
                     <button type="submit" class="pear-btn pear-btn-primary pear-btn-md" lay-submit="" lay-filter="save">
-                        提交
+                        Gửi
                     </button>
                     <button type="reset" class="pear-btn pear-btn-md">
                         重置
@@ -1127,7 +1127,7 @@ EOF;
             const PRIMARY_KEY = "$primary_key";
             const SELECT_API = "$url_path_base/select" + location.search;
             const UPDATE_API = "$url_path_base/update";
-            // 获取数据库记录
+            // Lấy dữ liệu库lịch sử
             layui.use(["form", "util", "popup"], function () {
                 let $ = layui.$;
                 $.ajax({
@@ -1135,11 +1135,11 @@ EOF;
                     dataType: "json",
                     success: function (res) {
                         
-                        // 给表单初始化数据
+                        // 给表单初始化dữ liệu
                         layui.each(res.data[0], function (key, value) {
                             let obj = $('*[name="'+key+'"]');
                             if (key === "password") {
-                                obj.attr("placeholder", "不更新密码请留空");
+                                obj.attr("placeholder", "不更新Mật khẩu请留空");
                                 return;
                             }
                             if (typeof obj[0] === "undefined" || !obj[0].nodeName) return;
@@ -1165,7 +1165,7 @@ EOF;
                         });
                         $js
                         
-                        // ajax返回失败
+                        // ajax返回Thất bại
                         if (res.code) {
                             layui.popup.failure(res.msg);
                         }
@@ -1174,7 +1174,7 @@ EOF;
                 });
             });
 
-            //提交事件
+            // Gửi事件
             layui.use(["form", "popup"], function () {
                 // 字段验证允许为空
                 layui.form.verify({
@@ -1182,7 +1182,7 @@ EOF;
                     email: [/(^$)|^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/, "邮箱格式不正确"],
                     url: [/(^$)|(^#)|(^http(s*):\/\/[^\s]+\.[^\s]+)/, "链接格式不正确"],
                     number: [/(^$)|^\d+$/,'只能填写数字'],
-                    date: [/(^$)|^(\d{4})[-\/](\d{1}|0\d{1}|1[0-2])([-\/](\d{1}|0\d{1}|[1-2][0-9]|3[0-1]))*$/, "日期格式不正确"],
+                    date: [/(^$)|^(\d{4})[-\/](\d{1}|0\d{1}|1[0-2])([-\/](\d{1}|0\d{1}|[1-2][0-9]|3[0-1]))*$/, "Ngày格式不正确"],
                     identity: [/(^$)|(^\d{15}$)|(^\d{17}(x|X|\d)$)/, "请输入正确的身份证号"]
                 });
                 layui.form.on("submit(save)", function (data) {
@@ -1196,7 +1196,7 @@ EOF;
                             if (res.code) {
                                 return layui.popup.failure(res.msg);
                             }
-                            return layui.popup.success("操作成功", function () {
+                            return layui.popup.success("Thao tác thành công", function () {
                                 parent.refreshTable();
                                 parent.layer.close(parent.layer.getFrameIndex(window.name));
                             });
@@ -1233,7 +1233,7 @@ EOF;
 
 
     /**
-     * 查询记录
+     * Tra cứulịch sử
      * @param Request $request
      * @return Response
      * @throws BusinessException
@@ -1249,7 +1249,7 @@ EOF;
 
         $allow_column = Util::db()->select("desc `$table`");
         if (!$allow_column) {
-            return $this->json(2, '表不存在');
+            return $this->json(2, '表không tồn tại');
         }
         $allow_column = array_column($allow_column, 'Field', 'Field');
         if (!in_array($field, $allow_column)) {
@@ -1303,7 +1303,7 @@ EOF;
     }
 
     /**
-     * 插入记录
+     * 插入lịch sử
      * @param Request $request
      * @return Response
      * @throws BusinessException|Throwable
@@ -1322,7 +1322,7 @@ EOF;
         $data = $request->post();
         $allow_column = Util::db()->select("desc `$table`");
         if (!$allow_column) {
-            throw new BusinessException('表不存在', 2);
+            throw new BusinessException('表không tồn tại', 2);
         }
         $columns = array_column($allow_column, 'Type', 'Field');
         foreach ($data as $col => $item) {
@@ -1354,7 +1354,7 @@ EOF;
     }
 
     /**
-     * 更新记录
+     * 更新lịch sử
      * @param Request $request
      * @return Response
      * @throws BusinessException|Throwable
@@ -1388,7 +1388,7 @@ EOF;
         $data = $request->post();
         $allow_column = Util::db()->select("desc `$table`");
         if (!$allow_column) {
-            throw new BusinessException('表不存在', 2);
+            throw new BusinessException('表không tồn tại', 2);
         }
         $columns = array_column($allow_column, 'Type', 'Field');
         foreach ($data as $col => $item) {
@@ -1404,7 +1404,7 @@ EOF;
                 $data[$col] = implode(',', $item);
             }
             if ($col === 'password') {
-                // 密码为空，则不更新密码
+                // Mật khẩu为空，则不更新Mật khẩu
                 if ($item == '') {
                     unset($data[$col]);
                     continue;
@@ -1421,7 +1421,7 @@ EOF;
     }
 
     /**
-     * 删除记录
+     * Xóalịch sử
      * @param Request $request
      * @return Response
      * @throws BusinessException
@@ -1432,10 +1432,10 @@ EOF;
         $table_info = Util::getSchema($table, 'table');
         $primary_keys = $table_info['primary_key'];
         if (empty($primary_keys)) {
-            return $this->json(1, '该表没有主键，无法执行删除操作');
+            return $this->json(1, '该表没有主键，无法执行Xóa操作');
         }
         if (count($primary_keys) > 1) {
-            return $this->json(1, '不支持复合主键删除');
+            return $this->json(1, '不支持复合主键Xóa');
         }
         $primary_key = $primary_keys[0];
         $value = (array)$request->post($primary_key);
@@ -1445,7 +1445,7 @@ EOF;
 
 
     /**
-     * 删除表
+     * Xóa表
      * @param Request $request
      * @return Response
      */
@@ -1458,11 +1458,11 @@ EOF;
         $prefix = 'wa_';
         $table_not_allow_drop = ["{$prefix}admins", "{$prefix}users", "{$prefix}options", "{$prefix}roles", "{$prefix}rules", "{$prefix}admin_roles", "{$prefix}uploads"];
         if ($found = array_intersect($tables, $table_not_allow_drop)) {
-            return $this->json(400, implode(',', $found) . '不允许删除');
+            return $this->json(400, implode(',', $found) . '不允许Xóa');
         }
         foreach ($tables as $table) {
             Util::schema()->drop($table);
-            // 删除schema
+            // Xóaschema
             Util::db()->table('wa_options')->where('name', "table_form_schema_$table")->delete();
         }
         return $this->json(0, 'ok');

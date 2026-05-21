@@ -50,7 +50,7 @@ class SystemLotteryGenerator
             
             Log::info('已加载 ' . count($this->systemLotteries) . ' 个系统彩配置');
         } catch (\Exception $e) {
-            Log::error('加载系统彩配置失败: ' . $e->getMessage());
+            Log::error('加载系统彩cấu hình thất bại: ' . $e->getMessage());
         }
     }
     
@@ -102,7 +102,7 @@ class SystemLotteryGenerator
             $this->generateOpencode($name, $config);
         });
         
-        Log::info("系统彩 {$config['title']} 定时器已设置，间隔: {$interval}秒");
+        Log::info("系统彩 {$config['title']} 定时器已Cài đặt，间隔: {$interval}秒");
     }
     
     
@@ -147,7 +147,7 @@ class SystemLotteryGenerator
         } catch (\Exception $e) {
             
             if (strpos($e->getMessage(), 'Duplicate entry') === false) {
-                Log::error("确保期号失败 {$name}: " . $e->getMessage());
+                Log::error("确保期号Thất bại {$name}: " . $e->getMessage());
             }
         }
     }
@@ -203,7 +203,7 @@ class SystemLotteryGenerator
                 }
             }
         } catch (\Exception $e) {
-            Log::error("补充期号失败 {$name}: " . $e->getMessage());
+            Log::error("补充期号Thất bại {$name}: " . $e->getMessage());
         }
     }
     
@@ -255,7 +255,7 @@ class SystemLotteryGenerator
             ]);
             
         } catch (\Exception $e) {
-            Log::error("创建期号失败 {$name}: " . $e->getMessage());
+            Log::error("创建期号Thất bại {$name}: " . $e->getMessage());
         }
     }
     
@@ -307,7 +307,7 @@ class SystemLotteryGenerator
             ]);
             
         } catch (\Exception $e) {
-            Log::error("创建下一期失败 {$name}: " . $e->getMessage());
+            Log::error("创建下一期Thất bại {$name}: " . $e->getMessage());
         }
     }
     
@@ -376,10 +376,10 @@ class SystemLotteryGenerator
                 ->where('id', $pendingIssue->id)
                 ->update(['opencode' => $opencode]);
             
-            Log::info("{$config['title']} 开奖: 期号 {$expect}, 开奖号码: {$opencode}");
+            Log::info("{$config['title']} Mở thưởng: 期号 {$expect}, Mở thưởng号码: {$opencode}");
             
         } catch (\Exception $e) {
-            Log::error("生成开奖号码失败 {$name}: " . $e->getMessage());
+            Log::error("生成Mở thưởng号码Thất bại {$name}: " . $e->getMessage());
         }
     }
     
@@ -507,7 +507,7 @@ class SystemLotteryGenerator
         }
         
         
-        Log::warning("利润控制：无法生成不中奖号码，使用原号码 {$name} {$expect}");
+        Log::warning("利润控制：无法生成不Trúng thưởng号码，使用原号码 {$name} {$expect}");
         return $opencode;
     }
     

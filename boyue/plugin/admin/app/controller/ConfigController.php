@@ -21,7 +21,7 @@ class ConfigController extends Base
     protected $noNeedAuth = ['get'];
 
     /**
-     * 账户设置
+     * tài khoảnCài đặt
      * @return Response
      * @throws Throwable
      */
@@ -31,7 +31,7 @@ class ConfigController extends Base
     }
 
     /**
-     * 获取配置
+     * Lấy配置
      * @return Response
      */
     public function get(): Response
@@ -40,7 +40,7 @@ class ConfigController extends Base
     }
 
     /**
-     * 基于配置文件获取默认权限
+     * 基于配置文件Lấy默认权限
      * @return mixed
      */
     protected function getByDefault()
@@ -140,7 +140,7 @@ class ConfigController extends Base
     protected function filterColor(string $color): string
     {
         if (!preg_match('/\#[a-zA-Z]6/', $color)) {
-            throw new BusinessException('参数错误');
+            throw new BusinessException('Tham số không hợp lệ');
         }
         return $color;
     }

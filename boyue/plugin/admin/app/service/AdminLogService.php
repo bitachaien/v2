@@ -14,47 +14,47 @@ class AdminLogService
      * 操作类型映射
      */
     const TYPE_MAP = [
-        // 登录相关
-        'login' => '登录',
-        'logout' => '退出',
+        // Đăng nhập相关
+        'login' => 'Đăng nhập',
+        'logout' => 'Đăng xuất',
         
-        // 会员管理
-        'member_add' => '添加会员',
-        'member_edit' => '编辑会员',
-        'member_delete' => '删除会员',
-        'member_status' => '会员状态变更',
-        'member_balance' => '会员余额调整',
+        // Thành viên管理
+        'member_add' => 'ThêmThành viên',
+        'member_edit' => '编辑Thành viên',
+        'member_delete' => 'XóaThành viên',
+        'member_status' => 'Thành viên状态变更',
+        'member_balance' => 'Thành viênSố dư调整',
         
-        // 充值提现
-        'recharge_approve' => '充值审核通过',
-        'recharge_reject' => '充值审核拒绝',
-        'withdraw_approve' => '提现审核通过',
-        'withdraw_reject' => '提现审核拒绝',
+        // Nạp tiềnRút tiền
+        'recharge_approve' => 'Nạp tiền审核通过',
+        'recharge_reject' => 'Nạp tiền审核拒绝',
+        'withdraw_approve' => 'Rút tiền审核通过',
+        'withdraw_reject' => 'Rút tiền审核拒绝',
         
-        // 彩票相关
-        'lottery_add' => '添加彩种',
+        // Xổ số相关
+        'lottery_add' => 'Thêm彩种',
         'lottery_edit' => '编辑彩种',
         'lottery_status' => '彩种状态变更',
         'bet_cancel' => '撤销注单',
-        'result_set' => '设置开奖结果',
+        'result_set' => 'Cài đặtMở thưởng结果',
         
         // 系统管理
-        'admin_add' => '添加管理员',
+        'admin_add' => 'Thêm管理员',
         'admin_edit' => '编辑管理员',
-        'admin_delete' => '删除管理员',
-        'role_add' => '添加角色',
+        'admin_delete' => 'Xóa管理员',
+        'role_add' => 'Thêm角色',
         'role_edit' => '编辑角色',
-        'role_delete' => '删除角色',
-        'setting_update' => '系统设置更新',
+        'role_delete' => 'Xóa角色',
+        'setting_update' => '系统Cài đặt更新',
         
         // 营销管理
-        'banner_add' => '添加轮播图',
+        'banner_add' => 'Thêm轮播图',
         'banner_edit' => '编辑轮播图',
-        'banner_delete' => '删除轮播图',
-        'notice_add' => '添加公告',
-        'notice_edit' => '编辑公告',
-        'activity_add' => '添加活动',
-        'activity_edit' => '编辑活动',
+        'banner_delete' => 'Xóa轮播图',
+        'notice_add' => 'ThêmCông bố',
+        'notice_edit' => '编辑Công bố',
+        'activity_add' => 'ThêmHoạt động',
+        'activity_edit' => '编辑Hoạt động',
     ];
 
     /**
@@ -81,13 +81,13 @@ class AdminLogService
                 $path = $request->path();
                 $method = $request->method();
                 
-                // 获取请求参数（过滤敏感信息）
+                // Lấy请求参数（过滤敏感信息）
                 $requestParams = array_merge($request->get(), $request->post());
                 $requestParams = self::filterSensitiveParams($requestParams);
                 $params = json_encode($requestParams, JSON_UNESCAPED_UNICODE);
             }
             
-            // 获取 IP 归属地
+            // Lấy IP 归属地
             $iparea = '';
             if ($ip) {
                 $iparea = IpLocationService::getLocation($ip);
@@ -106,13 +106,13 @@ class AdminLogService
                 'time' => time(),
             ]);
         } catch (\Exception $e) {
-            // 日志记录失败不影响业务
+            // 日志lịch sử thất bại不影响业务
             \support\Log::error('AdminLogService::log error: ' . $e->getMessage());
         }
     }
 
     /**
-     * 快捷记录方法
+     * 快捷lịch sử方法
      */
     public static function record(Request $request, string $type, string $info = ''): void
     {
@@ -153,7 +153,7 @@ class AdminLogService
             '/app/admin/api/admin/role-delete' => 'role_delete',
             '/app/admin/api/admin/role-rules' => 'role_edit',
             
-            // 会员
+            // Thành viên
             '/app/admin/member/add' => 'member_add',
             '/app/admin/member/edit' => 'member_edit',
             '/app/admin/member/delete' => 'member_delete',
@@ -163,11 +163,11 @@ class AdminLogService
             '/app/admin/system/banner-edit' => 'banner_edit',
             '/app/admin/system/banner-delete' => 'banner_delete',
             
-            // 彩票
+            // Xổ số
             '/app/admin/api/lottery/save' => 'lottery_edit',
             '/app/admin/api/lottery/delete' => 'lottery_delete',
             
-            // 登录
+            // Đăng nhập
             '/app/admin/account/login' => 'login',
             '/app/admin/account/logout' => 'logout',
         ];

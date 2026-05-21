@@ -110,11 +110,11 @@ class IndexController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('首页数据获取失败: ' . $e->getMessage());
+            \support\Log::error('首页dữ liệuLấy dữ liệu thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '获取数据失败',
+                'message' => 'Lấy dữ liệuThất bại',
                 'data' => null
             ]);
         }
@@ -177,11 +177,11 @@ class IndexController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('彩种大厅数据获取失败: ' . $e->getMessage());
+            \support\Log::error('彩种大厅dữ liệuLấy dữ liệu thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '获取数据失败',
+                'message' => 'Lấy dữ liệuThất bại',
                 'data' => null
             ]);
         }
@@ -221,11 +221,11 @@ class IndexController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('公告列表获取失败: ' . $e->getMessage());
+            \support\Log::error('Công bố列表Lấy dữ liệu thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '获取数据失败',
+                'message' => 'Lấy dữ liệuThất bại',
                 'data' => null
             ]);
         }
@@ -240,7 +240,7 @@ class IndexController
                 return json([
                     'code' => 400,
                     'sign' => false,
-                    'message' => '参数错误',
+                    'message' => 'Tham số không hợp lệ',
                     'data' => null
                 ]);
             }
@@ -253,7 +253,7 @@ class IndexController
                 return json([
                     'code' => 404,
                     'sign' => false,
-                    'message' => '公告不存在',
+                    'message' => 'Công bốkhông tồn tại',
                     'data' => null
                 ]);
             }
@@ -271,11 +271,11 @@ class IndexController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('公告详情获取失败: ' . $e->getMessage());
+            \support\Log::error('Công bốChi tiếtLấy dữ liệu thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '获取数据失败',
+                'message' => 'Lấy dữ liệuThất bại',
                 'data' => null
             ]);
         }
@@ -309,11 +309,11 @@ class IndexController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('轮播图获取失败: ' . $e->getMessage());
+            \support\Log::error('轮播图Lấy dữ liệu thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '获取数据失败',
+                'message' => 'Lấy dữ liệuThất bại',
                 'data' => null
             ]);
         }
@@ -358,11 +358,11 @@ class IndexController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('系统配置获取失败: ' . $e->getMessage());
+            \support\Log::error('系统配置Lấy dữ liệu thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '获取数据失败',
+                'message' => 'Lấy dữ liệuThất bại',
                 'data' => null
             ]);
         }
@@ -483,10 +483,10 @@ class IndexController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('实时开奖列表获取失败: ' . $e->getMessage());
+            \support\Log::error('实时Mở thưởng列表Lấy dữ liệu thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败',
+                'message' => 'Lấy dữ liệuThất bại',
                 'data' => []
             ]);
         }
@@ -507,7 +507,7 @@ class IndexController
                 ->first();
             
             if (!$lottery) {
-                return json(['code' => 404, 'message' => '彩种不存在', 'data' => null]);
+                return json(['code' => 404, 'message' => '彩种không tồn tại', 'data' => null]);
             }
             
             $currentExpect = Db::table('caipiao_kaijiang')
@@ -563,10 +563,10 @@ class IndexController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('彩种当前期信息获取失败: ' . $e->getMessage());
+            \support\Log::error('彩种当前期信息Lấy dữ liệu thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败',
+                'message' => 'Lấy dữ liệuThất bại',
                 'data' => null
             ]);
         }

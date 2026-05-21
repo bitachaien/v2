@@ -17,7 +17,7 @@ class YzzMenuController extends Base
     protected $noNeedAuth = ['tree', 'list'];
 
     /**
-     * 获取菜单树（前端路由用）
+     * Lấy菜单树（前端路由用）
      * GET /app/admin/api/yzz-menu/tree
      */
     public function tree(Request $request)
@@ -39,7 +39,7 @@ class YzzMenuController extends Base
     }
 
     /**
-     * 获取完整菜单树（包含隐藏菜单，菜单管理用）
+     * Lấy完整菜单树（包含隐藏菜单，菜单管理用）
      * GET /app/admin/api/yzz-menu/full-tree
      */
     public function fullTree(Request $request)
@@ -56,7 +56,7 @@ class YzzMenuController extends Base
     }
 
     /**
-     * 获取菜单列表（扁平结构）
+     * Lấy菜单列表（扁平结构）
      * GET /app/admin/api/yzz-menu/list
      */
     public function list(Request $request)
@@ -88,26 +88,26 @@ class YzzMenuController extends Base
     }
 
     /**
-     * 菜单详情
+     * 菜单Chi tiết
      * GET /app/admin/api/yzz-menu/detail
      */
     public function detail(Request $request)
     {
         $id = $request->get('id');
         if (!$id) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
         $menu = Db::table('yzz_menus')->where('id', $id)->first();
         if (!$menu) {
-            return $this->json(1, '菜单不存在');
+            return $this->json(1, '菜单không tồn tại');
         }
 
         return $this->json(0, 'ok', (array)$menu);
     }
 
     /**
-     * 添加菜单
+     * Thêm菜单
      * POST /app/admin/api/yzz-menu/add
      */
     public function add(Request $request)
@@ -120,7 +120,7 @@ class YzzMenuController extends Base
         // 检查 name 是否重复
         $exists = Db::table('yzz_menus')->where('name', $data['name'])->first();
         if ($exists) {
-            return $this->json(1, '菜单名称已存在');
+            return $this->json(1, '菜单名称đã tồn tại');
         }
 
         $data['created_at'] = date('Y-m-d H:i:s');
@@ -128,7 +128,7 @@ class YzzMenuController extends Base
 
         $id = Db::table('yzz_menus')->insertGetId($data);
 
-        return $this->json(0, '添加成功', ['id' => $id]);
+        return $this->json(0, 'ThêmThành công', ['id' => $id]);
     }
 
     /**
@@ -139,12 +139,12 @@ class YzzMenuController extends Base
     {
         $id = $request->post('id');
         if (!$id) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
         $menu = Db::table('yzz_menus')->where('id', $id)->first();
         if (!$menu) {
-            return $this->json(1, '菜单不存在');
+            return $this->json(1, '菜单không tồn tại');
         }
 
         $data = $this->validateMenuData($request, $id);
@@ -158,36 +158,36 @@ class YzzMenuController extends Base
             ->where('id', '!=', $id)
             ->first();
         if ($exists) {
-            return $this->json(1, '菜单名称已存在');
+            return $this->json(1, '菜单名称đã tồn tại');
         }
 
         $data['updated_at'] = date('Y-m-d H:i:s');
 
         Db::table('yzz_menus')->where('id', $id)->update($data);
 
-        return $this->json(0, '修改成功');
+        return $this->json(0, 'SửaThành công');
     }
 
     /**
-     * 删除菜单
+     * Xóa菜单
      * POST /app/admin/api/yzz-menu/delete
      */
     public function delete(Request $request)
     {
         $id = $request->post('id');
         if (!$id) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
         // 检查是否有子菜单
         $childCount = Db::table('yzz_menus')->where('pid', $id)->count();
         if ($childCount > 0) {
-            return $this->json(1, '该菜单下有子菜单，无法删除');
+            return $this->json(1, '该菜单下有子菜单，无法Xóa');
         }
 
         Db::table('yzz_menus')->where('id', $id)->delete();
 
-        return $this->json(0, '删除成功');
+        return $this->json(0, 'XóaThành công');
     }
 
     /**
@@ -200,7 +200,7 @@ class YzzMenuController extends Base
         $status = $request->post('status');
 
         if (!$id || $status === null) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
         Db::table('yzz_menus')->where('id', $id)->update([
@@ -208,7 +208,7 @@ class YzzMenuController extends Base
             'updated_at' => date('Y-m-d H:i:s'),
         ]);
 
-        return $this->json(0, '状态更新成功');
+        return $this->json(0, '状态更新Thành công');
     }
 
     /**
@@ -220,7 +220,7 @@ class YzzMenuController extends Base
         $data = $request->post('data', []);
 
         if (empty($data)) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
         foreach ($data as $item) {
@@ -232,7 +232,7 @@ class YzzMenuController extends Base
             }
         }
 
-        return $this->json(0, '排序更新成功');
+        return $this->json(0, '排序更新Thành công');
     }
 
     /**
@@ -276,7 +276,7 @@ class YzzMenuController extends Base
         $clear = $request->post('clear', false); // 是否清空现有菜单
 
         if (empty($menus)) {
-            return $this->json(1, '菜单数据不能为空');
+            return $this->json(1, '菜单数据không được để trống');
         }
 
         try {
@@ -290,7 +290,7 @@ class YzzMenuController extends Base
 
             Db::commit();
 
-            return $this->json(0, "导入成功，共 {$count} 条菜单");
+            return $this->json(0, "导入Thành công，共 {$count} 条菜单");
         } catch (\Exception $e) {
             Db::rollBack();
             return $this->json(1, '导入失败: ' . $e->getMessage());
@@ -382,7 +382,7 @@ class YzzMenuController extends Base
     }
 
     /**
-     * 验证菜单数据
+     * 验证菜单dữ liệu
      */
     private function validateMenuData(Request $request, int $id = 0): array|string
     {
@@ -390,11 +390,11 @@ class YzzMenuController extends Base
         $title = $request->post('title');
 
         if (!$name) {
-            return '菜单名称不能为空';
+            return '菜单名称không được để trống';
         }
 
         if (!$title) {
-            return '菜单标题不能为空';
+            return '菜单标题không được để trống';
         }
 
         return [
@@ -411,7 +411,7 @@ class YzzMenuController extends Base
     }
 
     /**
-     * 获取类型文本
+     * Lấy类型文本
      */
     private function getTypeText(int $type): string
     {

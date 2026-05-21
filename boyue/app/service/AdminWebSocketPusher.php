@@ -53,7 +53,7 @@ class AdminWebSocketPusher
             
             return true;
         } catch (\Exception $e) {
-            Log::error("[AdminWSPusher] 推送失败: " . $e->getMessage());
+            Log::error("[AdminWSPusher] 推送Thất bại: " . $e->getMessage());
             self::$redis = null;
             return false;
         }

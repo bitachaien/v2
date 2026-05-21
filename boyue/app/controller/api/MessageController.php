@@ -35,7 +35,7 @@ class MessageController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '请先登录',
+                'message' => 'Vui lòng đăng nhập',
                 'data' => null
             ]);
         }
@@ -92,7 +92,7 @@ class MessageController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'total' => $total,
                     'page' => $page,
@@ -103,10 +103,10 @@ class MessageController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取站内信列表失败: ' . $e->getMessage());
+            \support\Log::error('Lấy站内信列表Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败: ' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại: ' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -120,7 +120,7 @@ class MessageController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '请先登录',
+                'message' => 'Vui lòng đăng nhập',
                 'data' => null
             ]);
         }
@@ -133,7 +133,7 @@ class MessageController
             if (!$msg) {
                 return json([
                     'code' => 404,
-                    'message' => '消息不存在',
+                    'message' => 'Tin nhắnkhông tồn tại',
                     'data' => null
                 ]);
             }
@@ -142,7 +142,7 @@ class MessageController
             if (!$this->isUserInUsers($msg->users, $userId)) {
                 return json([
                     'code' => 403,
-                    'message' => '无权查看此消息',
+                    'message' => '无权查看此Tin nhắn',
                     'data' => null
                 ]);
             }
@@ -158,7 +158,7 @@ class MessageController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'id' => $msg->id,
                     'title' => $msg->title,
@@ -171,10 +171,10 @@ class MessageController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取站内信详情失败: ' . $e->getMessage());
+            \support\Log::error('Lấy站内信Chi tiếtThất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败',
+                'message' => 'Lấy dữ liệuThất bại',
                 'data' => null
             ]);
         }
@@ -188,7 +188,7 @@ class MessageController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '请先登录',
+                'message' => 'Vui lòng đăng nhập',
                 'data' => null
             ]);
         }
@@ -215,7 +215,7 @@ class MessageController
             }
             
             if (empty($ids)) {
-                return json(['code' => 400, 'message' => '参数错误', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Tham số không hợp lệ', 'data' => null]);
             }
             
             
@@ -231,14 +231,14 @@ class MessageController
             
             return json([
                 'code' => 0,
-                'message' => '标记成功',
+                'message' => '标记Thành công',
                 'data' => null
             ]);
             
         } catch (\Exception $e) {
             return json([
                 'code' => 500,
-                'message' => '操作失败',
+                'message' => 'Thao tác thất bại',
                 'data' => null
             ]);
         }
@@ -252,7 +252,7 @@ class MessageController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '请先登录',
+                'message' => 'Vui lòng đăng nhập',
                 'data' => null
             ]);
         }
@@ -266,7 +266,7 @@ class MessageController
             }
             
             if (empty($ids)) {
-                return json(['code' => 400, 'message' => '参数错误', 'data' => null]);
+                return json(['code' => 400, 'message' => 'Tham số không hợp lệ', 'data' => null]);
             }
             
             
@@ -283,14 +283,14 @@ class MessageController
             
             return json([
                 'code' => 0,
-                'message' => '删除成功',
+                'message' => 'XóaThành công',
                 'data' => null
             ]);
             
         } catch (\Exception $e) {
             return json([
                 'code' => 500,
-                'message' => '操作失败',
+                'message' => 'Thao tác thất bại',
                 'data' => null
             ]);
         }
@@ -304,7 +304,7 @@ class MessageController
         if (!$userId) {
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => ['unreadCount' => 0]
             ]);
         }
@@ -322,7 +322,7 @@ class MessageController
             if (empty($messages)) {
                 return json([
                     'code' => 0,
-                    'message' => '获取成功',
+                    'message' => 'Lấy dữ liệu thành công',
                     'data' => ['unreadCount' => 0]
                 ]);
             }
@@ -338,15 +338,15 @@ class MessageController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => ['unreadCount' => $unreadCount]
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取未读站内信数量失败: ' . $e->getMessage());
+            \support\Log::error('Lấy未读站内信数量Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败',
+                'message' => 'Lấy dữ liệuThất bại',
                 'data' => null
             ]);
         }

@@ -48,7 +48,7 @@ class LotteryCollector
     
     public function onWorkerStart($worker)
     {
-        Log::info('彩票采集进程启动');
+        Log::info('Xổ số采集进程启动');
         
         
         $this->collectAll();
@@ -70,7 +70,7 @@ class LotteryCollector
     
     private function collectAll()
     {
-        Log::info('开始采集开奖数据...');
+        Log::info('开始采集Mở thưởngdữ liệu...');
         $successCount = 0;
         $failCount = 0;
         
@@ -92,11 +92,11 @@ class LotteryCollector
                 if ($result['success']) {
                     $successCount++;
                     if ($result['new_count'] > 0) {
-                        Log::info("{$lottery->title} 采集成功，新增 {$result['new_count']} 期");
+                        Log::info("{$lottery->title} 采集Thành công，新增 {$result['new_count']} 期");
                     }
                 } else {
                     $failCount++;
-                    Log::warning("{$lottery->title} 采集失败: {$result['message']}");
+                    Log::warning("{$lottery->title} 采集Thất bại: {$result['message']}");
                 }
                 
             } catch (\Exception $e) {
@@ -105,7 +105,7 @@ class LotteryCollector
             }
         }
         
-        Log::info("采集完成，成功: {$successCount}, 失败: {$failCount}");
+        Log::info("采集完成，Thành công: {$successCount}, Thất bại: {$failCount}");
     }
     
     
@@ -117,14 +117,14 @@ class LotteryCollector
         $response = $this->httpGet($url);
         
         if (!$response) {
-            return ['success' => false, 'message' => 'HTTP请求失败', 'new_count' => 0];
+            return ['success' => false, 'message' => 'HTTPYêu cầu thất bại', 'new_count' => 0];
         }
         
         
         $data = json_decode($response, true);
         
         if (!$data || !isset($data[0])) {
-            return ['success' => false, 'message' => '数据格式错误', 'new_count' => 0];
+            return ['success' => false, 'message' => 'dữ liệu格式Lỗi', 'new_count' => 0];
         }
         
         
@@ -133,7 +133,7 @@ class LotteryCollector
         $opendate = $data[0]['opendate'] ?? '';
         
         if (!$expect || !$opencode) {
-            return ['success' => false, 'message' => '期号或开奖号码为空', 'new_count' => 0];
+            return ['success' => false, 'message' => '期号hoặcMở thưởng号码为空', 'new_count' => 0];
         }
         
         
@@ -146,7 +146,7 @@ class LotteryCollector
             ->exists();
         
         if ($exists) {
-            return ['success' => true, 'message' => '已存在', 'new_count' => 0];
+            return ['success' => true, 'message' => 'đã tồn tại', 'new_count' => 0];
         }
         
         
@@ -164,10 +164,10 @@ class LotteryCollector
                 'isdraw' => 0,
             ]);
             
-            return ['success' => true, 'message' => '采集成功', 'new_count' => 1];
+            return ['success' => true, 'message' => '采集Thành công', 'new_count' => 1];
             
         } catch (\Exception $e) {
-            return ['success' => false, 'message' => '数据库插入失败: ' . $e->getMessage(), 'new_count' => 0];
+            return ['success' => false, 'message' => 'dữ liệu库插入Thất bại: ' . $e->getMessage(), 'new_count' => 0];
         }
     }
     
@@ -187,7 +187,7 @@ class LotteryCollector
         curl_close($ch);
         
         if ($error) {
-            Log::error("HTTP请求失败: {$url}, 错误: {$error}");
+            Log::error("HTTPYêu cầu thất bại: {$url}, Lỗi: {$error}");
             return false;
         }
         
@@ -220,11 +220,11 @@ class LotteryCollector
                 ->delete();
             
             if ($count > 0) {
-                Log::info("清理了 {$count} 条 {$days} 天前的开奖数据");
+                Log::info("清理了 {$count} 条 {$days} 天前的Mở thưởngdữ liệu");
             }
             
         } catch (\Exception $e) {
-            Log::error("清理旧数据失败: " . $e->getMessage());
+            Log::error("清理旧dữ liệuThất bại: " . $e->getMessage());
         }
     }
 }

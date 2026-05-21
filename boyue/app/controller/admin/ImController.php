@@ -54,12 +54,12 @@ class ImController
     {
         $id = $request->get('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $group = Db::table('im_groups')->where('id', $id)->first();
         if (!$group) {
-            return json(['code' => 1, 'msg' => '群聊不存在']);
+            return json(['code' => 1, 'msg' => '群聊không tồn tại']);
         }
 
         return json(['code' => 0, 'msg' => 'ok', 'data' => (array)$group]);
@@ -73,7 +73,7 @@ class ImController
         $max_members = $request->post('max_members', 200);
 
         if (!$name) {
-            return json(['code' => 1, 'msg' => '群名称不能为空']);
+            return json(['code' => 1, 'msg' => '群名称không được để trống']);
         }
 
         $now = time();
@@ -89,14 +89,14 @@ class ImController
             'updated_at' => $now,
         ]);
 
-        return json(['code' => 0, 'msg' => '创建成功', 'data' => ['id' => $id]]);
+        return json(['code' => 0, 'msg' => '创建Thành công', 'data' => ['id' => $id]]);
     }
 
     public function groupUpdate(Request $request)
     {
         $id = $request->post('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $data = ['updated_at' => time()];
@@ -115,33 +115,33 @@ class ImController
 
         Db::table('im_groups')->where('id', $id)->update($data);
 
-        return json(['code' => 0, 'msg' => '修改成功']);
+        return json(['code' => 0, 'msg' => 'SửaThành công']);
     }
 
     public function groupDelete(Request $request)
     {
         $id = $request->post('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         Db::table('im_group_members')->where('group_id', $id)->delete();
         Db::table('im_messages')->where('to_group', $id)->delete();
         Db::table('im_groups')->where('id', $id)->delete();
 
-        return json(['code' => 0, 'msg' => '删除成功']);
+        return json(['code' => 0, 'msg' => 'XóaThành công']);
     }
 
     public function groupToggleStatus(Request $request)
     {
         $id = $request->post('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $group = Db::table('im_groups')->where('id', $id)->first();
         if (!$group) {
-            return json(['code' => 1, 'msg' => '群聊不存在']);
+            return json(['code' => 1, 'msg' => '群聊không tồn tại']);
         }
 
         Db::table('im_groups')->where('id', $id)->update([
@@ -156,7 +156,7 @@ class ImController
     {
         $group_id = $request->get('group_id');
         if (!$group_id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $list = Db::table('im_group_members as gm')
@@ -187,7 +187,7 @@ class ImController
         $user_id = $request->post('user_id');
 
         if (!$group_id || !$user_id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         Db::table('im_group_members')
@@ -197,7 +197,7 @@ class ImController
 
         Db::table('im_groups')->where('id', $group_id)->decrement('member_count');
 
-        return json(['code' => 0, 'msg' => '移除成功']);
+        return json(['code' => 0, 'msg' => '移除Thành công']);
     }
 
     public function groupOptions(Request $request)
@@ -269,24 +269,24 @@ class ImController
     {
         $id = $request->post('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         Db::table('im_messages')->where('id', $id)->delete();
 
-        return json(['code' => 0, 'msg' => '删除成功']);
+        return json(['code' => 0, 'msg' => 'XóaThành công']);
     }
 
     public function groupMessageBatchDelete(Request $request)
     {
         $ids = $request->post('ids', []);
         if (empty($ids)) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         Db::table('im_messages')->whereIn('id', $ids)->delete();
 
-        return json(['code' => 0, 'msg' => '删除成功']);
+        return json(['code' => 0, 'msg' => 'XóaThành công']);
     }
 
     public function userMessageList(Request $request)
@@ -355,23 +355,23 @@ class ImController
     {
         $id = $request->post('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         Db::table('im_messages')->where('id', $id)->delete();
 
-        return json(['code' => 0, 'msg' => '删除成功']);
+        return json(['code' => 0, 'msg' => 'XóaThành công']);
     }
 
     public function userMessageBatchDelete(Request $request)
     {
         $ids = $request->post('ids', []);
         if (empty($ids)) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         Db::table('im_messages')->whereIn('id', $ids)->delete();
 
-        return json(['code' => 0, 'msg' => '删除成功']);
+        return json(['code' => 0, 'msg' => 'XóaThành công']);
     }
 }

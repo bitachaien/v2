@@ -53,7 +53,7 @@ class LevelRewardService
         } catch (LevelRewardException $e) {
             return $e->toResult()->toArray();
         } catch (\Throwable $e) {
-            Log::error('获取晋级奖励信息失败', [
+            Log::error('LấyThăng cấp奖励信息Thất bại', [
                 'error' => $e->getMessage(),
                 'uid'   => $uid,
             ]);
@@ -88,7 +88,7 @@ class LevelRewardService
                     'amount'       => (float)$item->amount,
                     'balanceBefore'=> (float)($item->amountbefor ?? 0),
                     'balanceAfter' => (float)($item->amountafter ?? 0),
-                    'remark'       => $item->remark ?? '晋级奖励',
+                    'remark'       => $item->remark ?? 'Thăng cấp奖励',
                     'createTime'   => $item->oddtime ? date('Y-m-d H:i:s', $item->oddtime) : '',
                 ];
             })->toArray();
@@ -105,7 +105,7 @@ class LevelRewardService
         } catch (LevelRewardException $e) {
             return $e->toResult()->toArray();
         } catch (\Throwable $e) {
-            Log::error('获取晋级记录失败', [
+            Log::error('LấyThăng cấplịch sử thất bại', [
                 'error' => $e->getMessage(),
                 'uid'   => $uid,
             ]);
@@ -155,7 +155,7 @@ class LevelRewardService
             
             return Result::success($data)->toArray();
         } catch (\Throwable $e) {
-            Log::error('获取等级配置失败', ['error' => $e->getMessage()]);
+            Log::error('LấyCấp độcấu hình thất bại', ['error' => $e->getMessage()]);
             return Result::serverError()->toArray();
         }
     }
@@ -184,18 +184,18 @@ class LevelRewardService
             
             $result = $this->executeClaimReward($uid, $user, $amount);
 
-            Log::info('领取晋级奖励成功', [
+            Log::info('领取Thăng cấp奖励Thành công', [
                 'uid'      => $uid,
                 'amount'   => $amount,
                 'order_id' => $result['orderId'],
             ]);
 
-            return Result::success($result, '领取成功')->toArray();
+            return Result::success($result, '领取Thành công')->toArray();
 
         } catch (LevelRewardException $e) {
             return $e->toResult()->toArray();
         } catch (\Throwable $e) {
-            Log::error('领取晋级奖励失败', [
+            Log::error('领取Thăng cấp奖励Thất bại', [
                 'error' => $e->getMessage(),
                 'uid'   => $uid,
             ]);
@@ -286,7 +286,7 @@ class LevelRewardService
                 'amountbefor' => $balanceBefore,
                 'amountafter' => $balanceAfter,
                 'oddtime'     => time(),
-                'remark'      => "晋级至{$levelName}奖励",
+                'remark'      => "Thăng cấp至{$levelName}奖励",
             ]);
 
             Db::commit();

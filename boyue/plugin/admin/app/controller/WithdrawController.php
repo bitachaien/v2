@@ -19,14 +19,14 @@ class WithdrawController
     }
 
     /**
-     * 获取提现列表数据
+     * Lấy rút tiền列表dữ liệu
      */
     public function list(Request $request)
     {
         $page = $request->get('page', 1);
         $limit = $request->get('limit', 20);
         
-        // 搜索条件
+        // Tìm kiếm条件
         $state = $request->get('state', '');
         $sDate = $request->get('sDate', '');
         $eDate = $request->get('eDate', '');
@@ -44,7 +44,7 @@ class WithdrawController
             $query->where('w.state', $state);
         }
 
-        // 时间筛选
+        // Thời gian筛选
         if ($sDate) {
             $startTime = strtotime($sDate);
             $query->where('w.oddtime', '>=', $startTime);
@@ -54,7 +54,7 @@ class WithdrawController
             $query->where('w.oddtime', '<=', $endTime);
         }
 
-        // 金额筛选
+        // Số tiền筛选
         if ($sAmout !== '') {
             $query->where('w.amount', '>=', $sAmout);
         }
@@ -62,7 +62,7 @@ class WithdrawController
             $query->where('w.amount', '<=', $eAmout);
         }
 
-        // 用户名筛选
+        // Tên người dùng筛选
         if ($username) {
             $query->where('w.username', 'like', "%{$username}%");
         }
@@ -77,28 +77,28 @@ class WithdrawController
             $query->where('w.uid', $uid);
         }
 
-        // 获取总数
+        // Lấy总数
         $count = $query->count();
 
-        // 分页查询
+        // 分页Tra cứu
         $list = $query->orderBy('w.id', 'desc')
             ->offset(($page - 1) * $limit)
             ->limit($limit)
             ->get()
             ->toArray();
 
-        // 处理数据
+        // 处理dữ liệu
         $result = [];
-        // 状态映射: 0=出款中, 1=提现成功, 2=提现拒绝, 3=提现取消
+        // 状态映射: 0=出款中, 1=Rút tiềnThành công, 2=Rút tiền拒绝, 3=Rút tiềnHủy
         $stateMap = [
             0 => '出款中',
-            1 => '提现成功',
-            2 => '提现拒绝',
-            3 => '提现取消'
+            1 => 'Rút tiềnThành công',
+            2 => 'Rút tiền拒绝',
+            3 => 'Rút tiềnHủy'
         ];
         foreach ($list as $item) {
             $row = (array)$item;
-            // 格式化时间
+            // 格式化Thời gian
             $row['oddtime'] = date('Y-m-d H:i:s', $row['oddtime']);
             
             // 状态文字
@@ -106,7 +106,7 @@ class WithdrawController
             $result[] = $row;
         }
 
-        // 计算统计数据
+        // 计算统计dữ liệu
         $statistics = Db::table('caipiao_withdraw as w')
             ->when($state !== '', function($q) use ($state) {
                 return $q->where('state', $state);
@@ -148,18 +148,18 @@ class WithdrawController
         $id = $request->post('id');
         
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
-        // 获取提现记录
+        // Lấy rút tiềnlịch sử
         $withdraw = Db::table('caipiao_withdraw')->where('id', $id)->first();
         
         if (!$withdraw) {
-            return json(['code' => 1, 'msg' => '提现记录不存在']);
+            return json(['code' => 1, 'msg' => 'Rút tiềnlịch sửkhông tồn tại']);
         }
 
         if ($withdraw->state != 0) {
-            return json(['code' => 1, 'msg' => '该提现已处理']);
+            return json(['code' => 1, 'msg' => '该Rút tiền已处理']);
         }
 
         // 更新状态
@@ -181,30 +181,30 @@ class WithdrawController
         $id = $request->post('id');
         
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
-        // 获取提现记录
+        // Lấy rút tiềnlịch sử
         $withdraw = Db::table('caipiao_withdraw')->where('id', $id)->first();
         
         if (!$withdraw) {
-            return json(['code' => 1, 'msg' => '提现记录不存在']);
+            return json(['code' => 1, 'msg' => 'Rút tiềnlịch sửkhông tồn tại']);
         }
 
         if ($withdraw->state != 0) {
-            return json(['code' => 1, 'msg' => '该提现已处理']);
+            return json(['code' => 1, 'msg' => '该Rút tiền已处理']);
         }
 
         // 开启事务
         Db::beginTransaction();
         
         try {
-            // 获取用户当前余额
+            // LấyNgười dùng当前Số dư
             $member = Db::table('caipiao_member')->where('id', $withdraw->uid)->first();
             $oldBalance = floatval($member->balance ?? 0);
             $newBalance = $oldBalance + floatval($withdraw->amount);
             
-            // 退回金额
+            // 退回Số tiền
             Db::table('caipiao_member')
                 ->where('id', $withdraw->uid)
                 ->update(['balance' => $newBalance]);
@@ -217,27 +217,27 @@ class WithdrawController
                     'updatetime' => time()
                 ]);
 
-            // 添加账变记录
+            // Thêm账变lịch sử
             $trano = 'FD' . date('YmdHis') . rand(1000, 9999);
             Db::table('caipiao_fuddetail')->insert([
                 'trano' => $trano,
                 'uid' => $withdraw->uid,
                 'username' => $withdraw->username,
                 'type' => 'withdraw_reject',
-                'typename' => '提现退回',
+                'typename' => 'Rút tiền退回',
                 'amount' => $withdraw->amount,
                 'amountbefor' => $oldBalance,
                 'amountafter' => $newBalance,
                 'oddtime' => time(),
-                'remark' => '提现退回，单号：' . $withdraw->trano
+                'remark' => 'Rút tiền退回，单号：' . $withdraw->trano
             ]);
 
             Db::commit();
-            return json(['code' => 0, 'msg' => '退回成功']);
+            return json(['code' => 0, 'msg' => '退回Thành công']);
             
         } catch (\Exception $e) {
             Db::rollBack();
-            return json(['code' => 1, 'msg' => '退回失败：' . $e->getMessage()]);
+            return json(['code' => 1, 'msg' => '退回Thất bại：' . $e->getMessage()]);
         }
     }
 }

@@ -90,7 +90,7 @@ class OrderController
                 'balance_after' => $account->balance,
                 'ref_type' => 'order',
                 'ref_id' => $order->id,
-                'remark' => "下注订单: {$orderNo}",
+                'remark' => "Đặt cược订单: {$orderNo}",
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
             
@@ -221,7 +221,7 @@ class OrderController
             
             $userId = $request->userId ?? 0;
             if (!$userId) {
-                return json(['code' => 2001, 'message' => '未登录']);
+                return json(['code' => 2001, 'message' => '未Đăng nhập']);
             }
             
             
@@ -297,8 +297,8 @@ class OrderController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取投注记录失败: ' . $e->getMessage());
-            return json(['code' => 9999, 'message' => '系统错误']);
+            \support\Log::error('LấyĐặt cượclịch sử thất bại: ' . $e->getMessage());
+            return json(['code' => 9999, 'message' => 'Lỗi hệ thống']);
         }
     }
 }

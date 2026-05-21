@@ -27,13 +27,13 @@ class AdminController extends Crud
     protected $model = null;
 
     /**
-     * 开启auth数据限制
+     * 开启authdữ liệu限制
      * @var string
      */
     protected $dataLimit = 'auth';
 
     /**
-     * 以id为数据限制字段
+     * 以id为dữ liệu限制字段
      * @var string
      */
     protected $dataLimitField = 'id';
@@ -58,7 +58,7 @@ class AdminController extends Crud
     }
 
     /**
-     * 查询
+     * Tra cứu
      * @param Request $request
      * @return Response
      * @throws BusinessException
@@ -152,16 +152,16 @@ class AdminController extends Crud
                 $exist_role_ids = AdminRole::where('admin_id', $admin_id)->pluck('role_id')->toArray();
                 $scope_role_ids = Auth::getScopeRoleIds();
                 if (!$is_supper_admin && !array_intersect($exist_role_ids, $scope_role_ids)) {
-                    return $this->json(1, '无权限更改该记录');
+                    return $this->json(1, '无权限更改该lịch sử');
                 }
                 if (!$is_supper_admin && array_diff($role_ids, $scope_role_ids)) {
                     return $this->json(1, '角色超出权限范围');
                 }
 
-                // 删除账户角色
+                // Xóatài khoản角色
                 $delete_ids = array_diff($exist_role_ids, $role_ids);
                 AdminRole::whereIn('role_id', $delete_ids)->where('admin_id', $admin_id)->delete();
-                // 添加账户角色
+                // Thêmtài khoản角色
                 $add_ids = array_diff($role_ids, $exist_role_ids);
                 foreach ($add_ids as $role_id) {
                     $admin_role = new AdminRole;
@@ -179,7 +179,7 @@ class AdminController extends Crud
     }
 
     /**
-     * 删除
+     * Xóa
      * @param Request $request
      * @return Response
      */
@@ -192,10 +192,10 @@ class AdminController extends Crud
         }
         $ids = (array)$ids;
         if (in_array(admin_id(), $ids)) {
-            return $this->json(1, '不能删除自己');
+            return $this->json(1, '不能Xóa自己');
         }
         if (!Auth::isSuperAdmin() && array_diff($ids, Auth::getScopeAdminIds())) {
-            return $this->json(1, '无数据权限');
+            return $this->json(1, '无dữ liệu权限');
         }
         $this->model->whereIn($primary_key, $ids)->each(function (Admin $admin) {
             $admin->delete();

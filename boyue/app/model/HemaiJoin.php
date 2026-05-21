@@ -45,7 +45,7 @@ class HemaiJoin extends Model
     {
         $map = [
             self::STATUS_BUYING => '认购中',
-            self::STATUS_COMPLETED => '已完成',
+            self::STATUS_COMPLETED => 'Đã hoàn thành',
             self::STATUS_REFUNDED => '已退款',
         ];
         return $map[$this->status] ?? '未知';

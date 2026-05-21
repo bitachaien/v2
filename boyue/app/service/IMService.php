@@ -25,7 +25,7 @@ class IMService
         
         $targetUser = Db::table('caipiao_member')->where('id', $toUid)->first();
         if (!$targetUser) {
-            return ['success' => false, 'error' => '用户不存在'];
+            return ['success' => false, 'error' => 'Người dùng không tồn tại'];
         }
         
         
@@ -35,7 +35,7 @@ class IMService
             ->where('is_blocked', 1)
             ->exists();
         if ($blocked) {
-            return ['success' => false, 'error' => '消息发送失败'];
+            return ['success' => false, 'error' => 'Tin nhắn发送Thất bại'];
         }
         
         $now = time();
@@ -58,7 +58,7 @@ class IMService
         
         
         $senderInfo = Db::table('caipiao_member')->where('id', $fromUid)->first();
-        $senderName = $senderInfo->nickname ?: $senderInfo->username ?: '用户'.$fromUid;
+        $senderName = $senderInfo->nickname ?: $senderInfo->username ?: 'Người dùng'.$fromUid;
         
         $message = [
             'msgId' => $msgId,
@@ -132,7 +132,7 @@ class IMService
         $senderInfo = Db::table('caipiao_member')->where('id', $fromUid)->first();
         $group = Db::table('im_groups')->where('id', $groupId)->first();
         
-        $senderName = $member->nickname ?: $senderInfo->nickname ?: $senderInfo->username ?: '用户'.$fromUid;
+        $senderName = $member->nickname ?: $senderInfo->nickname ?: $senderInfo->username ?: 'Người dùng'.$fromUid;
         $message = [
             'msgId' => $msgId,
             'fromUid' => $fromUid,
@@ -183,7 +183,7 @@ class IMService
     }
     
     
-    public static function sendSystemNotice(int $toUid, string $content, string $title = '系统通知', array $extra = []): array
+    public static function sendSystemNotice(int $toUid, string $content, string $title = '系统Thông báo', array $extra = []): array
     {
         $now = time();
         
@@ -297,7 +297,7 @@ class IMService
                 $item['targetName'] = $group->name ?? '';
                 $item['targetAvatar'] = $group->avatar ?? '';
             } else {
-                $item['targetName'] = '系统通知';
+                $item['targetName'] = '系统Thông báo';
                 $item['targetAvatar'] = '';
             }
             
@@ -347,7 +347,7 @@ class IMService
         $result = [];
         foreach ($messages as $msg) {
             $sender = $senders[$msg->from_uid] ?? null;
-            $senderName = $sender ? ($sender->nickname ?: $sender->username ?: '用户'.$msg->from_uid) : '系统';
+            $senderName = $sender ? ($sender->nickname ?: $sender->username ?: 'Người dùng'.$msg->from_uid) : '系统';
             
             $result[] = [
                 'msgId' => $msg->id,
@@ -407,7 +407,7 @@ class IMService
         try {
             WebSocketPusher::pushToUser($userId, $type, $data);
         } catch (\Exception $e) {
-            Log::warning('[IM] 推送失败: ' . $e->getMessage());
+            Log::warning('[IM] 推送Thất bại: ' . $e->getMessage());
         }
     }
     
@@ -542,7 +542,7 @@ class IMService
     public static function sendFriendRequest(int $fromUid, int $toUid, string $message = ''): array
     {
         if ($fromUid == $toUid) {
-            return ['success' => false, 'error' => '不能添加自己'];
+            return ['success' => false, 'error' => '不能Thêm自己'];
         }
         
         
@@ -593,7 +593,7 @@ class IMService
             ->first();
         
         if (!$request) {
-            return ['success' => false, 'error' => '请求不存在'];
+            return ['success' => false, 'error' => '请求không tồn tại'];
         }
         
         $now = time();
@@ -747,7 +747,7 @@ class IMService
             ->first();
         
         if (!$operator || $operator->role < 1) {
-            return ['success' => false, 'error' => '权限不足'];
+            return ['success' => false, 'error' => 'Không đủ quyền'];
         }
         
         $target = Db::table('im_group_members')
@@ -756,11 +756,11 @@ class IMService
             ->first();
         
         if (!$target) {
-            return ['success' => false, 'error' => '用户不在群中'];
+            return ['success' => false, 'error' => 'Người dùng不在群中'];
         }
         
         if ($target->role >= $operator->role) {
-            return ['success' => false, 'error' => '无法踢出同级或更高权限成员'];
+            return ['success' => false, 'error' => '无法踢出同级hoặc更高权限成员'];
         }
         
         Db::table('im_group_members')
@@ -790,7 +790,7 @@ class IMService
             ->first();
         
         if (!$operator || $operator->role != 2) {
-            return ['success' => false, 'error' => '只有群主可以设置管理员'];
+            return ['success' => false, 'error' => '只有群主可以Cài đặt管理员'];
         }
         
         Db::table('im_group_members')
@@ -814,7 +814,7 @@ class IMService
         }
         
         if ($member->role == 2) {
-            return ['success' => false, 'error' => '群主不能退出，请先转让群'];
+            return ['success' => false, 'error' => '群主不能Đăng xuất，请先转让群'];
         }
         
         Db::table('im_group_members')

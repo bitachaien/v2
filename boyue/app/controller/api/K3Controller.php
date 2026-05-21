@@ -20,7 +20,7 @@ class K3Controller
             $type = $request->get('type', '');
             
             if ($type !== 'k3') {
-                return json(['code' => 1001, 'message' => '参数错误']);
+                return json(['code' => 1001, 'message' => 'Tham số không hợp lệ']);
             }
             
             
@@ -35,8 +35,8 @@ class K3Controller
             return json(['code' => 0, 'data' => $data]);
             
         } catch (\Exception $e) {
-            Log::error('获取彩种列表失败: ' . $e->getMessage());
-            return json(['code' => 9999, 'message' => '系统错误']);
+            Log::error('Lấy彩种列表Thất bại: ' . $e->getMessage());
+            return json(['code' => 9999, 'message' => 'Lỗi hệ thống']);
         }
     }
     
@@ -47,21 +47,21 @@ class K3Controller
             $code = $request->get('code', '');
             
             if (empty($code)) {
-                return json(['code' => 1001, 'message' => '参数错误']);
+                return json(['code' => 1001, 'message' => 'Tham số không hợp lệ']);
             }
             
             
             $data = K3Service::getCurrentInfo($code);
             
             if (!$data) {
-                return json(['code' => 1001, 'message' => '彩种不存在']);
+                return json(['code' => 1001, 'message' => '彩种không tồn tại']);
             }
             
             return json(['code' => 0, 'data' => $data]);
             
         } catch (\Exception $e) {
-            Log::error('获取当前期号失败: ' . $e->getMessage());
-            return json(['code' => 9999, 'message' => '系统错误']);
+            Log::error('Lấy当前期号Thất bại: ' . $e->getMessage());
+            return json(['code' => 9999, 'message' => 'Lỗi hệ thống']);
         }
     }
     
@@ -73,7 +73,7 @@ class K3Controller
             $limit = max(1, min(100, (int)$request->get('limit', 30)));
             
             if (empty($code)) {
-                return json(['code' => 1001, 'message' => '参数错误']);
+                return json(['code' => 1001, 'message' => 'Tham số không hợp lệ']);
             }
             
             
@@ -82,8 +82,8 @@ class K3Controller
             return json(['code' => 0, 'data' => $data]);
             
         } catch (\Exception $e) {
-            Log::error('获取历史开奖失败: ' . $e->getMessage());
-            return json(['code' => 9999, 'message' => '系统错误']);
+            Log::error('Lấy历史Mở thưởngThất bại: ' . $e->getMessage());
+            return json(['code' => 9999, 'message' => 'Lỗi hệ thống']);
         }
     }
     
@@ -94,7 +94,7 @@ class K3Controller
             $code = $request->get('code', '');
             
             if (empty($code)) {
-                return json(['code' => 1001, 'message' => '参数错误']);
+                return json(['code' => 1001, 'message' => 'Tham số không hợp lệ']);
             }
             
             
@@ -107,7 +107,7 @@ class K3Controller
                 ->first();
             
             if (!$caipiao) {
-                return json(['code' => 1001, 'message' => '彩种不存在']);
+                return json(['code' => 1001, 'message' => '彩种không tồn tại']);
             }
             
             
@@ -129,8 +129,8 @@ class K3Controller
             ]);
             
         } catch (\Exception $e) {
-            Log::error('获取玩法赔率失败: ' . $e->getMessage());
-            return json(['code' => 9999, 'message' => '系统错误']);
+            Log::error('Lấy玩法赔率Thất bại: ' . $e->getMessage());
+            return json(['code' => 9999, 'message' => 'Lỗi hệ thống']);
         }
     }
     
@@ -141,7 +141,7 @@ class K3Controller
             
             $userId = $request->userId ?? 0;
             if (!$userId) {
-                return json(['code' => 2001, 'message' => '未登录']);
+                return json(['code' => 2001, 'message' => '未Đăng nhập']);
             }
             
             
@@ -198,11 +198,11 @@ class K3Controller
             
             $this->pushBetNotification($userId, $result['data'], $bets, $timingCheck['caipiao']);
             
-            return json(['code' => 0, 'message' => '投注成功', 'data' => $result['data']]);
+            return json(['code' => 0, 'message' => 'Đặt cượcThành công', 'data' => $result['data']]);
             
         } catch (\Exception $e) {
-            Log::error('投注失败: ' . $e->getMessage());
-            return json(['code' => 9999, 'message' => '系统错误']);
+            Log::error('Đặt cượcThất bại: ' . $e->getMessage());
+            return json(['code' => 9999, 'message' => 'Lỗi hệ thống']);
         }
     }
     
@@ -233,7 +233,7 @@ class K3Controller
                 'orderId' => $data['orderId'],
             ]);
         } catch (\Exception $e) {
-            Log::warning('[WebSocket] 推送失败: ' . $e->getMessage());
+            Log::warning('[WebSocket] 推送Thất bại: ' . $e->getMessage());
         }
     }
     
@@ -244,7 +244,7 @@ class K3Controller
             
             $userId = $request->userId ?? 0;
             if (!$userId) {
-                return json(['code' => 2001, 'message' => '未登录']);
+                return json(['code' => 2001, 'message' => '未Đăng nhập']);
             }
             
             
@@ -259,7 +259,7 @@ class K3Controller
             
             
             if (empty($hemaiConfig)) {
-                return json(['code' => 1001, 'message' => '合买配置错误']);
+                return json(['code' => 1001, 'message' => '合买配置Lỗi']);
             }
             
             $totalShares = (int)($hemaiConfig['totalShares'] ?? 0);
@@ -267,7 +267,7 @@ class K3Controller
             $commission = (int)($hemaiConfig['commission'] ?? 0);
             
             if ($totalShares <= 0 || $selfShares <= 0 || $selfShares > $totalShares) {
-                return json(['code' => 1001, 'message' => '份数配置错误']);
+                return json(['code' => 1001, 'message' => '份数配置Lỗi']);
             }
             
             
@@ -278,7 +278,7 @@ class K3Controller
             $user = Db::table('caipiao_member')->where('id', $userId)->first();
             $userBalance = (float)($user->balance ?? 0);
             if (!$user || $userBalance < $selfAmount) {
-                return json(['code' => 1003, 'message' => '余额不足']);
+                return json(['code' => 1003, 'message' => 'Số dư không đủ']);
             }
             
             
@@ -288,7 +288,7 @@ class K3Controller
                 ->first();
             
             if (!$caipiao) {
-                return json(['code' => 1001, 'message' => '彩种不存在']);
+                return json(['code' => 1001, 'message' => '彩种không tồn tại']);
             }
             
             
@@ -377,7 +377,7 @@ class K3Controller
                 
                 return json([
                     'code' => 0,
-                    'message' => '合买发起成功',
+                    'message' => '合买发起Thành công',
                     'data' => [
                         'hemaiId' => $hemaiId,
                         'orderId' => 'HM' . date('YmdHis') . str_pad($hemaiId, 6, '0', STR_PAD_LEFT),
@@ -393,7 +393,7 @@ class K3Controller
             }
             
         } catch (\Exception $e) {
-            Log::error('合买发起失败: ' . $e->getMessage());
+            Log::error('合买发起Thất bại: ' . $e->getMessage());
             return json(['code' => 9999, 'message' => $e->getMessage()]);
         }
     }
@@ -408,11 +408,11 @@ class K3Controller
         
         
         if (empty($expecttime) || $expecttime <= 0) {
-            Log::error('彩种配置错误: expecttime 无效', [
+            Log::error('彩种配置Lỗi: expecttime 无效', [
                 'name' => $caipiao->name ?? '',
                 'expecttime' => $expecttime
             ]);
-            throw new \Exception('彩种配置错误，开奖间隔时间无效');
+            throw new \Exception('彩种配置Lỗi，Mở thưởng间隔Thời gian无效');
         }
         
         

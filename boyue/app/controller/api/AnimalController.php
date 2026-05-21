@@ -81,15 +81,15 @@ class AnimalController
             
             return json([
                 'code' => 500,
-                'message' => '获取游戏列表失败',
+                'message' => 'Lấy trò chơi列表Thất bại',
                 'data' => []
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取动物彩游戏列表失败: ' . $e->getMessage());
+            \support\Log::error('Lấy动物彩Trò chơi列表Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '服务暂不可用',
+                'message' => '服务暂không khả dụng',
                 'data' => []
             ]);
         }
@@ -178,15 +178,15 @@ class AnimalController
             
             return json([
                 'code' => 500,
-                'message' => '获取期号信息失败',
+                'message' => 'Lấy期号信息Thất bại',
                 'data' => null
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取动物彩期号失败: ' . $e->getMessage());
+            \support\Log::error('Lấy动物彩期号Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '服务暂不可用: ' . $e->getMessage(),
+                'message' => '服务暂không khả dụng: ' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -202,7 +202,7 @@ class AnimalController
             if (!$issueNo) {
                 return json([
                     'code' => 400,
-                    'message' => '期号不能为空',
+                    'message' => '期号không được để trống',
                     'data' => null
                 ]);
             }
@@ -251,15 +251,15 @@ class AnimalController
             
             return json([
                 'code' => 404,
-                'message' => '暂无开奖数据',
+                'message' => '暂无Mở thưởngdữ liệu',
                 'data' => null
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取动物彩开奖结果失败: ' . $e->getMessage());
+            \support\Log::error('Lấy动物彩Mở thưởng结果Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '服务暂不可用',
+                'message' => '服务暂không khả dụng',
                 'data' => null
             ]);
         }
@@ -320,7 +320,7 @@ class AnimalController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取动物彩历史记录失败: ' . $e->getMessage());
+            \support\Log::error('Lấy动物彩历史lịch sử thất bại: ' . $e->getMessage());
             return json([
                 'code' => 0,
                 'message' => 'ok',
@@ -370,7 +370,7 @@ class AnimalController
         } catch (\Exception $e) {
             return json([
                 'code' => 500,
-                'message' => '获取玩法失败',
+                'message' => 'Lấy玩法Thất bại',
                 'data' => null
             ]);
         }
@@ -399,7 +399,7 @@ class AnimalController
             if (!isset($request->userId)) {
                 return json([
                     'code' => 401,
-                    'message' => '请先登录',
+                    'message' => 'Vui lòng đăng nhập',
                     'data' => null
                 ]);
             }
@@ -428,7 +428,7 @@ class AnimalController
             if (!$caipiao || $caipiao->isopen != 1) {
                 return json([
                     'code' => 400,
-                    'message' => '该彩种不可用',
+                    'message' => '该彩种không khả dụng',
                     'data' => null
                 ]);
             }
@@ -473,7 +473,7 @@ class AnimalController
                     }
                 }
             } catch (\Exception $e) {
-                \support\Log::warning('验证期号失败: ' . $e->getMessage());
+                \support\Log::warning('验证期号Thất bại: ' . $e->getMessage());
             }
             
             
@@ -484,7 +484,7 @@ class AnimalController
             if (!$user) {
                 return json([
                     'code' => 404,
-                    'message' => '用户不存在',
+                    'message' => 'Người dùng không tồn tại',
                     'data' => null
                 ]);
             }
@@ -498,7 +498,7 @@ class AnimalController
             if ($totalAmount <= 0) {
                 return json([
                     'code' => 400,
-                    'message' => '投注金额无效',
+                    'message' => 'Đặt cượcSố tiền无效',
                     'data' => null
                 ]);
             }
@@ -507,7 +507,7 @@ class AnimalController
             if ($user->balance < $totalAmount) {
                 return json([
                     'code' => 400,
-                    'message' => '余额不足',
+                    'message' => 'Số dư không đủ',
                     'data' => null
                 ]);
             }
@@ -569,12 +569,12 @@ class AnimalController
                     'uid' => $userId,
                     'username' => $user->username,
                     'type' => 9,
-                    'typename' => '投注',
+                    'typename' => 'Đặt cược',
                     'trano' => $trano,
                     'amount' => -$totalAmount,
                     'before' => $user->balance,
                     'after' => $user->balance - $totalAmount,
-                    'remark' => "投注 {$caipiao->title} 第{$issueNo}期",
+                    'remark' => "Đặt cược {$caipiao->title} 第{$issueNo}期",
                     'addtime' => $now,
                     'ip' => $request->getRealIp()
                 ]);
@@ -583,7 +583,7 @@ class AnimalController
                 
                 return json([
                     'code' => 0,
-                    'message' => '投注成功',
+                    'message' => 'Đặt cượcThành công',
                     'data' => [
                         'trano' => $trano,
                         'totalAmount' => $totalAmount,
@@ -597,10 +597,10 @@ class AnimalController
             }
             
         } catch (\Exception $e) {
-            \support\Log::error('动物彩投注失败: ' . $e->getMessage());
+            \support\Log::error('动物彩Đặt cượcThất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '投注失败：' . $e->getMessage(),
+                'message' => 'Đặt cượcThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -624,7 +624,7 @@ class AnimalController
             if (!isset($request->userId)) {
                 return json([
                     'code' => 401,
-                    'message' => '请先登录',
+                    'message' => 'Vui lòng đăng nhập',
                     'data' => []
                 ]);
             }
@@ -655,13 +655,13 @@ class AnimalController
                 $statusText = '';
                 $statusColor = 'blue';
                 if ($item->isdraw == 1) {
-                    $statusText = '已中奖';
+                    $statusText = '已Trúng thưởng';
                     $statusColor = 'green';
                 } elseif ($item->isdraw == 0) {
-                    $statusText = '未开奖';
+                    $statusText = '未Mở thưởng';
                     $statusColor = 'blue';
                 } elseif ($item->isdraw == -1) {
-                    $statusText = '未中奖';
+                    $statusText = '未Trúng thưởng';
                     $statusColor = 'gray';
                 } elseif ($item->isdraw == -2) {
                     $statusText = '已撤单';
@@ -691,10 +691,10 @@ class AnimalController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取动物彩投注记录失败: ' . $e->getMessage());
+            \support\Log::error('Lấy动物彩Đặt cượclịch sử thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败',
+                'message' => 'Lấy dữ liệuThất bại',
                 'count' => 0,
                 'data' => []
             ]);

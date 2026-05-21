@@ -22,7 +22,7 @@ class AntiCheatService
             ->count();
         
         if ($ipCount >= $ipLimit) {
-            return ['allowed' => false, 'reason' => '同一IP注册过于频繁，请稍后再试'];
+            return ['allowed' => false, 'reason' => '同一IPĐăng ký过于频繁，请稍后再试'];
         }
         
         
@@ -36,7 +36,7 @@ class AntiCheatService
                 ->count();
             
             if ($deviceCount >= $deviceLimit) {
-                return ['allowed' => false, 'reason' => '该设备注册数量已达上限'];
+                return ['allowed' => false, 'reason' => '该设备Đăng ký数量已达上限'];
             }
         }
         
@@ -45,7 +45,7 @@ class AntiCheatService
             $parent = Db::table('caipiao_member')->where('id', $parentId)->first();
             if ($parent && $parent->regip === $ip) {
                 
-                \support\Log::warning('可疑注册：推荐人与被推荐人同IP', [
+                \support\Log::warning('可疑Đăng ký：推荐人与被推荐人同IP', [
                     'parent_id' => $parentId,
                     'ip' => $ip
                 ]);
@@ -153,7 +153,7 @@ class AntiCheatService
             return [
                 'allowed' => false, 
                 'suspicious' => $suspiciousCount,
-                'reason' => '检测到异常推广行为，请联系客服'
+                'reason' => '检测到异常Giới thiệu行为，请联系CSKH'
             ];
         }
         

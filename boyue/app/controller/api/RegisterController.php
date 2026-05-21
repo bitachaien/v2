@@ -21,7 +21,7 @@ class RegisterController
             return json([
                 'code' => 400,
                 'sign' => false,
-                'message' => '用户名不能为空',
+                'message' => 'Tên người dùngkhông được để trống',
                 'data' => null
             ]);
         }
@@ -31,7 +31,7 @@ class RegisterController
             return json([
                 'code' => 400,
                 'sign' => false,
-                'message' => '用户名为2-12字母与数字或中文的字符!',
+                'message' => 'Tên người dùngtừ 2-12 ký tự chữ cái, số hoặc tiếng Việt!',
                 'data' => null
             ]);
         }
@@ -40,7 +40,7 @@ class RegisterController
             return json([
                 'code' => 400,
                 'sign' => false,
-                'message' => '请输入6-16位的密码',
+                'message' => '请输入6-16位的Mật khẩu',
                 'data' => null
             ]);
         }
@@ -55,7 +55,7 @@ class RegisterController
             return json([
                 'code' => 400,
                 'sign' => false,
-                'message' => '密码强度不足，需包含大写、小写、数字、符号中至少2种',
+                'message' => 'Mật khẩu强度不足，需包含大写、小写、数字、符号中至少2种',
                 'data' => null
             ]);
         }
@@ -64,7 +64,7 @@ class RegisterController
             return json([
                 'code' => 400,
                 'sign' => false,
-                'message' => '请输入6-16位的重复密码',
+                'message' => '请输入6-16位的重复Mật khẩu',
                 'data' => null
             ]);
         }
@@ -73,7 +73,7 @@ class RegisterController
             return json([
                 'code' => 400,
                 'sign' => false,
-                'message' => '两次密码输入不一致',
+                'message' => '两次Mật khẩu输入不一致',
                 'data' => null
             ]);
         }
@@ -86,7 +86,7 @@ class RegisterController
             return json([
                 'code' => 400,
                 'sign' => false,
-                'message' => '用户名已被注册',
+                'message' => 'Tên người dùngđã được đăng ký',
                 'data' => null
             ]);
         }
@@ -112,7 +112,7 @@ class RegisterController
                 return json([
                     'code' => 400,
                     'sign' => false,
-                    'message' => '推荐码验证失败',
+                    'message' => '推荐码验证Thất bại',
                     'data' => null
                 ]);
             }
@@ -164,7 +164,7 @@ class RegisterController
                 'iparea' => IpLocationService::getLocation($ip),
                 'regtime' => $now,
                 'regip' => $ip,
-                'source' => 'mobile版注册',
+                'source' => 'mobile版Đăng ký',
                 'logintime' => 0,
                 'onlinetime' => 0,
                 'islock' => 0,
@@ -176,7 +176,7 @@ class RegisterController
                 return json([
                     'code' => 500,
                     'sign' => false,
-                    'message' => '注册失败，请稍后重试',
+                    'message' => 'Đăng kýThất bại，请稍后重试',
                     'data' => null
                 ]);
             }
@@ -193,7 +193,7 @@ class RegisterController
             return json([
                 'code' => 0,
                 'sign' => true,
-                'message' => '注册成功',
+                'message' => 'Đăng kýThành công',
                 'data' => [
                     'regisok' => 1,
                     'user_id' => $userId,
@@ -212,7 +212,7 @@ class RegisterController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('用户注册异常: ' . $e->getMessage());
+            \support\Log::error('Người dùngĐăng ký异常: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
@@ -230,7 +230,7 @@ class RegisterController
             return json([
                 'code' => 400,
                 'sign' => false,
-                'message' => '用户名不能为空',
+                'message' => 'Tên người dùngkhông được để trống',
                 'data' => null
             ]);
         }
@@ -258,7 +258,7 @@ class RegisterController
             return json([
                 'code' => 400,
                 'sign' => false,
-                'message' => '推荐码不能为空',
+                'message' => '推荐码không được để trống',
                 'data' => null
             ]);
         }
@@ -277,7 +277,7 @@ class RegisterController
             return json([
                 'code' => 404,
                 'sign' => false,
-                'message' => '推荐码不存在',
+                'message' => '推荐码không tồn tại',
                 'data' => null
             ]);
         }

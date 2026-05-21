@@ -96,13 +96,13 @@ class HemaiService
             $userStats = $this->getUserStats($item->uid);
             
             
-            $isdrawText = '进行中';
+            $isdrawText = 'Đang diễn ra';
             if ($item->status == 1) {
                 $isdrawText = '已截止';
             } elseif ($item->status == 2) {
-                $isdrawText = '已开奖';
+                $isdrawText = '已Mở thưởng';
             } elseif ($item->status == 3) {
-                $isdrawText = '已取消';
+                $isdrawText = 'Đã hủy';
             }
             
             $data[] = [
@@ -158,13 +158,13 @@ class HemaiService
         $userStats = $this->getUserStats($item->uid);
         
         
-        $isdrawText = '进行中';
+        $isdrawText = 'Đang diễn ra';
         if ($item->status == 1) {
             $isdrawText = '已截止';
         } elseif ($item->status == 2) {
-            $isdrawText = '已开奖';
+            $isdrawText = '已Mở thưởng';
         } elseif ($item->status == 3) {
-            $isdrawText = '已取消';
+            $isdrawText = 'Đã hủy';
         }
         
         
@@ -240,7 +240,7 @@ class HemaiService
             ->first();
         
         if (!$hemai) {
-            throw new \Exception('合买方案不存在');
+            throw new \Exception('合买方案không tồn tại');
         }
         
         
@@ -273,12 +273,12 @@ class HemaiService
             ->first();
         
         if (!$user) {
-            throw new \Exception('用户不存在');
+            throw new \Exception('Người dùng không tồn tại');
         }
         
         
         if ($user->balance < $amount) {
-            throw new \Exception('余额不足');
+            throw new \Exception('Số dư không đủ');
         }
         
         
@@ -364,7 +364,7 @@ class HemaiService
             ->first();
         
         if (!$caipiao) {
-            throw new \Exception('彩种不存在');
+            throw new \Exception('彩种không tồn tại');
         }
         
         
@@ -423,19 +423,19 @@ class HemaiService
             ->first();
         
         if (!$hemai) {
-            throw new \Exception('方案不存在');
+            throw new \Exception('方案không tồn tại');
         }
         
         if ($hemai->uid != $uid) {
-            throw new \Exception('只能取消自己的方案');
+            throw new \Exception('只能Hủy自己的方案');
         }
         
         if ($hemai->status != 0) {
-            throw new \Exception('该方案已结束，无法取消');
+            throw new \Exception('该方案已结束，无法Hủy');
         }
         
         if ($hemai->buyed > 0) {
-            throw new \Exception('已有人认购，无法取消');
+            throw new \Exception('已有人认购，无法Hủy');
         }
         
         
@@ -691,10 +691,10 @@ class HemaiService
     private function getStatusText($status)
     {
         $map = [
-            0 => '进行中',
+            0 => 'Đang diễn ra',
             1 => '已截止',
-            2 => '已开奖',
-            3 => '已取消',
+            2 => '已Mở thưởng',
+            3 => 'Đã hủy',
         ];
         
         return $map[$status] ?? '未知';
@@ -711,7 +711,7 @@ class HemaiService
             ->first();
         
         if (!$join) {
-            throw new \Exception('未找到参与记录或已经撤销');
+            throw new \Exception('未找到参与lịch sửhoặc已经撤销');
         }
         
         
@@ -720,7 +720,7 @@ class HemaiService
             ->first();
         
         if (!$hemai) {
-            throw new \Exception('合买方案不存在');
+            throw new \Exception('合买方案không tồn tại');
         }
         
         
@@ -731,7 +731,7 @@ class HemaiService
         
         $now = time() * 1000;
         if ($hemai->endtime - $now < 10 * 60 * 1000) {
-            throw new \Exception('距离截止时间不足10分钟，无法撤资');
+            throw new \Exception('距离截止Thời gian不足10分钟，无法撤资');
         }
         
         

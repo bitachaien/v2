@@ -75,26 +75,26 @@ class YebaoController extends Base
     }
 
     /**
-     * 产品详情
+     * 产品Chi tiết
      * GET /app/admin/api/yebao/product-detail
      */
     public function productDetail(Request $request)
     {
         $id = $request->get('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $item = Db::table('yzz_yuebao_product')->where('id', $id)->first();
         if (!$item) {
-            return json(['code' => 1, 'msg' => '产品不存在']);
+            return json(['code' => 1, 'msg' => '产品không tồn tại']);
         }
 
         return json(['code' => 0, 'msg' => 'ok', 'data' => (array)$item]);
     }
 
     /**
-     * 添加产品
+     * Thêm产品
      * POST /app/admin/api/yebao/product-add
      */
     public function productAdd(Request $request)
@@ -113,7 +113,7 @@ class YebaoController extends Base
         $sort = intval($request->post('sort', 0));
 
         if (!$name) {
-            return json(['code' => 1, 'msg' => '产品名称不能为空']);
+            return json(['code' => 1, 'msg' => '产品名称không được để trống']);
         }
 
         if (!in_array($type, ['current', 'fixed'])) {
@@ -125,7 +125,7 @@ class YebaoController extends Base
         }
 
         if ($type == 'fixed' && $durationDays <= 0) {
-            return json(['code' => 1, 'msg' => '定期产品必须设置周期天数']);
+            return json(['code' => 1, 'msg' => '定期产品必须Cài đặt周期天数']);
         }
 
         $id = Db::table('yzz_yuebao_product')->insertGetId([
@@ -144,7 +144,7 @@ class YebaoController extends Base
             'create_time' => time(),
         ]);
 
-        return json(['code' => 0, 'msg' => '添加成功', 'data' => ['id' => $id]]);
+        return json(['code' => 0, 'msg' => 'ThêmThành công', 'data' => ['id' => $id]]);
     }
 
     /**
@@ -155,12 +155,12 @@ class YebaoController extends Base
     {
         $id = $request->post('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $item = Db::table('yzz_yuebao_product')->where('id', $id)->first();
         if (!$item) {
-            return json(['code' => 1, 'msg' => '产品不存在']);
+            return json(['code' => 1, 'msg' => '产品không tồn tại']);
         }
 
         $data = [];
@@ -205,11 +205,11 @@ class YebaoController extends Base
             Db::table('yzz_yuebao_product')->where('id', $id)->update($data);
         }
 
-        return json(['code' => 0, 'msg' => '修改成功']);
+        return json(['code' => 0, 'msg' => 'SửaThành công']);
     }
 
     /**
-     * 删除产品
+     * Xóa产品
      * POST /app/admin/api/yebao/product-delete
      */
     public function productDelete(Request $request)
@@ -218,7 +218,7 @@ class YebaoController extends Base
         $ids = $request->post('ids', []);
 
         if (!$id && empty($ids)) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $deleteIds = $id ? [$id] : $ids;
@@ -230,12 +230,12 @@ class YebaoController extends Base
             ->count();
 
         if ($usedCount > 0) {
-            return json(['code' => 1, 'msg' => '该产品有用户持仓中，无法删除']);
+            return json(['code' => 1, 'msg' => '该产品有Người dùng持仓中，无法Xóa']);
         }
 
         Db::table('yzz_yuebao_product')->whereIn('id', $deleteIds)->delete();
 
-        return json(['code' => 0, 'msg' => '删除成功']);
+        return json(['code' => 0, 'msg' => 'XóaThành công']);
     }
 
     /**
@@ -248,14 +248,14 @@ class YebaoController extends Base
         $status = $request->post('status');
 
         if (!$id || $status === null) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         Db::table('yzz_yuebao_product')->where('id', $id)->update([
             'status' => intval($status),
         ]);
 
-        return json(['code' => 0, 'msg' => '状态更新成功']);
+        return json(['code' => 0, 'msg' => '状态更新Thành công']);
     }
 
     /**
@@ -295,7 +295,7 @@ class YebaoController extends Base
 
     /**
      * ============================================
-     * 持仓记录管理 API
+     * 持仓lịch sử管理 API
      * ============================================
      */
 
@@ -360,7 +360,7 @@ class YebaoController extends Base
         $statusMap = [
             'running' => '收息中',
             'settled' => '已结算',
-            'cancelled' => '已取消',
+            'cancelled' => 'Đã hủy',
         ];
 
         $result = [];
@@ -390,19 +390,19 @@ class YebaoController extends Base
     }
 
     /**
-     * 持仓详情
+     * 持仓Chi tiết
      * GET /app/admin/api/yebao/holding-detail
      */
     public function holdingDetail(Request $request)
     {
         $id = $request->get('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $item = Db::table('yzz_yuebao_holding')->where('id', $id)->first();
         if (!$item) {
-            return json(['code' => 1, 'msg' => '记录不存在']);
+            return json(['code' => 1, 'msg' => 'lịch sửkhông tồn tại']);
         }
 
         $row = (array)$item;
@@ -420,16 +420,16 @@ class YebaoController extends Base
     {
         $id = $request->post('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $holding = Db::table('yzz_yuebao_holding')->where('id', $id)->first();
         if (!$holding) {
-            return json(['code' => 1, 'msg' => '记录不存在']);
+            return json(['code' => 1, 'msg' => 'lịch sửkhông tồn tại']);
         }
 
         if ($holding->status != 'running') {
-            return json(['code' => 1, 'msg' => '该持仓已结算或已取消']);
+            return json(['code' => 1, 'msg' => '该持仓已结算hoặcĐã hủy']);
         }
 
         Db::beginTransaction();
@@ -444,7 +444,7 @@ class YebaoController extends Base
                 'settle_time' => $now,
             ]);
 
-            // 返还本金+利息到用户余额
+            // 返还本金+利息到Người dùngSố dư
             $member = Db::table('caipiao_member')->where('id', $holding->uid)->first();
             $beforeBalance = $member->balance ?? 0;
             $afterBalance = bcadd($beforeBalance, $totalAmount, 2);
@@ -453,7 +453,7 @@ class YebaoController extends Base
                 'balance' => $afterBalance,
             ]);
 
-            // 记录账变
+            // lịch sử账变
             $orderId = YuebaoConstant::generateOrderId('YBSET');
             Db::table('yzz_yuebao_record')->insert([
                 'order_id' => $orderId,
@@ -474,40 +474,40 @@ class YebaoController extends Base
 
             Db::commit();
 
-            return json(['code' => 0, 'msg' => '结算成功', 'data' => [
+            return json(['code' => 0, 'msg' => '结算Thành công', 'data' => [
                 'amount' => $holding->amount,
                 'interest' => $interest,
                 'total' => $totalAmount,
             ]]);
         } catch (\Exception $e) {
             Db::rollBack();
-            return json(['code' => 1, 'msg' => '结算失败：' . $e->getMessage()]);
+            return json(['code' => 1, 'msg' => '结算Thất bại：' . $e->getMessage()]);
         }
     }
 
     /**
-     * 删除持仓记录
+     * Xóa持仓lịch sử
      * POST /app/admin/api/yebao/holding-delete
      */
     public function holdingDelete(Request $request)
     {
         $id = $request->post('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $holding = Db::table('yzz_yuebao_holding')->where('id', $id)->first();
         if (!$holding) {
-            return json(['code' => 1, 'msg' => '记录不存在']);
+            return json(['code' => 1, 'msg' => 'lịch sửkhông tồn tại']);
         }
 
         if ($holding->status == 'running') {
-            return json(['code' => 1, 'msg' => '收息中的持仓不能删除，请先结算']);
+            return json(['code' => 1, 'msg' => '收息中的持仓不能Xóa，请先结算']);
         }
 
         Db::table('yzz_yuebao_holding')->where('id', $id)->delete();
 
-        return json(['code' => 0, 'msg' => '删除成功']);
+        return json(['code' => 0, 'msg' => 'XóaThành công']);
     }
 
     /**
@@ -546,7 +546,7 @@ class YebaoController extends Base
         $statuses = [
             ['value' => 'running', 'label' => '收息中'],
             ['value' => 'settled', 'label' => '已结算'],
-            ['value' => 'cancelled', 'label' => '已取消'],
+            ['value' => 'cancelled', 'label' => 'Đã hủy'],
         ];
 
         return json(['code' => 0, 'msg' => 'ok', 'data' => $statuses]);
@@ -554,12 +554,12 @@ class YebaoController extends Base
 
     /**
      * ============================================
-     * 账变记录 API
+     * 账变lịch sử API
      * ============================================
      */
 
     /**
-     * 账变记录列表
+     * 账变lịch sử列表
      * GET /app/admin/api/yebao/record-list
      */
     public function recordList(Request $request)
@@ -625,7 +625,7 @@ class YebaoController extends Base
             $row = (array)$item;
             $row['type_text'] = $typeMap[$row['type']] ?? $row['type'];
             $row['createtime_text'] = $row['create_time'] ? date('Y-m-d H:i:s', $row['create_time']) : '';
-            // claim类型显示余额变动，其他类型显示余额宝变动
+            // claim类型显示Số dư变动，其他类型显示Số dư宝变动
             if ($row['type'] === 'claim') {
                 $row['before_yebao'] = $row['before_balance'];
                 $row['after_yebao'] = $row['after_balance'];
@@ -647,19 +647,19 @@ class YebaoController extends Base
     }
 
     /**
-     * 账变记录详情
+     * 账变lịch sửChi tiết
      * GET /app/admin/api/yebao/record-detail
      */
     public function recordDetail(Request $request)
     {
         $id = $request->get('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $item = Db::table('yzz_yuebao_record')->where('id', $id)->first();
         if (!$item) {
-            return json(['code' => 1, 'msg' => '记录不存在']);
+            return json(['code' => 1, 'msg' => 'lịch sửkhông tồn tại']);
         }
 
         $row = (array)$item;
@@ -669,19 +669,19 @@ class YebaoController extends Base
     }
 
     /**
-     * 删除账变记录
+     * Xóa账变lịch sử
      * POST /app/admin/api/yebao/record-delete
      */
     public function recordDelete(Request $request)
     {
         $id = $request->post('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         Db::table('yzz_yuebao_record')->where('id', $id)->delete();
 
-        return json(['code' => 0, 'msg' => '删除成功']);
+        return json(['code' => 0, 'msg' => 'XóaThành công']);
     }
 
     /**
@@ -708,7 +708,7 @@ class YebaoController extends Base
      */
 
     /**
-     * 管理员帮用户存入
+     * 管理员帮Người dùng存入
      * POST /app/admin/api/yebao/admin-deposit
      */
     public function adminDeposit(Request $request)
@@ -719,25 +719,25 @@ class YebaoController extends Base
         $remark = $request->post('remark', '管理员操作');
 
         if (!$username) {
-            return json(['code' => 1, 'msg' => '请输入用户名']);
+            return json(['code' => 1, 'msg' => '请输入Tên người dùng']);
         }
 
         if ($amount <= 0) {
-            return json(['code' => 1, 'msg' => '存入金额必须大于0']);
+            return json(['code' => 1, 'msg' => '存入Số tiền必须大于0']);
         }
 
         $member = Db::table('caipiao_member')->where('username', $username)->first();
         if (!$member) {
-            return json(['code' => 1, 'msg' => '用户不存在']);
+            return json(['code' => 1, 'msg' => 'Người dùng không tồn tại']);
         }
 
         $product = Db::table('yzz_yuebao_product')->where('id', $productId)->where('status', 1)->first();
         if (!$product) {
-            return json(['code' => 1, 'msg' => '产品不存在或已下架']);
+            return json(['code' => 1, 'msg' => '产品không tồn tạihoặc已下架']);
         }
 
         if ($amount < $product->min_amount) {
-            return json(['code' => 1, 'msg' => '存入金额不能低于' . $product->min_amount]);
+            return json(['code' => 1, 'msg' => '存入Số tiền不能低于' . $product->min_amount]);
         }
 
         Db::beginTransaction();
@@ -746,7 +746,7 @@ class YebaoController extends Base
             $orderId = YuebaoConstant::generateOrderId(YuebaoConstant::ORDER_PREFIX_IN);
             $uid = $member->id;
 
-            // 获取当前余额宝余额
+            // Lấy当前Số dư宝Số dư
             $stats = Db::table('yzz_yuebao_stats')->where('uid', $uid)->first();
             $beforeYebao = $stats ? ($product->type == 'current' ? $stats->current_amount : $stats->fixed_amount) : 0;
             $afterYebao = bcadd($beforeYebao, $amount, 2);
@@ -759,7 +759,7 @@ class YebaoController extends Base
                 $endtime = $now + ($product->duration_days * 86400);
             }
 
-            // 创建持仓记录
+            // 创建持仓lịch sử
             Db::table('yzz_yuebao_holding')->insert([
                 'order_id' => $orderId,
                 'uid' => $uid,
@@ -810,7 +810,7 @@ class YebaoController extends Base
                 ]);
             }
 
-            // 记录流水
+            // lịch sửVòng cược
             Db::table('yzz_yuebao_record')->insert([
                 'order_id' => $orderId,
                 'uid' => $uid,
@@ -830,18 +830,18 @@ class YebaoController extends Base
 
             Db::commit();
 
-            return json(['code' => 0, 'msg' => '存入成功', 'data' => [
+            return json(['code' => 0, 'msg' => '存入Thành công', 'data' => [
                 'order_id' => $orderId,
                 'amount' => $amount,
             ]]);
         } catch (\Exception $e) {
             Db::rollBack();
-            return json(['code' => 1, 'msg' => '存入失败：' . $e->getMessage()]);
+            return json(['code' => 1, 'msg' => '存入Thất bại：' . $e->getMessage()]);
         }
     }
 
     /**
-     * 管理员帮用户取出
+     * 管理员帮Người dùng取出
      * POST /app/admin/api/yebao/admin-withdraw
      */
     public function adminWithdraw(Request $request)
@@ -852,27 +852,27 @@ class YebaoController extends Base
         $remark = $request->post('remark', '管理员操作');
 
         if (!$username) {
-            return json(['code' => 1, 'msg' => '请输入用户名']);
+            return json(['code' => 1, 'msg' => '请输入Tên người dùng']);
         }
 
         if ($amount <= 0) {
-            return json(['code' => 1, 'msg' => '取出金额必须大于0']);
+            return json(['code' => 1, 'msg' => '取出Số tiền必须大于0']);
         }
 
         $member = Db::table('caipiao_member')->where('username', $username)->first();
         if (!$member) {
-            return json(['code' => 1, 'msg' => '用户不存在']);
+            return json(['code' => 1, 'msg' => 'Người dùng không tồn tại']);
         }
 
         $uid = $member->id;
         $stats = Db::table('yzz_yuebao_stats')->where('uid', $uid)->first();
         if (!$stats) {
-            return json(['code' => 1, 'msg' => '用户没有余额宝记录']);
+            return json(['code' => 1, 'msg' => 'Người dùng没有Số dư宝lịch sử']);
         }
 
         $currentAmount = $type == 'current' ? $stats->current_amount : $stats->fixed_amount;
         if ($amount > $currentAmount) {
-            return json(['code' => 1, 'msg' => '余额不足，当前' . ($type == 'current' ? '活期' : '定期') . '余额：' . $currentAmount]);
+            return json(['code' => 1, 'msg' => 'Số dư không đủ，当前' . ($type == 'current' ? '活期' : '定期') . 'Số dư：' . $currentAmount]);
         }
 
         Db::beginTransaction();
@@ -903,7 +903,7 @@ class YebaoController extends Base
             }
             Db::table('caipiao_member')->where('id', $uid)->update($memberUpdate);
 
-            // 更新持仓记录 (活期按比例扣减)
+            // 更新持仓lịch sử (活期按比例扣减)
             if ($type == 'current') {
                 $holdings = Db::table('yzz_yuebao_holding')
                     ->where('uid', $uid)
@@ -931,7 +931,7 @@ class YebaoController extends Base
                 }
             }
 
-            // 记录流水
+            // lịch sửVòng cược
             Db::table('yzz_yuebao_record')->insert([
                 'order_id' => $orderId,
                 'uid' => $uid,
@@ -951,19 +951,19 @@ class YebaoController extends Base
 
             Db::commit();
 
-            return json(['code' => 0, 'msg' => '取出成功', 'data' => [
+            return json(['code' => 0, 'msg' => '取出Thành công', 'data' => [
                 'order_id' => $orderId,
                 'amount' => $amount,
                 'to_balance' => $afterBalance,
             ]]);
         } catch (\Exception $e) {
             Db::rollBack();
-            return json(['code' => 1, 'msg' => '取出失败：' . $e->getMessage()]);
+            return json(['code' => 1, 'msg' => '取出Thất bại：' . $e->getMessage()]);
         }
     }
 
     /**
-     * 查询用户余额宝信息
+     * Tra cứuNgười dùngSố dư宝信息
      * GET /app/admin/api/yebao/user-info
      */
     public function userInfo(Request $request)
@@ -972,7 +972,7 @@ class YebaoController extends Base
         $uid = $request->get('uid');
 
         if (!$username && !$uid) {
-            return json(['code' => 1, 'msg' => '请输入用户名或用户ID']);
+            return json(['code' => 1, 'msg' => '请输入Tên người dùnghoặcNgười dùngID']);
         }
 
         $query = Db::table('caipiao_member');
@@ -984,12 +984,12 @@ class YebaoController extends Base
         $member = $query->first();
 
         if (!$member) {
-            return json(['code' => 1, 'msg' => '用户不存在']);
+            return json(['code' => 1, 'msg' => 'Người dùng không tồn tại']);
         }
 
         $stats = Db::table('yzz_yuebao_stats')->where('uid', $member->id)->first();
 
-        // 获取持仓列表
+        // Lấy持仓列表
         $holdings = Db::table('yzz_yuebao_holding')
             ->where('uid', $member->id)
             ->where('status', 'running')
@@ -1016,7 +1016,7 @@ class YebaoController extends Base
      */
 
     /**
-     * 用户统计列表
+     * Người dùng统计列表
      * GET /app/admin/api/yebao/user-stats
      */
     public function userStats(Request $request)
@@ -1081,7 +1081,7 @@ class YebaoController extends Base
         $claimedInterest = Db::table('yzz_yuebao_stats')->sum('total_interest') ?? 0;
         $totalInterest = bcadd((string)$claimedInterest, (string)($holdingStats->pending_interest ?? 0), 2);
 
-        // 今日统计
+        // Hôm nay统计
         $todayStart = strtotime(date('Y-m-d'));
         $todayStats = Db::table('yzz_yuebao_record')
             ->where('create_time', '>=', $todayStart)
@@ -1117,7 +1117,7 @@ class YebaoController extends Base
      */
 
     /**
-     * 获取利息宝配置
+     * Lấy利息宝配置
      * GET /app/admin/api/yebao/config
      */
     public function config(Request $request)
@@ -1151,7 +1151,7 @@ class YebaoController extends Base
     }
 
     /**
-     * 保存利息宝配置
+     * Lưu利息宝配置
      * POST /app/admin/api/yebao/config-save
      */
     public function configSave(Request $request)
@@ -1187,6 +1187,6 @@ class YebaoController extends Base
             ]);
         }
 
-        return json(['code' => 0, 'msg' => '保存成功']);
+        return json(['code' => 0, 'msg' => 'LưuThành công']);
     }
 }

@@ -17,7 +17,7 @@ class SecurityController
         if (!$userId) {
             return json([
                 'code' => ErrorCode::UNAUTHORIZED,
-                'message' => '请先登录',
+                'message' => 'Vui lòng đăng nhập',
                 'data' => null
             ]);
         }
@@ -29,7 +29,7 @@ class SecurityController
         if (!$user) {
             return json([
                 'code' => ErrorCode::NOT_FOUND,
-                'message' => '用户不存在',
+                'message' => 'Người dùng không tồn tại',
                 'data' => null
             ]);
         }
@@ -63,7 +63,7 @@ class SecurityController
         $phone = $request->post('phone');
         
         if (!$userId) {
-            return json(['code' => ErrorCode::UNAUTHORIZED, 'message' => '请先登录', 'data' => null]);
+            return json(['code' => ErrorCode::UNAUTHORIZED, 'message' => 'Vui lòng đăng nhập', 'data' => null]);
         }
         
         if (!$phone || !preg_match('/^1[3-9]\d{9}$/', $phone)) {
@@ -101,7 +101,7 @@ class SecurityController
         $code = $request->post('code');
         
         if (!$userId) {
-            return json(['code' => ErrorCode::UNAUTHORIZED, 'message' => '请先登录', 'data' => null]);
+            return json(['code' => ErrorCode::UNAUTHORIZED, 'message' => 'Vui lòng đăng nhập', 'data' => null]);
         }
         
         if (!$phone || !$code) {
@@ -120,7 +120,7 @@ class SecurityController
                 ->first();
             
             if (!$verify) {
-                return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '验证码错误或已过期', 'data' => null]);
+                return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => 'Mã xác thực saihoặc已过期', 'data' => null]);
             }
         }
         
@@ -131,7 +131,7 @@ class SecurityController
             ->exists();
         
         if ($exists) {
-            return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '该手机号已被其他账号绑定', 'data' => null]);
+            return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '该手机号已被其他Tài khoảnLiên kết', 'data' => null]);
         }
         
         
@@ -147,7 +147,7 @@ class SecurityController
         
         return json([
             'code' => ErrorCode::SUCCESS,
-            'message' => '手机绑定成功',
+            'message' => '手机Liên kếtThành công',
             'data' => null
         ]);
     }
@@ -159,7 +159,7 @@ class SecurityController
         $email = $request->post('email');
         
         if (!$userId) {
-            return json(['code' => ErrorCode::UNAUTHORIZED, 'message' => '请先登录', 'data' => null]);
+            return json(['code' => ErrorCode::UNAUTHORIZED, 'message' => 'Vui lòng đăng nhập', 'data' => null]);
         }
         
         if (!$email || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -193,7 +193,7 @@ class SecurityController
         $code = $request->post('code');
         
         if (!$userId) {
-            return json(['code' => ErrorCode::UNAUTHORIZED, 'message' => '请先登录', 'data' => null]);
+            return json(['code' => ErrorCode::UNAUTHORIZED, 'message' => 'Vui lòng đăng nhập', 'data' => null]);
         }
         
         if (!$email || !$code) {
@@ -212,7 +212,7 @@ class SecurityController
                 ->first();
             
             if (!$verify) {
-                return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '验证码错误或已过期', 'data' => null]);
+                return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => 'Mã xác thực saihoặc已过期', 'data' => null]);
             }
         }
         
@@ -223,7 +223,7 @@ class SecurityController
             ->exists();
         
         if ($exists) {
-            return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '该邮箱已被其他账号绑定', 'data' => null]);
+            return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '该邮箱已被其他Tài khoảnLiên kết', 'data' => null]);
         }
         
         Db::table('caipiao_member')
@@ -237,7 +237,7 @@ class SecurityController
         
         return json([
             'code' => ErrorCode::SUCCESS,
-            'message' => '邮箱绑定成功',
+            'message' => '邮箱Liên kếtThành công',
             'data' => null
         ]);
     }
@@ -248,7 +248,7 @@ class SecurityController
         $userId = $request->userId ?? 0;
         
         if (!$userId) {
-            return json(['code' => ErrorCode::UNAUTHORIZED, 'message' => '请先登录', 'data' => null]);
+            return json(['code' => ErrorCode::UNAUTHORIZED, 'message' => 'Vui lòng đăng nhập', 'data' => null]);
         }
         
         $user = Db::table('caipiao_member')
@@ -256,7 +256,7 @@ class SecurityController
             ->first(['username', 'google_secret', 'google_bind']);
         
         if ($user->google_bind) {
-            return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '已绑定Google验证器', 'data' => null]);
+            return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '已Liên kếtGoogle验证器', 'data' => null]);
         }
         
         
@@ -268,7 +268,7 @@ class SecurityController
             ->update(['google_secret' => $secret]);
         
         
-        $issuer = urlencode('彩票平台');
+        $issuer = urlencode('Xổ số平台');
         $qrContent = "otpauth://totp/{$issuer}:{$user->username}?secret={$secret}&issuer={$issuer}";
         
         return json([
@@ -288,7 +288,7 @@ class SecurityController
         $code = $request->post('code');
         
         if (!$userId) {
-            return json(['code' => ErrorCode::UNAUTHORIZED, 'message' => '请先登录', 'data' => null]);
+            return json(['code' => ErrorCode::UNAUTHORIZED, 'message' => 'Vui lòng đăng nhập', 'data' => null]);
         }
         
         if (!$code || strlen($code) !== 6) {
@@ -300,16 +300,16 @@ class SecurityController
             ->first(['google_secret', 'google_bind']);
         
         if ($user->google_bind) {
-            return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '已绑定Google验证器', 'data' => null]);
+            return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '已Liên kếtGoogle验证器', 'data' => null]);
         }
         
         if (!$user->google_secret) {
-            return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '请先获取密钥', 'data' => null]);
+            return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '请先Lấy密钥', 'data' => null]);
         }
         
         
         if (!$this->verifyGoogleCode($user->google_secret, $code)) {
-            return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '验证码错误', 'data' => null]);
+            return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => 'Mã xác thực sai', 'data' => null]);
         }
         
         Db::table('caipiao_member')
@@ -318,7 +318,7 @@ class SecurityController
         
         return json([
             'code' => ErrorCode::SUCCESS,
-            'message' => 'Google验证器绑定成功',
+            'message' => 'Google验证器Liên kếtThành công',
             'data' => null
         ]);
     }
@@ -352,11 +352,11 @@ class SecurityController
         $answer = $request->post('answer');
         
         if (!$userId) {
-            return json(['code' => ErrorCode::UNAUTHORIZED, 'message' => '请先登录', 'data' => null]);
+            return json(['code' => ErrorCode::UNAUTHORIZED, 'message' => 'Vui lòng đăng nhập', 'data' => null]);
         }
         
         if (!$question || !$answer) {
-            return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '请选择问题并输入答案', 'data' => null]);
+            return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => 'Vui lòng chọn问题并输入答案', 'data' => null]);
         }
         
         if (mb_strlen($answer) < 2) {
@@ -372,7 +372,7 @@ class SecurityController
         
         return json([
             'code' => ErrorCode::SUCCESS,
-            'message' => '密保问题设置成功',
+            'message' => '密保问题Cài đặtThành công',
             'data' => null
         ]);
     }
@@ -384,11 +384,11 @@ class SecurityController
         $password = $request->post('password');
         
         if (!$userId) {
-            return json(['code' => ErrorCode::UNAUTHORIZED, 'message' => '请先登录', 'data' => null]);
+            return json(['code' => ErrorCode::UNAUTHORIZED, 'message' => 'Vui lòng đăng nhập', 'data' => null]);
         }
         
         if (!$password || strlen($password) !== 6) {
-            return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '请输入6位资金密码', 'data' => null]);
+            return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '请输入6位资金Mật khẩu', 'data' => null]);
         }
         
         $user = Db::table('caipiao_member')
@@ -396,7 +396,7 @@ class SecurityController
             ->first(['tradepassword']);
         
         if (!$user) {
-            return json(['code' => ErrorCode::NOT_FOUND, 'message' => '用户不存在', 'data' => null]);
+            return json(['code' => ErrorCode::NOT_FOUND, 'message' => 'Người dùng không tồn tại', 'data' => null]);
         }
         
         
@@ -404,17 +404,17 @@ class SecurityController
         
         
         if (empty($user->tradepassword) || $user->tradepassword === $defaultTradePwd) {
-            return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '请先设置资金密码', 'data' => null]);
+            return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '请先Cài đặt资金Mật khẩu', 'data' => null]);
         }
         
         
         if (md5($password) !== $user->tradepassword) {
-            return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '资金密码错误', 'data' => null]);
+            return json(['code' => ErrorCode::INVALID_PARAMS, 'message' => '资金Mật khẩu sai', 'data' => null]);
         }
         
         return json([
             'code' => ErrorCode::SUCCESS,
-            'message' => '验证成功',
+            'message' => '验证Thành công',
             'data' => null
         ]);
     }

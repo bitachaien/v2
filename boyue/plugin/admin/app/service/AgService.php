@@ -10,15 +10,15 @@ class AgService
 {
     protected $sn;          // 商户前缀 (原 api_account)
     protected $secretKey;   // 密钥 (原 sign_key)
-    protected $base_url = 'https://ap.api-bet.net';  // NG 平台地址
+    protected $base_url = 'https:// ap.api-bet.net';  // NG 平台地址
 
     public function __construct()
     {
-        // 从配置文件或环境变量获取
+        // 从配置文件hoặc环境变量Lấy
         $this->sn = env('NG_SN', env('NG_API_ACCOUNT', ''));
         $this->secretKey = env('NG_SECRET_KEY', env('NG_SIGN_KEY', ''));
         
-        // 记录配置状态（仅用于调试）
+        // lịch sử配置状态（仅用于调试）
         \support\Log::info('NG API 配置状态', [
             'sn' => $this->sn ? '已配置' : '未配置',
             'secretKey' => $this->secretKey ? '已配置' : '未配置',
@@ -53,7 +53,7 @@ class AgService
     }
     
     /**
-     * 获取请求头
+     * Lấy请求头
      * @return array
      */
     private function getHeaders()
@@ -72,7 +72,7 @@ class AgService
     }
 
     /**
-     * 获取所有平台余额
+     * Lấy所有平台Số dư
      * 接口：/api/server/quota
      * 参数：currency（货币类型，如：CNY）
      */
@@ -83,7 +83,7 @@ class AgService
             return [
                 'code' => 0,
                 'data' => [],
-                'msg' => 'NG 平台配置未设置，请在 .env 文件中设置 NG_SN 和 NG_SECRET_KEY'
+                'msg' => 'NG 平台配置未Cài đặt，请在 .env 文件中Cài đặt NG_SN 和 NG_SECRET_KEY'
             ];
         }
         
@@ -99,14 +99,14 @@ class AgService
         \support\Log::info('NG 平台返回', ['response' => $res]);
         
         if ($res && isset($res['code']) && $res['code'] == 10000) {
-            // 成功返回，解析数据
+            // Thành công返回，解析dữ liệu
             // 返回格式：{"model":"1","CNY":100.100,"costRatio":1.00,"ratios":[...]}
-            // CNY 是商户总余额，ratios 是各平台的占比
+            // CNY 是商户总Số dư，ratios 是各平台的占比
             $data = $res['data'] ?? [];
             $totalBalance = $data['CNY'] ?? 0;
             $ratios = $data['ratios'] ?? [];
             
-            // 计算各平台实际余额
+            // 计算各平台实际Số dư
             $balances = [];
             foreach ($ratios as $item) {
                 $platform = $item['platfrom'] ?? $item['platform'] ?? '';
@@ -116,28 +116,28 @@ class AgService
                 }
             }
             
-            // 添加总额度
-            $balances['tyscore'] = $totalBalance;  // 通用额度 = 总余额
+            // Thêm总额度
+            $balances['tyscore'] = $totalBalance;  // 通用额度 = 总Số dư
             
             return [
                 'code' => 1,
                 'data' => $balances
             ];
         } else {
-            $errorMsg = $res['msg'] ?? '请求失败';
+            $errorMsg = $res['msg'] ?? 'Yêu cầu thất bại';
             return [
                 'code' => 0,
                 'data' => [],
-                'msg' => 'API 返回错误 (' . ($res['code'] ?? 'unknown') . '): ' . $errorMsg
+                'msg' => 'API 返回Lỗi (' . ($res['code'] ?? 'unknown') . '): ' . $errorMsg
             ];
         }
     }
 
     /**
-     * 获取投注记录
+     * LấyĐặt cượclịch sử
      * 接口：/record/query
-     * @param string $startTime 开始时间
-     * @param string $endTime 结束时间
+     * @param string $startTime 开始Thời gian
+     * @param string $endTime 结束Thời gian
      * @param int $page 页码
      * @param int $limit 每页数量
      */
@@ -166,7 +166,7 @@ class AgService
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POST, 1);
         
-        // 将数据转为 JSON 格式
+        // 将dữ liệu转为 JSON 格式
         $jsonData = json_encode($post_data);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
         
@@ -189,7 +189,7 @@ class AgService
         
         $contents = curl_exec($ch);
         
-        // 记录错误信息
+        // lịch sửLỗi信息
         if (curl_errno($ch)) {
             \support\Log::error('CURL 错误', [
                 'error' => curl_error($ch),

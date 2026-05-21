@@ -42,7 +42,7 @@ class LotteryChatController
         try {
             $userId = $request->userId;
             if (!$userId) {
-                return json(['code' => 401, 'message' => '请先登录']);
+                return json(['code' => 401, 'message' => 'Vui lòng đăng nhập']);
             }
 
             $lotteryCode = $request->post('lotteryCode');
@@ -64,7 +64,7 @@ class LotteryChatController
             }
             
             if (empty($bets)) {
-                return json(['code' => 1, 'message' => '请输入投注内容']);
+                return json(['code' => 1, 'message' => '请输入Đặt cược内容']);
             }
 
             
@@ -73,11 +73,11 @@ class LotteryChatController
                 ->first();
             
             if (!$caipiao) {
-                return json(['code' => 1, 'message' => '彩种不存在']);
+                return json(['code' => 1, 'message' => '彩种không tồn tại']);
             }
             
             if ($caipiao->isopen != 1) {
-                return json(['code' => 1, 'message' => '彩种已关闭']);
+                return json(['code' => 1, 'message' => '彩种đã đóng']);
             }
 
             
@@ -89,11 +89,11 @@ class LotteryChatController
             
             $user = Db::table('caipiao_member')->where('id', $userId)->first();
             if (!$user) {
-                return json(['code' => 1, 'message' => '用户不存在']);
+                return json(['code' => 1, 'message' => 'Người dùng không tồn tại']);
             }
             
             if ($user->islock == 1) {
-                return json(['code' => 1, 'message' => '账户已被锁定']);
+                return json(['code' => 1, 'message' => 'tài khoản已被锁定']);
             }
 
             
@@ -120,7 +120,7 @@ class LotteryChatController
                 }
                 $redis->close();
             } catch (\Exception $e) {
-                Log::warning('Redis频率限制检查失败: ' . $e->getMessage());
+                Log::warning('Redis频率限制检查Thất bại: ' . $e->getMessage());
             }
 
             
@@ -129,15 +129,15 @@ class LotteryChatController
             foreach ($bets as $bet) {
                 $amount = floatval($bet['amount'] ?? 0);
                 if ($amount <= 0) {
-                    return json(['code' => 1, 'message' => '投注金额无效']);
+                    return json(['code' => 1, 'message' => 'Đặt cượcSố tiền无效']);
                 }
                 
                 if ($amount < $minBet) {
-                    return json(['code' => 1, 'message' => "单注金额不能低于 {$minBet} 元"]);
+                    return json(['code' => 1, 'message' => "单注Số tiền不能低于 {$minBet} 元"]);
                 }
                 
                 if ($amount > $maxBet) {
-                    return json(['code' => 1, 'message' => "单注金额不能超过 {$maxBet} 元"]);
+                    return json(['code' => 1, 'message' => "单注Số tiền不能超过 {$maxBet} 元"]);
                 }
                 $totalAmount += $amount;
                 $betItems[] = [
@@ -158,12 +158,12 @@ class LotteryChatController
             
             if ($existingBetAmount + $totalAmount > $periodMaxBet) {
                 $remaining = $periodMaxBet - $existingBetAmount;
-                return json(['code' => 1, 'message' => "本期投注已达上限，剩余可投 {$remaining} 元"]);
+                return json(['code' => 1, 'message' => "本期Đặt cược已达上限，剩余可投 {$remaining} 元"]);
             }
 
             
             if ($user->balance < $totalAmount) {
-                return json(['code' => 1001, 'message' => '余额不足']);
+                return json(['code' => 1001, 'message' => 'Số dư không đủ']);
             }
 
             
@@ -177,7 +177,7 @@ class LotteryChatController
                 
                 if ($affected === 0) {
                     Db::rollBack();
-                    return json(['code' => 1001, 'message' => '余额不足或操作过于频繁，请重试']);
+                    return json(['code' => 1001, 'message' => 'Số dư không đủhoặc操作过于频繁，请重试']);
                 }
                 
                 
@@ -251,13 +251,13 @@ class LotteryChatController
                     'uid' => $userId,
                     'username' => $user->nickname ?? $user->username,
                     'type' => 9,
-                    'typename' => '投注',
+                    'typename' => 'Đặt cược',
                     'trano' => $orderId,
                     'amount' => -$totalAmount,
                     'before' => $balanceBefore,
                     'after' => $balanceAfter,
                     'addtime' => time(),
-                    'remark' => "期号:{$issue} 投注",
+                    'remark' => "期号:{$issue} Đặt cược",
                 ]);
 
                 
@@ -265,7 +265,7 @@ class LotteryChatController
                     'lottery_code' => $lotteryCode,
                     'issue' => $issue,
                     'user_id' => $userId,
-                    'user_name' => $user->nickname ?? $user->username ?? '用户' . substr($userId, -4),
+                    'user_name' => $user->nickname ?? $user->username ?? 'Người dùng' . substr($userId, -4),
                     'avatar' => $user->face ?? '',
                     'honor_level' => $this->calculateHonorLevel($userId),
                     'content' => $betText,
@@ -322,7 +322,7 @@ class LotteryChatController
 
                 return json([
                     'code' => 0,
-                    'message' => '投注成功',
+                    'message' => 'Đặt cượcThành công',
                     'data' => [
                         'orderId' => $orderId,
                         'balance' => number_format($balanceAfter, 2, '.', ''),
@@ -336,8 +336,8 @@ class LotteryChatController
             }
 
         } catch (\Exception $e) {
-            Log::error('聊天室投注失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '投注失败: ' . $e->getMessage()]);
+            Log::error('聊天室Đặt cượcThất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Đặt cượcThất bại: ' . $e->getMessage()]);
         }
     }
     
@@ -359,7 +359,7 @@ class LotteryChatController
             
             
             if (!empty($currentIssue->opencode)) {
-                return '该期已开奖，请投注下一期';
+                return '该期已Mở thưởng，请Đặt cược下一期';
             }
             
             
@@ -376,7 +376,7 @@ class LotteryChatController
             if ($latestIssue) {
                 
                 if ($issue <= $latestIssue->expect && !empty($latestIssue->opencode)) {
-                    return '该期已开奖，请投注下一期';
+                    return '该期已Mở thưởng，请Đặt cược下一期';
                 }
             }
         }
@@ -477,7 +477,7 @@ class LotteryChatController
                         }
                     }
                 } catch (\Exception $e) {
-                    Log::warning('获取Redis消息失败: ' . $e->getMessage());
+                    Log::warning('LấyRedisTin nhắnThất bại: ' . $e->getMessage());
                 }
             }
 
@@ -502,8 +502,8 @@ class LotteryChatController
             ]);
 
         } catch (\Exception $e) {
-            Log::error('获取聊天消息失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '获取失败']);
+            Log::error('Lấy聊天Tin nhắnThất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại']);
         }
     }
 
@@ -525,7 +525,7 @@ class LotteryChatController
             ]);
 
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '获取失败']);
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại']);
         }
     }
 
@@ -535,7 +535,7 @@ class LotteryChatController
         try {
             $userId = $request->userId;
             if (!$userId) {
-                return json(['code' => 401, 'message' => '请先登录']);
+                return json(['code' => 401, 'message' => 'Vui lòng đăng nhập']);
             }
 
             $lotteryCode = $code;
@@ -589,8 +589,8 @@ class LotteryChatController
             ]);
 
         } catch (\Exception $e) {
-            Log::error('获取投注历史失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '获取失败']);
+            Log::error('LấyĐặt cược历史Thất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại']);
         }
     }
 
@@ -696,8 +696,8 @@ class LotteryChatController
             ]);
 
         } catch (\Exception $e) {
-            Log::error('获取投注统计失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '获取失败']);
+            Log::error('LấyĐặt cược统计Thất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại']);
         }
     }
 
@@ -734,7 +734,7 @@ class LotteryChatController
                 }
                 
                 if ($amount <= 0) {
-                    return ['valid' => false, 'error' => "金额必须大于0: {$part}"];
+                    return ['valid' => false, 'error' => "Số tiền必须大于0: {$part}"];
                 }
                 
                 
@@ -756,7 +756,7 @@ class LotteryChatController
         }
         
         if (empty($bets)) {
-            return ['valid' => false, 'error' => '请输入有效的投注内容'];
+            return ['valid' => false, 'error' => '请输入有效的Đặt cược内容'];
         }
         
         return ['valid' => true, 'bets' => $bets];
@@ -885,12 +885,12 @@ class LotteryChatController
     {
         $userId = $request->userId;
         if (!$userId) {
-            return json(['code' => 401, 'message' => '请先登录']);
+            return json(['code' => 401, 'message' => 'Vui lòng đăng nhập']);
         }
 
         $issue = $request->get('issue', '');
         if (empty($issue)) {
-            return json(['code' => 1, 'message' => '期号不能为空']);
+            return json(['code' => 1, 'message' => '期号không được để trống']);
         }
 
         
@@ -952,7 +952,7 @@ class LotteryChatController
 
         return json([
             'code' => 0,
-            'message' => '获取成功',
+            'message' => 'Lấy dữ liệu thành công',
             'data' => $list
         ]);
     }
@@ -962,7 +962,7 @@ class LotteryChatController
     {
         $userId = $request->userId;
         if (!$userId) {
-            return json(['code' => 401, 'message' => '请先登录']);
+            return json(['code' => 401, 'message' => 'Vui lòng đăng nhập']);
         }
 
         $bet = Db::table('caipiao_touzhu')
@@ -971,7 +971,7 @@ class LotteryChatController
             ->first();
 
         if (!$bet) {
-            return json(['code' => 1, 'message' => '订单不存在']);
+            return json(['code' => 1, 'message' => '订单không tồn tại']);
         }
 
         if ($bet->iscancel == 1) {
@@ -1029,7 +1029,7 @@ class LotteryChatController
                 'amount' => $bet->amount,
                 'before' => $beforeBalance,
                 'after' => $afterBalance,
-                'remark' => "撤销投注[{$bet->expect}]{$bet->playtitle}",
+                'remark' => "撤销Đặt cược[{$bet->expect}]{$bet->playtitle}",
                 'addtime' => time(),
                 'ip' => $request->getRealIp() ?? ''
             ]);
@@ -1039,10 +1039,10 @@ class LotteryChatController
             
             $this->recallBetMessage($bet);
             
-            return json(['code' => 0, 'message' => '撤单成功']);
+            return json(['code' => 0, 'message' => '撤单Thành công']);
         } catch (\Exception $e) {
             Db::rollBack();
-            return json(['code' => 1, 'message' => '撤单失败: ' . $e->getMessage()]);
+            return json(['code' => 1, 'message' => '撤单Thất bại: ' . $e->getMessage()]);
         }
     }
 
@@ -1095,7 +1095,7 @@ class LotteryChatController
             }
         } catch (\Exception $e) {
             
-            Log::warning('[cancelBet] 撤回消息失败: ' . $e->getMessage());
+            Log::warning('[cancelBet] 撤回Tin nhắnThất bại: ' . $e->getMessage());
         }
     }
 
@@ -1104,13 +1104,13 @@ class LotteryChatController
     {
         $userId = $request->userId;
         if (!$userId) {
-            return json(['code' => 401, 'message' => '请先登录']);
+            return json(['code' => 401, 'message' => 'Vui lòng đăng nhập']);
         }
 
         $newAmount = floatval($request->post('amount', 0));
         $perAmount = floatval($request->post('perAmount', 0));
         if ($newAmount <= 0) {
-            return json(['code' => 1, 'message' => '金额必须大于0']);
+            return json(['code' => 1, 'message' => 'Số tiền必须大于0']);
         }
 
         $bet = Db::table('caipiao_touzhu')
@@ -1119,7 +1119,7 @@ class LotteryChatController
             ->first();
 
         if (!$bet) {
-            return json(['code' => 1, 'message' => '订单不存在']);
+            return json(['code' => 1, 'message' => '订单không tồn tại']);
         }
 
         if ($bet->iscancel == 1) {
@@ -1127,7 +1127,7 @@ class LotteryChatController
         }
 
         if ($bet->isdraw != 0) {
-            return json(['code' => 1, 'message' => '订单已结算，无法修改']);
+            return json(['code' => 1, 'message' => '订单已结算，无法Sửa']);
         }
 
         
@@ -1143,7 +1143,7 @@ class LotteryChatController
             if ($kaijiang && $kaijiang->opentime) {
                 $remaining = $kaijiang->opentime - time();
                 if ($remaining <= $sealTime) {
-                    return json(['code' => 1, 'message' => '已封盘，无法修改']);
+                    return json(['code' => 1, 'message' => '已封盘，无法Sửa']);
                 }
             }
         }
@@ -1154,7 +1154,7 @@ class LotteryChatController
         
         $user = Db::table('caipiao_member')->where('id', $userId)->first();
         if ($diff > 0 && $user->balance < $diff) {
-            return json(['code' => 1, 'message' => '余额不足']);
+            return json(['code' => 1, 'message' => 'Số dư không đủ']);
         }
 
         
@@ -1189,12 +1189,12 @@ class LotteryChatController
                 'uid' => $userId,
                 'username' => $user->username ?? '',
                 'type' => 7, 
-                'typename' => '修改投注',
+                'typename' => 'SửaĐặt cược',
                 'trano' => $bet->trano ?? '',
                 'amount' => -$diff,
                 'before' => $beforeBalance,
                 'after' => $afterBalance,
-                'remark' => "修改投注[{$bet->expect}]{$bet->playtitle}: {$oldAmount}→{$newAmount}",
+                'remark' => "SửaĐặt cược[{$bet->expect}]{$bet->playtitle}: {$oldAmount}→{$newAmount}",
                 'addtime' => time(),
                 'ip' => $request->getRealIp() ?? ''
             ]);
@@ -1204,10 +1204,10 @@ class LotteryChatController
             
             $this->updateBetMessage($bet, $newAmount, $perAmount);
             
-            return json(['code' => 0, 'message' => '修改成功']);
+            return json(['code' => 0, 'message' => 'SửaThành công']);
         } catch (\Exception $e) {
             Db::rollBack();
-            return json(['code' => 1, 'message' => '修改失败: ' . $e->getMessage()]);
+            return json(['code' => 1, 'message' => 'SửaThất bại: ' . $e->getMessage()]);
         }
     }
 
@@ -1284,7 +1284,7 @@ class LotteryChatController
                 $redis->rPush('websocket_push_queue', json_encode($updateMsg));
             }
         } catch (\Exception $e) {
-            Log::warning('[modifyBet] 更新消息失败: ' . $e->getMessage());
+            Log::warning('[modifyBet] 更新Tin nhắnThất bại: ' . $e->getMessage());
         }
     }
 }

@@ -17,7 +17,7 @@ class BankController extends Base
     }
     
     /**
-     * 获取银行信息列表数据
+     * Lấy银行信息列表dữ liệu
      */
     public function list(Request $request)
     {
@@ -42,7 +42,7 @@ class BankController extends Base
             $query->where('state', $state);
         }
         
-        // 获取总数
+        // Lấy总数
         $count = $query->count();
         
         // 分页
@@ -52,7 +52,7 @@ class BankController extends Base
                      ->limit($limit)
                      ->get();
         
-        // 处理数据
+        // 处理dữ liệu
         $result = [];
         foreach ($list as $item) {
             $row = (array)$item;
@@ -71,8 +71,8 @@ class BankController extends Base
             'count' => $count
         ]);
         } catch (\Exception $e) {
-            \support\Log::error('BankController::list 错误: ' . $e->getMessage());
-            return json(['code' => 1, 'msg' => '获取列表失败: ' . $e->getMessage()]);
+            \support\Log::error('BankController::list Lỗi: ' . $e->getMessage());
+            return json(['code' => 1, 'msg' => 'Lấy列表Thất bại: ' . $e->getMessage()]);
         }
     }
     
@@ -84,13 +84,13 @@ class BankController extends Base
         $id = $request->get('id');
         
         if (!$id) {
-            return '<script>alert("参数错误");history.back();</script>';
+            return '<script>alert("Tham số không hợp lệ");history.back();</script>';
         }
         
         $info = Db::table('caipiao_banklist')->where('id', $id)->first();
         
         if (!$info) {
-            return '<script>alert("银行信息不存在");history.back();</script>';
+            return '<script>alert("银行信息không tồn tại");history.back();</script>';
         }
         
         $info = (array)$info;
@@ -102,7 +102,7 @@ class BankController extends Base
             $info['city'] = $_bankaddress[1] ?? '';
         }
         
-        // POST 提交保存
+        // POST GửiLưu
         if ($request->method() === 'POST') {
             $data = [];
             $data['bankname'] = $request->post('bankname');
@@ -131,22 +131,22 @@ class BankController extends Base
                     $member = Db::table('caipiao_member')->where('id', $info['uid'])->first();
                     $amountbefor = $member->balance;
                     
-                    // 增加余额
+                    // 增加Số dư
                     Db::table('caipiao_member')
                         ->where('id', $info['uid'])
                         ->increment('balance', $balance);
                     
-                    // 记录账变
+                    // lịch sử账变
                     $fuddetaildata = [
                         'trano' => $this->generateTrano(4),
                         'uid' => $info['uid'],
                         'username' => $info['username'],
                         'type' => 'activity_bindcard',
-                        'typename' => '绑定银行赠送活动',
+                        'typename' => 'Liên kết银行赠送Hoạt động',
                         'amount' => abs($balance),
                         'amountbefor' => $amountbefor,
                         'amountafter' => $amountbefor + abs($balance),
-                        'remark' => '绑定银行赠送',
+                        'remark' => 'Liên kết银行赠送',
                         'oddtime' => time()
                     ];
                     Db::table('caipiao_fuddetail')->insert($fuddetaildata);
@@ -160,9 +160,9 @@ class BankController extends Base
                 ->update($data);
             
             if ($result !== false) {
-                return json(['code' => 0, 'msg' => '银行信息修改成功']);
+                return json(['code' => 0, 'msg' => '银行信息SửaThành công']);
             } else {
-                return json(['code' => 1, 'msg' => '银行信息修改失败']);
+                return json(['code' => 1, 'msg' => '银行信息SửaThất bại']);
             }
         }
         
@@ -170,27 +170,27 @@ class BankController extends Base
     }
     
     /**
-     * 删除银行信息
+     * Xóa银行信息
      */
     public function delete(Request $request)
     {
         $id = $request->post('id');
         
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
         
         $result = Db::table('caipiao_banklist')->where('id', $id)->delete();
         
         if ($result) {
-            return json(['code' => 0, 'msg' => '删除成功']);
+            return json(['code' => 0, 'msg' => 'XóaThành công']);
         } else {
-            return json(['code' => 1, 'msg' => '删除失败']);
+            return json(['code' => 1, 'msg' => 'XóaThất bại']);
         }
     }
     
     /**
-     * 获取配置值
+     * Lấy配置值
      */
     private function getConfig($name)
     {

@@ -16,7 +16,7 @@ class TeamReportController extends Base
     }
     
     /**
-     * 获取团队报表数据
+     * LấyĐội nhóm报表dữ liệu
      */
     public function getData(Request $request)
     {
@@ -24,17 +24,17 @@ class TeamReportController extends Base
         $endtime = $request->get('endtime', date('Y-m-d'));
         $loginname = $request->get('loginname', '');
         
-        // 转换时间戳
+        // 转换Thời gian戳
         $startTimestamp = strtotime($startime . ' 00:00:00');
         $endTimestamp = strtotime($endtime . ' 23:59:59');
         
-        // 检查时间范围
+        // 检查Thời gian范围
         $days = floor(($endTimestamp - $startTimestamp) / 86400);
         if ($days > 60) {
-            return json(['code' => 1, 'msg' => '只能查询60天内的数据']);
+            return json(['code' => 1, 'msg' => '只能Tra cứu60天内的dữ liệu']);
         }
         
-        // 获取用户及下级ID列表
+        // LấyNgười dùng及Cấp dướiID列表
         $chiduids = [];
         $username = '';
         if (!empty($loginname)) {
@@ -57,25 +57,25 @@ class TeamReportController extends Base
             $dayStart = strtotime($date . ' 00:00:00');
             $dayEnd = strtotime($date . ' 23:59:59');
             
-            // 充值金额（自动充值 + 手动加 - 手动减）
+            // Nạp tiềnSố tiền（自动Nạp tiền + 手动加 - 手动减）
             $zdchongzhi = $this->getRechargeAmount($chiduids, $dayStart, $dayEnd, 1, null);
             $sdjiachongzhi = $this->getRechargeAmount($chiduids, $dayStart, $dayEnd, 2, 1);
             $sdjianchongzhi = $this->getRechargeAmount($chiduids, $dayStart, $dayEnd, 2, -1);
             $dayRechargeMoney = $zdchongzhi + $sdjiachongzhi - $sdjianchongzhi;
             
-            // 提款金额
+            // Rút tiềnSố tiền
             $dayDrawMoney = $this->getWithdrawAmount($chiduids, $dayStart, $dayEnd);
             
-            // 投注额
+            // Đặt cược额
             $dayBetMoney = $this->getBetAmount($chiduids, $dayStart, $dayEnd);
             
-            // 中奖额
+            // Trúng thưởng额
             $dayWinMoney = $this->getWinAmount($chiduids, $dayStart, $dayEnd);
             
             // 返点额
             $dayRebateMoney = $this->getRebateAmount($chiduids, $dayStart, $dayEnd);
             
-            // 盈亏 = 充值 - 提款 - (中奖 + 返点 - 投注)
+            // 盈亏 = Nạp tiền - Rút tiền - (Trúng thưởng + 返点 - Đặt cược)
             $dayProfit = $dayRechargeMoney - $dayDrawMoney - ($dayWinMoney + $dayRebateMoney - $dayBetMoney);
             
             $list[] = [
@@ -99,7 +99,7 @@ class TeamReportController extends Base
     }
     
     /**
-     * 获取下级ID列表
+     * LấyCấp dướiID列表
      */
     private function getDownList($pid)
     {
@@ -119,7 +119,7 @@ class TeamReportController extends Base
     }
     
     /**
-     * 获取充值金额
+     * Lấy nạp tiềnSố tiền
      */
     private function getRechargeAmount($uids, $start, $end, $isauto, $sdtype = null)
     {
@@ -141,7 +141,7 @@ class TeamReportController extends Base
     }
     
     /**
-     * 获取提款金额
+     * Lấy rút tiềnSố tiền
      */
     private function getWithdrawAmount($uids, $start, $end)
     {
@@ -158,7 +158,7 @@ class TeamReportController extends Base
     }
     
     /**
-     * 获取投注额（排除机器人投注）
+     * LấyĐặt cược额（排除机器人Đặt cược）
      */
     private function getBetAmount($uids, $start, $end)
     {
@@ -176,7 +176,7 @@ class TeamReportController extends Base
     }
     
     /**
-     * 获取中奖额
+     * LấyTrúng thưởng额
      */
     private function getWinAmount($uids, $start, $end)
     {
@@ -193,7 +193,7 @@ class TeamReportController extends Base
     }
     
     /**
-     * 获取返点额
+     * Lấy返点额
      */
     private function getRebateAmount($uids, $start, $end)
     {

@@ -101,7 +101,7 @@ class ScheduledTasks
                 'created_at' => time()
             ]);
         } catch (\Exception $e) {
-            Log::error("记录任务日志失败: " . $e->getMessage());
+            Log::error("lịch sử任务日志Thất bại: " . $e->getMessage());
         }
     }
     
@@ -141,19 +141,19 @@ class ScheduledTasks
                     'type' => 'activity_daily_consume',
                     'amount' => $rewardAmount,
                     'afterbalance' => Db::table('caipiao_member')->where('id', $user->uid)->value('balance'),
-                    'remark' => '每日消费赠送活动',
+                    'remark' => '每日消费赠送Hoạt động',
                     'oddtime' => time(),
                 ]);
                 
                 $rewardCount++;
             }
             
-            $result = "发放成功，受益用户: {$rewardCount}";
+            $result = "发放Thành công，受益Người dùng: {$rewardCount}";
             Log::info($result);
             $this->logTask('daily_consume', $result);
             
         } catch (\Exception $e) {
-            $result = "执行失败: " . $e->getMessage();
+            $result = "执行Thất bại: " . $e->getMessage();
             Log::error($result);
             $this->logTask('daily_consume', $result);
         }
@@ -162,7 +162,7 @@ class ScheduledTasks
     
     private function dailyLossReward($settings)
     {
-        Log::info('开始执行每日亏损赠送活动');
+        Log::info('开始执行每日亏损赠送Hoạt động');
         
         try {
             $today = strtotime(date('Y-m-d'));
@@ -198,7 +198,7 @@ class ScheduledTasks
                         'type' => 'activity_daily_loss',
                         'amount' => $rewardAmount,
                         'afterbalance' => Db::table('caipiao_member')->where('id', $user->uid)->value('balance'),
-                        'remark' => '每日亏损赠送活动',
+                        'remark' => '每日亏损赠送Hoạt động',
                         'oddtime' => time(),
                     ]);
                     
@@ -206,12 +206,12 @@ class ScheduledTasks
                 }
             }
             
-            $result = "发放成功，受益用户: {$rewardCount}";
+            $result = "发放Thành công，受益Người dùng: {$rewardCount}";
             Log::info($result);
             $this->logTask('daily_loss', $result);
             
         } catch (\Exception $e) {
-            $result = "执行失败: " . $e->getMessage();
+            $result = "执行Thất bại: " . $e->getMessage();
             Log::error($result);
             $this->logTask('daily_loss', $result);
         }
@@ -220,7 +220,7 @@ class ScheduledTasks
     
     private function monthlyConsumeReward($settings)
     {
-        Log::info('开始执行每月消费赠送活动');
+        Log::info('开始执行每月消费赠送Hoạt động');
         
         try {
             
@@ -250,19 +250,19 @@ class ScheduledTasks
                     'type' => 'activity_monthly_consume',
                     'amount' => $rewardAmount,
                     'afterbalance' => Db::table('caipiao_member')->where('id', $user->uid)->value('balance'),
-                    'remark' => '每月消费赠送活动',
+                    'remark' => '每月消费赠送Hoạt động',
                     'oddtime' => time(),
                 ]);
                 
                 $rewardCount++;
             }
             
-            $result = "发放成功，受益用户: {$rewardCount}";
+            $result = "发放Thành công，受益Người dùng: {$rewardCount}";
             Log::info($result);
             $this->logTask('monthly_consume', $result);
             
         } catch (\Exception $e) {
-            $result = "执行失败: " . $e->getMessage();
+            $result = "执行Thất bại: " . $e->getMessage();
             Log::error($result);
             $this->logTask('monthly_consume', $result);
         }
@@ -271,7 +271,7 @@ class ScheduledTasks
     
     private function monthlyLossReward($settings)
     {
-        Log::info('开始执行每月亏损赠送活动');
+        Log::info('开始执行每月亏损赠送Hoạt động');
         
         
     }
@@ -279,7 +279,7 @@ class ScheduledTasks
     
     private function cleanOldData()
     {
-        Log::info('开始执行数据清理任务');
+        Log::info('开始执行dữ liệu清理任务');
         
         try {
             
@@ -289,7 +289,7 @@ class ScheduledTasks
                 ->where('addtime', '<', $deleteTime)
                 ->delete();
             
-            Log::info("清理了 {$count} 条开奖数据");
+            Log::info("清理了 {$count} 条Mở thưởngdữ liệu");
             
         } catch (\Exception $e) {
             Log::error('数据清理失败: ' . $e->getMessage());
@@ -469,7 +469,7 @@ class ScheduledTasks
             }
             
             if ($processedCount > 0) {
-                Log::info("余额宝计息完成", [
+                Log::info("Số dư宝计息完成", [
                     'processed_count' => $processedCount,
                     'total_interest' => $totalInterest,
                     'auto_claim' => $autoClaim,
@@ -477,7 +477,7 @@ class ScheduledTasks
             }
             
         } catch (\Exception $e) {
-            Log::error('余额宝计息任务异常: ' . $e->getMessage(), [
+            Log::error('Số dư宝计息任务异常: ' . $e->getMessage(), [
                 'trace' => $e->getTraceAsString()
             ]);
         }
@@ -496,7 +496,7 @@ class ScheduledTasks
                 return !empty($data['auto_claim']);
             }
         } catch (\Exception $e) {
-            Log::warning('获取余额宝配置失败: ' . $e->getMessage());
+            Log::warning('Lấy số dư宝cấu hình thất bại: ' . $e->getMessage());
         }
         
         return false; 
@@ -531,7 +531,7 @@ class ScheduledTasks
             
         } catch (\Exception $e) {
             
-            Log::warning("读取系统设置失败，使用默认值: " . $e->getMessage());
+            Log::warning("读取系统Cài đặtThất bại，使用默认值: " . $e->getMessage());
             return $this->getDefaultSettings();
         }
     }
@@ -571,7 +571,7 @@ class ScheduledTasks
             
             if ($result['success']) {
                 if ($result['synced'] > 0 || $result['updated'] > 0) {
-                    Log::info("同步第三方投注记录完成", [
+                    Log::info("同步第三方Đặt cượclịch sử完成", [
                         'synced' => $result['synced'],
                         'updated' => $result['updated'],
                         'commission_triggered' => $result['commission_triggered'] ?? 0,
@@ -579,10 +579,10 @@ class ScheduledTasks
                     ]);
                 }
             } else {
-                Log::warning("同步第三方投注记录失败: " . ($result['msg'] ?? 'unknown'));
+                Log::warning("同步第三方Đặt cượclịch sử thất bại: " . ($result['msg'] ?? 'unknown'));
             }
         } catch (\Exception $e) {
-            Log::error("同步第三方投注记录异常: " . $e->getMessage());
+            Log::error("同步第三方Đặt cượclịch sử异常: " . $e->getMessage());
         }
     }
 }

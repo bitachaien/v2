@@ -22,12 +22,12 @@ class RebateService
     ];
     
     const GAME_TYPE_NAMES = [
-        1 => '真人',
-        2 => '捕鱼',
-        3 => '电子',
-        4 => '彩票',
-        5 => '体育',
-        6 => '棋牌',
+        1 => 'Live Casino',
+        2 => 'Bắn cá',
+        3 => 'Điện tử',
+        4 => 'Xổ số',
+        5 => 'Thể thao',
+        6 => 'Bài',
         7 => '电竞',
     ];
 
@@ -47,14 +47,14 @@ class RebateService
             
             return [
                 'code' => 0,
-                'message' => '反水处理成功',
+                'message' => '反水处理Thành công',
                 'data' => $playerRebate
             ];
         } catch (\Exception $e) {
-            Log::error('反水处理失败: ' . $e->getMessage());
+            Log::error('反水处理Thất bại: ' . $e->getMessage());
             return [
                 'code' => 500,
-                'message' => '反水处理失败: ' . $e->getMessage(),
+                'message' => '反水处理Thất bại: ' . $e->getMessage(),
                 'data' => null
             ];
         }
@@ -71,7 +71,7 @@ class RebateService
             ->first();
         
         if (!$userInfo) {
-            return ['code' => 404, 'message' => '用户不存在', 'rate' => 0, 'amount' => 0];
+            return ['code' => 404, 'message' => 'Người dùng không tồn tại', 'rate' => 0, 'amount' => 0];
         }
         
         
@@ -124,7 +124,7 @@ class RebateService
             
             Db::table('caipiao_fanshui')->insert($insertData);
             
-            Log::info('玩家反水记录创建(阶梯模式)', [
+            Log::info('玩家反水lịch sử创建(阶梯模式)', [
                 'uid' => $uid,
                 'category' => $categoryCode,
                 'vendor' => $vendorCode,
@@ -217,7 +217,7 @@ class RebateService
             
             Db::table('caipiao_fanshui')->insert($insertData);
             
-            Log::info('代理反水记录创建', [
+            Log::info('Đại lý反水lịch sử创建', [
                 'agent_uid' => $parentUser->id,
                 'from_uid' => $uid,
                 'layer' => $layer,
@@ -446,19 +446,19 @@ class RebateService
                     'uid' => $uid,
                     'username' => $user->username,
                     'type' => 'fanshui',
-                    'typename' => '代理反水领取',
+                    'typename' => 'Đại lý反水领取',
                     'trano' => 'AR' . date('YmdHis') . rand(1000, 9999),
                     'amount' => $totalAmount,
                     'before' => $user->balance,
                     'after' => $user->balance + $totalAmount,
                     'oddtime' => time(),
-                    'remark' => '代理反水领取，共 ' . count($claimedIds) . ' 笔'
+                    'remark' => 'Đại lý反水领取，共 ' . count($claimedIds) . ' 笔'
                 ]);
             }
             
             return [
                 'code' => 0,
-                'message' => '领取成功',
+                'message' => '领取Thành công',
                 'data' => [
                     'amount' => round($totalAmount, 2),
                     'count' => count($claimedIds)
@@ -466,8 +466,8 @@ class RebateService
             ];
             
         } catch (\Exception $e) {
-            Log::error('代理反水领取失败: ' . $e->getMessage());
-            return ['code' => 500, 'message' => '领取失败: ' . $e->getMessage(), 'data' => null];
+            Log::error('Đại lý反水领取Thất bại: ' . $e->getMessage());
+            return ['code' => 500, 'message' => '领取Thất bại: ' . $e->getMessage(), 'data' => null];
         }
     }
 
@@ -555,7 +555,7 @@ class RebateService
                 'bili' => floatval($item->bili),
                 'amount' => floatval($item->amount),
                 'fanshuiType' => intval($item->fanshui_type),
-                'fanshuiTypeName' => $item->fanshui_type == 1 ? '玩家反水' : '代理反水',
+                'fanshuiTypeName' => $item->fanshui_type == 1 ? '玩家反水' : 'Đại lý反水',
                 'shenhe' => intval($item->shenhe),
                 'canClaim' => intval($item->can_claim),
                 'statusName' => $this->getStatusName($item),
@@ -578,7 +578,7 @@ class RebateService
             return '已结算';
         }
         if ($item->shenhe == 2) {
-            return '已拒绝';
+            return 'Đã từ chối';
         }
         if ($item->can_claim == 1) {
             return '可领取';

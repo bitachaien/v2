@@ -18,9 +18,9 @@ class EntertainmentController
                 [
                     'id' => 1,
                     'code' => 'kaiyuan',
-                    'name' => '开元棋牌',
+                    'name' => '开元Bài',
                     'category' => 'chess',
-                    'desc' => '经典棋牌,畅玩不停',
+                    'desc' => '经典Bài,畅玩不停',
                     'image' => '/images/entertainment/kaiyuan.png',
                     'status' => 1,
                     'sort' => 1
@@ -28,9 +28,9 @@ class EntertainmentController
                 [
                     'id' => 2,
                     'code' => 'ag',
-                    'name' => 'AG真人',
+                    'name' => 'AGLive Casino',
                     'category' => 'live',
-                    'desc' => '美女荷官,真人互动',
+                    'desc' => '美女荷官,Live Casino互动',
                     'image' => '/images/entertainment/ag.png',
                     'status' => 1,
                     'sort' => 1
@@ -38,9 +38,9 @@ class EntertainmentController
                 [
                     'id' => 3,
                     'code' => 'bbin',
-                    'name' => 'BBIN真人',
+                    'name' => 'BBINLive Casino',
                     'category' => 'live',
-                    'desc' => '真人视讯,精彩刺激',
+                    'desc' => 'Live Casino视讯,精彩刺激',
                     'image' => '/images/entertainment/bbin.png',
                     'status' => 1,
                     'sort' => 2
@@ -48,9 +48,9 @@ class EntertainmentController
                 [
                     'id' => 4,
                     'code' => 'crown',
-                    'name' => '皇冠体育',
+                    'name' => '皇冠Thể thao',
                     'category' => 'sports',
-                    'desc' => '全球赛事,实时投注',
+                    'desc' => '全球赛事,实时Đặt cược',
                     'image' => '/images/entertainment/crown.png',
                     'status' => 1,
                     'sort' => 1
@@ -80,11 +80,11 @@ class EntertainmentController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取游戏平台列表失败: ' . $e->getMessage());
+            \support\Log::error('Lấy trò chơidanh sách nền tảngThất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -99,7 +99,7 @@ class EntertainmentController
                 return json([
                     'code' => 401,
                     'sign' => false,
-                    'message' => '请先登录',
+                    'message' => 'Vui lòng đăng nhập',
                     'data' => null
                 ]);
             }
@@ -136,11 +136,11 @@ class EntertainmentController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('进入游戏失败: ' . $e->getMessage());
+            \support\Log::error('进入Trò chơiThất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '进入游戏失败：' . $e->getMessage(),
+                'message' => '进入Trò chơiThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -155,7 +155,7 @@ class EntertainmentController
                 return json([
                     'code' => 401,
                     'sign' => false,
-                    'message' => '请先登录',
+                    'message' => 'Vui lòng đăng nhập',
                     'data' => null
                 ]);
             }
@@ -188,11 +188,11 @@ class EntertainmentController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取游戏余额失败: ' . $e->getMessage());
+            \support\Log::error('Lấy trò chơiSố dưThất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '获取余额失败：' . $e->getMessage(),
+                'message' => 'Lấy số dưThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -207,7 +207,7 @@ class EntertainmentController
                 return json([
                     'code' => 401,
                     'sign' => false,
-                    'message' => '请先登录',
+                    'message' => 'Vui lòng đăng nhập',
                     'data' => null
                 ]);
             }
@@ -220,7 +220,7 @@ class EntertainmentController
                 return json([
                     'code' => 400,
                     'sign' => false,
-                    'message' => '参数不完整或金额无效',
+                    'message' => '参数不完整hoặcSố tiền无效',
                     'data' => null
                 ]);
             }
@@ -236,7 +236,7 @@ class EntertainmentController
             return json([
                 'code' => 0,
                 'sign' => true,
-                'message' => '转入成功',
+                'message' => '转入Thành công',
                 'data' => [
                     'order_id' => $orderId,
                     'amount' => $amount,
@@ -246,11 +246,11 @@ class EntertainmentController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('转账失败: ' . $e->getMessage());
+            \support\Log::error('Chuyển khoảnThất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '转账失败：' . $e->getMessage(),
+                'message' => 'Chuyển khoảnThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -265,7 +265,7 @@ class EntertainmentController
                 return json([
                     'code' => 401,
                     'sign' => false,
-                    'message' => '请先登录',
+                    'message' => 'Vui lòng đăng nhập',
                     'data' => null
                 ]);
             }
@@ -278,7 +278,7 @@ class EntertainmentController
                 return json([
                     'code' => 400,
                     'sign' => false,
-                    'message' => '参数不完整或金额无效',
+                    'message' => '参数不完整hoặcSố tiền无效',
                     'data' => null
                 ]);
             }
@@ -293,7 +293,7 @@ class EntertainmentController
             return json([
                 'code' => 0,
                 'sign' => true,
-                'message' => '转出成功',
+                'message' => '转出Thành công',
                 'data' => [
                     'order_id' => $orderId,
                     'amount' => $amount,
@@ -303,11 +303,11 @@ class EntertainmentController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('转账失败: ' . $e->getMessage());
+            \support\Log::error('Chuyển khoảnThất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '转账失败：' . $e->getMessage(),
+                'message' => 'Chuyển khoảnThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -322,7 +322,7 @@ class EntertainmentController
                 return json([
                     'code' => 401,
                     'sign' => false,
-                    'message' => '请先登录',
+                    'message' => 'Vui lòng đăng nhập',
                     'data' => null
                 ]);
             }
@@ -344,7 +344,7 @@ class EntertainmentController
             return json([
                 'code' => 0,
                 'sign' => true,
-                'message' => '回收成功',
+                'message' => '回收Thành công',
                 'data' => [
                     'platforms' => $platforms,
                     'total_amount' => $totalAmount,
@@ -353,11 +353,11 @@ class EntertainmentController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('一键回收失败: ' . $e->getMessage());
+            \support\Log::error('一键回收Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '回收失败：' . $e->getMessage(),
+                'message' => '回收Thất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }

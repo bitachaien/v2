@@ -12,6 +12,12 @@ class EncryptionMiddleware implements MiddlewareInterface
     private static $excludePaths = [
         '/im/upload',
         '/upload',
+        '/api/v1/gscplus/health',
+        '/api/v1/gscplus/test',
+        '/api/v1/gscplus/config',
+        '/api/v1/gscplus/seamless',
+        '/api/v1/game/launch',
+        '/api/v1/game/gscplus',
     ];
     
     private static function isEnabled(): bool

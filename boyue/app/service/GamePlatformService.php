@@ -16,11 +16,11 @@ class GamePlatformService
             ->first();
         
         if (!$platformConfig) {
-            throw new \Exception('平台不存在');
+            throw new \Exception('平台không tồn tại');
         }
         
         if ($platformConfig->status !== 'online') {
-            throw new \Exception('游戏维护中');
+            throw new \Exception('Trò chơi维护中');
         }
         
         
@@ -30,7 +30,7 @@ class GamePlatformService
             ->first();
         
         if (!$ngConfig) {
-            throw new \Exception('NG平台配置不存在');
+            throw new \Exception('NG平台配置không tồn tại');
         }
         
         return $this->getNGGameUrl($user, $platform, $gameId, $device, $ngConfig);
@@ -168,12 +168,12 @@ class GamePlatformService
             
             
             $errorMsg = $this->getNGErrorMessage($response['code'] ?? '0', $response['msg'] ?? '');
-            Log::error("NG API失败", ['code' => $response['code'] ?? '', 'msg' => $errorMsg, 'params' => $params]);
+            Log::error("NG APIThất bại", ['code' => $response['code'] ?? '', 'msg' => $errorMsg, 'params' => $params]);
             
             throw new \Exception($errorMsg);
             
         } catch (\Exception $e) {
-            Log::error("NG游戏URL生成失败: " . $e->getMessage());
+            Log::error("NGTrò chơiURL生成Thất bại: " . $e->getMessage());
             throw new \Exception('游戏进入失败: ' . $e->getMessage());
         }
     }
@@ -213,7 +213,7 @@ class GamePlatformService
                 $synced = 0;
                 $errors = [];
                 
-                Log::info("NG 同步游戏开始", ['platType' => $platType, 'total' => count($games)]);
+                Log::info("NG 同步Trò chơi开始", ['platType' => $platType, 'total' => count($games)]);
                 
                 foreach ($games as $game) {
                     try {
@@ -294,25 +294,25 @@ class GamePlatformService
                         $synced++;
                     } catch (\Exception $e) {
                         $errors[] = ['gameCode' => $gameCode ?? 'unknown', 'error' => $e->getMessage()];
-                        Log::warning("NG 同步单个游戏失败", ['game' => $game, 'error' => $e->getMessage()]);
+                        Log::warning("NG 同步单个Trò chơiThất bại", ['game' => $game, 'error' => $e->getMessage()]);
                     }
                 }
                 
-                Log::info("NG 同步游戏完成", ['platType' => $platType, 'synced' => $synced, 'errors' => count($errors)]);
+                Log::info("NG 同步Trò chơi完成", ['platType' => $platType, 'synced' => $synced, 'errors' => count($errors)]);
                 
                 return [
                     'success' => true, 
-                    'msg' => "同步成功", 
+                    'msg' => "同步Thành công", 
                     'count' => $synced, 
                     'total' => count($games),
                     'errors' => count($errors)
                 ];
             }
             
-            return ['success' => false, 'msg' => $response['msg'] ?? '同步失败', 'response' => $response];
+            return ['success' => false, 'msg' => $response['msg'] ?? '同步Thất bại', 'response' => $response];
             
         } catch (\Exception $e) {
-            Log::error("NG 同步游戏失败: " . $e->getMessage());
+            Log::error("NG 同步Trò chơiThất bại: " . $e->getMessage());
             return ['success' => false, 'msg' => $e->getMessage()];
         }
     }
@@ -335,35 +335,35 @@ class GamePlatformService
             ['code' => 'sa', 'name' => 'SA视讯', 'type' => 'live'],
             
             
-            ['code' => 'pg', 'name' => 'PG电子', 'type' => 'slot'],
-            ['code' => 'cq9', 'name' => 'CQ9电子', 'type' => 'slot'],
-            ['code' => 'jdb', 'name' => 'JDB电子', 'type' => 'slot'],
-            ['code' => 'jili', 'name' => 'JILI电子', 'type' => 'slot'],
-            ['code' => 'pp', 'name' => 'PP电子', 'type' => 'slot'],
-            ['code' => 'pt', 'name' => 'PT电子', 'type' => 'slot'],
-            ['code' => 'mg', 'name' => 'MG电子', 'type' => 'slot'],
-            ['code' => 'fc', 'name' => 'FC电子', 'type' => 'slot'],
-            ['code' => 'fg', 'name' => 'FG电子', 'type' => 'slot'],
-            ['code' => 'sg', 'name' => 'SG电子', 'type' => 'slot'],
+            ['code' => 'pg', 'name' => 'PGĐiện tử', 'type' => 'slot'],
+            ['code' => 'cq9', 'name' => 'CQ9Điện tử', 'type' => 'slot'],
+            ['code' => 'jdb', 'name' => 'JDBĐiện tử', 'type' => 'slot'],
+            ['code' => 'jili', 'name' => 'JILIĐiện tử', 'type' => 'slot'],
+            ['code' => 'pp', 'name' => 'PPĐiện tử', 'type' => 'slot'],
+            ['code' => 'pt', 'name' => 'PTĐiện tử', 'type' => 'slot'],
+            ['code' => 'mg', 'name' => 'MGĐiện tử', 'type' => 'slot'],
+            ['code' => 'fc', 'name' => 'FCĐiện tử', 'type' => 'slot'],
+            ['code' => 'fg', 'name' => 'FGĐiện tử', 'type' => 'slot'],
+            ['code' => 'sg', 'name' => 'SGĐiện tử', 'type' => 'slot'],
             
             
-            ['code' => 'im', 'name' => 'IM体育', 'type' => 'sport'],
-            ['code' => 'saba', 'name' => '沙巴体育', 'type' => 'sport'],
-            ['code' => 'cmd', 'name' => 'CMD体育', 'type' => 'sport'],
-            ['code' => 'fb', 'name' => 'FB体育', 'type' => 'sport'],
+            ['code' => 'im', 'name' => 'IMThể thao', 'type' => 'sport'],
+            ['code' => 'saba', 'name' => '沙巴Thể thao', 'type' => 'sport'],
+            ['code' => 'cmd', 'name' => 'CMDThể thao', 'type' => 'sport'],
+            ['code' => 'fb', 'name' => 'FBThể thao', 'type' => 'sport'],
             
             
-            ['code' => 'ky', 'name' => '开元棋牌', 'type' => 'chess'],
-            ['code' => 'vg', 'name' => 'VG棋牌', 'type' => 'chess'],
-            ['code' => 'leg', 'name' => '乐游棋牌', 'type' => 'chess'],
+            ['code' => 'ky', 'name' => '开元Bài', 'type' => 'chess'],
+            ['code' => 'vg', 'name' => 'VGBài', 'type' => 'chess'],
+            ['code' => 'leg', 'name' => '乐游Bài', 'type' => 'chess'],
             
             
-            ['code' => 'cq9', 'name' => 'CQ9捕鱼', 'type' => 'fish'],
-            ['code' => 'jdb', 'name' => 'JDB捕鱼', 'type' => 'fish'],
+            ['code' => 'cq9', 'name' => 'CQ9Bắn cá', 'type' => 'fish'],
+            ['code' => 'jdb', 'name' => 'JDBBắn cá', 'type' => 'fish'],
             
             
-            ['code' => 'tcg', 'name' => 'TCG彩票', 'type' => 'lottery'],
-            ['code' => 'ig', 'name' => 'IG彩票', 'type' => 'lottery'],
+            ['code' => 'tcg', 'name' => 'TCGXổ số', 'type' => 'lottery'],
+            ['code' => 'ig', 'name' => 'IGXổ số', 'type' => 'lottery'],
             
             
             ['code' => 'esb', 'name' => 'ESB电竞', 'type' => 'esport'],
@@ -401,7 +401,7 @@ class GamePlatformService
             $synced++;
         }
         
-        return ['success' => true, 'msg' => "同步成功", 'count' => $synced];
+        return ['success' => true, 'msg' => "同步Thành công", 'count' => $synced];
     }
     
     
@@ -423,41 +423,41 @@ class GamePlatformService
     private function getNGErrorMessage($code, $defaultMsg = ''): string
     {
         $errorMap = [
-            '10001' => '签名错误',
-            '10002' => '商户不存在',
+            '10001' => '签名Lỗi',
+            '10002' => '商户không tồn tại',
             '10003' => '商户已禁用',
             '10004' => 'IP不在白名单',
-            '10005' => '参数错误',
-            '10006' => '玩家不存在',
+            '10005' => 'Tham số không hợp lệ',
+            '10006' => '玩家không tồn tại',
             '10007' => '平台不支持',
-            '10008' => '游戏不存在',
-            '10009' => '余额不足',
-            '10010' => '转账失败',
-            '10101' => '玩家已存在',
-            '10102' => '创建玩家失败',
+            '10008' => 'Trò chơikhông tồn tại',
+            '10009' => 'Số dư không đủ',
+            '10010' => 'Chuyển khoảnThất bại',
+            '10101' => '玩家đã tồn tại',
+            '10102' => '创建玩家Thất bại',
         ];
         
-        return $errorMap[$code] ?? ($defaultMsg ?: '未知错误');
+        return $errorMap[$code] ?? ($defaultMsg ?: '未知Lỗi');
     }
     
     
     private function generateGameLaunchPage($user, $platform, $gameCode, $gameId): string
     {
         $platformNames = [
-            'KA' => '开元棋牌',
-            'VG' => 'VG棋牌',
+            'KA' => '开元Bài',
+            'VG' => 'VGBài',
             'AG' => 'AG视讯',
             'BBIN' => 'BBIN视讯',
             'OG' => 'OG视讯',
             'DG' => 'DG视讯',
             'WM' => 'WM视讯',
-            'IM' => 'IM体育',
-            'BTI' => 'BTI体育',
-            'SABA' => '沙巴体育',
-            'CQ9' => 'CQ9电子',
-            'PT' => 'PT电子',
-            'MG' => 'MG电子',
-            'PG' => 'PG电子',
+            'IM' => 'IMThể thao',
+            'BTI' => 'BTIThể thao',
+            'SABA' => '沙巴Thể thao',
+            'CQ9' => 'CQ9Điện tử',
+            'PT' => 'PTĐiện tử',
+            'MG' => 'MGĐiện tử',
+            'PG' => 'PGĐiện tử',
         ];
         
         $platformName = $platformNames[$platform] ?? $platform;
@@ -568,36 +568,36 @@ class GamePlatformService
 <body>
     <div class="container">
         <div class="logo">🎮</div>
-        <h1>游戏即将启动</h1>
+        <h1>Trò chơi即将启动</h1>
         <div class="platform">{$platformName}</div>
         
         <div class="info">
             <div class="info-item">
-                <span class="label">游戏平台</span>
+                <span class="label">nền tảng trò chơi</span>
                 <span class="value">{$platform}</span>
             </div>
             <div class="info-item">
-                <span class="label">游戏代码</span>
+                <span class="label">Trò chơi代码</span>
                 <span class="value">{$gameCode}</span>
             </div>
             <div class="info-item">
-                <span class="label">游戏ID</span>
+                <span class="label">Trò chơiID</span>
                 <span class="value">{$gameId}</span>
             </div>
             <div class="info-item">
-                <span class="label">用户</span>
+                <span class="label">Người dùng</span>
                 <span class="value">{$user->username}</span>
             </div>
         </div>
         
         <div class="notice">
-            <strong>⚠️ 重要提示</strong><br>
-            当前游戏平台正在对接NG API中。<br>
+            <strong>⚠️ 重要Lưu ý</strong><br>
+            当前nền tảng trò chơi正在对接NG API中。<br>
             <br>
             <strong>需要完成的配置：</strong><br>
-            1. 登录NG商户后台获取正确的API端点<br>
-            2. 添加服务器IP到NG白名单<br>
-            3. 联系技术支持获取完整API文档<br>
+            1. Đăng nhậpNG商户后台Lấy正确的API端点<br>
+            2. Thêm服务器IP到NG白名单<br>
+            3. 联系技术支持Lấy完整API文档<br>
             <br>
             商户号：ck197988<br>
             API域名：api.ng777.net
@@ -645,11 +645,11 @@ HTML;
                 return;
             }
             
-            Log::warning("NG创建会员失败", ['response' => $response]);
+            Log::warning("NG创建Thành viênThất bại", ['response' => $response]);
             
         } catch (\Exception $e) {
             
-            Log::error("NG创建会员异常: " . $e->getMessage());
+            Log::error("NG创建Thành viên异常: " . $e->getMessage());
         }
     }
     
@@ -694,7 +694,7 @@ HTML;
                     ->where('id', $user->id)
                     ->decrement('balance', $amount);
                 
-                Log::info("NG转账成功", [
+                Log::info("NGChuyển khoảnThành công", [
                     'playerId' => $user->username,
                     'platType' => $platType,
                     'amount' => $amount,
@@ -702,7 +702,7 @@ HTML;
                 ]);
                 return true;
             } else {
-                Log::warning("NG转账失败", [
+                Log::warning("NGChuyển khoảnThất bại", [
                     'playerId' => $user->username,
                     'platType' => $platType,
                     'amount' => $amount,
@@ -711,7 +711,7 @@ HTML;
                 return false;
             }
         } catch (\Exception $e) {
-            Log::error("NG转账异常: " . $e->getMessage());
+            Log::error("NGChuyển khoản异常: " . $e->getMessage());
             return false;
         }
     }
@@ -960,23 +960,23 @@ HTML;
         curl_close($ch);
         
         if ($error) {
-            Log::error("HTTP请求失败", ['error' => $error, 'url' => $url]);
-            throw new \Exception('HTTP请求失败: ' . $error);
+            Log::error("HTTPYêu cầu thất bại", ['error' => $error, 'url' => $url]);
+            throw new \Exception('HTTPYêu cầu thất bại: ' . $error);
         }
         
         if ($httpCode != 200) {
-            Log::error("HTTP状态码错误", [
+            Log::error("HTTP状态码Lỗi", [
                 'httpCode' => $httpCode,
                 'url' => $url,
                 'response' => $response
             ]);
-            throw new \Exception('HTTP状态码错误: ' . $httpCode);
+            throw new \Exception('HTTP状态码Lỗi: ' . $httpCode);
         }
         
         $result = json_decode($response, true);
         if (!$result) {
-            Log::error("响应解析失败", ['response' => $response]);
-            throw new \Exception('响应解析失败: ' . $response);
+            Log::error("响应解析Thất bại", ['response' => $response]);
+            throw new \Exception('响应解析Thất bại: ' . $response);
         }
         
         return $result;
@@ -1009,7 +1009,7 @@ HTML;
             return $gameUrl;
             
         } catch (\Exception $e) {
-            Log::error("KY游戏URL生成失败: " . $e->getMessage());
+            Log::error("KYTrò chơiURL生成Thất bại: " . $e->getMessage());
             throw new \Exception('游戏进入失败');
         }
     }
@@ -1040,11 +1040,11 @@ HTML;
                 return $response['url'];
             }
             
-            throw new \Exception('获取游戏URL失败');
+            throw new \Exception('Lấy trò chơiURLThất bại');
             
         } catch (\Exception $e) {
-            Log::error("AG游戏URL生成失败: " . $e->getMessage());
-            throw new \Exception('游戏进入失败');
+            Log::error("AGTrò chơiURL生成Thất bại: " . $e->getMessage());
+            throw new \Exception('Trò chơi进入Thất bại');
         }
     }
     
@@ -1067,7 +1067,7 @@ HTML;
             return $gameUrl;
             
         } catch (\Exception $e) {
-            Log::error("BBIN游戏URL生成失败: " . $e->getMessage());
+            Log::error("BBINTrò chơiURL生成Thất bại: " . $e->getMessage());
             throw new \Exception('游戏进入失败');
         }
     }
@@ -1233,7 +1233,7 @@ HTML;
         curl_close($ch);
         
         if ($error) {
-            throw new \Exception('HTTP请求失败: ' . $error);
+            throw new \Exception('HTTPYêu cầu thất bại: ' . $error);
         }
         
         return json_decode($response, true) ?: [];
@@ -1298,7 +1298,7 @@ HTML;
                 
                 return [
                     'success' => true,
-                    'msg' => '拉取成功',
+                    'msg' => '拉取Thành công',
                     'total' => $total,
                     'list' => $records,
                     'page' => $page,
@@ -1306,11 +1306,11 @@ HTML;
                 ];
             }
             
-            Log::error("NG 拉取投注记录失败", ['response' => $response]);
-            return ['success' => false, 'msg' => $response['msg'] ?? '拉取失败', 'response' => $response];
+            Log::error("NG 拉取Đặt cượclịch sử thất bại", ['response' => $response]);
+            return ['success' => false, 'msg' => $response['msg'] ?? '拉取Thất bại', 'response' => $response];
             
         } catch (\Exception $e) {
-            Log::error("NG 拉取投注记录异常: " . $e->getMessage());
+            Log::error("NG 拉取Đặt cượclịch sử异常: " . $e->getMessage());
             return ['success' => false, 'msg' => $e->getMessage()];
         }
     }
@@ -1368,7 +1368,7 @@ HTML;
                 
                 return [
                     'success' => true,
-                    'msg' => '拉取成功',
+                    'msg' => '拉取Thành công',
                     'total' => $total,
                     'list' => $records,
                     'page' => $page,
@@ -1376,11 +1376,11 @@ HTML;
                 ];
             }
             
-            Log::error("NG 拉取历史记录失败", ['response' => $response]);
-            return ['success' => false, 'msg' => $response['msg'] ?? '拉取失败', 'response' => $response];
+            Log::error("NG 拉取历史lịch sử thất bại", ['response' => $response]);
+            return ['success' => false, 'msg' => $response['msg'] ?? '拉取Thất bại', 'response' => $response];
             
         } catch (\Exception $e) {
-            Log::error("NG 拉取历史记录异常: " . $e->getMessage());
+            Log::error("NG 拉取历史lịch sử异常: " . $e->getMessage());
             return ['success' => false, 'msg' => $e->getMessage()];
         }
     }
@@ -1430,7 +1430,7 @@ HTML;
                 }
                 
                 if (!$uid) {
-                    Log::warning("NG 投注记录无法解析用户", ['playerId' => $playerId]);
+                    Log::warning("NG Đặt cượclịch sử无法解析Người dùng", ['playerId' => $playerId]);
                     continue;
                 }
                 
@@ -1499,7 +1499,7 @@ HTML;
                         $commissionTriggered++;
                     } catch (\Exception $e) {
                         
-                        Log::warning("三方游戏佣金计算失败: " . $e->getMessage(), [
+                        Log::warning("三方Trò chơiHoa hồng计算Thất bại: " . $e->getMessage(), [
                             'uid' => $uid,
                             'orderNo' => $orderNo,
                             'betAmount' => $betAmount,
@@ -1530,19 +1530,19 @@ HTML;
     private function getPlatformName(string $code): string
     {
         $platforms = [
-            'pg' => 'PG电子',
+            'pg' => 'PGĐiện tử',
             'ag' => 'AG视讯',
             'bbin' => 'BBIN',
-            'cq9' => 'CQ9电子',
-            'jdb' => 'JDB电子',
-            'jili' => 'JILI电子',
-            'pp' => 'PP电子',
-            'mg' => 'MG电子',
-            'pt' => 'PT电子',
-            'ky' => '开元棋牌',
-            'leg' => '乐游棋牌',
-            'im' => 'IM体育',
-            'saba' => '沙巴体育',
+            'cq9' => 'CQ9Điện tử',
+            'jdb' => 'JDBĐiện tử',
+            'jili' => 'JILIĐiện tử',
+            'pp' => 'PPĐiện tử',
+            'mg' => 'MGĐiện tử',
+            'pt' => 'PTĐiện tử',
+            'ky' => '开元Bài',
+            'leg' => '乐游Bài',
+            'im' => 'IMThể thao',
+            'saba' => '沙巴Thể thao',
             'dg' => 'DG视讯',
             'wm' => 'WM视讯',
             'sexy' => 'SEXY视讯',

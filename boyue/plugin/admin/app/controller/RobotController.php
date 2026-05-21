@@ -20,7 +20,7 @@ class RobotController
             return view('robot/setting');
         }
         
-        // 处理数据请求
+        // 处理dữ liệu请求
         $limit = $request->get('limit', 20);
         $username = $request->get('username', '');
         
@@ -53,19 +53,19 @@ class RobotController
         
         return json([
             'code' => 0,
-            'msg' => '获取成功',
+            'msg' => 'Lấy dữ liệu thành công',
             'count' => $total,
             'data' => $data
         ]);
     }
     
     /**
-     * 添加机器人
+     * Thêm机器人
      */
     public function addRobot(Request $request)
     {
         if ($request->method() === 'GET') {
-            // 获取会员组列表
+            // LấyThành viên组列表
             $groups = Db::table('caipiao_membergroup')
                 ->select('groupid', 'groupname')
                 ->where('groupstatus', 1)
@@ -79,13 +79,13 @@ class RobotController
         $groupid = $request->post('groupid', 1);
         
         if (empty($username) || empty($password)) {
-            return json(['code' => 1, 'msg' => '用户名和密码不能为空']);
+            return json(['code' => 1, 'msg' => 'Tên người dùng和Mật khẩu không được để trống']);
         }
         
-        // 检查用户名是否存在
+        // 检查Tên người dùng是否存在
         $exists = Db::table('caipiao_member')->where('username', $username)->exists();
         if ($exists) {
-            return json(['code' => 1, 'msg' => '用户名已存在']);
+            return json(['code' => 1, 'msg' => 'Tên người dùngđã tồn tại']);
         }
         
         $now = time();
@@ -131,46 +131,46 @@ class RobotController
         $id = Db::table('caipiao_member')->insertGetId($data);
         
         if ($id) {
-            return json(['code' => 0, 'msg' => '添加成功']);
+            return json(['code' => 0, 'msg' => 'ThêmThành công']);
         }
         
-        return json(['code' => 1, 'msg' => '添加失败']);
+        return json(['code' => 1, 'msg' => 'ThêmThất bại']);
     }
     
     /**
-     * 删除机器人
+     * Xóa机器人
      */
     public function deleteRobot(Request $request)
     {
         $id = $request->post('id');
         
         if (empty($id)) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
         
-        // 只能删除机器人账号
+        // 只能Xóa机器人Tài khoản
         $member = Db::table('caipiao_member')->where('id', $id)->where('isnb', 1)->first();
         
         if (!$member) {
-            return json(['code' => 1, 'msg' => '机器人不存在']);
+            return json(['code' => 1, 'msg' => '机器人không tồn tại']);
         }
         
         $result = Db::table('caipiao_member')->where('id', $id)->delete();
         
         if ($result) {
-            return json(['code' => 0, 'msg' => '删除成功']);
+            return json(['code' => 0, 'msg' => 'XóaThành công']);
         }
         
-        return json(['code' => 1, 'msg' => '删除失败']);
+        return json(['code' => 1, 'msg' => 'XóaThất bại']);
     }
     
     /**
-     * 发单设置 - 配置各彩种合买参数
+     * 发单Cài đặt - 配置各彩种合买参数
      */
     public function fadan(Request $request)
     {
         if ($request->method() === 'GET') {
-            // 获取所有彩种
+            // Lấy所有彩种
             $caipiaoList = Db::table('caipiao_caipiao')
                 ->where('isopen', 1)
                 ->where('iswh', 0)
@@ -186,7 +186,7 @@ class RobotController
                 $caipiaoList[$key] = $val;
             }
             
-            // 获取各彩种类型的玩法
+            // Lấy各彩种类型的玩法
             $wanfaObj = new \Lib\wanfa_fadan();
             
             return view('robot/fadan', [
@@ -204,7 +204,7 @@ class RobotController
     }
     
     /**
-     * 修改合买状态
+     * Sửa合买状态
      */
     public function changeHemaiStatus(Request $request)
     {
@@ -215,11 +215,11 @@ class RobotController
             ->where('name', $cpname)
             ->update(['hemai_status' => $status]);
         
-        return json(['code' => 0, 'msg' => '操作成功']);
+        return json(['code' => 0, 'msg' => 'Thao tác thành công']);
     }
     
     /**
-     * 修改合买配置
+     * Sửa合买配置
      */
     public function changeHemaiValue(Request $request)
     {
@@ -231,7 +231,7 @@ class RobotController
             ->where('name', $cpname)
             ->update($data);
         
-        return json(['code' => 0, 'msg' => '操作成功']);
+        return json(['code' => 0, 'msg' => 'Thao tác thành công']);
     }
     
     /**
@@ -243,7 +243,7 @@ class RobotController
         $page = $request->get('page');
         
         if (empty($page)) {
-            // 获取彩种列表
+            // Lấy彩种列表
             $caipiaoList = Db::table('caipiao_caipiao')
                 ->orderBy('typeid', 'asc')
                 ->orderBy('id', 'desc')
@@ -252,7 +252,7 @@ class RobotController
             return view('robot/hemai', ['caipiaoList' => $caipiaoList]);
         }
         
-        // 处理数据请求
+        // 处理dữ liệu请求
         $limit = $request->get('limit', 20);
         
         $cpname = $request->get('cpname', '');
@@ -332,11 +332,11 @@ class RobotController
             $isdraw = $item['isdraw'];
             $statusText = '';
             if ($isdraw == 1) {
-                $statusText = '已中奖';
+                $statusText = '已Trúng thưởng';
             } elseif ($isdraw == 0) {
-                $statusText = '未开奖';
+                $statusText = '未Mở thưởng';
             } elseif ($isdraw == -1) {
-                $statusText = '未中奖';
+                $statusText = '未Trúng thưởng';
             } elseif ($isdraw == -2) {
                 $statusText = '撤单';
             }
@@ -376,33 +376,33 @@ class RobotController
         
         return json([
             'code' => 0,
-            'msg' => '获取成功',
+            'msg' => 'Lấy dữ liệu thành công',
             'count' => $total,
             'data' => $data
         ]);
     }
     
     /**
-     * 合买详情
+     * 合买Chi tiết
      */
     public function hemaiDetail(Request $request)
     {
         $id = $request->get('id');
         
         if (empty($id)) {
-            return view('robot/hemai-detail', ['list' => [], 'error' => '参数错误']);
+            return view('robot/hemai-detail', ['list' => [], 'error' => 'Tham số không hợp lệ']);
         }
         
-        // 先查询主订单信息
+        // 先Tra cứu主订单信息
         $mainOrder = Db::table('caipiao_touzhu')
             ->where('id', $id)
             ->first();
         
         if (!$mainOrder) {
-            return view('robot/hemai-detail', ['list' => [], 'error' => '订单不存在']);
+            return view('robot/hemai-detail', ['list' => [], 'error' => '订单không tồn tại']);
         }
         
-        // 查询合买参与记录
+        // Tra cứu合买参与lịch sử
         $detail = Db::table('caipiao_touzhuhm')
             ->where('touzhuid', $id)
             ->get();

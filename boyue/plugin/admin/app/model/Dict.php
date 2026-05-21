@@ -22,7 +22,7 @@ class Dict
     }
 
     /**
-     * 保存字典
+     * Lưu字典
      * @param $name
      * @param $values
      * @return void
@@ -31,7 +31,7 @@ class Dict
     public static function save($name, $values)
     {
         if (!preg_match('/[a-zA-Z]/', $name)) {
-            throw new BusinessException('字典名只能包含字母');
+            throw new BusinessException('Tên từ điển chỉ được chứa chữ cái');
         }
         $option_name = static::dictNameToOptionName($name);
         if (!$option = Option::where('name', $option_name)->first()) {
@@ -44,7 +44,7 @@ class Dict
     }
 
     /**
-     * 删除字典
+     * Xóa字典
      * @param array $names
      * @return void
      */
@@ -87,7 +87,7 @@ class Dict
         $format_values = [];
         foreach ($values as $item) {
             if (!isset($item['value']) || !isset($item['name'])) {
-                throw new BusinessException('字典格式错误', 1);
+                throw new BusinessException('字典格式Lỗi', 1);
             }
             $format_values[] =  ['value' => $item['value'], 'name' => $item['name']];
         }

@@ -54,7 +54,7 @@ class K3Service
         
         
         if (empty($expecttime) || $expecttime <= 0) {
-            throw new \Exception('彩种配置错误，开奖间隔时间无效');
+            throw new \Exception('彩种配置Lỗi，Mở thưởng间隔Thời gian无效');
         }
         
         
@@ -128,7 +128,7 @@ class K3Service
             ->first();
         
         if (!$caipiao || $caipiao->isopen != 1) {
-            return ['valid' => false, 'error' => '彩种已关闭', 'code' => 1004];
+            return ['valid' => false, 'error' => '彩种đã đóng', 'code' => 1004];
         }
         
         $now = time();
@@ -154,7 +154,7 @@ class K3Service
         if ($existingDraw) {
             return [
                 'valid' => false,
-                'error' => '该期已开奖，无法投注',
+                'error' => '该期已Mở thưởng，无法Đặt cược',
                 'code' => 1002,
             ];
         }

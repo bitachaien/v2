@@ -72,10 +72,10 @@ class Hemai extends Model
     public function getStatusTextAttribute()
     {
         $map = [
-            self::STATUS_ONGOING => '进行中',
+            self::STATUS_ONGOING => 'Đang diễn ra',
             self::STATUS_CLOSED => '已截止',
-            self::STATUS_DRAWN => '已开奖',
-            self::STATUS_CANCELED => '已取消',
+            self::STATUS_DRAWN => '已Mở thưởng',
+            self::STATUS_CANCELED => 'Đã hủy',
         ];
         return $map[$this->status] ?? '未知';
     }

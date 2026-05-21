@@ -17,7 +17,7 @@ class SysBankController extends Base
      */
     protected $noNeedAuth = ['list', 'index'];
     /**
-     * 数据表名
+     * dữ liệu表名
      */
     protected $table = 'caipiao_sysbank';
 
@@ -30,7 +30,7 @@ class SysBankController extends Base
     }
 
     /**
-     * 获取银行列表数据 (对应老版本 manage)
+     * Lấy银行列表dữ liệu (对应老版本 manage)
      */
     public function list(Request $request)
     {
@@ -38,10 +38,10 @@ class SysBankController extends Base
             $page = (int)$request->get('page', 1);
             $limit = (int)$request->get('limit', 20);
 
-            // 获取总数
+            // Lấy总数
             $count = Db::table($this->table)->count();
 
-            // 分页查询，按 listorder asc, id desc 排序（与老版本一致）
+            // 分页Tra cứu，按 listorder asc, id desc 排序（与老版本一致）
             $list = Db::table($this->table)
                 ->orderBy('listorder', 'asc')
                 ->orderBy('id', 'desc')
@@ -58,8 +58,8 @@ class SysBankController extends Base
                 'data' => $list
             ]);
         } catch (\Throwable $e) {
-            \support\Log::error('SysBankController::list 错误: ' . $e->getMessage());
-            return json(['code' => 1, 'msg' => '获取列表失败: ' . $e->getMessage()]);
+            \support\Log::error('SysBankController::list Lỗi: ' . $e->getMessage());
+            return json(['code' => 1, 'msg' => 'Lấy列表Thất bại: ' . $e->getMessage()]);
         }
     }
 
@@ -72,7 +72,7 @@ class SysBankController extends Base
     }
 
     /**
-     * 保存新银行 (对应老版本 bankadd POST)
+     * Lưu新银行 (对应老版本 bankadd POST)
      */
     public function save(Request $request)
     {
@@ -81,15 +81,15 @@ class SysBankController extends Base
 
             // 验证必填字段
             if (empty($data['bankcode']) || empty($data['bankname'])) {
-                return json(['code' => 1, 'msg' => '银行代码和银行名称不能为空']);
+                return json(['code' => 1, 'msg' => '银行代码和银行名称không được để trống']);
             }
 
-            // 检查银行代码是否已存在
+            // 检查银行代码是否đã tồn tại
             if (Db::table($this->table)->where('bankcode', $data['bankcode'])->exists()) {
-                return json(['code' => 1, 'msg' => '银行代码已存在']);
+                return json(['code' => 1, 'msg' => '银行代码đã tồn tại']);
             }
 
-            // 获取最大ID+1作为listorder（与老版本一致）
+            // Lấy最大ID+1作为listorder（与老版本一致）
             $maxId = Db::table($this->table)->max('id') ?? 0;
 
             $insertData = [
@@ -104,11 +104,11 @@ class SysBankController extends Base
             $result = Db::table($this->table)->insert($insertData);
 
             return $result 
-                ? json(['code' => 0, 'msg' => '添加成功'])
-                : json(['code' => 1, 'msg' => '添加失败']);
+                ? json(['code' => 0, 'msg' => 'ThêmThành công'])
+                : json(['code' => 1, 'msg' => 'ThêmThất bại']);
         } catch (\Throwable $e) {
-            \support\Log::error('SysBankController::save 错误: ' . $e->getMessage());
-            return json(['code' => 1, 'msg' => '操作失败: ' . $e->getMessage()]);
+            \support\Log::error('SysBankController::save Lỗi: ' . $e->getMessage());
+            return json(['code' => 1, 'msg' => 'Thao tác thất bại: ' . $e->getMessage()]);
         }
     }
 
@@ -120,13 +120,13 @@ class SysBankController extends Base
         $id = $request->get('id');
         
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $info = Db::table($this->table)->where('id', $id)->first();
         
         if (!$info) {
-            return json(['code' => 1, 'msg' => '银行不存在']);
+            return json(['code' => 1, 'msg' => '银行không tồn tại']);
         }
 
         return view('sysbank/edit', ['info' => $info]);
@@ -142,17 +142,17 @@ class SysBankController extends Base
             $data = $request->post();
 
             if (!$id) {
-                return json(['code' => 1, 'msg' => '参数错误']);
+                return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
             }
 
             // 验证必填字段
             if (empty($data['bankcode']) || empty($data['bankname'])) {
-                return json(['code' => 1, 'msg' => '银行代码和银行名称不能为空']);
+                return json(['code' => 1, 'msg' => '银行代码和银行名称không được để trống']);
             }
 
-            // 检查银行代码是否与其他记录重复
+            // 检查银行代码是否与其他lịch sử重复
             if (Db::table($this->table)->where('bankcode', $data['bankcode'])->where('id', '!=', $id)->exists()) {
-                return json(['code' => 1, 'msg' => '银行代码已存在']);
+                return json(['code' => 1, 'msg' => '银行代码đã tồn tại']);
             }
 
             $updateData = [
@@ -167,16 +167,16 @@ class SysBankController extends Base
             $result = Db::table($this->table)->where('id', $id)->update($updateData);
 
             return $result !== false
-                ? json(['code' => 0, 'msg' => '更新成功'])
-                : json(['code' => 1, 'msg' => '更新失败']);
+                ? json(['code' => 0, 'msg' => '更新Thành công'])
+                : json(['code' => 1, 'msg' => '更新Thất bại']);
         } catch (\Throwable $e) {
-            \support\Log::error('SysBankController::update 错误: ' . $e->getMessage());
-            return json(['code' => 1, 'msg' => '操作失败: ' . $e->getMessage()]);
+            \support\Log::error('SysBankController::update Lỗi: ' . $e->getMessage());
+            return json(['code' => 1, 'msg' => 'Thao tác thất bại: ' . $e->getMessage()]);
         }
     }
 
     /**
-     * 删除银行 (对应老版本 delete)
+     * Xóa银行 (对应老版本 delete)
      */
     public function delete(Request $request)
     {
@@ -184,27 +184,27 @@ class SysBankController extends Base
             $id = $request->post('id');
             
             if (!$id) {
-                return json(['code' => 1, 'msg' => '参数错误']);
+                return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
             }
 
-            // 检查数据是否存在
+            // 检查dữ liệu是否存在
             if (!Db::table($this->table)->where('id', $id)->exists()) {
-                return json(['code' => 1, 'msg' => '数据不存在或已删除']);
+                return json(['code' => 1, 'msg' => 'Dữ liệu không tồn tạihoặc已Xóa']);
             }
 
             $result = Db::table($this->table)->where('id', $id)->delete();
 
             return $result
-                ? json(['code' => 0, 'msg' => '删除成功'])
-                : json(['code' => 1, 'msg' => '删除失败']);
+                ? json(['code' => 0, 'msg' => 'XóaThành công'])
+                : json(['code' => 1, 'msg' => 'XóaThất bại']);
         } catch (\Throwable $e) {
-            \support\Log::error('SysBankController::delete 错误: ' . $e->getMessage());
-            return json(['code' => 1, 'msg' => '操作失败: ' . $e->getMessage()]);
+            \support\Log::error('SysBankController::delete Lỗi: ' . $e->getMessage());
+            return json(['code' => 1, 'msg' => 'Thao tác thất bại: ' . $e->getMessage()]);
         }
     }
 
     /**
-     * 批量删除 (对应老版本 deleteall)
+     * 批量Xóa (对应老版本 deleteall)
      */
     public function deleteAll(Request $request)
     {
@@ -212,17 +212,17 @@ class SysBankController extends Base
             $ids = $request->post('ids', []);
             
             if (empty($ids) || !is_array($ids)) {
-                return json(['code' => 1, 'msg' => '参数错误']);
+                return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
             }
 
             $result = Db::table($this->table)->whereIn('id', $ids)->delete();
 
             return $result
-                ? json(['code' => 0, 'msg' => '批量删除成功'])
-                : json(['code' => 1, 'msg' => '批量删除失败']);
+                ? json(['code' => 0, 'msg' => '批量XóaThành công'])
+                : json(['code' => 1, 'msg' => '批量XóaThất bại']);
         } catch (\Throwable $e) {
-            \support\Log::error('SysBankController::deleteAll 错误: ' . $e->getMessage());
-            return json(['code' => 1, 'msg' => '操作失败: ' . $e->getMessage()]);
+            \support\Log::error('SysBankController::deleteAll Lỗi: ' . $e->getMessage());
+            return json(['code' => 1, 'msg' => 'Thao tác thất bại: ' . $e->getMessage()]);
         }
     }
 
@@ -237,10 +237,10 @@ class SysBankController extends Base
             $name = $request->post('name', 'state');
             
             if (!$id) {
-                return json(['code' => 1, 'msg' => '参数错误']);
+                return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
             }
 
-            // 只允许修改 state 字段（与老版本一致）
+            // 只允许Sửa state 字段（与老版本一致）
             if ($name !== 'state') {
                 return json(['code' => 1, 'msg' => '非法操作']);
             }
@@ -256,11 +256,11 @@ class SysBankController extends Base
                 ->update(['state' => $state ? 1 : 0]);
 
             return $result !== false
-                ? json(['code' => 0, 'msg' => '操作成功'])
-                : json(['code' => 1, 'msg' => '操作失败']);
+                ? json(['code' => 0, 'msg' => 'Thao tác thành công'])
+                : json(['code' => 1, 'msg' => 'Thao tác thất bại']);
         } catch (\Throwable $e) {
-            \support\Log::error('SysBankController::setState 错误: ' . $e->getMessage());
-            return json(['code' => 1, 'msg' => '操作失败: ' . $e->getMessage()]);
+            \support\Log::error('SysBankController::setState Lỗi: ' . $e->getMessage());
+            return json(['code' => 1, 'msg' => 'Thao tác thất bại: ' . $e->getMessage()]);
         }
     }
 
@@ -274,7 +274,7 @@ class SysBankController extends Base
             $listorder = $request->post('listorder', []);
 
             if (empty($ids) || !is_array($ids)) {
-                return json(['code' => 1, 'msg' => '参数错误']);
+                return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
             }
 
             $successCount = 0;
@@ -290,11 +290,11 @@ class SysBankController extends Base
             }
 
             return $successCount > 0
-                ? json(['code' => 0, 'msg' => '排序更新成功'])
-                : json(['code' => 1, 'msg' => '排序更新失败']);
+                ? json(['code' => 0, 'msg' => '排序更新Thành công'])
+                : json(['code' => 1, 'msg' => '排序更新Thất bại']);
         } catch (\Throwable $e) {
-            \support\Log::error('SysBankController::listOrder 错误: ' . $e->getMessage());
-            return json(['code' => 1, 'msg' => '操作失败: ' . $e->getMessage()]);
+            \support\Log::error('SysBankController::listOrder Lỗi: ' . $e->getMessage());
+            return json(['code' => 1, 'msg' => 'Thao tác thất bại: ' . $e->getMessage()]);
         }
     }
 }

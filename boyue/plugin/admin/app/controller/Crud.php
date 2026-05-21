@@ -60,7 +60,7 @@ class Crud extends Base
     }
 
     /**
-     * 删除
+     * Xóa
      * @param Request $request
      * @return Response
      * @throws BusinessException
@@ -73,7 +73,7 @@ class Crud extends Base
     }
 
     /**
-     * 查询前置
+     * Tra cứu前置
      * @param Request $request
      * @return array
      * @throws BusinessException
@@ -93,7 +93,7 @@ class Crud extends Base
 
         $allow_column = Util::db()->select("desc `$table`");
         if (!$allow_column) {
-            throw new BusinessException('表不存在');
+            throw new BusinessException('表không tồn tại');
         }
         $allow_column = array_column($allow_column, 'Field', 'Field');
         if (!in_array($field, $allow_column)) {
@@ -107,7 +107,7 @@ class Crud extends Base
                 unset($where[$column]);
             }
         }
-        // 按照数据限制字段返回数据
+        // 按照dữ liệu限制字段返回dữ liệu
         if (!Auth::isSuperAdmin()) {
             if ($this->dataLimit === 'personal') {
                 $where[$this->dataLimitField] = admin_id();
@@ -122,7 +122,7 @@ class Crud extends Base
     }
 
     /**
-     * 指定查询where条件,并没有真正的查询数据库操作
+     * 指定Tra cứuwhere条件,并没有真正的Tra cứudữ liệu库操作
      * @param array $where
      * @param string|null $field
      * @param string $order
@@ -167,7 +167,7 @@ class Crud extends Base
     }
 
     /**
-     * 执行真正查询，并返回格式化数据
+     * 执行真正Tra cứu，并返回格式化dữ liệu
      * @param $query
      * @param $format
      * @param $limit
@@ -212,7 +212,7 @@ class Crud extends Base
                 if (!empty($data[$this->dataLimitField])) {
                     $admin_id = $data[$this->dataLimitField];
                     if (!in_array($admin_id, Auth::getScopeAdminIds(true))) {
-                        throw new BusinessException('无数据权限');
+                        throw new BusinessException('无dữ liệu权限');
                     }
                 } else {
                     $data[$this->dataLimitField] = admin_id();
@@ -254,30 +254,30 @@ class Crud extends Base
         $data = $this->inputFilter($request->post());
         $model = $this->model->find($id);
         if (!$model) {
-            throw new BusinessException('记录不存在', 2);
+            throw new BusinessException('lịch sửkhông tồn tại', 2);
         }
 
         if (!Auth::isSuperAdmin()) {
             if ($this->dataLimit == 'personal') {
                 if ($model->{$this->dataLimitField} != admin_id()) {
-                    throw new BusinessException('无数据权限');
+                    throw new BusinessException('无dữ liệu权限');
                 }
             } elseif ($this->dataLimit == 'auth') {
                 $scopeAdminIds = Auth::getScopeAdminIds(true);
                 $admin_ids = [
-                    $data[$this->dataLimitField] ?? false, // 检查要更新的数据admin_id是否是有权限的值
-                    $model->{$this->dataLimitField} ?? false // 检查要更新的记录的admin_id是否有权限
+                    $data[$this->dataLimitField] ?? false, // 检查要更新的dữ liệuadmin_id是否是有权限的值
+                    $model->{$this->dataLimitField} ?? false // 检查要更新的lịch sử的admin_id是否有权限
                 ];
                 foreach ($admin_ids as $admin_id) {
                     if ($admin_id && !in_array($admin_id, $scopeAdminIds)) {
-                        throw new BusinessException('无数据权限');
+                        throw new BusinessException('无dữ liệu权限');
                     }
                 }
             }
         }
         $password_filed = 'password';
         if (isset($data[$password_filed])) {
-            // 密码为空，则不更新密码
+            // Mật khẩu为空，则不更新Mật khẩu
             if ($data[$password_filed] === '') {
                 unset($data[$password_filed]);
             } else {
@@ -304,7 +304,7 @@ class Crud extends Base
     }
 
     /**
-     * 对用户输入表单过滤
+     * 对Người dùng输入表单过滤
      * @param array $data
      * @return array
      * @throws BusinessException
@@ -314,7 +314,7 @@ class Crud extends Base
         $table = config('plugin.admin.database.connections.mysql.prefix') . $this->model->getTable();
         $allow_column = $this->model->getConnection()->select("desc `$table`");
         if (!$allow_column) {
-            throw new BusinessException('表不存在', 2);
+            throw new BusinessException('表không tồn tại', 2);
         }
         $columns = array_column($allow_column, 'Type', 'Field');
         foreach ($data as $col => $item) {
@@ -340,7 +340,7 @@ class Crud extends Base
     }
 
     /**
-     * 删除前置方法
+     * Xóa前置方法
      * @param Request $request
      * @return array
      * @throws BusinessException
@@ -359,11 +359,11 @@ class Crud extends Base
             }
             if ($this->dataLimit == 'personal') {
                 if (!in_array(admin_id(), $admin_ids)) {
-                    throw new BusinessException('无数据权限');
+                    throw new BusinessException('无dữ liệu权限');
                 }
             } elseif ($this->dataLimit == 'auth') {
                 if (array_diff($admin_ids, Auth::getScopeAdminIds(true))) {
-                    throw new BusinessException('无数据权限');
+                    throw new BusinessException('无dữ liệu权限');
                 }
             }
         }

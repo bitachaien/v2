@@ -55,7 +55,7 @@ class AgentCommissionController
             
             $result = [];
             foreach ($list as $item) {
-                // 统计下级人数
+                // 统计Cấp dưới人数
                 $subCount = Db::table('caipiao_member')
                     ->where('parentid', $item->agent_id)
                     ->count();
@@ -85,17 +85,17 @@ class AgentCommissionController
             ]);
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'msg' => '获取失败: ' . $e->getMessage()]);
+            return json(['code' => 500, 'msg' => 'Lấy dữ liệu thất bại: ' . $e->getMessage()]);
         }
     }
 
     /**
-     * 获取统计数据
+     * Lấy统计dữ liệu
      */
     public function stats(Request $request)
     {
         try {
-            // 累计佣金
+            // 累计Hoa hồng
             $totalCommission = Db::table('caipiao_agent_commission')
                 ->sum('amount') ?? 0;
             
@@ -109,7 +109,7 @@ class AgentCommissionController
                 ->where('status', 1)
                 ->sum('amount') ?? 0;
             
-            // 代理人数
+            // Đại lý人数
             $agentCount = Db::table('caipiao_member')
                 ->where('proxy', 1)
                 ->count();
@@ -126,19 +126,19 @@ class AgentCommissionController
             ]);
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'msg' => '获取失败: ' . $e->getMessage()]);
+            return json(['code' => 500, 'msg' => 'Lấy dữ liệu thất bại: ' . $e->getMessage()]);
         }
     }
 
     /**
-     * 手动发放佣金
+     * 手动发放Hoa hồng
      */
     public function manualClaim(Request $request)
     {
         $id = (int)$request->post('id', 0);
         
         if (!$id) {
-            return json(['code' => 400, 'msg' => '参数错误']);
+            return json(['code' => 400, 'msg' => 'Tham số không hợp lệ']);
         }
         
         try {
@@ -147,7 +147,7 @@ class AgentCommissionController
                 ->first();
             
             if (!$record) {
-                return json(['code' => 404, 'msg' => '记录不存在']);
+                return json(['code' => 404, 'msg' => 'lịch sửkhông tồn tại']);
             }
             
             if ($record->status == 2) {
@@ -164,33 +164,33 @@ class AgentCommissionController
                     'claimed_at' => time()
                 ]);
             
-            // 增加用户余额
+            // 增加Người dùngSố dư
             Db::table('caipiao_member')
                 ->where('id', $record->agent_id)
                 ->increment('balance', $record->amount);
             
-            // 记录资金变动
+            // lịch sử资金变动
             Db::table('caipiao_fuddetail')->insert([
                 'uid' => $record->agent_id,
-                'type' => '代理佣金',
+                'type' => 'Đại lýHoa hồng',
                 'money' => $record->amount,
                 'balance' => Db::table('caipiao_member')->where('id', $record->agent_id)->value('balance'),
                 'oddtime' => time(),
-                'memo' => '管理员手动发放代理佣金'
+                'memo' => '管理员手动发放Đại lýHoa hồng'
             ]);
             
             Db::commit();
             
-            return json(['code' => 0, 'msg' => '发放成功']);
+            return json(['code' => 0, 'msg' => '发放Thành công']);
             
         } catch (\Exception $e) {
             Db::rollBack();
-            return json(['code' => 500, 'msg' => '发放失败: ' . $e->getMessage()]);
+            return json(['code' => 500, 'msg' => '发放Thất bại: ' . $e->getMessage()]);
         }
     }
 
     /**
-     * 获取返佣比例配置
+     * Lấy返佣比例配置
      */
     public function rates(Request $request)
     {
@@ -233,12 +233,12 @@ class AgentCommissionController
             ]);
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'msg' => '获取失败: ' . $e->getMessage()]);
+            return json(['code' => 500, 'msg' => 'Lấy dữ liệu thất bại: ' . $e->getMessage()]);
         }
     }
 
     /**
-     * 获取代理列表
+     * LấyĐại lý列表
      */
     public function agentList(Request $request)
     {
@@ -259,12 +259,12 @@ class AgentCommissionController
             
             $list = [];
             foreach ($agents as $agent) {
-                // 下级人数
+                // Cấp dưới人数
                 $subCount = Db::table('caipiao_member')
                     ->where('parentid', $agent->id)
                     ->count();
                 
-                // 总业绩和佣金
+                // 总业绩和Hoa hồng
                 $commissionData = Db::table('caipiao_agent_commission')
                     ->where('agent_id', $agent->id)
                     ->selectRaw('SUM(performance) as total_performance, SUM(amount) as total_commission, SUM(CASE WHEN status = 1 THEN amount ELSE 0 END) as pending')
@@ -288,19 +288,19 @@ class AgentCommissionController
             ]);
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'msg' => '获取失败: ' . $e->getMessage()]);
+            return json(['code' => 500, 'msg' => 'Lấy dữ liệu thất bại: ' . $e->getMessage()]);
         }
     }
 
     /**
-     * 取消代理资格
+     * HủyĐại lý资格
      */
     public function removeAgent(Request $request)
     {
         $id = (int)$request->post('id', 0);
         
         if (!$id) {
-            return json(['code' => 400, 'msg' => '参数错误']);
+            return json(['code' => 400, 'msg' => 'Tham số không hợp lệ']);
         }
         
         try {
@@ -308,20 +308,20 @@ class AgentCommissionController
                 ->where('id', $id)
                 ->update(['proxy' => 0]);
             
-            return json(['code' => 0, 'msg' => '已取消代理资格']);
+            return json(['code' => 0, 'msg' => 'Đã hủyĐại lý资格']);
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'msg' => '操作失败: ' . $e->getMessage()]);
+            return json(['code' => 500, 'msg' => 'Thao tác thất bại: ' . $e->getMessage()]);
         }
     }
 
     /**
-     * 代理系统配置（获取/保存）
+     * Đại lý系统配置（Lấy/Lưu）
      */
     public function settings(Request $request)
     {
         if ($request->method() === 'GET') {
-            // 获取所有配置
+            // Lấy所有配置
             try {
                 $configKeys = [
                     'agent_mode' => '一级净盈利',
@@ -355,11 +355,11 @@ class AgentCommissionController
                     ]
                 ]);
             } catch (\Exception $e) {
-                return json(['code' => 500, 'msg' => '获取失败: ' . $e->getMessage()]);
+                return json(['code' => 500, 'msg' => 'Lấy dữ liệu thất bại: ' . $e->getMessage()]);
             }
         }
         
-        // 保存设置
+        // LưuCài đặt
         try {
             $settings = [
                 'agent_mode' => $request->post('agentMode', '一级净盈利'),
@@ -379,16 +379,16 @@ class AgentCommissionController
                 );
             }
             
-            return json(['code' => 0, 'msg' => '保存成功']);
+            return json(['code' => 0, 'msg' => 'LưuThành công']);
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'msg' => '保存失败: ' . $e->getMessage()]);
+            return json(['code' => 500, 'msg' => 'LưuThất bại: ' . $e->getMessage()]);
         }
     }
 
     /**
-     * 执行佣金结算
-     * 优化：使用事务、提前查询代理模式、正确统计有效人数
+     * 执行Hoa hồng结算
+     * 优化：使用事务、提前Tra cứuĐại lý模式、正确统计有效人数
      */
     public function settlement(Request $request)
     {
@@ -396,12 +396,12 @@ class AgentCommissionController
             $today = date('Y-m-d');
             $monthStart = strtotime(date('Y-m-01'));
             
-            // 提前查询代理模式（只查一次）
+            // 提前Tra cứuĐại lý模式（只查一次）
             $agentMode = Db::table('caipiao_setting')
                 ->where('name', 'agent_mode')
                 ->value('value') ?? '一级净盈利';
             
-            // 获取所有代理
+            // Lấy所有Đại lý
             $agents = Db::table('caipiao_member')
                 ->where('proxy', 1)
                 ->get();
@@ -411,7 +411,7 @@ class AgentCommissionController
             
             foreach ($agents as $agent) {
                 try {
-                    // 检查是否已有今日结算记录（提前检查，避免不必要的计算）
+                    // 检查是否已有Hôm nay结算lịch sử（提前检查，避免不必要的计算）
                     $exists = Db::table('caipiao_agent_commission')
                         ->where('agent_id', $agent->id)
                         ->where('settle_date', $today)
@@ -419,7 +419,7 @@ class AgentCommissionController
                     
                     if ($exists) continue;
                     
-                    // 获取直属下级
+                    // Lấy直属Cấp dưới
                     $subIds = Db::table('caipiao_member')
                         ->where('parentid', $agent->id)
                         ->pluck('id')
@@ -428,15 +428,15 @@ class AgentCommissionController
                     if (empty($subIds)) continue;
                     
                     // 计算业绩
-                    if ($agentMode === '有效投注') {
-                        // 有效投注模式：按已开奖的投注额计算
+                    if ($agentMode === '有效Đặt cược') {
+                        // 有效Đặt cược模式：按已Mở thưởng的Đặt cược额计算
                         $performance = Db::table('caipiao_touzhu')
                             ->whereIn('uid', $subIds)
                             ->where('oddtime', '>=', $monthStart)
                             ->where('isdraw', '!=', 0)
                             ->sum('amount') ?? 0;
                     } else {
-                        // 一级净盈利模式：按下级输赢计算（平台赢的钱）
+                        // 一级净盈利模式：按Cấp dưới输赢计算（平台赢的钱）
                         $betAmount = Db::table('caipiao_touzhu')
                             ->whereIn('uid', $subIds)
                             ->where('oddtime', '>=', $monthStart)
@@ -452,10 +452,10 @@ class AgentCommissionController
                         $performance = $betAmount - $winAmount;
                     }
                     
-                    // 净盈利模式下，如果平台亏损则不计算佣金
+                    // 净盈利模式下，如果平台亏损则不计算Hoa hồng
                     if ($performance <= 0) continue;
                     
-                    // 正确计算有效人数（使用子查询避免groupBy+count问题）
+                    // 正确计算有效人数（使用子Tra cứu避免groupBy+count问题）
                     $effectiveUsers = Db::table('caipiao_touzhu')
                         ->selectRaw('uid')
                         ->whereIn('uid', $subIds)
@@ -467,15 +467,15 @@ class AgentCommissionController
                     
                     if ($effectiveCount <= 0) continue;
                     
-                    // 获取返佣比例
+                    // Lấy返佣比例
                     $rate = $this->getCommissionRate($effectiveCount);
                     
                     if ($rate <= 0) continue;
                     
-                    // 计算佣金（保留2位小数）
+                    // 计算Hoa hồng（保留2位小数）
                     $commission = round($performance * $rate / 100, 2);
                     
-                    // 使用事务插入佣金记录
+                    // 使用事务插入Hoa hồnglịch sử
                     Db::beginTransaction();
                     
                     // 再次检查防止并发重复插入
@@ -506,14 +506,14 @@ class AgentCommissionController
                     
                 } catch (\Exception $e) {
                     Db::rollBack();
-                    $errors[] = "代理{$agent->id}: " . $e->getMessage();
+                    $errors[] = "Đại lý{$agent->id}: " . $e->getMessage();
                     continue;
                 }
             }
             
-            $msg = "结算完成，共生成 {$count} 条记录";
+            $msg = "结算完成，共生成 {$count} 条lịch sử";
             if (!empty($errors)) {
-                $msg .= "，" . count($errors) . " 条失败";
+                $msg .= "，" . count($errors) . " 条Thất bại";
                 \support\Log::warning('部分结算失败: ' . implode('; ', $errors));
             }
             
@@ -524,8 +524,8 @@ class AgentCommissionController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('佣金结算失败: ' . $e->getMessage());
-            return json(['code' => 500, 'msg' => '结算失败: ' . $e->getMessage()]);
+            \support\Log::error('Hoa hồng结算Thất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'msg' => '结算Thất bại: ' . $e->getMessage()]);
         }
     }
 
@@ -544,20 +544,20 @@ class AgentCommissionController
     }
 
     /**
-     * 保存返佣比例配置
+     * Lưu返佣比例配置
      */
     private function saveRates(Request $request)
     {
         $rates = $request->post('rates', []);
         
         if (empty($rates) || !is_array($rates)) {
-            return json(['code' => 400, 'msg' => '参数错误']);
+            return json(['code' => 400, 'msg' => 'Tham số không hợp lệ']);
         }
         
         try {
             Db::beginTransaction();
             
-            // 删除现有配置
+            // Xóa现有配置
             Db::table('caipiao_agent_rate')->delete();
             
             // 插入新配置
@@ -574,11 +574,11 @@ class AgentCommissionController
             
             Db::commit();
             
-            return json(['code' => 0, 'msg' => '保存成功']);
+            return json(['code' => 0, 'msg' => 'LưuThành công']);
             
         } catch (\Exception $e) {
             Db::rollBack();
-            return json(['code' => 500, 'msg' => '保存失败: ' . $e->getMessage()]);
+            return json(['code' => 500, 'msg' => 'LưuThất bại: ' . $e->getMessage()]);
         }
     }
 }

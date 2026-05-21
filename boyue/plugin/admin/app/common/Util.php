@@ -46,7 +46,7 @@ class Util
     }
 
     /**
-     * 获取SchemaBuilder
+     * LấySchemaBuilder
      * @return Builder
      */
     public static function schema(): Builder
@@ -55,7 +55,7 @@ class Util
     }
 
     /**
-     * 获取语义化时间
+     * Lấy语义化Thời gian
      * @param $time
      * @return false|string
      */
@@ -103,7 +103,7 @@ class Util
     }
 
     /**
-     * 数据库字符串转义
+     * dữ liệu库字符串转义
      * @param $var
      * @return false|string
      */
@@ -127,7 +127,7 @@ class Util
     }
 
     /**
-     * 变量或数组中的元素只能是字母数字下划线组合
+     * 变量hoặc数组中的元素只能是字母数字下划线组合
      * @param $var
      * @return mixed
      * @throws BusinessException
@@ -144,7 +144,7 @@ class Util
     }
 
     /**
-     * 变量或数组中的元素只能是字母数字
+     * 变量hoặc数组中的元素只能是字母数字
      * @param $var
      * @return mixed
      * @throws BusinessException
@@ -266,7 +266,7 @@ class Util
     }
 
     /**
-     * 获取注释中第一行
+     * Lấy注释中第一行
      * @param $comment
      * @return false|mixed|string
      */
@@ -290,7 +290,7 @@ class Util
     public static function methodControlMap(): array
     {
         return  [
-            //method=>[控件]
+            // method=>[控件]
             'integer' => ['InputNumber'],
             'string' => ['Input'],
             'text' => ['TextArea'],
@@ -329,7 +329,7 @@ class Util
     }
 
     /**
-     * 数据库类型到插件的转换
+     * dữ liệu库类型到插件的转换
      * @param $type
      * @return string
      */
@@ -351,7 +351,7 @@ class Util
     }
 
     /**
-     * 数据库类型到表单类型的转换
+     * dữ liệu库类型到表单类型的转换
      * @param $type
      * @param $unsigned
      * @return string
@@ -373,7 +373,7 @@ class Util
     }
 
     /**
-     * 按表获取摘要
+     * 按表Lấy摘要
      * @param $table
      * @param null $section
      * @return array|mixed
@@ -451,7 +451,7 @@ class Util
     }
 
     /**
-     * 获取字段长度或默认值
+     * Lấy字段长度hoặc默认值
      * @param $schema
      * @return mixed|string
      */
@@ -476,7 +476,7 @@ class Util
     }
 
     /**
-     * 获取控件参数
+     * Lấy控件参数
      * @param $control
      * @param $control_args
      * @return array
@@ -517,7 +517,7 @@ class Util
     }
 
     /**
-     * 获取某个composer包的版本
+     * Lấy某个composer包的版本
      * @param string $package
      * @return mixed|string
      */

@@ -30,7 +30,7 @@ class DictController extends Base
     }
 
     /**
-     * 查询
+     * Tra cứu
      * @param Request $request
      * @return Response
      */
@@ -86,7 +86,7 @@ class DictController extends Base
         if ($request->method() === 'POST') {
             $name = $request->post('name');
             if (!Dict::get($name)) {
-                return $this->json(1, '字典不存在');
+                return $this->json(1, '字典không tồn tại');
             }
             if (!preg_match('/^[a-zA-Z0-9_]+$/', $name)) {
                 return $this->json(2, '字典名称只能是字母数字下划线的组合');
@@ -97,7 +97,7 @@ class DictController extends Base
     }
 
     /**
-     * 删除
+     * Xóa
      * @param Request $request
      * @return Response
      */
@@ -109,7 +109,7 @@ class DictController extends Base
     }
 
     /**
-     * 获取
+     * Lấy
      * @param Request $request
      * @param $name
      * @return Response

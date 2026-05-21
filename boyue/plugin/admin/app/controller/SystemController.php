@@ -17,7 +17,7 @@ class SystemController extends Base
     protected $noNeedAuth = ['menus', 'info'];
 
     /**
-     * 获取菜单列表 (Art Design Pro 动态路由格式)
+     * Lấy菜单列表 (Art Design Pro 动态路由格式)
      * GET /app/admin/api/system/menus
      */
     public function menus(Request $request)
@@ -27,7 +27,7 @@ class SystemController extends Base
             return $this->json(401, '请先登录');
         }
 
-        // 获取用户角色权限
+        // LấyNgười dùng角色权限
         $roleIds = $admin['roles'] ?? [];
         $ruleIds = [];
         $isSuper = false;
@@ -43,7 +43,7 @@ class SystemController extends Base
             }
         }
 
-        // 获取菜单
+        // Lấy菜单
         $query = Db::table('wa_rules')
             ->whereIn('type', [0, 1]) // 0=目录, 1=菜单
             ->orderBy('weight', 'asc')
@@ -101,7 +101,7 @@ class SystemController extends Base
 
                 if (!empty($children)) {
                     $item['children'] = $children;
-                    // 有子菜单时设置重定向
+                    // 有子菜单时Cài đặt重定向
                     $item['redirect'] = $item['path'] . '/' . $children[0]['path'];
                 }
 
@@ -163,7 +163,7 @@ class SystemController extends Base
     }
 
     /**
-     * 获取允许输出的菜单 ID（根节点及其子节点）
+     * Lấy允许输出的菜单 ID（根节点及其子节点）
      */
     private function getAllowedMenuIds(): array
     {
@@ -203,12 +203,12 @@ class SystemController extends Base
 
 
     /**
-     * 获取系统设置信息 (Art Design Pro 前端)
+     * Lấy系统Cài đặt信息 (Art Design Pro 前端)
      * GET /app/admin/system/info
      */
     public function info(Request $request)
     {
-        // 获取所有设置项
+        // Lấy所有Cài đặt项
         $setlist = Db::table('caipiao_setting')->get();
         
         $settings = [];
@@ -218,8 +218,8 @@ class SystemController extends Base
         
         // 返回系统信息
         return $this->json(0, 'ok', [
-            'siteName' => $settings['webname'] ?? '彩票系统',
-            'siteTitle' => $settings['webname'] ?? '彩票管理后台',
+            'siteName' => $settings['webname'] ?? 'Xổ số系统',
+            'siteTitle' => $settings['webname'] ?? 'Xổ số管理后台',
             'siteLogo' => $settings['logo'] ?? '',
             'copyright' => $settings['copyright'] ?? '',
             'version' => '1.0.0',
@@ -228,11 +228,11 @@ class SystemController extends Base
     }
 
     /**
-     * 系统设置页面
+     * 系统Cài đặt页面
      */
     public function setting(Request $request)
     {
-        // 获取所有设置项
+        // Lấy所有Cài đặt项
         $setlist = Db::table('caipiao_setting')->get();
         
         $settings = [];
@@ -244,7 +244,7 @@ class SystemController extends Base
     }
     
     /**
-     * 保存系统设置
+     * Lưu系统Cài đặt
      */
     public function save(Request $request)
     {
@@ -255,42 +255,42 @@ class SystemController extends Base
         $params = $request->post('info', []);
         
         if (empty($params)) {
-            return json(['code' => 0, 'msg' => '参数错误']);
+            return json(['code' => 0, 'msg' => 'Tham số không hợp lệ']);
         }
         
         // 需要验证为数字的字段
         $validNums = [
-            'xtclirun' => '系统彩利润格式错误',
-            'fanDianMax' => '返点最大值格式错误',
-            'fanDianMin' => '返点最小值格式错误',
-            'touzhuMax' => '最大投注格式错误',
-            'zhongjiangMax' => '最大中奖格式错误',
-            'chongzhiMin' => '充值限制（最低金额）格式错误',
-            'chongzhiMax' => '充值限制（最高金额）格式错误',
-            'damaliang' => '提款限制（打码量）格式错误',
-            'tikuanMin' => '提款限制（最低提款）格式错误',
-            'tikuanMax' => '提款限制（最高提款）格式错误',
-            'ritikuanxiane' => '日提款限额格式错误',
-            'tikuannum' => '日提款次数格式错误',
-            'tikuannumoverbilv' => '超出收取费用比例格式错误',
-            'tikuannumovermin' => '超出收取费用最低格式错误',
-            'tikuannumovermax' => '超出收取费用最高格式错误',
-            'paiduinum' => '提款排队人数格式错误',
-            'sysBankMaxNum' => '绑卡数格式错误',
-            'pointchongzhi' => '积分规则（每充值N元）格式错误',
-            'pointchongzhiadd' => '积分规则（增加N积分）格式错误',
-            'pointtouzhu' => '积分规则（每投注N元）格式错误',
-            'pointtouzhuadd' => '积分规则（投注增加N积分）格式错误',
-            'pointhuisun' => '积分规则（每亏损N元）格式错误',
-            'pointhuisunadd' => '积分规则（亏损增加N积分）格式错误',
-            'loginerrornum' => '后台登录最大失败次数格式错误',
-            'loginerrorclosetime' => '后台登录禁止登陆时间格式错误',
-            'loginerrornum_q' => '前台登录最大失败次数格式错误',
-            'loginerrorclosetime_q' => '前台登录禁止登陆时间格式错误',
-            'adminemailcodetime' => '后台邮件验证码过期时间格式错误',
-            'czaudioplaytime' => '充值提示音时间格式错误',
-            'czaudioqxtime' => '充值提示音关闭时间格式错误',
-            'tkaudioplaytime' => '提款提示音时间格式错误',
+            'xtclirun' => '系统彩利润格式Lỗi',
+            'fanDianMax' => '返点最大值格式Lỗi',
+            'fanDianMin' => '返点最小值格式Lỗi',
+            'touzhuMax' => '最大Đặt cược格式Lỗi',
+            'zhongjiangMax' => '最大Trúng thưởng格式Lỗi',
+            'chongzhiMin' => 'Nạp tiền限制（最低Số tiền）格式Lỗi',
+            'chongzhiMax' => 'Nạp tiền限制（最高Số tiền）格式Lỗi',
+            'damaliang' => 'Rút tiền限制（Vòng cược量）格式Lỗi',
+            'tikuanMin' => 'Rút tiền限制（最低Rút tiền）格式Lỗi',
+            'tikuanMax' => 'Rút tiền限制（最高Rút tiền）格式Lỗi',
+            'ritikuanxiane' => '日Rút tiền限额格式Lỗi',
+            'tikuannum' => '日Rút tiền次数格式Lỗi',
+            'tikuannumoverbilv' => '超出收取费用比例格式Lỗi',
+            'tikuannumovermin' => '超出收取费用最低格式Lỗi',
+            'tikuannumovermax' => '超出收取费用最高格式Lỗi',
+            'paiduinum' => 'Rút tiền排队人数格式Lỗi',
+            'sysBankMaxNum' => '绑卡数格式Lỗi',
+            'pointchongzhi' => '积分Quy tắc（每Nạp tiềnN元）格式Lỗi',
+            'pointchongzhiadd' => '积分Quy tắc（增加N积分）格式Lỗi',
+            'pointtouzhu' => '积分Quy tắc（每Đặt cượcN元）格式Lỗi',
+            'pointtouzhuadd' => '积分Quy tắc（Đặt cược增加N积分）格式Lỗi',
+            'pointhuisun' => '积分Quy tắc（每亏损N元）格式Lỗi',
+            'pointhuisunadd' => '积分Quy tắc（亏损增加N积分）格式Lỗi',
+            'loginerrornum' => '后台Đăng nhập最大Thất bại次数格式Lỗi',
+            'loginerrorclosetime' => '后台Đăng nhập禁止登陆Thời gian格式Lỗi',
+            'loginerrornum_q' => '前台Đăng nhập最大Thất bại次数格式Lỗi',
+            'loginerrorclosetime_q' => '前台Đăng nhập禁止登陆Thời gian格式Lỗi',
+            'adminemailcodetime' => '后台邮件验证码过期Thời gian格式Lỗi',
+            'czaudioplaytime' => 'Nạp tiềnLưu ý音Thời gian格式Lỗi',
+            'czaudioqxtime' => 'Nạp tiềnLưu ý音关闭Thời gian格式Lỗi',
+            'tkaudioplaytime' => 'Rút tiềnLưu ý音Thời gian格式Lỗi',
         ];
         
         $successCount = 0;
@@ -334,11 +334,11 @@ class SystemController extends Base
                 $successCount++;
             }
             
-            return json(['code' => 0, 'msg' => '配置保存成功']);
+            return json(['code' => 0, 'msg' => '配置LưuThành công']);
             
         } catch (\Exception $e) {
-            \support\Log::error('系统设置保存失败: ' . $e->getMessage());
-            return json(['code' => 0, 'msg' => '配置保存失败：' . $e->getMessage()]);
+            \support\Log::error('系统Cài đặtLưuThất bại: ' . $e->getMessage());
+            return json(['code' => 0, 'msg' => '配置LưuThất bại：' . $e->getMessage()]);
         }
     }
 }

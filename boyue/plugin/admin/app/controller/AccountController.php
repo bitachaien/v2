@@ -39,20 +39,20 @@ class AccountController extends Crud
         $password = $request->post('password', '');
         
         if (!$username) {
-            return $this->json(1, '用户名不能为空');
+            return $this->json(1, 'Tên người dùngkhông được để trống');
         }
         if (!$password) {
-            return $this->json(1, '密码不能为空');
+            return $this->json(1, 'Mật khẩu không được để trống');
         }
         
         $this->checkLoginLimit($username);
         
         $admin = Admin::where('username', $username)->first();
         if (!$admin || !Util::passwordVerify($password, $admin->password)) {
-            return $this->json(1, '账户不存在或密码错误');
+            return $this->json(1, 'tài khoảnkhông tồn tạihoặcMật khẩu sai');
         }
         if ($admin->status != 0) {
-            return $this->json(1, '当前账户暂时无法登录');
+            return $this->json(1, '当前tài khoản暂时无法Đăng nhập');
         }
         
         $admin->login_at = date('Y-m-d H:i:s');
@@ -71,7 +71,7 @@ class AccountController extends Crud
         
         $config = config('jwt');
         
-        return $this->json(0, '登录成功', [
+        return $this->json(0, 'Đăng nhập thành công', [
             'id' => $admin->id,
             'username' => $admin->username,
             'nickname' => $admin->nickname,
@@ -90,15 +90,15 @@ class AccountController extends Crud
     {
         $refreshToken = $request->post('refresh_token', '');
         if (empty($refreshToken)) {
-            return $this->json(1, 'Refresh Token 不能为空');
+            return $this->json(1, 'Refresh Token không được để trống');
         }
         
         $result = AdminJwtService::refreshToken($refreshToken);
         if (!$result) {
-            return $this->json(401, 'Refresh Token 无效或已过期');
+            return $this->json(401, 'Refresh Token 无效hoặc已过期');
         }
         
-        return $this->json(0, '刷新成功', $result);
+        return $this->json(0, 'Làm mớiThành công', $result);
     }
 
     public function logout(Request $request): Response
@@ -164,7 +164,7 @@ class AccountController extends Crud
         }
         
         if (empty($update_data)) {
-            return $this->json(1, '没有需要更新的数据');
+            return $this->json(1, '没有需要更新的dữ liệu');
         }
         
         Admin::where('id', admin_id())->update($update_data);
@@ -175,14 +175,14 @@ class AccountController extends Crud
         }
         $request->session()->set('admin', $admin);
         
-        return $this->json(0, '更新成功');
+        return $this->json(0, '更新Thành công');
     }
 
     public function password(Request $request): Response
     {
         $admin = Admin::find(admin_id());
         if (!$admin) {
-            return $this->json(1, '用户不存在');
+            return $this->json(1, 'Người dùng không tồn tại');
         }
         
         $hash = $admin->password;
@@ -192,19 +192,19 @@ class AccountController extends Crud
         $confirmPassword = $request->post('confirmPassword') ?? $request->post('password_confirm');
         
         if (!$oldPassword) {
-            return $this->json(1, '原密码不能为空');
+            return $this->json(1, '原Mật khẩu không được để trống');
         }
         if (!$newPassword) {
-            return $this->json(1, '新密码不能为空');
+            return $this->json(1, '新Mật khẩu không được để trống');
         }
         if ($confirmPassword && $confirmPassword !== $newPassword) {
-            return $this->json(1, '两次密码输入不一致');
+            return $this->json(1, '两次Mật khẩu输入不一致');
         }
         if (!Util::passwordVerify($oldPassword, $hash)) {
-            return $this->json(1, '原密码不正确');
+            return $this->json(1, '原Mật khẩu不正确');
         }
         if (strlen($newPassword) < 6) {
-            return $this->json(1, '新密码长度不能少于6位');
+            return $this->json(1, '新Mật khẩu长度不能少于6位');
         }
         
         $update_data = [
@@ -212,7 +212,7 @@ class AccountController extends Crud
         ];
         Admin::where('id', admin_id())->update($update_data);
         
-        return $this->json(0, '密码修改成功');
+        return $this->json(0, 'Mật khẩuSửaThành công');
     }
 
     public function captcha(Request $request, string $type = 'login'): Response
@@ -249,7 +249,7 @@ class AccountController extends Crud
         $limit_info['count']++;
         file_put_contents($limit_file, json_encode($limit_info));
         if ($limit_info['count'] >= 5) {
-            throw new BusinessException('登录失败次数过多，请5分钟后再试');
+            throw new BusinessException('Đăng nhậpThất bại次数过多，请5分钟后再试');
         }
     }
 

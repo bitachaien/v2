@@ -23,11 +23,11 @@ class RebateController
             $status = $request->get('status', '');
             $startDate = $request->get('startDate', '');
             $endDate = $request->get('endDate', '');
-            $type = $request->get('type', ''); // daily: 每日反水, vendor: 游戏商反水
+            $type = $request->get('type', ''); // daily: 每日反水, vendor: Trò chơi商反水
             
             $query = Db::table('caipiao_fanshui');
             
-            // 搜索条件
+            // Tìm kiếm条件
             if (!empty($username)) {
                 $query->where('username', 'like', "%{$username}%");
             }
@@ -58,7 +58,7 @@ class RebateController
             // 统计总数
             $total = $query->count();
             
-            // 分页查询
+            // 分页Tra cứu
             $list = $query->orderBy('id', 'desc')
                 ->offset(($page - 1) * $pageSize)
                 ->limit($pageSize)
@@ -81,13 +81,13 @@ class RebateController
                     'vendor_code' => $item->vendor_code ?? '',
                     'category_code' => $item->category_code ?? '',
                     'type' => empty($item->vendor_code) ? 'daily' : 'vendor',
-                    'type_label' => empty($item->vendor_code) ? '每日反水' : '游戏商反水'
+                    'type_label' => empty($item->vendor_code) ? '每日反水' : 'Trò chơi商反水'
                 ];
             }
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'total' => $total,
                     'list' => $items
@@ -97,7 +97,7 @@ class RebateController
         } catch (\Exception $e) {
             return json([
                 'code' => 500,
-                'message' => '获取失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệu thất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -116,7 +116,7 @@ class RebateController
             if (!$id || !in_array($action, ['pass', 'reject'])) {
                 return json([
                     'code' => 400,
-                    'message' => '参数错误',
+                    'message' => 'Tham số không hợp lệ',
                     'data' => null
                 ]);
             }
@@ -126,7 +126,7 @@ class RebateController
             if (!$record) {
                 return json([
                     'code' => 404,
-                    'message' => '记录不存在',
+                    'message' => 'lịch sửkhông tồn tại',
                     'data' => null
                 ]);
             }
@@ -134,7 +134,7 @@ class RebateController
             if ($record->shenhe != 0) {
                 return json([
                     'code' => 400,
-                    'message' => '该记录已审核',
+                    'message' => '该lịch sử已审核',
                     'data' => null
                 ]);
             }
@@ -145,14 +145,14 @@ class RebateController
                     ->where('id', $id)
                     ->update(['shenhe' => 1]);
                 
-                // 增加用户余额
+                // 增加Người dùngSố dư
                 $user = Db::table('caipiao_member')->where('id', $record->uid)->first();
                 if ($user) {
                     Db::table('caipiao_member')
                         ->where('id', $record->uid)
                         ->increment('balance', $record->amount);
                     
-                    // 记录资金明细
+                    // lịch sử资金明细
                     Db::table('caipiao_fuddetail')->insert([
                         'uid' => $record->uid,
                         'username' => $record->username,
@@ -175,14 +175,14 @@ class RebateController
             
             return json([
                 'code' => 0,
-                'message' => $action === 'pass' ? '审核通过' : '已拒绝',
+                'message' => $action === 'pass' ? '审核通过' : 'Đã từ chối',
                 'data' => null
             ]);
             
         } catch (\Exception $e) {
             return json([
                 'code' => 500,
-                'message' => '操作失败：' . $e->getMessage(),
+                'message' => 'Thao tác thất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -201,7 +201,7 @@ class RebateController
             if (empty($ids) || !in_array($action, ['pass', 'reject'])) {
                 return json([
                     'code' => 400,
-                    'message' => '参数错误',
+                    'message' => 'Tham số không hợp lệ',
                     'data' => null
                 ]);
             }
@@ -244,21 +244,21 @@ class RebateController
             
             return json([
                 'code' => 0,
-                'message' => "已处理 {$count} 条记录",
+                'message' => "已处理 {$count} 条lịch sử",
                 'data' => ['count' => $count]
             ]);
             
         } catch (\Exception $e) {
             return json([
                 'code' => 500,
-                'message' => '操作失败：' . $e->getMessage(),
+                'message' => 'Thao tác thất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
     }
     
     /**
-     * 获取反水统计数据
+     * Lấy反水统计dữ liệu
      * GET /app/admin/api/rebate/stats
      */
     public function stats(Request $request)
@@ -267,7 +267,7 @@ class RebateController
             $todayStart = strtotime(date('Y-m-d 00:00:00'));
             $monthStart = strtotime(date('Y-m-01 00:00:00'));
             
-            // 今日统计
+            // Hôm nay统计
             $todayTotal = Db::table('caipiao_fanshui')
                 ->where('oddtime', '>=', $todayStart)
                 ->where('shenhe', 1)
@@ -282,7 +282,7 @@ class RebateController
                 ->where('shenhe', 0)
                 ->count();
             
-            // 本月统计
+            // Tháng này统计
             $monthTotal = Db::table('caipiao_fanshui')
                 ->where('oddtime', '>=', $monthStart)
                 ->where('shenhe', 1)
@@ -292,12 +292,12 @@ class RebateController
                 ->where('oddtime', '>=', $monthStart)
                 ->count();
             
-            // 总待审核
+            // 总Chờ duyệt
             $totalPending = Db::table('caipiao_fanshui')
                 ->where('shenhe', 0)
                 ->count();
             
-            // 按类型统计（今日）
+            // 按类型统计（Hôm nay）
             $dailyRebate = Db::table('caipiao_fanshui')
                 ->where('oddtime', '>=', $todayStart)
                 ->where('shenhe', 1)
@@ -316,7 +316,7 @@ class RebateController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'today' => [
                         'total' => round($todayTotal, 2),
@@ -336,7 +336,7 @@ class RebateController
         } catch (\Exception $e) {
             return json([
                 'code' => 500,
-                'message' => '获取失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệu thất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -345,7 +345,7 @@ class RebateController
     // ==================== 配置管理相关方法 ====================
     
     /**
-     * 获取全局反水配置
+     * Lấy全局反水配置
      * GET /app/admin/api/rebate/global-config
      */
     public function globalConfig(Request $request)
@@ -354,7 +354,7 @@ class RebateController
             $keys = ['rebate_enabled', 'rebate_cycle', 'rebate_min_amount', 'rebate_expire_days', 'rebate_turnover_times'];
             $configs = Db::table('caipiao_system_config')->whereIn('config_key', $keys)->pluck('config_value', 'config_key')->toArray();
             return json([
-                'code' => 0, 'message' => '获取成功',
+                'code' => 0, 'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'enabled' => ($configs['rebate_enabled'] ?? '1') === '1',
                     'cycle' => $configs['rebate_cycle'] ?? 'daily',
@@ -364,12 +364,12 @@ class RebateController
                 ]
             ]);
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '获取失败：' . $e->getMessage(), 'data' => null]);
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại：' . $e->getMessage(), 'data' => null]);
         }
     }
     
     /**
-     * 保存全局反水配置
+     * Lưu全局反水配置
      */
     public function globalConfigSave(Request $request)
     {
@@ -385,14 +385,14 @@ class RebateController
             foreach ($updates as $key => $value) {
                 Db::table('caipiao_system_config')->updateOrInsert(['config_key' => $key], ['config_value' => $value, 'updated_at' => time()]);
             }
-            return json(['code' => 0, 'message' => '保存成功', 'data' => null]);
+            return json(['code' => 0, 'message' => 'LưuThành công', 'data' => null]);
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '保存失败：' . $e->getMessage(), 'data' => null]);
+            return json(['code' => 500, 'message' => 'LưuThất bại：' . $e->getMessage(), 'data' => null]);
         }
     }
     
     /**
-     * 获取VIP等级反水配置（含游戏类型）
+     * LấyVIPCấp độ反水配置（含Trò chơi类型）
      */
     public function vipConfig(Request $request)
     {
@@ -412,26 +412,26 @@ class RebateController
                     'groupName' => $g->groupname,
                     'fanshuiRaw' => $g->fanshui ?? '',
                     'tiers' => $tiers,
-                    // 游戏类型反水
+                    // Trò chơi类型反水
                     'gameTypeRates' => [
-                        ['type' => 1, 'name' => '真人', 'field' => 'fs_realperson', 'rate' => floatval($g->fs_realperson)],
-                        ['type' => 2, 'name' => '捕鱼', 'field' => 'fs_fish', 'rate' => floatval($g->fs_fish)],
-                        ['type' => 3, 'name' => '电子', 'field' => 'fs_electron', 'rate' => floatval($g->fs_electron)],
-                        ['type' => 4, 'name' => '彩票', 'field' => 'fs_lottery', 'rate' => floatval($g->fs_lottery)],
-                        ['type' => 5, 'name' => '体育', 'field' => 'fs_sport', 'rate' => floatval($g->fs_sport)],
-                        ['type' => 6, 'name' => '棋牌', 'field' => 'fs_chess', 'rate' => floatval($g->fs_chess)],
+                        ['type' => 1, 'name' => 'Live Casino', 'field' => 'fs_realperson', 'rate' => floatval($g->fs_realperson)],
+                        ['type' => 2, 'name' => 'Bắn cá', 'field' => 'fs_fish', 'rate' => floatval($g->fs_fish)],
+                        ['type' => 3, 'name' => 'Điện tử', 'field' => 'fs_electron', 'rate' => floatval($g->fs_electron)],
+                        ['type' => 4, 'name' => 'Xổ số', 'field' => 'fs_lottery', 'rate' => floatval($g->fs_lottery)],
+                        ['type' => 5, 'name' => 'Thể thao', 'field' => 'fs_sport', 'rate' => floatval($g->fs_sport)],
+                        ['type' => 6, 'name' => 'Bài', 'field' => 'fs_chess', 'rate' => floatval($g->fs_chess)],
                         ['type' => 7, 'name' => '电竞', 'field' => 'fs_esport', 'rate' => floatval($g->fs_esport)],
                     ]
                 ];
             }
-            return json(['code' => 0, 'message' => '获取成功', 'data' => ['list' => $list]]);
+            return json(['code' => 0, 'message' => 'Lấy dữ liệu thành công', 'data' => ['list' => $list]]);
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '获取失败：' . $e->getMessage(), 'data' => null]);
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại：' . $e->getMessage(), 'data' => null]);
         }
     }
     
     /**
-     * 保存VIP等级反水配置（含游戏类型）
+     * LưuVIPCấp độ反水配置（含Trò chơi类型）
      */
     public function vipConfigSave(Request $request)
     {
@@ -451,10 +451,10 @@ class RebateController
                 }
             }
             
-            // 构建更新数据
+            // 构建更新dữ liệu
             $updateData = ['fanshui' => implode(';', $parts)];
             
-            // 添加游戏类型反水配置
+            // ThêmTrò chơi类型反水配置
             $fieldMap = [
                 1 => 'fs_realperson',
                 2 => 'fs_fish',
@@ -475,32 +475,32 @@ class RebateController
             
             Db::table('caipiao_membergroup')->where('groupid', $groupId)->update($updateData);
             
-            return json(['code' => 0, 'message' => '保存成功', 'data' => null]);
+            return json(['code' => 0, 'message' => 'LưuThành công', 'data' => null]);
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '保存失败：' . $e->getMessage(), 'data' => null]);
+            return json(['code' => 500, 'message' => 'LưuThất bại：' . $e->getMessage(), 'data' => null]);
         }
     }
 
     
     /**
- * 获取游戏商反水配置
+ * Lấy trò chơi商反水配置
  */
 public function vendorConfig(Request $request)
 {
     try {
-        // 获取反水分类配置
+        // Lấy反水分类配置
         $categoryConfigs = Db::table('caipiao_rebate_category_config')
             ->orderBy('sort')
             ->get()
             ->keyBy('category_code');
         
-        // 从 caipiao_game_platform 表获取所有平台（按type分类）
+        // 从 caipiao_game_platform 表Lấy所有平台（按type分类）
         $platforms = Db::table('caipiao_game_platform')
             ->where('status', 'online')
             ->orderBy('sort')
             ->get();
         
-        // 从 caipiao_game 表获取游戏数量统计
+        // 从 caipiao_game 表Lấy trò chơi数量统计
         $gameCounts = Db::table('caipiao_game')
             ->select('platform', Db::raw('COUNT(*) as cnt'))
             ->where('status', 'online')
@@ -508,7 +508,7 @@ public function vendorConfig(Request $request)
             ->pluck('cnt', 'platform')
             ->toArray();
         
-        // 获取已配置的反水设置
+        // Lấy已配置的反水Cài đặt
         $vendorConfigs = Db::table('caipiao_rebate_vendor_config')->get()->keyBy(function($item) { 
             return $item->category_code . '_' . $item->vendor_code; 
         });
@@ -524,27 +524,27 @@ public function vendorConfig(Request $request)
             'esport' => 'esport'
         ];
         
-        // 按分类组织平台数据
+        // 按分类组织平台dữ liệu
         $categorized = [];
         foreach ($platforms as $platform) {
             $type = $platform->type;
             
             // 如果type不在标准分类中，尝试从code推断
             if (!isset($typeMapping[$type])) {
-                if (strpos($platform->code, '_LOTTERY') !== false || strpos($platform->name, '彩票') !== false) {
+                if (strpos($platform->code, '_LOTTERY') !== false || strpos($platform->name, 'Xổ số') !== false) {
                     $type = 'lottery';
-                } elseif (strpos($platform->code, '_CHESS') !== false || strpos($platform->name, '棋牌') !== false) {
+                } elseif (strpos($platform->code, '_CHESS') !== false || strpos($platform->name, 'Bài') !== false) {
                     $type = 'chess';
-                } elseif (strpos($platform->code, '_FISH') !== false || strpos($platform->name, '捕鱼') !== false) {
+                } elseif (strpos($platform->code, '_FISH') !== false || strpos($platform->name, 'Bắn cá') !== false) {
                     $type = 'fishing';
-                } elseif (strpos($platform->name, '体育') !== false) {
+                } elseif (strpos($platform->name, 'Thể thao') !== false) {
                     $type = 'sport';
                 } elseif (strpos($platform->name, '电竞') !== false) {
                     $type = 'esport';
-                } elseif (strpos($platform->name, '真人') !== false || strpos($platform->name, '视讯') !== false) {
+                } elseif (strpos($platform->name, 'Live Casino') !== false || strpos($platform->name, '视讯') !== false) {
                     $type = 'live';
                 } else {
-                    $type = 'slot'; // 默认归类为电子
+                    $type = 'slot'; // 默认归类为Điện tử
                 }
             }
             
@@ -579,14 +579,14 @@ public function vendorConfig(Request $request)
             ];
         }
         
-        return json(['code' => 0, 'message' => '获取成功', 'data' => ['categories' => $result]]);
+        return json(['code' => 0, 'message' => 'Lấy dữ liệu thành công', 'data' => ['categories' => $result]]);
     } catch (\Exception $e) {
-        return json(['code' => 500, 'message' => '获取失败：' . $e->getMessage(), 'data' => null]);
+        return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại：' . $e->getMessage(), 'data' => null]);
     }
 }
     
     /**
-     * 保存分类状态
+     * Lưu分类状态
      */
     public function categoryStatusSave(Request $request)
     {
@@ -598,27 +598,27 @@ public function vendorConfig(Request $request)
                 ->where('category_code', $code)
                 ->update(['status' => $status, 'updated_at' => time()]);
             
-            return json(['code' => 0, 'message' => '保存成功', 'data' => null]);
+            return json(['code' => 0, 'message' => 'LưuThành công', 'data' => null]);
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '保存失败：' . $e->getMessage(), 'data' => null]);
+            return json(['code' => 500, 'message' => 'LưuThất bại：' . $e->getMessage(), 'data' => null]);
         }
     }
     
     /**
-     * 保存游戏商反水配置
+     * LưuTrò chơi商反水配置
      */
     public function vendorConfigSave(Request $request)
     {
         try {
             $data = $request->post();
-            if (empty($data['vendorCode']) || empty($data['categoryCode'])) { return json(['code' => 400, 'message' => '参数错误', 'data' => null]); }
+            if (empty($data['vendorCode']) || empty($data['categoryCode'])) { return json(['code' => 400, 'message' => 'Tham số không hợp lệ', 'data' => null]); }
             Db::table('caipiao_rebate_vendor_config')->updateOrInsert(
                 ['vendor_code' => $data['vendorCode'], 'category_code' => $data['categoryCode']],
                 ['vendor_name' => $data['vendorName'] ?? '', 'status' => $data['status'] ?? 1, 'base_rate' => $data['baseRate'] ?? 0.5, 'vip_bonus' => $data['vipBonus'] ?? 0.1, 'min_bet' => $data['minBet'] ?? 100, 'updated_at' => time()]
             );
-            return json(['code' => 0, 'message' => '保存成功', 'data' => null]);
+            return json(['code' => 0, 'message' => 'LưuThành công', 'data' => null]);
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '保存失败：' . $e->getMessage(), 'data' => null]);
+            return json(['code' => 500, 'message' => 'LưuThất bại：' . $e->getMessage(), 'data' => null]);
         }
     }
     
@@ -636,7 +636,7 @@ public function vendorConfig(Request $request)
     }
     
     /**
-     * 获取统计报表数据
+     * Lấy统计报表dữ liệu
      * GET /app/admin/api/rebate/report
      */
     public function report(Request $request)
@@ -645,7 +645,7 @@ public function vendorConfig(Request $request)
             $days = intval($request->get('days', 7));
             $todayStart = strtotime(date('Y-m-d 00:00:00'));
             
-            // 近N天趋势数据
+            // 近N天趋势dữ liệu
             $trend = [];
             for ($i = $days - 1; $i >= 0; $i--) {
                 $dayStart = strtotime("-{$i} days", $todayStart);
@@ -655,16 +655,16 @@ public function vendorConfig(Request $request)
                 $trend[] = ['date' => date('m-d', $dayStart), 'amount' => round($amount, 2), 'count' => $count];
             }
             
-            // 按游戏类型分布
+            // 按Trò chơi类型分布
             $byCategory = Db::table('caipiao_fanshui')->select(Db::raw("CASE WHEN vendor_code = '' OR vendor_code IS NULL THEN 'daily' ELSE LEFT(vendor_code, LOCATE('_', vendor_code) - 1) END as category, SUM(amount) as total"))
                 ->where('shenhe', 1)->where('oddtime', '>=', strtotime('-30 days', $todayStart))->groupBy('category')->get();
             
-            // 按VIP等级分布
+            // 按VIPCấp độ分布
             $byVip = Db::table('caipiao_fanshui')->select('groupname', Db::raw('SUM(amount) as total, COUNT(*) as cnt'))
                 ->where('shenhe', 1)->where('oddtime', '>=', strtotime('-30 days', $todayStart))->groupBy('groupname')->get();
             
             return json([
-                'code' => 0, 'message' => '获取成功',
+                'code' => 0, 'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'trend' => $trend,
                     'byCategory' => $byCategory,
@@ -672,12 +672,12 @@ public function vendorConfig(Request $request)
                 ]
             ]);
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '获取失败：' . $e->getMessage(), 'data' => null]);
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại：' . $e->getMessage(), 'data' => null]);
         }
     }
 
     /**
-     * 获取阶梯反水配置列表
+     * Lấy阶梯反水配置列表
      * GET /app/admin/api/rebate/tier-config
      */
     public function tierConfig(Request $request)
@@ -717,10 +717,10 @@ public function vendorConfig(Request $request)
                 ];
             }
             
-            // 获取分类和平台名称
+            // Lấy分类和平台名称
             $categoryNames = [
-                'slot' => '电子', 'live' => '真人', 'fishing' => '捕鱼',
-                'chess' => '棋牌', 'lottery' => '彩票', 'sport' => '体育', 'esport' => '电竞'
+                'slot' => 'Điện tử', 'live' => 'Live Casino', 'fishing' => 'Bắn cá',
+                'chess' => 'Bài', 'lottery' => 'Xổ số', 'sport' => 'Thể thao', 'esport' => '电竞'
             ];
             $platformNames = Db::table('caipiao_game_platform')->pluck('name', 'code')->toArray();
             
@@ -731,14 +731,14 @@ public function vendorConfig(Request $request)
                 $result[] = $item;
             }
             
-            return json(['code' => 0, 'message' => '获取成功', 'data' => ['list' => $result]]);
+            return json(['code' => 0, 'message' => 'Lấy dữ liệu thành công', 'data' => ['list' => $result]]);
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '获取失败：' . $e->getMessage(), 'data' => null]);
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại：' . $e->getMessage(), 'data' => null]);
         }
     }
 
     /**
-     * 保存阶梯反水配置
+     * Lưu阶梯反水配置
      * POST /app/admin/api/rebate/tier-config-save
      */
     public function tierConfigSave(Request $request)
@@ -749,12 +749,12 @@ public function vendorConfig(Request $request)
             $tiers = $request->post('tiers', []);
             
             if (empty($categoryCode) || empty($vendorCode)) {
-                return json(['code' => 400, 'message' => '分类和平台不能为空', 'data' => null]);
+                return json(['code' => 400, 'message' => '分类和平台không được để trống', 'data' => null]);
             }
             
             $now = time();
             
-            // 删除旧配置
+            // Xóa旧配置
             Db::table('caipiao_rebate_tier_config')
                 ->where('category_code', $categoryCode)
                 ->where('vendor_code', $vendorCode)
@@ -773,14 +773,14 @@ public function vendorConfig(Request $request)
                 ]);
             }
             
-            return json(['code' => 0, 'message' => '保存成功', 'data' => null]);
+            return json(['code' => 0, 'message' => 'LưuThành công', 'data' => null]);
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '保存失败：' . $e->getMessage(), 'data' => null]);
+            return json(['code' => 500, 'message' => 'LưuThất bại：' . $e->getMessage(), 'data' => null]);
         }
     }
 
     /**
-     * 删除阶梯反水配置
+     * Xóa阶梯反水配置
      * POST /app/admin/api/rebate/tier-config-delete
      */
     public function tierConfigDelete(Request $request)
@@ -792,14 +792,14 @@ public function vendorConfig(Request $request)
                 Db::table('caipiao_rebate_tier_config')->where('id', $id)->delete();
             }
             
-            return json(['code' => 0, 'message' => '删除成功', 'data' => null]);
+            return json(['code' => 0, 'message' => 'XóaThành công', 'data' => null]);
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '删除失败：' . $e->getMessage(), 'data' => null]);
+            return json(['code' => 500, 'message' => 'XóaThất bại：' . $e->getMessage(), 'data' => null]);
         }
     }
 
     /**
-     * 获取用户累计投注统计
+     * LấyNgười dùng累计Đặt cược统计
      * GET /app/admin/api/rebate/user-bet-stats
      */
     public function userBetStats(Request $request)
@@ -822,9 +822,9 @@ public function vendorConfig(Request $request)
             
             $list = $query->orderBy('s.total_bet', 'desc')->limit(100)->get();
             
-            return json(['code' => 0, 'message' => '获取成功', 'data' => ['list' => $list]]);
+            return json(['code' => 0, 'message' => 'Lấy dữ liệu thành công', 'data' => ['list' => $list]]);
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '获取失败：' . $e->getMessage(), 'data' => null]);
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại：' . $e->getMessage(), 'data' => null]);
         }
     }
 
@@ -835,18 +835,18 @@ public function vendorConfig(Request $request)
     public function cleanupTierConfig(Request $request)
     {
         try {
-            // 删除非通用配置
+            // Xóa非通用配置
             $deleted = Db::table('caipiao_rebate_tier_config')
                 ->where('vendor_code', '!=', '*')
                 ->delete();
             
             return json([
                 'code' => 0,
-                'message' => "清理完成，删除了 {$deleted} 条非通用配置",
+                'message' => "清理完成，Xóa了 {$deleted} 条非通用配置",
                 'data' => ['deleted' => $deleted]
             ]);
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '清理失败：' . $e->getMessage(), 'data' => null]);
+            return json(['code' => 500, 'message' => '清理Thất bại：' . $e->getMessage(), 'data' => null]);
         }
     }
 }

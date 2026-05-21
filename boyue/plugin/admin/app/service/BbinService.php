@@ -10,12 +10,12 @@ class BbinService
     private $apiAccount;
     private $apiKey;
     private $apiPasswd;
-    private $base_url = 'https://ap.api-bet.net';  // 新的 NG 平台地址
+    private $base_url = 'https:// ap.api-bet.net';  // 新的 NG 平台地址
     private $lang = 'zh-CN';  // 语言
 
     public function __construct()
     {
-        // 从配置文件或环境变量获取
+        // 从配置文件hoặc环境变量Lấy
         $this->apiAccount = env('BBIN_API_ACCOUNT', 'FNhang294');
         $this->apiKey = env('BBIN_API_KEY', 'RhE4dcEGAQK8jFyekRMEr4pnp7HF6KM3Up8wrc42umVAuEfMkpz');
         $this->apiPasswd = env('BBIN_API_PASSWD', 'ybvuvcy7');
@@ -30,13 +30,13 @@ class BbinService
     }
 
     /**
-     * 获取投注记录
-     * @param string $roundDate 日期 (Y-m-d)
-     * @param string $startTime 开始时间 (H:i:s)
-     * @param string $endTime 结束时间 (H:i:s)
-     * @param int $gameKind 游戏类型
-     * @param string $subGameKind 子游戏类型
-     * @param string $gameType 游戏类型
+     * LấyĐặt cượclịch sử
+     * @param string $roundDate Ngày (Y-m-d)
+     * @param string $startTime 开始Thời gian (H:i:s)
+     * @param string $endTime 结束Thời gian (H:i:s)
+     * @param int $gameKind Trò chơi类型
+     * @param string $subGameKind 子Trò chơi类型
+     * @param string $gameType Trò chơi类型
      * @param int $pageIndex 页码
      * @param int $pageSize 每页数量
      */
@@ -63,7 +63,7 @@ class BbinService
     }
 
     /**
-     * 获取商户余额
+     * Lấy商户Số dư
      */
     public function credit()
     {
@@ -94,7 +94,7 @@ class BbinService
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
         
-        // 添加请求头，绕过 Cloudflare 防护
+        // Thêm请求头，绕过 Cloudflare 防护
         $headers = [
             'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
             'Accept: application/json, text/plain, */*',
@@ -107,7 +107,7 @@ class BbinService
         
         $res = curl_exec($ch);
         
-        // 记录错误信息
+        // lịch sửLỗi信息
         if (curl_errno($ch)) {
             \support\Log::error('BBIN CURL 错误', ['error' => curl_error($ch), 'url' => $url]);
         }

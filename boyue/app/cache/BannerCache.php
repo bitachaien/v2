@@ -39,7 +39,7 @@ class BannerCache
         } catch (\Throwable $e) {
             
             self::$enabled = false;
-            Log::warning('Redis连接失败，缓存已禁用: ' . $e->getMessage());
+            Log::warning('Redis连接Thất bại，缓存已禁用: ' . $e->getMessage());
             return null;
         }
     }
@@ -63,7 +63,7 @@ class BannerCache
 
             return null;
         } catch (\Throwable $e) {
-            Log::warning("Banner缓存读取失败: " . $e->getMessage());
+            Log::warning("Banner缓存读取Thất bại: " . $e->getMessage());
             return null;
         }
     }
@@ -81,7 +81,7 @@ class BannerCache
             $redis->setex($key, $ttl, json_encode($data, JSON_UNESCAPED_UNICODE));
             return true;
         } catch (\Throwable $e) {
-            Log::warning("Banner缓存写入失败: " . $e->getMessage());
+            Log::warning("Banner缓存写入Thất bại: " . $e->getMessage());
             return false;
         }
     }
@@ -99,13 +99,13 @@ class BannerCache
             $data = $redis->get($key);
 
             if ($data !== null) {
-                Log::debug("Banner详情缓存命中: {$key}");
+                Log::debug("BannerChi tiết缓存命中: {$key}");
                 return json_decode($data, true);
             }
 
             return null;
         } catch (\Throwable $e) {
-            Log::warning("Banner详情缓存读取失败: " . $e->getMessage());
+            Log::warning("BannerChi tiết缓存读取Thất bại: " . $e->getMessage());
             return null;
         }
     }
@@ -123,7 +123,7 @@ class BannerCache
             $redis->setex($key, $ttl, json_encode($data, JSON_UNESCAPED_UNICODE));
             return true;
         } catch (\Throwable $e) {
-            Log::warning("Banner详情缓存写入失败: " . $e->getMessage());
+            Log::warning("BannerChi tiết缓存写入Thất bại: " . $e->getMessage());
             return false;
         }
     }
@@ -141,7 +141,7 @@ class BannerCache
             $redis->del($key);
             return true;
         } catch (\Throwable $e) {
-            Log::warning("Banner详情缓存删除失败: " . $e->getMessage());
+            Log::warning("BannerChi tiết缓存XóaThất bại: " . $e->getMessage());
             return false;
         }
     }
@@ -156,7 +156,7 @@ class BannerCache
             Log::info("Banner缓存已清除");
             return true;
         } catch (\Throwable $e) {
-            Log::error("Banner缓存清除失败: " . $e->getMessage());
+            Log::error("Banner缓存清除Thất bại: " . $e->getMessage());
             return false;
         }
     }
@@ -181,7 +181,7 @@ class BannerCache
                 }
             }
         } catch (\Throwable $e) {
-            Log::warning("Banner列表缓存清除失败: " . $e->getMessage());
+            Log::warning("Banner列表缓存清除Thất bại: " . $e->getMessage());
         }
     }
 

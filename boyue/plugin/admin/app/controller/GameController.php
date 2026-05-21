@@ -18,7 +18,7 @@ class GameController extends Base
     }
 
     /**
-     * 获取游戏记录列表
+     * Lấy trò chơilịch sử列表
      */
     public function recordList(Request $request)
     {
@@ -34,11 +34,11 @@ class GameController extends Base
         $page = $request->get('page', 1);
         $limit = $request->get('limit', 20);
         
-        // 直接查询投注表（老版本不做关联）
+        // 直接Tra cứuĐặt cược表（老版本不做关联）
         $query = Db::table('caipiao_touzhu as t')
             ->select('t.*');
         
-        // 排除机器人投注记录
+        // 排除机器人Đặt cượclịch sử
         $query->where(function($q) {
             $q->whereNull('t.source')
               ->orWhere('t.source', '!=', 'robot');
@@ -61,7 +61,7 @@ class GameController extends Base
             $query->where('t.username', 'like', '%' . $username . '%');
         }
         
-        // 状态筛选（空字符串或999表示全部）
+        // 状态筛选（空字符串hoặc999表示全部）
         if ($status !== '' && $status != '999') {
             $query->where('t.isdraw', $status);
         }
@@ -99,7 +99,7 @@ class GameController extends Base
                 break;
         }
         
-        // 调试：记录SQL
+        // 调试：lịch sửSQL
         \support\Log::info('游戏记录查询条件: ' . json_encode([
             'cpname' => $cpname,
             'expect' => $expect,
@@ -110,7 +110,7 @@ class GameController extends Base
             'endTime' => $endTime
         ], JSON_UNESCAPED_UNICODE));
         
-        // 获取总数
+        // Lấy总数
         $count = $query->count();
         
         \support\Log::info('游戏记录总数: ' . $count);
@@ -119,7 +119,7 @@ class GameController extends Base
         $offset = ($page - 1) * $limit;
         $list = $query->offset($offset)->limit($limit)->get();
         
-        // 处理数据
+        // 处理dữ liệu
         $result = [];
         foreach ($list as $item) {
             $row = (array)$item;
@@ -127,10 +127,10 @@ class GameController extends Base
             // 单号：trano
             $row['orderno'] = $row['trano'] ?? '';
             
-            // 用户名：username（直接在投注表）
+            // Tên người dùng：username（直接在Đặt cược表）
             // 已有此字段
             
-            // 彩票名称：cptitle（直接在投注表）
+            // Xổ số名称：cptitle（直接在Đặt cược表）
             $row['lottery_name'] = $row['cptitle'] ?? '';
             
             // 玩法名称：playtitle
@@ -142,19 +142,19 @@ class GameController extends Base
             // 注数：itemcount
             $row['betcount'] = $row['itemcount'] ?? 0;
             
-            // 奖金/赔率：mode
+            // Tiền thưởng/赔率：mode
             $row['odds'] = $row['mode'] ?? 0;
             
-            // 投注后金额：amountafter
+            // Đặt cược后Số tiền：amountafter
             $row['after_balance'] = $row['amountafter'] ?? 0;
             
-            // 中奖金额：okamount
+            // Trúng thưởngSố tiền：okamount
             $row['winamount'] = $row['okamount'] ?? 0;
             
-            // 中奖注数：okcount
+            // Trúng thưởng注数：okcount
             $row['wincount'] = $row['okcount'] ?? 0;
             
-            // 中奖倍数：beishu
+            // Trúng thưởng倍数：beishu
             $row['multiple'] = $row['beishu'] ?? 0;
             
             // 元角分：yjf
@@ -163,10 +163,10 @@ class GameController extends Base
             // 号码：tzcode
             $row['betcontent'] = $row['tzcode'] ?? '';
             
-            // 开奖号：opencode
+            // Mở thưởng号：opencode
             // 已有此字段
             
-            // 格式化投注时间
+            // 格式化Đặt cượcThời gian
             if (isset($row['oddtime']) && is_numeric($row['oddtime'])) {
                 $row['bettime'] = date('m-d H:i:s', $row['oddtime']);
             }
@@ -180,13 +180,13 @@ class GameController extends Base
             
             // 状态文本
             if ($row['isdraw'] == 1) {
-                $row['status_text'] = '中奖';
+                $row['status_text'] = 'Trúng thưởng';
             } elseif ($row['isdraw'] == -1) {
-                $row['status_text'] = '未中奖';
+                $row['status_text'] = '未Trúng thưởng';
             } elseif ($row['isdraw'] == -2) {
                 $row['status_text'] = '撤单';
             } else {
-                $row['status_text'] = '未开奖';
+                $row['status_text'] = '未Mở thưởng';
             }
             
             $result[] = $row;
@@ -209,19 +209,19 @@ class GameController extends Base
         $id = $request->post('id');
         
         if (!$id) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
         
-        // 查询投注记录
+        // Tra cứuĐặt cượclịch sử
         $bet = Db::table('caipiao_touzhu')->where('id', $id)->first();
         
         if (!$bet) {
-            return $this->json(1, '投注记录不存在');
+            return $this->json(1, 'Đặt cượclịch sửkhông tồn tại');
         }
         
-        // 检查是否已开奖
+        // 检查是否已Mở thưởng
         if ($bet->isdraw != 0) {
-            return $this->json(1, '该订单已开奖，无法撤单');
+            return $this->json(1, '该订单已Mở thưởng，无法撤单');
         }
         
         // 更新状态为撤单
@@ -230,15 +230,15 @@ class GameController extends Base
             ->update(['isdraw' => -2]);
         
         if ($result !== false) {
-            // 退还金额给用户
+            // 退还Số tiền给Người dùng
             Db::table('caipiao_member')
                 ->where('id', $bet->uid)
                 ->increment('balance', $bet->amount);
             
-            \support\Log::info('撤单成功 - 订单ID: ' . $id . ', 金额: ' . $bet->amount);
-            return $this->json(0, '撤单成功');
+            \support\Log::info('撤单Thành công - 订单ID: ' . $id . ', Số tiền: ' . $bet->amount);
+            return $this->json(0, '撤单Thành công');
         } else {
-            return $this->json(1, '撤单失败');
+            return $this->json(1, '撤单Thất bại');
         }
     }
 
@@ -251,7 +251,7 @@ class GameController extends Base
     }
 
     /**
-     * 获取注单异常检测列表
+     * Lấy注单异常检测列表
      */
     public function checkAnomalyOrderList(Request $request)
     {
@@ -261,8 +261,8 @@ class GameController extends Base
         $page = $request->get('page', 1);
         $limit = $request->get('limit', 20);
         
-        // 核心SQL：查询投注时间和开奖时间差异小于等于指定值的注单
-        // 这些注单可能存在异常（在开奖前很短时间内投注）
+        // 核心SQL：Tra cứuĐặt cượcThời gian和Mở thưởngThời gian差异小于等于指定值的注单
+        // 这些注单可能存在异常（在Mở thưởng前很短Thời gian内Đặt cược）
         $query = Db::table('caipiao_touzhu as a')
             ->leftJoin('caipiao_kaijiang as b', function($join) {
                 $join->on('a.cpname', '=', 'b.name')
@@ -279,7 +279,7 @@ class GameController extends Base
                 'c.name as cname'
             )
             ->whereRaw('b.name IS NOT NULL AND b.name != ""')
-            // 排除机器人投注记录
+            // 排除机器人Đặt cượclịch sử
             ->where(function($q) {
                 $q->whereNull('a.source')
                   ->orWhere('a.source', '!=', 'robot');
@@ -290,12 +290,12 @@ class GameController extends Base
             $query->where('a.cpname', $cpname);
         }
         
-        // 用户名筛选
+        // Tên người dùng筛选
         if (!empty($username)) {
             $query->where('a.username', 'like', '%' . $username . '%');
         }
         
-        // 时间差筛选：开奖时间 - 投注时间 <= 指定秒数
+        // Thời gian差筛选：Mở thưởngThời gian - Đặt cượcThời gian <= 指定秒数
         if ($shijiancha > 0) {
             $query->whereRaw('b.opentime - a.oddtime <= ?', [$shijiancha]);
         }
@@ -303,14 +303,14 @@ class GameController extends Base
         // 按ID降序
         $query->orderBy('a.id', 'desc');
         
-        // 获取总数
+        // Lấy总数
         $count = $query->count();
         
         // 分页
         $offset = ($page - 1) * $limit;
         $list = $query->offset($offset)->limit($limit)->get();
         
-        // 处理数据
+        // 处理dữ liệu
         $result = [];
         foreach ($list as $item) {
             $row = (array)$item;
@@ -318,10 +318,10 @@ class GameController extends Base
             // 单号
             $row['orderno'] = $row['trano'] ?? '';
             
-            // 用户名
+            // Tên người dùng
             // 已有 username 字段
             
-            // 彩票名称
+            // Xổ số名称
             $row['lottery_name'] = $row['cptitle'] ?? '';
             
             // 期号
@@ -330,10 +330,10 @@ class GameController extends Base
             // 玩法
             $row['play_name'] = $row['playtitle'] ?? '';
             
-            // 投注金额
+            // Đặt cượcSố tiền
             // 已有 amount 字段
             
-            // 中奖金额
+            // Trúng thưởngSố tiền
             // 已有 okamount 字段
             
             // 状态文本（不包含HTML，由前端模板处理样式）
@@ -347,21 +347,21 @@ class GameController extends Base
                 $row['status_text'] = '撤';
                 $row['status_class'] = 'c-666';
             } else {
-                $row['status_text'] = '未开奖';
+                $row['status_text'] = '未Mở thưởng';
                 $row['status_class'] = 'c-333';
             }
             
-            // 格式化投注时间
+            // 格式化Đặt cượcThời gian
             if (isset($row['oddtime']) && is_numeric($row['oddtime'])) {
                 $row['oddtime_text'] = date('m-d H:i:s', $row['oddtime']);
             }
             
-            // 格式化开奖时间
+            // 格式化Mở thưởngThời gian
             if (isset($row['opentime']) && is_numeric($row['opentime'])) {
                 $row['opentime_text'] = date('m-d H:i:s', $row['opentime']);
             }
             
-            // 计算时间差（秒）
+            // 计算Thời gian差（秒）
             if (isset($row['opentime']) && isset($row['oddtime'])) {
                 $row['time_diff'] = $row['opentime'] - $row['oddtime'];
             } else {
@@ -382,12 +382,12 @@ class GameController extends Base
 
     /**
      * ============================================
-     * 游戏平台管理 API（Art Design Pro 前端专用）
+     * nền tảng trò chơi管理 API（Art Design Pro 前端专用）
      * ============================================
      */
 
     /**
-     * 游戏平台列表
+     * Trò chơidanh sách nền tảng
      * GET /app/admin/api/game/platform-list
      */
     public function platformList(Request $request)
@@ -408,12 +408,12 @@ class GameController extends Base
         }
 
         if ($type) {
-            // 彩票、体育、电竞等直接进入大厅的类型：根据平台表的 type 筛选
+            // Xổ số、Thể thao、电竞等直接进入大厅的类型：根据平台表的 type 筛选
             $directTypes = ['lottery', 'sport', 'esport'];
             if (in_array($type, $directTypes)) {
                 $query->where('type', $type);
             } else {
-                // 其他类型：根据游戏表的类型筛选（支持综合平台多分类显示）
+                // 其他类型：根据Trò chơi表的类型筛选（支持综合平台多分类显示）
                 $gameTypeMap = ['fish' => 'fishing'];
                 $dbType = $gameTypeMap[$type] ?? $type;
                 
@@ -426,7 +426,7 @@ class GameController extends Base
                 if (!empty($platformCodes)) {
                     $query->whereIn('code', $platformCodes);
                 } else {
-                    // 没有游戏的分类，回退到按平台类型筛选
+                    // 没有Trò chơi的分类，回退到按平台类型筛选
                     $query->where('type', $type);
                 }
             }
@@ -446,12 +446,12 @@ class GameController extends Base
             ->get();
 
         $typeMap = [
-            'live' => '真人视讯',
-            'slot' => '电子游戏',
-            'chess' => '棋牌游戏',
-            'sport' => '体育投注',
-            'lottery' => '彩票游戏',
-            'fishing' => '捕鱼游戏',
+            'live' => 'Live Casino视讯',
+            'slot' => 'Điện tửTrò chơi',
+            'chess' => 'BàiTrò chơi',
+            'sport' => 'Thể thaoĐặt cược',
+            'lottery' => 'Xổ sốTrò chơi',
+            'fishing' => 'Bắn cáTrò chơi',
         ];
 
         $statusMap = [
@@ -479,26 +479,26 @@ class GameController extends Base
     }
 
     /**
-     * 游戏平台详情
+     * nền tảng trò chơiChi tiết
      * GET /app/admin/api/game/platform-detail
      */
     public function platformDetail(Request $request)
     {
         $id = $request->get('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $item = Db::table('caipiao_game_platform')->where('id', $id)->first();
         if (!$item) {
-            return json(['code' => 1, 'msg' => '平台不存在']);
+            return json(['code' => 1, 'msg' => '平台không tồn tại']);
         }
 
         return json(['code' => 0, 'msg' => 'ok', 'data' => (array)$item]);
     }
 
     /**
-     * 添加游戏平台
+     * Thêmnền tảng trò chơi
      * POST /app/admin/api/game/platform-add
      */
     public function platformAdd(Request $request)
@@ -516,17 +516,17 @@ class GameController extends Base
         $apiSecret = $request->post('api_secret', '');
 
         if (!$code) {
-            return json(['code' => 1, 'msg' => '平台代码不能为空']);
+            return json(['code' => 1, 'msg' => '平台代码không được để trống']);
         }
 
         if (!$name) {
-            return json(['code' => 1, 'msg' => '平台名称不能为空']);
+            return json(['code' => 1, 'msg' => '平台名称không được để trống']);
         }
 
-        // 检查代码是否已存在
+        // 检查代码是否đã tồn tại
         $exists = Db::table('caipiao_game_platform')->where('code', $code)->exists();
         if ($exists) {
-            return json(['code' => 1, 'msg' => '平台代码已存在']);
+            return json(['code' => 1, 'msg' => '平台代码đã tồn tại']);
         }
 
         $now = time();
@@ -546,23 +546,23 @@ class GameController extends Base
             'updated_at' => $now,
         ]);
 
-        return json(['code' => 0, 'msg' => '添加成功', 'data' => ['id' => $id]]);
+        return json(['code' => 0, 'msg' => 'ThêmThành công', 'data' => ['id' => $id]]);
     }
 
     /**
-     * 编辑游戏平台
+     * 编辑nền tảng trò chơi
      * POST /app/admin/api/game/platform-edit
      */
     public function platformEdit(Request $request)
     {
         $id = $request->post('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $item = Db::table('caipiao_game_platform')->where('id', $id)->first();
         if (!$item) {
-            return json(['code' => 1, 'msg' => '平台不存在']);
+            return json(['code' => 1, 'msg' => '平台không tồn tại']);
         }
 
         $data = ['updated_at' => time()];
@@ -570,7 +570,7 @@ class GameController extends Base
         $code = $request->post('code');
         if ($code !== null) {
             $code = strtoupper(trim($code));
-            // 检查代码是否被其他记录使用
+            // 检查代码是否被其他lịch sử使用
             $exists = Db::table('caipiao_game_platform')
                 ->where('code', $code)
                 ->where('id', '!=', $id)
@@ -613,11 +613,11 @@ class GameController extends Base
 
         Db::table('caipiao_game_platform')->where('id', $id)->update($data);
 
-        return json(['code' => 0, 'msg' => '修改成功']);
+        return json(['code' => 0, 'msg' => 'SửaThành công']);
     }
 
     /**
-     * 删除游戏平台
+     * Xóanền tảng trò chơi
      * POST /app/admin/api/game/platform-delete
      */
     public function platformDelete(Request $request)
@@ -626,12 +626,12 @@ class GameController extends Base
         $ids = $request->post('ids', []);
 
         if (!$id && empty($ids)) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $deleteIds = $id ? [$id] : $ids;
 
-        // 检查是否有游戏使用该平台
+        // 检查是否有Trò chơi使用该平台
         $codes = Db::table('caipiao_game_platform')
             ->whereIn('id', $deleteIds)
             ->pluck('code')
@@ -642,16 +642,16 @@ class GameController extends Base
             ->count();
 
         if ($usedCount > 0) {
-            return json(['code' => 1, 'msg' => '该平台下有游戏，无法删除']);
+            return json(['code' => 1, 'msg' => '该平台下有Trò chơi，无法Xóa']);
         }
 
         Db::table('caipiao_game_platform')->whereIn('id', $deleteIds)->delete();
 
-        return json(['code' => 0, 'msg' => '删除成功']);
+        return json(['code' => 0, 'msg' => 'XóaThành công']);
     }
 
     /**
-     * 更新游戏平台状态
+     * 更新nền tảng trò chơi状态
      * POST /app/admin/api/game/platform-status
      */
     public function platformStatus(Request $request)
@@ -660,7 +660,7 @@ class GameController extends Base
         $status = $request->post('status');
 
         if (!$id || !$status) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $allowedStatus = ['online', 'offline', 'maintenance'];
@@ -673,11 +673,11 @@ class GameController extends Base
             'updated_at' => time(),
         ]);
 
-        return json(['code' => 0, 'msg' => '状态更新成功']);
+        return json(['code' => 0, 'msg' => '状态更新Thành công']);
     }
 
     /**
-     * 查询平台余额（模拟）
+     * Tra cứu平台Số dư（模拟）
      * GET /app/admin/api/game/platform-balance
      */
     public function platformBalance(Request $request)
@@ -686,10 +686,10 @@ class GameController extends Base
         $code = $request->get('code');
 
         if (!$id && !$code) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
-        // 查询平台
+        // Tra cứu平台
         $query = Db::table('caipiao_game_platform');
         if ($id) {
             $query->where('id', $id);
@@ -699,10 +699,10 @@ class GameController extends Base
         $platform = $query->first();
 
         if (!$platform) {
-            return json(['code' => 1, 'msg' => '平台不存在']);
+            return json(['code' => 1, 'msg' => '平台không tồn tại']);
         }
 
-        // 从 caipiao_game_balance 表查询余额
+        // 从 caipiao_game_balance 表Tra cứuSố dư
         $balance = Db::table('caipiao_game_balance')
             ->where('platform', $platform->code)
             ->first();
@@ -720,7 +720,7 @@ class GameController extends Base
     }
 
     /**
-     * 查询所有平台余额
+     * Tra cứu所有平台Số dư
      * GET /app/admin/api/game/platform-balance-all
      */
     public function platformBalanceAll(Request $request)
@@ -755,12 +755,12 @@ class GameController extends Base
     public function platformTypeOptions(Request $request)
     {
         $types = [
-            ['value' => 'live', 'label' => '真人视讯'],
-            ['value' => 'slot', 'label' => '电子游戏'],
-            ['value' => 'chess', 'label' => '棋牌游戏'],
-            ['value' => 'sport', 'label' => '体育投注'],
-            ['value' => 'lottery', 'label' => '彩票游戏'],
-            ['value' => 'fishing', 'label' => '捕鱼游戏'],
+            ['value' => 'live', 'label' => 'Live Casino视讯'],
+            ['value' => 'slot', 'label' => 'Điện tửTrò chơi'],
+            ['value' => 'chess', 'label' => 'BàiTrò chơi'],
+            ['value' => 'sport', 'label' => 'Thể thaoĐặt cược'],
+            ['value' => 'lottery', 'label' => 'Xổ sốTrò chơi'],
+            ['value' => 'fishing', 'label' => 'Bắn cáTrò chơi'],
         ];
 
         return json(['code' => 0, 'msg' => 'ok', 'data' => $types]);
@@ -804,12 +804,12 @@ class GameController extends Base
 
     /**
      * ============================================
-     * 第三方游戏投注记录 API
+     * 第三方Trò chơiĐặt cượclịch sử API
      * ============================================
      */
 
     /**
-     * 投注记录列表
+     * Đặt cượclịch sử列表
      * GET /app/admin/api/game/bet-list
      */
     public function betList(Request $request)
@@ -869,7 +869,7 @@ class GameController extends Base
         $statusMap = [
             'pending' => '未结算',
             'settled' => '已结算',
-            'cancelled' => '已取消',
+            'cancelled' => 'Đã hủy',
         ];
 
         $result = [];
@@ -896,14 +896,14 @@ class GameController extends Base
     }
 
     /**
-     * 投注记录详情
+     * Đặt cượclịch sửChi tiết
      * GET /app/admin/api/game/bet-detail
      */
     public function betDetail(Request $request)
     {
         $id = $request->get('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $item = Db::table('caipiao_game_bet as b')
@@ -913,7 +913,7 @@ class GameController extends Base
             ->first();
 
         if (!$item) {
-            return json(['code' => 1, 'msg' => '记录不存在']);
+            return json(['code' => 1, 'msg' => 'lịch sửkhông tồn tại']);
         }
 
         $row = (array)$item;
@@ -924,7 +924,7 @@ class GameController extends Base
     }
 
     /**
-     * 投注状态选项
+     * Đặt cược状态选项
      * GET /app/admin/api/game/bet-status-options
      */
     public function betStatusOptions(Request $request)
@@ -932,7 +932,7 @@ class GameController extends Base
         $statuses = [
             ['value' => 'pending', 'label' => '未结算'],
             ['value' => 'settled', 'label' => '已结算'],
-            ['value' => 'cancelled', 'label' => '已取消'],
+            ['value' => 'cancelled', 'label' => 'Đã hủy'],
         ];
 
         return json(['code' => 0, 'msg' => 'ok', 'data' => $statuses]);
@@ -1011,7 +1011,7 @@ class GameController extends Base
             ->get();
 
         $typeMap = ['in' => '转入', 'out' => '转出'];
-        $statusMap = [0 => '处理中', 1 => '成功', 2 => '失败'];
+        $statusMap = [0 => 'Đang xử lý', 1 => 'Thành công', 2 => 'Thất bại'];
 
         $result = [];
         foreach ($list as $item) {
@@ -1035,14 +1035,14 @@ class GameController extends Base
     }
 
     /**
-     * 额度转让详情
+     * 额度转让Chi tiết
      * GET /app/admin/api/game/transfer-detail
      */
     public function transferDetail(Request $request)
     {
         $id = $request->get('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $item = Db::table('caipiao_game_transfer as t')
@@ -1052,7 +1052,7 @@ class GameController extends Base
             ->first();
 
         if (!$item) {
-            return json(['code' => 1, 'msg' => '记录不存在']);
+            return json(['code' => 1, 'msg' => 'lịch sửkhông tồn tại']);
         }
 
         $row = (array)$item;
@@ -1073,41 +1073,41 @@ class GameController extends Base
         $type = $request->post('type'); // in=转入平台, out=转出平台
         $amount = floatval($request->post('amount', 0));
 
-        // 根据用户名获取uid
+        // 根据Tên người dùngLấyuid
         if (!$uid && $username) {
             $member = Db::table('caipiao_member')->where('username', $username)->first();
             if (!$member) {
-                return json(['code' => 1, 'msg' => '用户不存在']);
+                return json(['code' => 1, 'msg' => 'Người dùng không tồn tại']);
             }
             $uid = $member->id;
         }
 
         if (!$uid) {
-            return json(['code' => 1, 'msg' => '请指定用户']);
+            return json(['code' => 1, 'msg' => '请指定Người dùng']);
         }
 
         if (!$platform) {
-            return json(['code' => 1, 'msg' => '请选择平台']);
+            return json(['code' => 1, 'msg' => 'Vui lòng chọn平台']);
         }
 
         if (!in_array($type, ['in', 'out'])) {
-            return json(['code' => 1, 'msg' => '无效的转账类型']);
+            return json(['code' => 1, 'msg' => '无效的Chuyển khoản类型']);
         }
 
         if ($amount <= 0) {
-            return json(['code' => 1, 'msg' => '金额必须大于0']);
+            return json(['code' => 1, 'msg' => 'Số tiền必须大于0']);
         }
 
-        // 查询用户
+        // Tra cứuNgười dùng
         $member = Db::table('caipiao_member')->where('id', $uid)->first();
         if (!$member) {
-            return json(['code' => 1, 'msg' => '用户不存在']);
+            return json(['code' => 1, 'msg' => 'Người dùng không tồn tại']);
         }
 
-        // 查询平台
+        // Tra cứu平台
         $platformInfo = Db::table('caipiao_game_platform')->where('code', $platform)->first();
         if (!$platformInfo) {
-            return json(['code' => 1, 'msg' => '平台不存在']);
+            return json(['code' => 1, 'msg' => '平台không tồn tại']);
         }
 
         Db::beginTransaction();
@@ -1120,7 +1120,7 @@ class GameController extends Base
                 // 转入平台：从中心钱包扣款
                 if ($beforeBalance < $amount) {
                     Db::rollBack();
-                    return json(['code' => 1, 'msg' => '余额不足']);
+                    return json(['code' => 1, 'msg' => 'Số dư không đủ']);
                 }
                 $afterBalance = $beforeBalance - $amount;
                 Db::table('caipiao_member')->where('id', $uid)->decrement('balance', $amount);
@@ -1130,7 +1130,7 @@ class GameController extends Base
                 Db::table('caipiao_member')->where('id', $uid)->increment('balance', $amount);
             }
 
-            // 记录转账
+            // lịch sửChuyển khoản
             Db::table('caipiao_game_transfer')->insert([
                 'order_no' => $orderNo,
                 'uid' => $uid,
@@ -1139,8 +1139,8 @@ class GameController extends Base
                 'amount' => $amount,
                 'before_balance' => $beforeBalance,
                 'after_balance' => $afterBalance,
-                'game_balance' => 0, // 实际需要调用第三方API获取
-                'status' => 1, // 直接成功
+                'game_balance' => 0, // 实际需要调用第三方APILấy
+                'status' => 1, // 直接Thành công
                 'created_at' => time(),
             ]);
 
@@ -1148,7 +1148,7 @@ class GameController extends Base
 
             return json([
                 'code' => 0,
-                'msg' => '转账成功',
+                'msg' => 'Chuyển khoảnThành công',
                 'data' => [
                     'order_no' => $orderNo,
                     'before_balance' => $beforeBalance,
@@ -1157,7 +1157,7 @@ class GameController extends Base
             ]);
         } catch (\Exception $e) {
             Db::rollBack();
-            return json(['code' => 1, 'msg' => '转账失败：' . $e->getMessage()]);
+            return json(['code' => 1, 'msg' => 'Chuyển khoảnThất bại：' . $e->getMessage()]);
         }
     }
 
@@ -1182,16 +1182,16 @@ class GameController extends Base
     public function transferStatusOptions(Request $request)
     {
         $statuses = [
-            ['value' => 0, 'label' => '处理中'],
-            ['value' => 1, 'label' => '成功'],
-            ['value' => 2, 'label' => '失败'],
+            ['value' => 0, 'label' => 'Đang xử lý'],
+            ['value' => 1, 'label' => 'Thành công'],
+            ['value' => 2, 'label' => 'Thất bại'],
         ];
 
         return json(['code' => 0, 'msg' => 'ok', 'data' => $statuses]);
     }
 
     /**
-     * 一键回收用户所有平台余额
+     * 一键回收Người dùng所有平台Số dư
      * POST /app/admin/api/game/transfer-recall-all
      */
     public function transferRecallAll(Request $request)
@@ -1202,23 +1202,23 @@ class GameController extends Base
         if (!$uid && $username) {
             $member = Db::table('caipiao_member')->where('username', $username)->first();
             if (!$member) {
-                return json(['code' => 1, 'msg' => '用户不存在']);
+                return json(['code' => 1, 'msg' => 'Người dùng không tồn tại']);
             }
             $uid = $member->id;
         }
 
         if (!$uid) {
-            return json(['code' => 1, 'msg' => '请指定用户']);
+            return json(['code' => 1, 'msg' => '请指定Người dùng']);
         }
 
-        // TODO: 调用各平台API回收余额
+        // TODO: 调用各平台API回收Số dư
         // 这里只是示意，实际需要对接各平台接口
 
         return json(['code' => 0, 'msg' => '一键回收已发起，请稍后查看结果']);
     }
 
     /**
-     * 获取平台下的游戏列表
+     * Lấy平台下的Trò chơi列表
      * GET /app/admin/api/game/game-list
      */
     public function gameList(Request $request)
@@ -1278,7 +1278,7 @@ class GameController extends Base
     }
 
     /**
-     * 保存游戏
+     * LưuTrò chơi
      * POST /app/admin/api/game/game-save
      */
     public function gameSave(Request $request)
@@ -1295,7 +1295,7 @@ class GameController extends Base
         $sort = (int)$request->post('sort', 0);
 
         if (empty($gameId) || empty($name) || empty($platform)) {
-            return json(['code' => 1, 'msg' => '游戏ID、名称和平台不能为空']);
+            return json(['code' => 1, 'msg' => 'Trò chơiID、名称和平台không được để trống']);
         }
 
         $data = [
@@ -1318,11 +1318,11 @@ class GameController extends Base
             Db::table('caipiao_game')->insert($data);
         }
 
-        return json(['code' => 0, 'msg' => '保存成功']);
+        return json(['code' => 0, 'msg' => 'LưuThành công']);
     }
 
     /**
-     * 设置游戏状态
+     * Cài đặtTrò chơi状态
      * POST /app/admin/api/game/game-status
      */
     public function gameStatus(Request $request)
@@ -1331,7 +1331,7 @@ class GameController extends Base
         $status = $request->post('status', 'online');
 
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         Db::table('caipiao_game')->where('id', $id)->update([
@@ -1339,11 +1339,11 @@ class GameController extends Base
             'updated_at' => time()
         ]);
 
-        return json(['code' => 0, 'msg' => '操作成功']);
+        return json(['code' => 0, 'msg' => 'Thao tác thành công']);
     }
 
     /**
-     * 设置游戏热门状态
+     * Cài đặtTrò chơi热门状态
      * POST /app/admin/api/game/game-hot
      */
     public function gameHot(Request $request)
@@ -1352,7 +1352,7 @@ class GameController extends Base
         $hot = (int)$request->post('hot', 0);
 
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         Db::table('caipiao_game')->where('id', $id)->update([
@@ -1360,11 +1360,11 @@ class GameController extends Base
             'updated_at' => time()
         ]);
 
-        return json(['code' => 0, 'msg' => '操作成功']);
+        return json(['code' => 0, 'msg' => 'Thao tác thành công']);
     }
 
     /**
-     * 删除游戏
+     * XóaTrò chơi
      * POST /app/admin/api/game/game-delete
      */
     public function gameDelete(Request $request)
@@ -1372,16 +1372,16 @@ class GameController extends Base
         $id = $request->post('id');
 
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         Db::table('caipiao_game')->where('id', $id)->delete();
 
-        return json(['code' => 0, 'msg' => '删除成功']);
+        return json(['code' => 0, 'msg' => 'XóaThành công']);
     }
     
     /**
-     * 同步 NG 平台到本地数据库
+     * 同步 NG 平台到本地dữ liệu库
      * POST /app/admin/api/game/sync-ng-platforms
      */
     public function syncNGPlatforms(Request $request)
@@ -1396,7 +1396,7 @@ class GameController extends Base
             
             return json(['code' => 1, 'msg' => $result['msg']]);
         } catch (\Exception $e) {
-            return json(['code' => 1, 'msg' => '同步失败: ' . $e->getMessage()]);
+            return json(['code' => 1, 'msg' => '同步Thất bại: ' . $e->getMessage()]);
         }
     }
     
@@ -1429,7 +1429,7 @@ class GameController extends Base
             
             return json(['code' => 1, 'msg' => $result['msg']]);
         } catch (\Exception $e) {
-            return json(['code' => 1, 'msg' => '同步失败: ' . $e->getMessage()]);
+            return json(['code' => 1, 'msg' => '同步Thất bại: ' . $e->getMessage()]);
         }
     }
     
@@ -1441,11 +1441,11 @@ class GameController extends Base
     {
         $id = $request->post('id');
         
-        // 记录请求日志
+        // lịch sử请求日志
         \support\Log::info('updatePlatform请求', ['id' => $id, 'post' => $request->post()]);
         
         if (empty($id)) {
-            return json(['code' => 1, 'msg' => '平台ID不能为空']);
+            return json(['code' => 1, 'msg' => '平台IDkhông được để trống']);
         }
         
         $updateData = [];
@@ -1460,7 +1460,7 @@ class GameController extends Base
         }
         
         if (empty($updateData)) {
-            return json(['code' => 1, 'msg' => '没有要更新的数据']);
+            return json(['code' => 1, 'msg' => '没有要更新的dữ liệu']);
         }
         
         try {
@@ -1468,9 +1468,9 @@ class GameController extends Base
                 ->where('id', $id)
                 ->update($updateData);
             
-            return json(['code' => 0, 'msg' => '更新成功']);
+            return json(['code' => 0, 'msg' => '更新Thành công']);
         } catch (\Exception $e) {
-            return json(['code' => 1, 'msg' => '更新失败: ' . $e->getMessage()]);
+            return json(['code' => 1, 'msg' => '更新Thất bại: ' . $e->getMessage()]);
         }
     }
     
@@ -1482,25 +1482,25 @@ class GameController extends Base
         $id = $request->post('id');
         
         if (empty($id)) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
         
         try {
-            // 先删除该平台下的所有游戏
+            // 先Xóa该平台下的所有Trò chơi
             Db::table('caipiao_game')
                 ->where('platform', function($query) use ($id) {
                     $query->select('code')->from('caipiao_game_platform')->where('id', $id);
                 })
                 ->delete();
             
-            // 删除平台
+            // Xóa平台
             Db::table('caipiao_game_platform')
                 ->where('id', $id)
                 ->delete();
             
-            return json(['code' => 0, 'msg' => '删除成功']);
+            return json(['code' => 0, 'msg' => 'XóaThành công']);
         } catch (\Exception $e) {
-            return json(['code' => 1, 'msg' => '删除失败: ' . $e->getMessage()]);
+            return json(['code' => 1, 'msg' => 'XóaThất bại: ' . $e->getMessage()]);
         }
     }
 }

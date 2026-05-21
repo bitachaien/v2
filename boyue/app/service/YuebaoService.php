@@ -64,7 +64,7 @@ class YuebaoService
         } catch (YuebaoException $e) {
             return $e->toResult()->toArray();
         } catch (\Throwable $e) {
-            Log::error('获取余额宝信息失败', [
+            Log::error('Lấy số dư宝信息Thất bại', [
                 'error' => $e->getMessage(),
                 'uid'   => $uid,
             ]);
@@ -98,7 +98,7 @@ class YuebaoService
             return Result::success($list)->toArray();
 
         } catch (\Throwable $e) {
-            Log::error('获取产品列表失败', ['error' => $e->getMessage()]);
+            Log::error('Lấy产品列表Thất bại', ['error' => $e->getMessage()]);
             return Result::serverError()->toArray();
         }
     }
@@ -157,19 +157,19 @@ class YuebaoService
             
             YuebaoCache::refresh($uid);
 
-            Log::info('余额宝转入成功', [
+            Log::info('Số dư宝转入Thành công', [
                 'uid'        => $uid,
                 'order_id'   => $result['order_id'],
                 'product_id' => $productId,
                 'amount'     => $amount,
             ]);
 
-            return Result::success($result, '转入成功')->toArray();
+            return Result::success($result, '转入Thành công')->toArray();
 
         } catch (YuebaoException $e) {
             return $e->toResult()->toArray();
         } catch (\Throwable $e) {
-            Log::error('余额宝转入失败', [
+            Log::error('Số dư宝转入Thất bại', [
                 'error' => $e->getMessage(),
                 'uid'   => $uid,
                 'data'  => $data,
@@ -282,7 +282,7 @@ class YuebaoService
                 'before_yebao'   => $afterYebao - $amount,
                 'after_yebao'    => $afterYebao,
                 'status'         => YuebaoConstant::RECORD_STATUS_SUCCESS,
-                'remark'         => "转入余额宝-{$product->name}",
+                'remark'         => "转入Số dư宝-{$product->name}",
                 'create_time'    => $now,
                 'ip'             => $this->getClientIp(),
             ]);
@@ -292,12 +292,12 @@ class YuebaoService
                 'uid'      => $uid,
                 'username' => $user->username,
                 'type'     => YuebaoConstant::MONEYLOG_TYPE_TRANSFER_IN,
-                'typename' => '余额宝转入',
+                'typename' => 'Số dư宝转入',
                 'trano'    => $orderId,
                 'amount'   => -$amount,
                 'before'   => $user->balance,
                 'after'    => $userAfter->balance,
-                'remark'   => "转入余额宝-{$product->name}",
+                'remark'   => "转入Số dư宝-{$product->name}",
                 'addtime'  => $now,
                 'ip'       => $this->getClientIp(),
             ]);
@@ -349,18 +349,18 @@ class YuebaoService
             
             YuebaoCache::refresh($uid);
 
-            Log::info('余额宝转出成功', [
+            Log::info('Số dư宝转出Thành công', [
                 'uid'      => $uid,
                 'order_id' => $result['order_id'],
                 'amount'   => $amount,
             ]);
 
-            return Result::success($result, '转出成功')->toArray();
+            return Result::success($result, '转出Thành công')->toArray();
 
         } catch (YuebaoException $e) {
             return $e->toResult()->toArray();
         } catch (\Throwable $e) {
-            Log::error('余额宝转出失败', [
+            Log::error('Số dư宝转出Thất bại', [
                 'error' => $e->getMessage(),
                 'uid'   => $uid,
                 'data'  => $data,
@@ -412,7 +412,7 @@ class YuebaoService
                 'before_yebao'   => $stats->current_amount,
                 'after_yebao'    => (float)$stats->current_amount - $amount,
                 'status'         => YuebaoConstant::RECORD_STATUS_SUCCESS,
-                'remark'         => '余额宝转出到主钱包',
+                'remark'         => 'Số dư宝转出到主钱包',
                 'create_time'    => $now,
                 'ip'             => $this->getClientIp(),
             ]);
@@ -422,12 +422,12 @@ class YuebaoService
                 'uid'      => $uid,
                 'username' => $user->username,
                 'type'     => YuebaoConstant::MONEYLOG_TYPE_TRANSFER_OUT,
-                'typename' => '余额宝转出',
+                'typename' => 'Số dư宝转出',
                 'trano'    => $orderId,
                 'amount'   => $amount,
                 'before'   => $user->balance,
                 'after'    => $userAfter->balance,
-                'remark'   => '余额宝转出到主钱包',
+                'remark'   => 'Số dư宝转出到主钱包',
                 'addtime'  => $now,
                 'ip'       => $this->getClientIp(),
             ]);
@@ -515,7 +515,7 @@ class YuebaoService
         } catch (YuebaoException $e) {
             return $e->toResult()->toArray();
         } catch (\Throwable $e) {
-            Log::error('获取交易记录失败', [
+            Log::error('Lấy交易lịch sử thất bại', [
                 'error'  => $e->getMessage(),
                 'uid'    => $uid,
                 'params' => $params,
@@ -606,7 +606,7 @@ class YuebaoService
         } catch (YuebaoException $e) {
             return $e->toResult()->toArray();
         } catch (\Throwable $e) {
-            Log::error('获取资产分析失败', [
+            Log::error('Lấy资产分析Thất bại', [
                 'error' => $e->getMessage(),
                 'uid'   => $uid,
                 'days'  => $days,
@@ -646,7 +646,7 @@ class YuebaoService
         } catch (YuebaoException $e) {
             return $e->toResult()->toArray();
         } catch (\Throwable $e) {
-            Log::error('获取持仓列表失败', [
+            Log::error('Lấy持仓列表Thất bại', [
                 'error'  => $e->getMessage(),
                 'uid'    => $uid,
                 'params' => $params,
@@ -676,12 +676,12 @@ class YuebaoService
         } catch (YuebaoException $e) {
             return $e->toResult()->toArray();
         } catch (\Throwable $e) {
-            Log::error('导出账单失败', [
+            Log::error('导出账单Thất bại', [
                 'error' => $e->getMessage(),
                 'uid'   => $uid,
                 'data'  => $data,
             ]);
-            return Result::fail('导出失败，请稍后重试')->toArray();
+            return Result::fail('导出Thất bại，请稍后重试')->toArray();
         }
     }
 
@@ -721,7 +721,7 @@ class YuebaoService
             return Result::success(self::DEFAULT_CONFIG)->toArray();
 
         } catch (\Throwable $e) {
-            Log::error('获取利息宝配置失败', ['error' => $e->getMessage()]);
+            Log::error('Lấy利息宝cấu hình thất bại', ['error' => $e->getMessage()]);
             return Result::success(self::DEFAULT_CONFIG)->toArray();
         }
     }
@@ -750,11 +750,11 @@ class YuebaoService
 
             Log::info('利息宝配置已更新', ['config' => $config]);
 
-            return Result::success(null, '保存成功')->toArray();
+            return Result::success(null, 'LưuThành công')->toArray();
 
         } catch (\Throwable $e) {
-            Log::error('保存利息宝配置失败', ['error' => $e->getMessage()]);
-            return Result::fail('保存失败')->toArray();
+            Log::error('Lưu利息宝cấu hình thất bại', ['error' => $e->getMessage()]);
+            return Result::fail('LưuThất bại')->toArray();
         }
     }
 
@@ -788,7 +788,7 @@ class YuebaoService
             $member = Db::table(self::TABLE_MEMBER)->where('id', $uid)->first();
             if (!$member) {
                 Db::rollBack();
-                return Result::fail('用户不存在')->toArray();
+                return Result::fail('Người dùng không tồn tại')->toArray();
             }
 
             $beforeBalance = (string)$member->balance;
@@ -856,7 +856,7 @@ class YuebaoService
 
             Db::commit();
 
-            Log::info('用户领取利息宝收益', [
+            Log::info('Người dùng领取利息宝收益', [
                 'uid' => $uid,
                 'amount' => $totalInterest
             ]);
@@ -864,15 +864,15 @@ class YuebaoService
             return Result::success([
                 'amount' => $totalInterest,
                 'balance' => $afterBalance
-            ], '领取成功')->toArray();
+            ], '领取Thành công')->toArray();
 
         } catch (\Throwable $e) {
             Db::rollBack();
-            Log::error('领取收益失败', [
+            Log::error('领取收益Thất bại', [
                 'uid' => $uid,
                 'error' => $e->getMessage()
             ]);
-            return Result::fail('领取失败：' . $e->getMessage())->toArray();
+            return Result::fail('领取Thất bại：' . $e->getMessage())->toArray();
         }
     }
 

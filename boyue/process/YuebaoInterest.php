@@ -17,13 +17,13 @@ class YuebaoInterest
             $this->settleExpiredFixed();
         });
         
-        Log::info('余额宝利息计算定时任务已启动');
+        Log::info('Số dư宝利息计算定时任务已启动');
     }
     
     
     private function calculateDailyInterest()
     {
-        Log::info('开始计算余额宝活期利息');
+        Log::info('开始计算Số dư宝活期利息');
         
         try {
             
@@ -33,7 +33,7 @@ class YuebaoInterest
                 ->first();
             
             if (!$currentProduct) {
-                Log::warning('活期产品配置不存在');
+                Log::warning('活期产品配置không tồn tại');
                 return;
             }
             
@@ -103,7 +103,7 @@ class YuebaoInterest
                         'before_yebao' => $stats->current_amount,
                         'after_yebao' => $stats->current_amount + $interest,
                         'status' => 'success',
-                        'remark' => '活期余额宝-昨日收益',
+                        'remark' => '活期Số dư宝-Hôm qua收益',
                         'create_time' => time(),
                         'ip' => '127.0.0.1',
                     ]);
@@ -115,11 +115,11 @@ class YuebaoInterest
                     
                 } catch (\Exception $e) {
                     Db::rollBack();
-                    Log::error("计算用户{$stats->uid}利息失败: " . $e->getMessage());
+                    Log::error("计算Người dùng{$stats->uid}利息Thất bại: " . $e->getMessage());
                 }
             }
             
-            Log::info("活期利息计算完成，处理 {$processCount} 个用户，总计发放 {$totalInterest} 元");
+            Log::info("活期利息计算完成，处理 {$processCount} 个Người dùng，总计发放 {$totalInterest} 元");
             
         } catch (\Exception $e) {
             Log::error('计算活期利息失败: ' . $e->getMessage());
@@ -209,11 +209,11 @@ class YuebaoInterest
                     
                     $settleCount++;
                     
-                    Log::info("定期持仓 {$holding->order_id} 结算完成，用户 {$holding->uid}，收益 {$actualInterest}");
+                    Log::info("定期持仓 {$holding->order_id} 结算完成，Người dùng {$holding->uid}，收益 {$actualInterest}");
                     
                 } catch (\Exception $e) {
                     Db::rollBack();
-                    Log::error("结算定期持仓{$holding->id}失败: " . $e->getMessage());
+                    Log::error("结算定期持仓{$holding->id}Thất bại: " . $e->getMessage());
                 }
             }
             
@@ -270,7 +270,7 @@ class YuebaoInterest
             }
             
         } catch (\Exception $e) {
-            Log::error("更新用户{$uid}七日年化失败: " . $e->getMessage());
+            Log::error("更新Người dùng{$uid}七日年化Thất bại: " . $e->getMessage());
         }
     }
 }

@@ -34,14 +34,14 @@ class IpLocationService
             return '内网IP';
         }
 
-        // 尝试从缓存获取
+        // 尝试从缓存Lấy
         $cacheKey = 'ip_location:' . $ip;
         $cached = self::getCache($cacheKey);
         if ($cached !== null) {
             return $cached;
         }
 
-        // 调用 API 获取
+        // 调用 API Lấy
         $location = self::fetchFromApi($ip);
         
         // 缓存结果
@@ -53,7 +53,7 @@ class IpLocationService
     }
 
     /**
-     * 从 ipinfo.io API 获取归属地
+     * 从 ipinfo.io API Lấy归属地
      * @param string $ip
      * @return string
      */
@@ -94,7 +94,7 @@ class IpLocationService
 
     /**
      * 格式化归属地信息
-     * @param array $data API 返回数据
+     * @param array $data API 返回dữ liệu
      * @return string
      */
     private static function formatLocation(array $data): string
@@ -182,7 +182,7 @@ class IpLocationService
                 return $value !== false ? $value : null;
             }
         } catch (\Exception $e) {
-            // 忽略缓存错误
+            // 忽略缓存Lỗi
         }
         return null;
     }
@@ -201,7 +201,7 @@ class IpLocationService
                 $redis->setex($key, $ttl, $value);
             }
         } catch (\Exception $e) {
-            // 忽略缓存错误
+            // 忽略缓存Lỗi
         }
     }
 
@@ -234,7 +234,7 @@ class IpLocationService
     }
 
     /**
-     * 批量更新会员归属地（用于修复历史数据）
+     * 批量更新Thành viên归属地（用于修复历史dữ liệu）
      * @param int $limit 每次处理数量
      * @return array 处理结果
      */

@@ -14,13 +14,13 @@ class K3BetValidate
     
     
     protected static $messages = [
-        'lotteryCode.required' => '彩种代码不能为空',
-        'lotteryCode.regex' => '彩种代码格式错误',
-        'issue.required' => '期号不能为空',
-        'issue.regex' => '期号格式错误',
-        'totalAmount.min' => '投注金额最小1元',
-        'totalAmount.max' => '投注金额最大100万',
-        'bets.min' => '至少需要一注投注',
+        'lotteryCode.required' => '彩种代码không được để trống',
+        'lotteryCode.regex' => '彩种代码格式Lỗi',
+        'issue.required' => '期号không được để trống',
+        'issue.regex' => '期号格式Lỗi',
+        'totalAmount.min' => 'Đặt cượcSố tiền最小1元',
+        'totalAmount.max' => 'Đặt cượcSố tiền最大100万',
+        'bets.min' => '至少需要一注Đặt cược',
         'bets.max' => '单次最多100注',
     ];
     
@@ -86,14 +86,14 @@ class K3BetValidate
         
         $amount = $bet['amount'] ?? 0;
         if (!is_numeric($amount) || $amount < 1) {
-            $errors[] = "第{$index}注: 金额最小1元";
+            $errors[] = "第{$index}注: Số tiền最小1元";
         } elseif ($amount > 100000) {
-            $errors[] = "第{$index}注: 单注金额最大10万";
+            $errors[] = "第{$index}注: 单注Số tiền最大10万";
         }
         
         
         if (is_numeric($amount) && floor($amount * 100) != $amount * 100) {
-            $errors[] = "第{$index}注: 金额精度最多2位小数";
+            $errors[] = "第{$index}注: Số tiền精度最多2位小数";
         }
         
         return $errors;

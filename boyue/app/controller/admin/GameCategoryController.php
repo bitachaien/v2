@@ -42,7 +42,7 @@ class GameCategoryController
         } catch (\Exception $e) {
             return json([
                 'code' => 1,
-                'msg' => '获取分类列表失败: ' . $e->getMessage()
+                'msg' => 'Lấy分类列表Thất bại: ' . $e->getMessage()
             ]);
         }
     }
@@ -58,7 +58,7 @@ class GameCategoryController
 
             $category = Db::table('caipiao_game_category')->where('id', $id)->first();
             if (!$category) {
-                return json(['code' => 1, 'msg' => '分类不存在']);
+                return json(['code' => 1, 'msg' => '分类không tồn tại']);
             }
 
             return json([
@@ -69,7 +69,7 @@ class GameCategoryController
         } catch (\Exception $e) {
             return json([
                 'code' => 1,
-                'msg' => '获取详情失败: ' . $e->getMessage()
+                'msg' => 'LấyChi tiếtThất bại: ' . $e->getMessage()
             ]);
         }
     }
@@ -90,7 +90,7 @@ class GameCategoryController
             ];
 
             if (!$data['code'] || !$data['name']) {
-                return json(['code' => 1, 'msg' => '分类代码和名称不能为空']);
+                return json(['code' => 1, 'msg' => '分类代码和名称không được để trống']);
             }
 
             
@@ -100,18 +100,18 @@ class GameCategoryController
                 ->exists();
             
             if ($exists) {
-                return json(['code' => 1, 'msg' => '分类代码已存在']);
+                return json(['code' => 1, 'msg' => '分类代码đã tồn tại']);
             }
 
             if ($id > 0) {
                 
                 Db::table('caipiao_game_category')->where('id', $id)->update($data);
-                $msg = '更新成功';
+                $msg = '更新Thành công';
             } else {
                 
                 $data['created_at'] = time();
                 Db::table('caipiao_game_category')->insert($data);
-                $msg = '添加成功';
+                $msg = 'ThêmThành công';
             }
 
             return json([
@@ -121,7 +121,7 @@ class GameCategoryController
         } catch (\Exception $e) {
             return json([
                 'code' => 1,
-                'msg' => '保存失败: ' . $e->getMessage()
+                'msg' => 'LưuThất bại: ' . $e->getMessage()
             ]);
         }
     }
@@ -146,12 +146,12 @@ class GameCategoryController
 
             return json([
                 'code' => 0,
-                'msg' => '操作成功'
+                'msg' => 'Thao tác thành công'
             ]);
         } catch (\Exception $e) {
             return json([
                 'code' => 1,
-                'msg' => '操作失败: ' . $e->getMessage()
+                'msg' => 'Thao tác thất bại: ' . $e->getMessage()
             ]);
         }
     }
@@ -176,12 +176,12 @@ class GameCategoryController
 
             return json([
                 'code' => 0,
-                'msg' => '操作成功'
+                'msg' => 'Thao tác thành công'
             ]);
         } catch (\Exception $e) {
             return json([
                 'code' => 1,
-                'msg' => '操作失败: ' . $e->getMessage()
+                'msg' => 'Thao tác thất bại: ' . $e->getMessage()
             ]);
         }
     }
@@ -199,12 +199,12 @@ class GameCategoryController
 
             return json([
                 'code' => 0,
-                'msg' => '删除成功'
+                'msg' => 'XóaThành công'
             ]);
         } catch (\Exception $e) {
             return json([
                 'code' => 1,
-                'msg' => '删除失败: ' . $e->getMessage()
+                'msg' => 'XóaThất bại: ' . $e->getMessage()
             ]);
         }
     }

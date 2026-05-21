@@ -54,7 +54,7 @@ class YuebaoCache
         } catch (\Throwable $e) {
             
             self::$enabled = false;
-            Log::warning('Redis连接失败，余额宝缓存已禁用: ' . $e->getMessage());
+            Log::warning('Redis连接Thất bại，Số dư宝缓存已禁用: ' . $e->getMessage());
             return null;
         }
     }
@@ -74,13 +74,13 @@ class YuebaoCache
             $data = $redis->get($key);
 
             if ($data !== null) {
-                Log::debug("余额宝产品缓存命中: {$key}");
+                Log::debug("Số dư宝产品缓存命中: {$key}");
                 return json_decode($data, true);
             }
 
             return null;
         } catch (\Throwable $e) {
-            Log::warning("余额宝产品缓存读取失败: " . $e->getMessage());
+            Log::warning("Số dư宝产品缓存读取Thất bại: " . $e->getMessage());
             return null;
         }
     }
@@ -98,7 +98,7 @@ class YuebaoCache
             $redis->setex($key, $ttl, json_encode($data, JSON_UNESCAPED_UNICODE));
             return true;
         } catch (\Throwable $e) {
-            Log::warning("余额宝产品缓存写入失败: " . $e->getMessage());
+            Log::warning("Số dư宝产品缓存写入Thất bại: " . $e->getMessage());
             return false;
         }
     }
@@ -116,7 +116,7 @@ class YuebaoCache
             $redis->del($key);
             return true;
         } catch (\Throwable $e) {
-            Log::warning("余额宝产品缓存清除失败: " . $e->getMessage());
+            Log::warning("Số dư宝产品缓存清除Thất bại: " . $e->getMessage());
             return false;
         }
     }
@@ -136,13 +136,13 @@ class YuebaoCache
             $data = $redis->get($key);
 
             if ($data !== null) {
-                Log::debug("余额宝用户统计缓存命中: {$key}");
+                Log::debug("Số dư宝Người dùng统计缓存命中: {$key}");
                 return json_decode($data, true);
             }
 
             return null;
         } catch (\Throwable $e) {
-            Log::warning("余额宝用户统计缓存读取失败: " . $e->getMessage());
+            Log::warning("Số dư宝Người dùng统计缓存读取Thất bại: " . $e->getMessage());
             return null;
         }
     }
@@ -160,7 +160,7 @@ class YuebaoCache
             $redis->setex($key, $ttl, json_encode($data, JSON_UNESCAPED_UNICODE));
             return true;
         } catch (\Throwable $e) {
-            Log::warning("余额宝用户统计缓存写入失败: " . $e->getMessage());
+            Log::warning("Số dư宝Người dùng统计缓存写入Thất bại: " . $e->getMessage());
             return false;
         }
     }
@@ -178,7 +178,7 @@ class YuebaoCache
             $redis->del($key);
             return true;
         } catch (\Throwable $e) {
-            Log::warning("余额宝用户统计缓存清除失败: " . $e->getMessage());
+            Log::warning("Số dư宝Người dùng统计缓存清除Thất bại: " . $e->getMessage());
             return false;
         }
     }
@@ -190,10 +190,10 @@ class YuebaoCache
     {
         try {
             self::clearProducts();
-            Log::info("余额宝缓存已清除");
+            Log::info("Số dư宝缓存已清除");
             return true;
         } catch (\Throwable $e) {
-            Log::error("余额宝缓存清除失败: " . $e->getMessage());
+            Log::error("Số dư宝缓存清除Thất bại: " . $e->getMessage());
             return false;
         }
     }
@@ -256,7 +256,7 @@ class YuebaoCache
             $count = (int)$redis->get($key);
 
             if ($count >= $maxCount) {
-                Log::warning("用户 {$uid} {$action} 操作频率超限: {$count}/{$maxCount}");
+                Log::warning("Người dùng {$uid} {$action} 操作频率超限: {$count}/{$maxCount}");
                 return false;
             }
 
@@ -269,7 +269,7 @@ class YuebaoCache
 
             return true;
         } catch (\Throwable $e) {
-            Log::warning("频率限制检查失败: " . $e->getMessage());
+            Log::warning("频率限制检查Thất bại: " . $e->getMessage());
             
             return true;
         }

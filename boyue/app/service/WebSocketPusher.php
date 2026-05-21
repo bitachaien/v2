@@ -61,7 +61,7 @@ class WebSocketPusher
             
             return true;
         } catch (\Exception $e) {
-            Log::error("[WebSocketPusher] Redis 广播失败: " . $e->getMessage(), [
+            Log::error("[WebSocketPusher] Redis 广播Thất bại: " . $e->getMessage(), [
                 'payload' => $payload
             ]);
             self::$redis = null; 

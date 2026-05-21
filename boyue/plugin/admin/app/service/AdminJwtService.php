@@ -26,7 +26,7 @@ class AdminJwtService
             'admin_id' => $adminId,
             'username' => $username,
             'roles' => $roles,
-            'type' => 'admin',  // 区分前台用户
+            'type' => 'admin',  // 区分前台Người dùng
         ];
         
         if (!empty($extra)) {
@@ -106,7 +106,7 @@ class AdminJwtService
         } catch (\UnexpectedValueException $e) {
             return ['valid' => false, 'payload' => null, 'error' => 'Token格式无效'];
         } catch (\Exception $e) {
-            return ['valid' => false, 'payload' => null, 'error' => 'Token验证失败'];
+            return ['valid' => false, 'payload' => null, 'error' => 'Token验证Thất bại'];
         }
     }
     
@@ -131,7 +131,7 @@ class AdminJwtService
             $accessToken = self::generateToken(
                 $decoded->admin_id,
                 $decoded->username,
-                [] // roles 需要重新从数据库获取
+                [] // roles 需要重新从dữ liệu库Lấy
             );
             
             return [

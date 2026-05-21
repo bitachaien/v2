@@ -30,7 +30,7 @@ class BetService
             
             if ($actualBalance < $totalAmount) {
                 Db::rollBack();
-                return ['success' => false, 'error' => '余额不足（并发检查）', 'code' => 1003];
+                return ['success' => false, 'error' => 'Số dư không đủ（并发检查）', 'code' => 1003];
             }
             
             
@@ -50,7 +50,7 @@ class BetService
                 
                 if ($amount < 1) continue;
                 if ($amount > 100000) {
-                    throw new \Exception('单注金额不能超过10万');
+                    throw new \Exception('单注Số tiền不能超过10万');
                 }
                 $amount = round($amount, 2);
                 
@@ -60,7 +60,7 @@ class BetService
                 
                 $play = LotteryRepository::getPlay($actualPlayId);
                 if (!$play || $play->isopen != 1) {
-                    throw new \Exception('玩法不可用: ' . $actualPlayId);
+                    throw new \Exception('玩法không khả dụng: ' . $actualPlayId);
                 }
                 
                 $betTrano = $orderId . sprintf('%02d', $index + 1);
@@ -98,12 +98,12 @@ class BetService
                 'uid' => $userId,
                 'username' => $user->username,
                 'type' => 1,
-                'typename' => '投注',
+                'typename' => 'Đặt cược',
                 'trano' => $orderId,
                 'amount' => -$totalAmount,
                 'before' => $actualBalance,
                 'after' => $actualBalance - $totalAmount,
-                'remark' => "投注-{$caipiao->title}-{$issue}",
+                'remark' => "Đặt cược-{$caipiao->title}-{$issue}",
                 'addtime' => $now,
                 'ip' => $ip
             ]);
@@ -123,7 +123,7 @@ class BetService
             
         } catch (\Exception $e) {
             Db::rollBack();
-            Log::error('投注事务失败: ' . $e->getMessage());
+            Log::error('Đặt cược事务Thất bại: ' . $e->getMessage());
             return ['success' => false, 'error' => $e->getMessage(), 'code' => 9999];
         }
     }
@@ -132,16 +132,16 @@ class BetService
     public static function validateParams(array $params): array
     {
         if (empty($params['lotteryCode'])) {
-            return ['valid' => false, 'error' => '彩种代码不能为空'];
+            return ['valid' => false, 'error' => '彩种代码không được để trống'];
         }
         if (empty($params['issue'])) {
-            return ['valid' => false, 'error' => '期号不能为空'];
+            return ['valid' => false, 'error' => '期号không được để trống'];
         }
         if (empty($params['bets']) || !is_array($params['bets'])) {
-            return ['valid' => false, 'error' => '投注内容不能为空'];
+            return ['valid' => false, 'error' => 'Đặt cược内容không được để trống'];
         }
         if (($params['totalAmount'] ?? 0) <= 0) {
-            return ['valid' => false, 'error' => '投注金额必须大于0'];
+            return ['valid' => false, 'error' => 'Đặt cượcSố tiền必须大于0'];
         }
         if (count($params['bets']) > 100) {
             return ['valid' => false, 'error' => '单次最多100注'];
@@ -156,12 +156,12 @@ class BetService
         $user = LotteryRepository::getUser($userId);
         
         if (!$user) {
-            return ['valid' => false, 'error' => '用户不存在', 'code' => 2001];
+            return ['valid' => false, 'error' => 'Người dùng không tồn tại', 'code' => 2001];
         }
         
         $balance = (float)($user->balance ?? 0);
         if ($balance < $totalAmount) {
-            return ['valid' => false, 'error' => '余额不足', 'code' => 1003];
+            return ['valid' => false, 'error' => 'Số dư không đủ', 'code' => 1003];
         }
         
         return ['valid' => true, 'user' => $user, 'balance' => $balance];
@@ -175,7 +175,7 @@ class BetService
         
         $caipiao = K3Service::getLotteryConfig($lotteryCode);
         if (!$caipiao || $caipiao->isopen != 1) {
-            return ['valid' => false, 'error' => '彩种已关闭', 'code' => 1004];
+            return ['valid' => false, 'error' => '彩种đã đóng', 'code' => 1004];
         }
         
         $now = time();
@@ -199,7 +199,7 @@ class BetService
             ->exists();
         
         if ($exists) {
-            return ['valid' => false, 'error' => '该期已开奖', 'code' => 1002];
+            return ['valid' => false, 'error' => '该期已Mở thưởng', 'code' => 1002];
         }
         
         

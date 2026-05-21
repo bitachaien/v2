@@ -11,7 +11,7 @@ class GameController
 {
     const BYLOT_PLATFORM = [
         'code' => 'BYLOT',
-        'name' => '博悦彩票',
+        'name' => 'Xổ Số Boyue',
         'type' => 'lottery',
         'kind' => 'local',
         'icon' => '/assets/img/provider-boyue.png',
@@ -102,8 +102,8 @@ class GameController
             ]);
             
         } catch (\Exception $e) {
-            Log::error('获取游戏平台列表失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '服务器错误']);
+            Log::error('Lấy danh sách nền tảng trò chơi thất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lỗi máy chủ']);
         }
     }
     
@@ -167,8 +167,8 @@ class GameController
             ]);
             
         } catch (\Exception $e) {
-            Log::error('游戏搜索失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '服务器错误']);
+            Log::error('Trò chơiTìm kiếmThất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lỗi máy chủ']);
         }
     }
     
@@ -193,7 +193,7 @@ class GameController
                     ->first();
                 
                 if (!$platformInfo) {
-                    return json(['code' => 1003, 'message' => '平台不存在']);
+                    return json(['code' => 1003, 'message' => '平台không tồn tại']);
                 }
                 $query->where('platform', $platform);
             }
@@ -241,8 +241,8 @@ class GameController
             ]);
             
         } catch (\Exception $e) {
-            Log::error('获取游戏列表失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '服务器错误']);
+            Log::error('Lấy trò chơi列表Thất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lỗi máy chủ']);
         }
     }
     
@@ -328,13 +328,13 @@ class GameController
             $userId = $request->userId ?? 0;
             
             if (!$userId) {
-                return json(['code' => 401, 'message' => '未登录或Token过期']);
+                return json(['code' => 401, 'message' => '未Đăng nhậphoặcToken过期']);
             }
             
             $user = Db::table('caipiao_member')->where('id', $userId)->first();
             
             if (!$user) {
-                return json(['code' => 401, 'message' => '用户不存在']);
+                return json(['code' => 401, 'message' => 'Người dùng không tồn tại']);
             }
             
             $platform = $request->post('platform', '');
@@ -342,7 +342,7 @@ class GameController
             $device = $request->post('device', 'mobile');
             
             if (empty($platform) || empty($gameId)) {
-                return json(['code' => 1, 'message' => '参数错误']);
+                return json(['code' => 1, 'message' => 'Tham số không hợp lệ']);
             }
             
             if (!in_array($device, ['mobile', 'pc'])) {
@@ -358,11 +358,11 @@ class GameController
                 ->first();
             
             if (!$platformInfo) {
-                return json(['code' => 1003, 'message' => '平台不存在']);
+                return json(['code' => 1003, 'message' => '平台không tồn tại']);
             }
             
             if ($platformInfo->status !== 'online') {
-                return json(['code' => 1002, 'message' => '游戏维护中']);
+                return json(['code' => 1002, 'message' => 'Trò chơi维护中']);
             }
             
             $game = null;
@@ -374,11 +374,11 @@ class GameController
                     ->first();
                 
                 if (!$game) {
-                    return json(['code' => 1004, 'message' => '游戏不存在']);
+                    return json(['code' => 1004, 'message' => 'Trò chơikhông tồn tại']);
                 }
                 
                 if ($game->status !== 'online') {
-                    return json(['code' => 1002, 'message' => '游戏维护中']);
+                    return json(['code' => 1002, 'message' => 'Trò chơi维护中']);
                 }
                 
                 $gameName = $game->name;
@@ -408,8 +408,8 @@ class GameController
             ]);
             
         } catch (\Exception $e) {
-            Log::error('进入游戏失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '服务器错误']);
+            Log::error('进入Trò chơiThất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lỗi máy chủ']);
         }
     }
     
@@ -433,7 +433,7 @@ class GameController
             ->first();
         
         if (!$lottery) {
-            return json(['code' => 1004, 'message' => '彩种不存在']);
+            return json(['code' => 1004, 'message' => '彩种không tồn tại']);
         }
         
         if ($lottery->isopen != 1) {
@@ -463,7 +463,7 @@ class GameController
             $userId = $request->userId ?? 0;
             
             if (!$userId) {
-                return json(['code' => 401, 'message' => '未登录或Token过期']);
+                return json(['code' => 401, 'message' => '未Đăng nhậphoặcToken过期']);
             }
             
             if ($platform === self::BYLOT_PLATFORM['code']) {
@@ -485,7 +485,7 @@ class GameController
                 ->first();
             
             if (!$platformInfo) {
-                return json(['code' => 1003, 'message' => '平台不存在']);
+                return json(['code' => 1003, 'message' => '平台không tồn tại']);
             }
             
             $gameBalance = Db::table('caipiao_game_balance')
@@ -507,8 +507,8 @@ class GameController
             ]);
             
         } catch (\Exception $e) {
-            Log::error('获取游戏余额失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '服务器错误']);
+            Log::error('Lấy trò chơiSố dưThất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lỗi máy chủ']);
         }
     }
     
@@ -518,26 +518,26 @@ class GameController
             $userId = $request->userId ?? 0;
             
             if (!$userId) {
-                return json(['code' => 401, 'message' => '未登录或Token过期']);
+                return json(['code' => 401, 'message' => '未Đăng nhậphoặcToken过期']);
             }
             
             $platform = $request->post('platform', '');
             $amount = $request->post('amount', '');
             
             if (empty($platform) || empty($amount)) {
-                return json(['code' => 1, 'message' => '参数错误']);
+                return json(['code' => 1, 'message' => 'Tham số không hợp lệ']);
             }
             
             if ($platform === self::BYLOT_PLATFORM['code']) {
                 return json([
                     'code' => 1007,
-                    'message' => '本地彩票平台不需要转账，直接使用主账户余额'
+                    'message' => '本地Xổ số平台不需要Chuyển khoản，直接使用主tài khoảnSố dư'
                 ]);
             }
             
             $amount = floatval($amount);
             if ($amount <= 0) {
-                return json(['code' => 1, 'message' => '金额必须大于0']);
+                return json(['code' => 1, 'message' => 'Số tiền必须大于0']);
             }
             
             $platformInfo = Db::table('caipiao_game_platform')
@@ -545,7 +545,7 @@ class GameController
                 ->first();
             
             if (!$platformInfo) {
-                return json(['code' => 1003, 'message' => '平台不存在']);
+                return json(['code' => 1003, 'message' => '平台không tồn tại']);
             }
             
             Db::beginTransaction();
@@ -558,7 +558,7 @@ class GameController
                 
                 if ($member->balance < $amount) {
                     Db::rollBack();
-                    return json(['code' => 1001, 'message' => '余额不足']);
+                    return json(['code' => 1001, 'message' => 'Số dư không đủ']);
                 }
                 
                 $beforeBalance = $member->balance;
@@ -609,7 +609,7 @@ class GameController
                 
                 return json([
                     'code' => 0,
-                    'message' => '转账成功',
+                    'message' => 'Chuyển khoảnThành công',
                     'data' => [
                         'orderNo' => $orderNo,
                         'platform' => $platform,
@@ -626,8 +626,8 @@ class GameController
             }
             
         } catch (\Exception $e) {
-            Log::error('转账到游戏平台失败: ' . $e->getMessage());
-            return json(['code' => 1005, 'message' => '转账失败']);
+            Log::error('Chuyển khoản到nền tảng trò chơiThất bại: ' . $e->getMessage());
+            return json(['code' => 1005, 'message' => 'Chuyển khoảnThất bại']);
         }
     }
     
@@ -637,26 +637,26 @@ class GameController
             $userId = $request->userId ?? 0;
             
             if (!$userId) {
-                return json(['code' => 401, 'message' => '未登录或Token过期']);
+                return json(['code' => 401, 'message' => '未Đăng nhậphoặcToken过期']);
             }
             
             $platform = $request->post('platform', '');
             $amount = $request->post('amount', '');
             
             if (empty($platform) || empty($amount)) {
-                return json(['code' => 1, 'message' => '参数错误']);
+                return json(['code' => 1, 'message' => 'Tham số không hợp lệ']);
             }
             
             if ($platform === self::BYLOT_PLATFORM['code']) {
                 return json([
                     'code' => 1007,
-                    'message' => '本地彩票平台不需要转账，直接使用主账户余额'
+                    'message' => '本地Xổ số平台不需要Chuyển khoản，直接使用主tài khoảnSố dư'
                 ]);
             }
             
             $amount = floatval($amount);
             if ($amount <= 0) {
-                return json(['code' => 1, 'message' => '金额必须大于0']);
+                return json(['code' => 1, 'message' => 'Số tiền必须大于0']);
             }
             
             $platformInfo = Db::table('caipiao_game_platform')
@@ -664,7 +664,7 @@ class GameController
                 ->first();
             
             if (!$platformInfo) {
-                return json(['code' => 1003, 'message' => '平台不存在']);
+                return json(['code' => 1003, 'message' => '平台không tồn tại']);
             }
             
             Db::beginTransaction();
@@ -678,7 +678,7 @@ class GameController
                 
                 if (!$gameBalance || $gameBalance->balance < $amount) {
                     Db::rollBack();
-                    return json(['code' => 1001, 'message' => '游戏余额不足']);
+                    return json(['code' => 1001, 'message' => 'Trò chơiSố dư không đủ']);
                 }
                 
                 $newGameBalance = $gameBalance->balance - $amount;
@@ -719,7 +719,7 @@ class GameController
                 
                 return json([
                     'code' => 0,
-                    'message' => '转账成功',
+                    'message' => 'Chuyển khoảnThành công',
                     'data' => [
                         'orderNo' => $orderNo,
                         'platform' => $platform,
@@ -736,8 +736,8 @@ class GameController
             }
             
         } catch (\Exception $e) {
-            Log::error('从游戏平台转出失败: ' . $e->getMessage());
-            return json(['code' => 1005, 'message' => '转账失败']);
+            Log::error('从nền tảng trò chơi转出Thất bại: ' . $e->getMessage());
+            return json(['code' => 1005, 'message' => 'Chuyển khoảnThất bại']);
         }
     }
     
@@ -747,7 +747,7 @@ class GameController
             $userId = $request->userId ?? 0;
             
             if (!$userId) {
-                return json(['code' => 401, 'message' => '未登录或Token过期']);
+                return json(['code' => 401, 'message' => '未Đăng nhậphoặcToken过期']);
             }
             
             $gameBalances = Db::table('caipiao_game_balance')
@@ -758,7 +758,7 @@ class GameController
             if ($gameBalances->isEmpty()) {
                 return json([
                     'code' => 0,
-                    'message' => '没有可回收的余额',
+                    'message' => '没有可回收的Số dư',
                     'data' => [
                         'totalAmount' => '0.00',
                         'details' => []
@@ -815,7 +815,7 @@ class GameController
                 
                 return json([
                     'code' => 0,
-                    'message' => '回收成功',
+                    'message' => '回收Thành công',
                     'data' => [
                         'totalAmount' => number_format($totalAmount, 2, '.', ''),
                         'details' => $details
@@ -828,8 +828,8 @@ class GameController
             }
             
         } catch (\Exception $e) {
-            Log::error('一键回收失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '服务器错误']);
+            Log::error('一键回收Thất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lỗi máy chủ']);
         }
     }
     
@@ -839,7 +839,7 @@ class GameController
             $userId = $request->userId ?? 0;
             
             if (!$userId) {
-                return json(['code' => 401, 'message' => '未登录或Token过期']);
+                return json(['code' => 401, 'message' => '未Đăng nhậphoặcToken过期']);
             }
             
             $platform = $request->get('platform', '');
@@ -933,8 +933,8 @@ class GameController
             ]);
             
         } catch (\Exception $e) {
-            Log::error('获取游戏记录失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '服务器错误']);
+            Log::error('Lấy trò chơilịch sử thất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lỗi máy chủ']);
         }
     }
     
@@ -982,8 +982,8 @@ class GameController
             ]);
             
         } catch (\Exception $e) {
-            Log::error('获取热门游戏失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '服务器错误']);
+            Log::error('Lấy热门Trò chơiThất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lỗi máy chủ']);
         }
     }
     
@@ -996,7 +996,7 @@ class GameController
             $type = $request->post('type', '');
             
             if (empty($platform) || empty($gameId)) {
-                return json(['code' => 400, 'message' => '参数错误']);
+                return json(['code' => 400, 'message' => 'Tham số không hợp lệ']);
             }
             
             $exists = Db::table('caipiao_game_favorite')
@@ -1030,11 +1030,11 @@ class GameController
                 'created_at' => time()
             ]);
             
-            return json(['code' => 0, 'message' => '收藏成功']);
+            return json(['code' => 0, 'message' => '收藏Thành công']);
             
         } catch (\Exception $e) {
-            Log::error('收藏游戏失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '服务器错误']);
+            Log::error('收藏Trò chơiThất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lỗi máy chủ']);
         }
     }
     
@@ -1046,7 +1046,7 @@ class GameController
             $gameId = $request->post('gameId', '');
             
             if (empty($platform) || empty($gameId)) {
-                return json(['code' => 400, 'message' => '参数错误']);
+                return json(['code' => 400, 'message' => 'Tham số không hợp lệ']);
             }
             
             Db::table('caipiao_game_favorite')
@@ -1055,11 +1055,11 @@ class GameController
                 ->where('game_id', $gameId)
                 ->delete();
             
-            return json(['code' => 0, 'message' => '取消收藏成功']);
+            return json(['code' => 0, 'message' => 'Hủy收藏Thành công']);
             
         } catch (\Exception $e) {
-            Log::error('取消收藏失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '服务器错误']);
+            Log::error('Hủy收藏Thất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lỗi máy chủ']);
         }
     }
     
@@ -1111,8 +1111,8 @@ class GameController
             ]);
             
         } catch (\Exception $e) {
-            Log::error('获取收藏列表失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '服务器错误']);
+            Log::error('Lấy收藏列表Thất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lỗi máy chủ']);
         }
     }
     
@@ -1125,7 +1125,7 @@ class GameController
             $type = $request->post('type', '');
             
             if (empty($platform) || empty($gameId)) {
-                return json(['code' => 400, 'message' => '参数错误']);
+                return json(['code' => 400, 'message' => 'Tham số không hợp lệ']);
             }
             
             $game = Db::table('caipiao_game')
@@ -1186,8 +1186,8 @@ class GameController
             return json(['code' => 0, 'message' => 'success']);
             
         } catch (\Exception $e) {
-            Log::error('记录最近游戏失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '服务器错误']);
+            Log::error('lịch sử最近Trò chơiThất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lỗi máy chủ']);
         }
     }
     
@@ -1242,8 +1242,8 @@ class GameController
             ]);
             
         } catch (\Exception $e) {
-            Log::error('获取最近游戏失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '服务器错误']);
+            Log::error('Lấy最近Trò chơiThất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lỗi máy chủ']);
         }
     }
     
@@ -1262,26 +1262,26 @@ class GameController
         ];
         
         $displayNameMap = [
-            'hot' => '热门游戏',
-            'slot' => '电子游戏',
-            'live' => '真人视讯',
-            'fish' => '捕鱼游戏',
-            'chess' => '棋牌游戏',
-            'lottery' => '彩票游戏',
-            'esport' => '电子竞技',
-            'sport' => '体育竞技',
-            'blockchain' => '区块链游戏'
+            'hot' => '热门Trò chơi',
+            'slot' => 'Điện tửTrò chơi',
+            'live' => 'Live Casino视讯',
+            'fish' => 'Bắn cáTrò chơi',
+            'chess' => 'BàiTrò chơi',
+            'lottery' => 'Xổ sốTrò chơi',
+            'esport' => 'Điện tử竞技',
+            'sport' => 'Thể thao竞技',
+            'blockchain' => '区块链Trò chơi'
         ];
         
         try {
             $defaultCategories = [
-                ['id' => 0, 'code' => 'hot', 'name' => '热门', 'displayName' => '热门游戏', 'iconImg' => $iconImgMap['hot'], 'path' => '', 'sort' => 0],
-                ['id' => 1, 'code' => 'slot', 'name' => '电子', 'displayName' => '电子游戏', 'iconImg' => $iconImgMap['slot'], 'path' => '/game/slot', 'sort' => 1],
-                ['id' => 2, 'code' => 'live', 'name' => '真人', 'displayName' => '真人视讯', 'iconImg' => $iconImgMap['live'], 'path' => '/game/live', 'sort' => 2],
-                ['id' => 3, 'code' => 'fish', 'name' => '捕鱼', 'displayName' => '捕鱼游戏', 'iconImg' => $iconImgMap['fish'], 'path' => '/game/fish', 'sort' => 3],
-                ['id' => 4, 'code' => 'chess', 'name' => '棋牌', 'displayName' => '棋牌游戏', 'iconImg' => $iconImgMap['chess'], 'path' => '/game/chess', 'sort' => 4],
-                ['id' => 5, 'code' => 'lottery', 'name' => '彩票', 'displayName' => '彩票游戏', 'iconImg' => $iconImgMap['lottery'], 'path' => '/game/lottery', 'sort' => 5],
-                ['id' => 6, 'code' => 'blockchain', 'name' => '区块链', 'displayName' => '区块链游戏', 'iconImg' => $iconImgMap['blockchain'], 'path' => '/game/blockchain', 'sort' => 7]
+                ['id' => 0, 'code' => 'hot', 'name' => '热门', 'displayName' => '热门Trò chơi', 'iconImg' => $iconImgMap['hot'], 'path' => '', 'sort' => 0],
+                ['id' => 1, 'code' => 'slot', 'name' => 'Điện tử', 'displayName' => 'Điện tửTrò chơi', 'iconImg' => $iconImgMap['slot'], 'path' => '/game/slot', 'sort' => 1],
+                ['id' => 2, 'code' => 'live', 'name' => 'Live Casino', 'displayName' => 'Live Casino视讯', 'iconImg' => $iconImgMap['live'], 'path' => '/game/live', 'sort' => 2],
+                ['id' => 3, 'code' => 'fish', 'name' => 'Bắn cá', 'displayName' => 'Bắn cáTrò chơi', 'iconImg' => $iconImgMap['fish'], 'path' => '/game/fish', 'sort' => 3],
+                ['id' => 4, 'code' => 'chess', 'name' => 'Bài', 'displayName' => 'BàiTrò chơi', 'iconImg' => $iconImgMap['chess'], 'path' => '/game/chess', 'sort' => 4],
+                ['id' => 5, 'code' => 'lottery', 'name' => 'Xổ số', 'displayName' => 'Xổ sốTrò chơi', 'iconImg' => $iconImgMap['lottery'], 'path' => '/game/lottery', 'sort' => 5],
+                ['id' => 6, 'code' => 'blockchain', 'name' => '区块链', 'displayName' => '区块链Trò chơi', 'iconImg' => $iconImgMap['blockchain'], 'path' => '/game/blockchain', 'sort' => 7]
             ];
             
             
@@ -1309,7 +1309,7 @@ class GameController
                         'id' => 0,
                         'code' => 'hot',
                         'name' => '热门',
-                        'displayName' => '热门游戏',
+                        'displayName' => '热门Trò chơi',
                         'iconImg' => $iconImgMap['hot'],
                         'path' => '',
                         'sort' => 0
@@ -1325,7 +1325,7 @@ class GameController
                         'id' => $cat->id,
                         'code' => $code,
                         'name' => $cat->name,
-                        'displayName' => $displayNameMap[$code] ?? $cat->name . '游戏',
+                        'displayName' => $displayNameMap[$code] ?? $cat->name . 'Trò chơi',
                         'iconImg' => $iconImg,
                         'path' => $cat->path ?? '/game/' . $code,
                         'sort' => $cat->sort
@@ -1344,19 +1344,19 @@ class GameController
             ]);
             
         } catch (\Exception $e) {
-            Log::error('获取游戏分类失败: ' . $e->getMessage());
+            Log::error('Lấy trò chơi分类Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 0,
                 'message' => 'success',
                 'data' => [
                     'list' => [
-                        ['id' => 0, 'code' => 'hot', 'name' => '热门', 'displayName' => '热门游戏', 'iconImg' => '/assets/img/icon_dtfl_rm_1.avif', 'path' => '', 'sort' => 0],
-                        ['id' => 1, 'code' => 'slot', 'name' => '电子', 'displayName' => '电子游戏', 'iconImg' => '/assets/img/icon_dtfl_dz_1.avif', 'path' => '/game/slot', 'sort' => 1],
-                        ['id' => 2, 'code' => 'live', 'name' => '真人', 'displayName' => '真人视讯', 'iconImg' => '/assets/img/icon_dtfl_zr_1.avif', 'path' => '/game/live', 'sort' => 2],
-                        ['id' => 3, 'code' => 'fish', 'name' => '捕鱼', 'displayName' => '捕鱼游戏', 'iconImg' => '/assets/img/icon_dtfl_by_1.avif', 'path' => '/game/fish', 'sort' => 3],
-                        ['id' => 4, 'code' => 'chess', 'name' => '棋牌', 'displayName' => '棋牌游戏', 'iconImg' => '/assets/img/icon_dtfl_qp_1.avif', 'path' => '/game/chess', 'sort' => 4],
-                        ['id' => 5, 'code' => 'lottery', 'name' => '彩票', 'displayName' => '彩票游戏', 'iconImg' => '/assets/img/icon_dtfl_cp_1.avif', 'path' => '/game/lottery', 'sort' => 5],
-                        ['id' => 6, 'code' => 'blockchain', 'name' => '区块链', 'displayName' => '区块链游戏', 'iconImg' => '/assets/img/icon_dtfl_qkl_1.avif', 'path' => '/game/blockchain', 'sort' => 7]
+                        ['id' => 0, 'code' => 'hot', 'name' => '热门', 'displayName' => '热门Trò chơi', 'iconImg' => '/assets/img/icon_dtfl_rm_1.avif', 'path' => '', 'sort' => 0],
+                        ['id' => 1, 'code' => 'slot', 'name' => 'Điện tử', 'displayName' => 'Điện tửTrò chơi', 'iconImg' => '/assets/img/icon_dtfl_dz_1.avif', 'path' => '/game/slot', 'sort' => 1],
+                        ['id' => 2, 'code' => 'live', 'name' => 'Live Casino', 'displayName' => 'Live Casino视讯', 'iconImg' => '/assets/img/icon_dtfl_zr_1.avif', 'path' => '/game/live', 'sort' => 2],
+                        ['id' => 3, 'code' => 'fish', 'name' => 'Bắn cá', 'displayName' => 'Bắn cáTrò chơi', 'iconImg' => '/assets/img/icon_dtfl_by_1.avif', 'path' => '/game/fish', 'sort' => 3],
+                        ['id' => 4, 'code' => 'chess', 'name' => 'Bài', 'displayName' => 'BàiTrò chơi', 'iconImg' => '/assets/img/icon_dtfl_qp_1.avif', 'path' => '/game/chess', 'sort' => 4],
+                        ['id' => 5, 'code' => 'lottery', 'name' => 'Xổ số', 'displayName' => 'Xổ sốTrò chơi', 'iconImg' => '/assets/img/icon_dtfl_cp_1.avif', 'path' => '/game/lottery', 'sort' => 5],
+                        ['id' => 6, 'code' => 'blockchain', 'name' => '区块链', 'displayName' => '区块链Trò chơi', 'iconImg' => '/assets/img/icon_dtfl_qkl_1.avif', 'path' => '/game/blockchain', 'sort' => 7]
                     ]
                 ]
             ]);
@@ -1370,7 +1370,7 @@ class GameController
             $user = Db::table('caipiao_member')->where('id', $userId)->first();
             
             if (!$user) {
-                return json(['code' => 401, 'message' => '请先登录']);
+                return json(['code' => 401, 'message' => 'Vui lòng đăng nhập']);
             }
             
             $platforms = Db::table('caipiao_game_platform')
@@ -1407,7 +1407,7 @@ class GameController
             ]);
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '服务器错误']);
+            return json(['code' => 500, 'message' => 'Lỗi máy chủ']);
         }
     }
     
@@ -1418,7 +1418,7 @@ class GameController
             $user = Db::table('caipiao_member')->where('id', $userId)->first();
             
             if (!$user) {
-                return json(['code' => 401, 'message' => '请先登录']);
+                return json(['code' => 401, 'message' => 'Vui lòng đăng nhập']);
             }
             
             $enteredPlatforms = Db::table('caipiao_game_recent')
@@ -1501,7 +1501,7 @@ class GameController
             
             return json([
                 'code' => 0,
-                'message' => '刷新成功',
+                'message' => 'Làm mớiThành công',
                 'data' => [
                     'mainBalance' => $user->balance,
                     'platforms' => $platformBalances
@@ -1509,7 +1509,7 @@ class GameController
             ]);
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '服务器错误']);
+            return json(['code' => 500, 'message' => 'Lỗi máy chủ']);
         }
     }
     
@@ -1560,7 +1560,7 @@ class GameController
             $user = Db::table('caipiao_member')->where('id', $userId)->first();
             
             if (!$user) {
-                return json(['code' => 401, 'message' => '请先登录']);
+                return json(['code' => 401, 'message' => 'Vui lòng đăng nhập']);
             }
             
             $ngConfig = Db::table('caipiao_game_platform')
@@ -1606,7 +1606,7 @@ class GameController
                 $totalAmount = floatval($data['data']['balanceAll'] ?? 0);
                 
                 if ($totalAmount < 1) {
-                    return json(['code' => 1, 'message' => '没有可找回的余额']);
+                    return json(['code' => 1, 'message' => '没有可找回的Số dư']);
                 }
                 
                 Db::beginTransaction();
@@ -1639,7 +1639,7 @@ class GameController
                     Db::commit();
                 } catch (\Exception $e) {
                     Db::rollBack();
-                    return json(['code' => 500, 'message' => '系统错误']);
+                    return json(['code' => 500, 'message' => 'Lỗi hệ thống']);
                 }
                 
                 return json([
@@ -1650,12 +1650,12 @@ class GameController
             } else {
                 return json([
                     'code' => 1,
-                    'message' => $data['msg'] ?? '找回失败'
+                    'message' => $data['msg'] ?? '找回Thất bại'
                 ]);
             }
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '服务器错误']);
+            return json(['code' => 500, 'message' => 'Lỗi máy chủ']);
         }
     }
     
@@ -1666,13 +1666,13 @@ class GameController
             $user = Db::table('caipiao_member')->where('id', $userId)->first();
             
             if (!$user) {
-                return json(['code' => 401, 'message' => '请先登录']);
+                return json(['code' => 401, 'message' => 'Vui lòng đăng nhập']);
             }
             
             $platform = $request->post('platform', '');
             
             if (empty($platform)) {
-                return json(['code' => 1, 'message' => '请选择平台']);
+                return json(['code' => 1, 'message' => 'Vui lòng chọn平台']);
             }
             
             $ngConfig = Db::table('caipiao_game_platform')
@@ -1687,7 +1687,7 @@ class GameController
             $amount = floor($balance);
             
             if ($amount < 1) {
-                return json(['code' => 1, 'message' => '余额不足1元']);
+                return json(['code' => 1, 'message' => 'Số dư không đủ1元']);
             }
             
             $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
@@ -1758,7 +1758,7 @@ class GameController
                     Db::commit();
                 } catch (\Exception $e) {
                     Db::rollBack();
-                    return json(['code' => 500, 'message' => '系统错误']);
+                    return json(['code' => 500, 'message' => 'Lỗi hệ thống']);
                 }
                 
                 return json([
@@ -1769,12 +1769,12 @@ class GameController
             } else {
                 return json([
                     'code' => 1,
-                    'message' => $data['msg'] ?? '找回失败'
+                    'message' => $data['msg'] ?? '找回Thất bại'
                 ]);
             }
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '服务器错误']);
+            return json(['code' => 500, 'message' => 'Lỗi máy chủ']);
         }
     }
 }

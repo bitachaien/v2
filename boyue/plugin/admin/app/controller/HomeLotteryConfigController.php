@@ -21,7 +21,7 @@ class HomeLotteryConfigController extends Base
     public function lotteries(Request $request)
     {
         try {
-            // 获取所有彩种
+            // Lấy所有彩种
             $lotteries = Db::table('caipiao_caipiao')
                 ->select('id', 'name', 'title', 'typeid', 'isopen', 'allsort')
                 ->orderBy('allsort', 'asc')
@@ -42,7 +42,7 @@ class HomeLotteryConfigController extends Base
 
             return $this->json(0, 'ok', ['list' => $list]);
         } catch (\Exception $e) {
-            return $this->json(1, '获取彩种列表失败: ' . $e->getMessage());
+            return $this->json(1, 'Lấy彩种列表Thất bại: ' . $e->getMessage());
         }
     }
 
@@ -52,7 +52,7 @@ class HomeLotteryConfigController extends Base
     public function getData(Request $request)
     {
         try {
-            // 获取配置
+            // Lấy配置
             $config = Db::table('caipiao_setting')
                 ->where('name', 'home_lottery_config')
                 ->first();
@@ -69,7 +69,7 @@ class HomeLotteryConfigController extends Base
                 }
             }
 
-            // 获取所有彩种
+            // Lấy所有彩种
             $lotteries = Db::table('caipiao_caipiao')
                 ->select('id', 'name', 'title', 'typeid', 'isopen', 'allsort')
                 ->orderBy('allsort', 'asc')
@@ -95,7 +95,7 @@ class HomeLotteryConfigController extends Base
                 'lotteries' => $lotteryList
             ]);
         } catch (\Exception $e) {
-            return $this->json(1, '获取配置失败: ' . $e->getMessage());
+            return $this->json(1, 'Lấycấu hình thất bại: ' . $e->getMessage());
         }
     }
 
@@ -105,7 +105,7 @@ class HomeLotteryConfigController extends Base
     public function save(Request $request)
     {
         try {
-            // 尝试从 JSON body 获取数据
+            // 尝试从 JSON body Lấy dữ liệu
             $data = $request->all();
             \support\Log::info('Home lottery config save request: ' . json_encode($data));
             
@@ -149,9 +149,9 @@ class HomeLotteryConfigController extends Base
                 ]);
             }
 
-            return $this->json(0, '保存成功');
+            return $this->json(0, 'LưuThành công');
         } catch (\Exception $e) {
-            return $this->json(1, '保存失败: ' . $e->getMessage());
+            return $this->json(1, 'LưuThất bại: ' . $e->getMessage());
         }
     }
 
@@ -164,7 +164,7 @@ class HomeLotteryConfigController extends Base
             $sortData = $request->post('sort_data', []);
 
             if (!is_array($sortData) || empty($sortData)) {
-                return $this->json(1, '排序数据为空');
+                return $this->json(1, '排序dữ liệu为空');
             }
 
             foreach ($sortData as $item) {
@@ -175,9 +175,9 @@ class HomeLotteryConfigController extends Base
                 }
             }
 
-            return $this->json(0, '排序保存成功');
+            return $this->json(0, '排序LưuThành công');
         } catch (\Exception $e) {
-            return $this->json(1, '排序保存失败: ' . $e->getMessage());
+            return $this->json(1, '排序LưuThất bại: ' . $e->getMessage());
         }
     }
 }

@@ -91,7 +91,7 @@ class NoticeController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'total' => $total,
                     'page' => (int)$page,
@@ -102,10 +102,10 @@ class NoticeController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取公告列表失败: ' . $e->getMessage());
+            \support\Log::error('LấyCông bố列表Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -120,7 +120,7 @@ class NoticeController
             if (empty($id)) {
                 return json([
                     'code' => 400,
-                    'message' => '参数错误',
+                    'message' => 'Tham số không hợp lệ',
                     'data' => null
                 ]);
             }
@@ -132,7 +132,7 @@ class NoticeController
             if (!$notice) {
                 return json([
                     'code' => 404,
-                    'message' => '公告不存在',
+                    'message' => 'Công bốkhông tồn tại',
                     'data' => null
                 ]);
             }
@@ -169,7 +169,7 @@ class NoticeController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'id' => $notice->id,
                     'title' => $notice->title ?? '',
@@ -185,10 +185,10 @@ class NoticeController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取公告详情失败: ' . $e->getMessage());
+            \support\Log::error('LấyCông bốChi tiếtThất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -202,7 +202,7 @@ class NoticeController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -220,7 +220,7 @@ class NoticeController
             if (empty($ids) || !is_array($ids)) {
                 return json([
                     'code' => 400,
-                    'message' => '参数错误',
+                    'message' => 'Tham số không hợp lệ',
                     'data' => null
                 ]);
             }
@@ -244,15 +244,15 @@ class NoticeController
             
             return json([
                 'code' => 0,
-                'message' => '标记成功',
+                'message' => '标记Thành công',
                 'data' => null
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('标记已读失败: ' . $e->getMessage());
+            \support\Log::error('标记已读Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '操作失败：' . $e->getMessage(),
+                'message' => 'Thao tác thất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -266,7 +266,7 @@ class NoticeController
         if (!$userId) {
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'unreadCount' => 0
                 ]
@@ -283,17 +283,17 @@ class NoticeController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'unreadCount' => $unreadCount
                 ]
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取未读数量失败: ' . $e->getMessage());
+            \support\Log::error('Lấy未读数量Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }

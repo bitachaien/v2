@@ -49,7 +49,7 @@ class CollectorController
                 if (!isset($this->lotteryApis[$name])) {
                     return json([
                         'code' => 400,
-                        'message' => '彩种不存在',
+                        'message' => '彩种không tồn tại',
                         'data' => null
                     ]);
                 }
@@ -73,10 +73,10 @@ class CollectorController
             }
             
         } catch (\Exception $e) {
-            Log::error('手动触发采集失败: ' . $e->getMessage());
+            Log::error('手动触发采集Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '采集失败: ' . $e->getMessage(),
+                'message' => '采集Thất bại: ' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -122,10 +122,10 @@ class CollectorController
             ]);
             
         } catch (\Exception $e) {
-            Log::error('获取采集状态失败: ' . $e->getMessage());
+            Log::error('Lấy采集状态Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取状态失败',
+                'message' => 'Lấy状态Thất bại',
                 'data' => null
             ]);
         }
@@ -157,7 +157,7 @@ class CollectorController
         $apiPath = $this->lotteryApis[$name] ?? null;
         
         if (!$apiPath) {
-            return ['success' => false, 'message' => '彩种不存在', 'new_count' => 0];
+            return ['success' => false, 'message' => '彩种không tồn tại', 'new_count' => 0];
         }
         
         
@@ -166,7 +166,7 @@ class CollectorController
             ->first();
         
         if (!$lottery) {
-            return ['success' => false, 'message' => '彩种不存在', 'new_count' => 0];
+            return ['success' => false, 'message' => '彩种không tồn tại', 'new_count' => 0];
         }
         
         $url = $this->apiBaseUrl . $apiPath;
@@ -175,14 +175,14 @@ class CollectorController
         $response = $this->httpGet($url);
         
         if (!$response) {
-            return ['success' => false, 'message' => 'HTTP请求失败', 'new_count' => 0];
+            return ['success' => false, 'message' => 'HTTPYêu cầu thất bại', 'new_count' => 0];
         }
         
         
         $data = json_decode($response, true);
         
         if (!$data || !isset($data[0])) {
-            return ['success' => false, 'message' => '数据格式错误', 'new_count' => 0];
+            return ['success' => false, 'message' => 'dữ liệu格式Lỗi', 'new_count' => 0];
         }
         
         
@@ -191,7 +191,7 @@ class CollectorController
         $opendate = $data[0]['opendate'] ?? '';
         
         if (!$expect || !$opencode) {
-            return ['success' => false, 'message' => '期号或开奖号码为空', 'new_count' => 0];
+            return ['success' => false, 'message' => '期号hoặcMở thưởng号码为空', 'new_count' => 0];
         }
         
         
@@ -206,7 +206,7 @@ class CollectorController
         if ($exists) {
             return [
                 'success' => true,
-                'message' => '已存在',
+                'message' => 'đã tồn tại',
                 'new_count' => 0,
                 'expect' => $expect,
                 'opencode' => $opencode
@@ -230,7 +230,7 @@ class CollectorController
             
             return [
                 'success' => true,
-                'message' => '采集成功',
+                'message' => '采集Thành công',
                 'new_count' => 1,
                 'expect' => $expect,
                 'opencode' => $opencode
@@ -239,7 +239,7 @@ class CollectorController
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => '数据库插入失败: ' . $e->getMessage(),
+                'message' => 'dữ liệu库插入Thất bại: ' . $e->getMessage(),
                 'new_count' => 0
             ];
         }
@@ -261,7 +261,7 @@ class CollectorController
         curl_close($ch);
         
         if ($error) {
-            Log::error("HTTP请求失败: {$url}, 错误: {$error}");
+            Log::error("HTTPYêu cầu thất bại: {$url}, Lỗi: {$error}");
             return false;
         }
         

@@ -31,7 +31,7 @@ class Auth
     }
 
     /**
-     * 获取权限范围内的所有管理员id
+     * Lấy权限范围内的所有管理员id
      * @param bool $with_self
      * @return array
      * @throws \Exception

@@ -27,7 +27,7 @@ class AdminLogMiddleware implements MiddlewareInterface
     ];
 
     /**
-     * 不需要记录的路径
+     * 不需要lịch sử的路径
      */
     protected $excludePaths = [
         '/app/admin/api/admin/list',
@@ -44,7 +44,7 @@ class AdminLogMiddleware implements MiddlewareInterface
     {
         $response = $handler($request);
         
-        // 只记录写操作
+        // 只lịch sử写操作
         $method = $request->method();
         if (!in_array($method, ['POST', 'PUT', 'DELETE'])) {
             return $response;
@@ -59,7 +59,7 @@ class AdminLogMiddleware implements MiddlewareInterface
             }
         }
         
-        // 检查是否需要记录
+        // 检查是否需要lịch sử
         $shouldLog = false;
         foreach ($this->logPaths as $logPath) {
             if (strpos($path, $logPath) === 0) {
@@ -72,18 +72,18 @@ class AdminLogMiddleware implements MiddlewareInterface
             return $response;
         }
 
-        // 获取操作类型和描述
+        // Lấy操作类型和描述
         $type = AdminLogService::getTypeByPath($path, $method);
         $info = $this->getInfoFromResponse($response, $path);
         
-        // 异步记录日志（不阻塞响应）
+        // 异步lịch sử日志（不阻塞响应）
         AdminLogService::log($type, $info, $request);
         
         return $response;
     }
 
     /**
-     * 从响应中获取操作描述
+     * 从响应中Lấy操作描述
      */
     protected function getInfoFromResponse(Response $response, string $path): string
     {
@@ -104,26 +104,26 @@ class AdminLogMiddleware implements MiddlewareInterface
     }
 
     /**
-     * 根据路径获取默认描述
+     * 根据路径Lấy默认描述
      */
     protected function getDefaultInfo(string $path): string
     {
         $pathInfo = [
-            'admin/add' => '添加管理员',
+            'admin/add' => 'Thêm管理员',
             'admin/edit' => '编辑管理员',
-            'admin/delete' => '删除管理员',
+            'admin/delete' => 'Xóa管理员',
             'admin/status' => '更新管理员状态',
-            'role-add' => '添加角色',
+            'role-add' => 'Thêm角色',
             'role-edit' => '编辑角色',
-            'role-delete' => '删除角色',
+            'role-delete' => 'Xóa角色',
             'role-rules' => '更新角色权限',
-            'banner-add' => '添加轮播图',
+            'banner-add' => 'Thêm轮播图',
             'banner-edit' => '编辑轮播图',
-            'banner-delete' => '删除轮播图',
-            'lottery/save' => '保存彩种',
-            'lottery/delete' => '删除彩种',
-            'login' => '登录系统',
-            'logout' => '退出系统',
+            'banner-delete' => 'Xóa轮播图',
+            'lottery/save' => 'Lưu彩种',
+            'lottery/delete' => 'Xóa彩种',
+            'login' => 'Đăng nhập系统',
+            'logout' => 'Đăng xuất系统',
         ];
 
         foreach ($pathInfo as $key => $info) {

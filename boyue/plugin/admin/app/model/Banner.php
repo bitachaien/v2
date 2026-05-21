@@ -45,7 +45,7 @@ class Banner extends Base
     protected $primaryKey = 'id';
 
     /**
-     * 是否自动维护时间戳
+     * 是否自动维护Thời gian戳
      *
      * @var bool
      */
@@ -87,7 +87,7 @@ class Banner extends Base
     ];
 
     /**
-     * 获取平台类型文本
+     * Lấy平台类型文本
      *
      * @return string
      */
@@ -97,7 +97,7 @@ class Banner extends Base
     }
 
     /**
-     * 获取状态文本
+     * Lấy状态文本
      *
      * @return string
      */
@@ -107,7 +107,7 @@ class Banner extends Base
     }
 
     /**
-     * 获取有效期文本
+     * Lấy有效期文本
      *
      * @return string
      */
@@ -133,12 +133,12 @@ class Banner extends Base
             return false;
         }
 
-        // 检查开始时间
+        // 检查开始Thời gian
         if (!empty($this->start_time) && $this->start_time > $now) {
             return false;
         }
 
-        // 检查结束时间
+        // 检查结束Thời gian
         if (!empty($this->end_time) && $this->end_time < $now) {
             return false;
         }
@@ -158,9 +158,9 @@ class Banner extends Base
     }
 
     /**
-     * 按平台类型查询
+     * 按平台类型Tra cứu
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query    查询构造器
+     * @param \Illuminate\Database\Eloquent\Builder $query    Tra cứu构造器
      * @param int                                    $platform 平台类型
      * @return \Illuminate\Database\Eloquent\Builder
      */

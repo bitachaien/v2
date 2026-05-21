@@ -53,7 +53,7 @@ class ActivityCategoryController
         } catch (\Exception $e) {
             return json([
                 'code' => 1,
-                'msg' => '获取失败：' . $e->getMessage()
+                'msg' => 'Lấy dữ liệu thất bại：' . $e->getMessage()
             ]);
         }
     }
@@ -76,7 +76,7 @@ class ActivityCategoryController
         } catch (\Exception $e) {
             return json([
                 'code' => 1,
-                'msg' => '获取失败：' . $e->getMessage()
+                'msg' => 'Lấy dữ liệu thất bại：' . $e->getMessage()
             ]);
         }
     }
@@ -92,16 +92,16 @@ class ActivityCategoryController
         $remark = $request->post('remark', '');
 
         if (!$name) {
-            return json(['code' => 1, 'msg' => '分类名称不能为空']);
+            return json(['code' => 1, 'msg' => '分类名称không được để trống']);
         }
 
         if (!$code) {
-            return json(['code' => 1, 'msg' => '分类代码不能为空']);
+            return json(['code' => 1, 'msg' => '分类代码không được để trống']);
         }
 
         $exists = Db::table('caipiao_activity_category')->where('code', $code)->exists();
         if ($exists) {
-            return json(['code' => 1, 'msg' => '分类代码已存在']);
+            return json(['code' => 1, 'msg' => '分类代码đã tồn tại']);
         }
 
         $now = time();
@@ -116,7 +116,7 @@ class ActivityCategoryController
             'updated_at' => $now,
         ]);
 
-        return json(['code' => 0, 'msg' => '添加成功', 'data' => ['id' => $id]]);
+        return json(['code' => 0, 'msg' => 'ThêmThành công', 'data' => ['id' => $id]]);
     }
 
     
@@ -124,12 +124,12 @@ class ActivityCategoryController
     {
         $id = $request->post('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $item = Db::table('caipiao_activity_category')->where('id', $id)->first();
         if (!$item) {
-            return json(['code' => 1, 'msg' => '分类不存在']);
+            return json(['code' => 1, 'msg' => '分类không tồn tại']);
         }
 
         $data = ['updated_at' => time()];
@@ -144,7 +144,7 @@ class ActivityCategoryController
                 ->where('id', '!=', $id)
                 ->exists();
             if ($exists) {
-                return json(['code' => 1, 'msg' => '分类代码已存在']);
+                return json(['code' => 1, 'msg' => '分类代码đã tồn tại']);
             }
             $data['code'] = $code;
         }
@@ -163,7 +163,7 @@ class ActivityCategoryController
 
         Db::table('caipiao_activity_category')->where('id', $id)->update($data);
 
-        return json(['code' => 0, 'msg' => '修改成功']);
+        return json(['code' => 0, 'msg' => 'SửaThành công']);
     }
 
     
@@ -173,7 +173,7 @@ class ActivityCategoryController
         $ids = $request->post('ids', []);
 
         if (!$id && empty($ids)) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $deleteIds = $id ? [$id] : $ids;
@@ -188,12 +188,12 @@ class ActivityCategoryController
             ->count();
 
         if ($usedCount > 0) {
-            return json(['code' => 1, 'msg' => '该分类下有活动，无法删除']);
+            return json(['code' => 1, 'msg' => '该分类下有Hoạt động，无法Xóa']);
         }
 
         Db::table('caipiao_activity_category')->whereIn('id', $deleteIds)->delete();
 
-        return json(['code' => 0, 'msg' => '删除成功']);
+        return json(['code' => 0, 'msg' => 'XóaThành công']);
     }
 
     
@@ -203,7 +203,7 @@ class ActivityCategoryController
         $status = $request->post('status');
 
         if (!$id || $status === null) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         Db::table('caipiao_activity_category')->where('id', $id)->update([
@@ -211,7 +211,7 @@ class ActivityCategoryController
             'updated_at' => time()
         ]);
 
-        return json(['code' => 0, 'msg' => '状态更新成功']);
+        return json(['code' => 0, 'msg' => '状态更新Thành công']);
     }
 }
 

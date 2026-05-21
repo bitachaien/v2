@@ -14,7 +14,7 @@ class ChaseController
         try {
             $userId = $request->userId ?? 0;
             if (!$userId) {
-                return json(['code' => 401, 'message' => '请先登录']);
+                return json(['code' => 401, 'message' => 'Vui lòng đăng nhập']);
             }
 
             $page = max(1, (int)$request->get('page', 1));
@@ -100,7 +100,7 @@ class ChaseController
 
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'list' => $list,
                     'total' => $total,
@@ -110,8 +110,8 @@ class ChaseController
             ]);
 
         } catch (\Exception $e) {
-            Log::error('获取追号记录失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '获取失败: ' . $e->getMessage()]);
+            Log::error('Lấy追号lịch sử thất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại: ' . $e->getMessage()]);
         }
     }
 
@@ -121,7 +121,7 @@ class ChaseController
         try {
             $userId = $request->userId ?? 0;
             if (!$userId) {
-                return json(['code' => 401, 'message' => '请先登录']);
+                return json(['code' => 401, 'message' => 'Vui lòng đăng nhập']);
             }
 
             
@@ -132,7 +132,7 @@ class ChaseController
                 ->get();
 
             if (count($bets) == 0) {
-                return json(['code' => 404, 'message' => '追号记录不存在']);
+                return json(['code' => 404, 'message' => '追号lịch sửkhông tồn tại']);
             }
 
             $first = $bets[0];
@@ -181,7 +181,7 @@ class ChaseController
 
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'chaseNo' => $chaseNo,
                     'lotteryCode' => $first->cpname,
@@ -203,8 +203,8 @@ class ChaseController
             ]);
 
         } catch (\Exception $e) {
-            Log::error('获取追号详情失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '获取失败: ' . $e->getMessage()]);
+            Log::error('Lấy追号Chi tiếtThất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại: ' . $e->getMessage()]);
         }
     }
 
@@ -214,11 +214,11 @@ class ChaseController
         try {
             $userId = $request->userId ?? 0;
             if (!$userId) {
-                return json(['code' => 401, 'message' => '请先登录']);
+                return json(['code' => 401, 'message' => 'Vui lòng đăng nhập']);
             }
 
             if (!$chaseNo) {
-                return json(['code' => 400, 'message' => '追号编号不能为空']);
+                return json(['code' => 400, 'message' => '追号编号không được để trống']);
             }
 
             
@@ -232,7 +232,7 @@ class ChaseController
                 ->get();
 
             if (count($pendingBets) == 0) {
-                return json(['code' => 400, 'message' => '没有可取消的追号订单']);
+                return json(['code' => 400, 'message' => '没有可Hủy的追号订单']);
             }
 
             
@@ -244,7 +244,7 @@ class ChaseController
             
             $user = Db::table('caipiao_member')->where('id', $userId)->first();
             if (!$user) {
-                return json(['code' => 404, 'message' => '用户不存在']);
+                return json(['code' => 404, 'message' => 'Người dùng không tồn tại']);
             }
 
             Db::beginTransaction();
@@ -287,7 +287,7 @@ class ChaseController
 
                 return json([
                     'code' => 0,
-                    'message' => '取消成功',
+                    'message' => 'HủyThành công',
                     'data' => [
                         'chaseNo' => $chaseNo,
                         'cancelledCount' => count($cancelledIds),
@@ -302,8 +302,8 @@ class ChaseController
             }
 
         } catch (\Exception $e) {
-            Log::error('取消追号失败: ' . $e->getMessage());
-            return json(['code' => 500, 'message' => '取消失败: ' . $e->getMessage()]);
+            Log::error('Hủy追号Thất bại: ' . $e->getMessage());
+            return json(['code' => 500, 'message' => 'HủyThất bại: ' . $e->getMessage()]);
         }
     }
 }

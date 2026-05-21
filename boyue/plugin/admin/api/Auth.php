@@ -39,7 +39,7 @@ class Auth
         
         $admin = admin();
         if (!$admin) {
-            $msg = '请登录';
+            $msg = '请Đăng nhập';
             
             $code = 401;
             return false;

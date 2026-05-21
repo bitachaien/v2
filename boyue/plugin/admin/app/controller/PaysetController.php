@@ -19,7 +19,7 @@ class PaysetController
     }
 
     /**
-     * 获取存款方式列表数据
+     * Lấy nạp tiềnphương thức列表dữ liệu
      */
     public function list(Request $request)
     {
@@ -28,21 +28,21 @@ class PaysetController
 
         $query = Db::table('caipiao_payset');
 
-        // 获取总数
+        // Lấy总数
         $count = $query->count();
 
-        // 分页查询
+        // 分页Tra cứu
         $list = $query->orderBy('listorder', 'asc')
             ->orderBy('id', 'asc')
             ->offset(($page - 1) * $limit)
             ->limit($limit)
             ->get();
 
-        // 处理数据
+        // 处理dữ liệu
         $data = [];
         foreach ($list as $item) {
             $row = (array)$item;
-            // 判断是否线上支付
+            // 判断是否线上Thanh toán
             $row['isonline_text'] = $row['isonline'] == 1 ? '<span style="color: #e80808;">是</span>' : '<span style="color: #999999;">否</span>';
             // 解析configs
             $row['configs_data'] = !empty($row['configs']) ? @unserialize($row['configs']) : [];
@@ -58,7 +58,7 @@ class PaysetController
     }
 
     /**
-     * 添加存款方式页面
+     * ThêmNạp tiềnphương thức页面
      */
     public function add(Request $request)
     {
@@ -66,7 +66,7 @@ class PaysetController
     }
 
     /**
-     * 保存新存款方式
+     * Lưu新Nạp tiềnphương thức
      */
     public function save(Request $request)
     {
@@ -74,19 +74,19 @@ class PaysetController
 
         // 验证必填字段
         if (empty($data['paytype']) || empty($data['paytypetitle'])) {
-            return json(['code' => 1, 'msg' => '标识和支付名称不能为空']);
+            return json(['code' => 1, 'msg' => '标识和Thanh toán名称không được để trống']);
         }
 
-        // 检查标识是否已存在
+        // 检查标识是否đã tồn tại
         $exists = Db::table('caipiao_payset')
             ->where('paytype', $data['paytype'])
             ->exists();
 
         if ($exists) {
-            return json(['code' => 1, 'msg' => '标识已存在']);
+            return json(['code' => 1, 'msg' => '标识đã tồn tại']);
         }
 
-        // 处理configs字段 - 支持对象或JSON字符串
+        // 处理configs字段 - 支持对象hoặcJSON字符串
         $configs = [];
         if (!empty($data['configs_data'])) {
             if (is_array($data['configs_data'])) {
@@ -119,34 +119,34 @@ class PaysetController
         $result = Db::table('caipiao_payset')->insert($insertData);
 
         if ($result) {
-            return json(['code' => 0, 'msg' => '添加成功']);
+            return json(['code' => 0, 'msg' => 'ThêmThành công']);
         } else {
-            return json(['code' => 1, 'msg' => '添加失败']);
+            return json(['code' => 1, 'msg' => 'ThêmThất bại']);
         }
     }
 
     /**
-     * 编辑存款方式页面
+     * 编辑Nạp tiềnphương thức页面
      */
     public function edit(Request $request)
     {
         $id = $request->get('id');
         
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $info = Db::table('caipiao_payset')->where('id', $id)->first();
         
         if (!$info) {
-            return json(['code' => 1, 'msg' => '存款方式不存在']);
+            return json(['code' => 1, 'msg' => 'Nạp tiềnphương thức không tồn tại']);
         }
 
         return view('payset/edit', ['info' => $info]);
     }
 
     /**
-     * 更新存款方式信息
+     * 更新Nạp tiềnphương thức信息
      */
     public function update(Request $request)
     {
@@ -154,25 +154,25 @@ class PaysetController
         $data = $request->post();
 
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         // 验证必填字段
         if (empty($data['paytype']) || empty($data['paytypetitle'])) {
-            return json(['code' => 1, 'msg' => '标识和支付名称不能为空']);
+            return json(['code' => 1, 'msg' => '标识和Thanh toán名称không được để trống']);
         }
 
-        // 检查标识是否与其他记录重复
+        // 检查标识是否与其他lịch sử重复
         $exists = Db::table('caipiao_payset')
             ->where('paytype', $data['paytype'])
             ->where('id', '!=', $id)
             ->exists();
 
         if ($exists) {
-            return json(['code' => 1, 'msg' => '标识已存在']);
+            return json(['code' => 1, 'msg' => '标识đã tồn tại']);
         }
 
-        // 处理configs字段 - 支持对象或JSON字符串
+        // 处理configs字段 - 支持对象hoặcJSON字符串
         $configs = [];
         if (!empty($data['configs_data'])) {
             if (is_array($data['configs_data'])) {
@@ -205,9 +205,9 @@ class PaysetController
         $result = Db::table('caipiao_payset')->where('id', $id)->update($updateData);
 
         if ($result !== false) {
-            return json(['code' => 0, 'msg' => '更新成功']);
+            return json(['code' => 0, 'msg' => '更新Thành công']);
         } else {
-            return json(['code' => 1, 'msg' => '更新失败']);
+            return json(['code' => 1, 'msg' => '更新Thất bại']);
         }
     }
 
@@ -219,15 +219,15 @@ class PaysetController
         $id = $request->post('id');
         
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $result = Db::table('caipiao_payset')->where('id', $id)->delete();
 
         if ($result) {
-            return json(['code' => 0, 'msg' => '删除成功']);
+            return json(['code' => 0, 'msg' => 'XóaThành công']);
         } else {
-            return json(['code' => 1, 'msg' => '删除失败']);
+            return json(['code' => 1, 'msg' => 'XóaThất bại']);
         }
     }
 
@@ -240,7 +240,7 @@ class PaysetController
         $state = $request->post('state');
         
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $result = Db::table('caipiao_payset')
@@ -248,9 +248,9 @@ class PaysetController
             ->update(['state' => $state ? 1 : 0]);
 
         if ($result !== false) {
-            return json(['code' => 0, 'msg' => '操作成功']);
+            return json(['code' => 0, 'msg' => 'Thao tác thành công']);
         } else {
-            return json(['code' => 1, 'msg' => '操作失败']);
+            return json(['code' => 1, 'msg' => 'Thao tác thất bại']);
         }
     }
 }

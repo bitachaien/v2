@@ -11,7 +11,7 @@ class CollectorService
     
     public static function collectAll(): void
     {
-        echo "[" . date('Y-m-d H:i:s') . "] 开始采集开奖数据...\n";
+        echo "[" . date('Y-m-d H:i:s') . "] 开始采集Mở thưởngdữ liệu...\n";
         
         
         $lotteries = Lottery::where('is_open', 1)->get();
@@ -20,7 +20,7 @@ class CollectorService
             try {
                 self::collectLottery($lottery);
             } catch (\Exception $e) {
-                error_log("采集失败: {$lottery->key} - " . $e->getMessage());
+                error_log("采集Thất bại: {$lottery->key} - " . $e->getMessage());
             }
         }
         
@@ -47,7 +47,7 @@ class CollectorService
             
             if ($result) {
                 self::saveLotteryResult($lottery, $result);
-                echo "  - {$lottery->key}: 采集成功 期号:{$result['expect']}\n";
+                echo "  - {$lottery->key}: 采集Thành công 期号:{$result['expect']}\n";
             }
             
         } finally {

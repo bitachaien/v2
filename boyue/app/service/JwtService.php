@@ -85,7 +85,7 @@ class JwtService
         } catch (\UnexpectedValueException $e) {
             return ['valid' => false, 'payload' => null, 'error' => 'Token格式无效'];
         } catch (\Exception $e) {
-            return ['valid' => false, 'payload' => null, 'error' => 'Token验证失败: ' . $e->getMessage()];
+            return ['valid' => false, 'payload' => null, 'error' => 'Token验证Thất bại: ' . $e->getMessage()];
         }
     }
     

@@ -53,7 +53,7 @@ class MarketingController extends Base
     }
 
     /**
-     * 获取轮播图列表数据
+     * Lấy轮播图列表dữ liệu
      *
      * @param Request $request 请求对象
      * @return Response
@@ -73,7 +73,7 @@ class MarketingController extends Base
     }
 
     /**
-     * 添加轮播图
+     * Thêm轮播图
      *
      * @param Request $request 请求对象
      * @return Response|string
@@ -136,20 +136,20 @@ class MarketingController extends Base
 
         // GET 请求 - 返回页面
         if ($id <= 0) {
-            return '<script>alert("参数错误");history.back();</script>';
+            return '<script>alert("Tham số không hợp lệ");history.back();</script>';
         }
 
         $info = $this->bannerService->getDetail($id);
 
         if (!$info) {
-            return '<script>alert("轮播图不存在");history.back();</script>';
+            return '<script>alert("轮播图không tồn tại");history.back();</script>';
         }
 
         return view('marketing/banner/edit', ['info' => $info]);
     }
 
     /**
-     * 删除轮播图
+     * Xóa轮播图
      *
      * @param Request $request 请求对象
      * @return Response
@@ -164,7 +164,7 @@ class MarketingController extends Base
     }
 
     /**
-     * 批量删除轮播图
+     * 批量Xóa轮播图
      *
      * @param Request $request 请求对象
      * @return Response
@@ -206,7 +206,7 @@ class MarketingController extends Base
      */
     
     /**
-     * 公告管理
+     * Công bố管理
      */
     public function notice(Request $request)
     {
@@ -222,7 +222,7 @@ class MarketingController extends Base
     }
     
     /**
-     * 活动管理
+     * Hoạt động管理
      */
     public function activity(Request $request)
     {
@@ -230,7 +230,7 @@ class MarketingController extends Base
     }
     
     /**
-     * 返水设置
+     * Hoàn trảCài đặt
      */
     public function rebate(Request $request)
     {
@@ -238,7 +238,7 @@ class MarketingController extends Base
     }
     
     /**
-     * 晋级奖励
+     * Thăng cấp奖励
      */
     public function level_reward(Request $request)
     {
@@ -247,12 +247,12 @@ class MarketingController extends Base
 
     /**
      * ============================================
-     * 活动管理 API（Art Design Pro 前端专用）
+     * Hoạt động管理 API（Art Design Pro 前端专用）
      * ============================================
      */
 
     /**
-     * 活动列表
+     * Hoạt động列表
      * GET /app/admin/api/activity/list
      */
     public function activityList(Request $request)
@@ -271,14 +271,14 @@ class MarketingController extends Base
         }
 
         if ($type) {
-            // 支持按type_code或type字段筛选
+            // 支持按type_codehoặctype字段筛选
             $query->where(function($q) use ($type) {
                 $q->where('type', $type)->orWhere('type_code', $type);
             });
         }
 
         if ($category) {
-            // category字段存储为JSON数组或逗号分隔字符串，支持模糊匹配
+            // category字段存储为JSON数组hoặc逗号分隔字符串，支持模糊匹配
             $query->where('category', 'like', "%{$category}%");
         }
 
@@ -286,7 +286,7 @@ class MarketingController extends Base
             $query->where('status', $status);
         }
 
-        // 获取总数
+        // Lấy总数
         $count = $query->count();
 
         // 分页
@@ -297,13 +297,13 @@ class MarketingController extends Base
             ->limit($limit)
             ->get();
 
-        // 活动类型映射
+        // Hoạt động类型映射
         $typeMap = [
-            'deposit' => '充值活动',
-            'rebate' => '返水活动',
-            'bonus' => '彩金活动',
-            'vip' => 'VIP活动',
-            'other' => '其他活动',
+            'deposit' => 'Nạp tiềnHoạt động',
+            'rebate' => 'Hoàn trảHoạt động',
+            'bonus' => '彩金Hoạt động',
+            'vip' => 'VIPHoạt động',
+            'other' => '其他Hoạt động',
         ];
 
         $result = [];
@@ -312,7 +312,7 @@ class MarketingController extends Base
             $row['type_text'] = $typeMap[$row['type']] ?? $row['type'];
             $row['status_text'] = $row['status'] == 1 ? '启用' : '禁用';
             
-            // 活动时间
+            // Hoạt độngThời gian
             $row['start_date_text'] = $row['start_date'] ?? '';
             $row['end_date_text'] = $row['end_date'] ?? '';
             
@@ -328,7 +328,7 @@ class MarketingController extends Base
                 $row['end_time_text'] = '';
             }
 
-            // 创建/更新时间
+            // 创建/更新Thời gian
             $row['created_at_text'] = $row['created_at'] ? date('Y-m-d H:i:s', $row['created_at']) : '';
             $row['updated_at_text'] = $row['updated_at'] ? date('Y-m-d H:i:s', $row['updated_at']) : '';
 
@@ -358,24 +358,24 @@ class MarketingController extends Base
     }
 
     /**
-     * 活动详情
+     * Hoạt độngChi tiết
      * GET /app/admin/api/activity/detail
      */
     public function activityDetail(Request $request)
     {
         $id = $request->get('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $item = Db::table('caipiao_huodong')->where('id', $id)->first();
         if (!$item) {
-            return json(['code' => 1, 'msg' => '活动不存在']);
+            return json(['code' => 1, 'msg' => 'Hoạt độngkhông tồn tại']);
         }
 
         $data = (array)$item;
         
-        // 格式化时间
+        // 格式化Thời gian
         if ($data['start_time']) {
             $data['start_time_text'] = date('Y-m-d H:i:s', $data['start_time']);
         }
@@ -401,7 +401,7 @@ class MarketingController extends Base
     }
 
     /**
-     * 添加活动
+     * ThêmHoạt động
      * POST /app/admin/api/activity/add
      */
     public function activityAdd(Request $request)
@@ -413,19 +413,19 @@ class MarketingController extends Base
         $banner = $request->post('banner', '');
         $images = $request->post('images', '');
         $type = $request->post('type', 'other');
-        $category = $request->post('category', []); // 游戏分类(数组)
-        $type_code = $request->post('type_code', ''); // 活动类型
+        $category = $request->post('category', []); // Trò chơi分类(数组)
+        $type_code = $request->post('type_code', ''); // Hoạt động类型
         $startDate = $request->post('start_date');
         $endDate = $request->post('end_date');
         $status = $request->post('status', 1);
         $sort = $request->post('sort', 0);
-        $jumpType = (int)$request->post('jump_type', 0); // 跳转类型: 0=默认详情页 1=签到弹窗 2=自定义URL
+        $jumpType = (int)$request->post('jump_type', 0); // 跳转类型: 0=默认Chi tiết页 1=签到弹窗 2=自定义URL
         $jumpUrl = $request->post('jump_url', ''); // 跳转URL
-        $requiredDeposit = (float)$request->post('required_deposit', 0); // 签到所需充值
-        $requiredBet = (float)$request->post('required_bet', 0); // 签到所需投注
+        $requiredDeposit = (float)$request->post('required_deposit', 0); // 签到所需Nạp tiền
+        $requiredBet = (float)$request->post('required_bet', 0); // 签到所需Đặt cược
 
         if (!$title) {
-            return json(['code' => 1, 'msg' => '活动标题不能为空']);
+            return json(['code' => 1, 'msg' => 'Hoạt động标题không được để trống']);
         }
 
         $now = time();
@@ -456,23 +456,23 @@ class MarketingController extends Base
             'updated_at' => $now,
         ]);
 
-        return json(['code' => 0, 'msg' => '添加成功', 'data' => ['id' => $id]]);
+        return json(['code' => 0, 'msg' => 'ThêmThành công', 'data' => ['id' => $id]]);
     }
 
     /**
-     * 编辑活动
+     * 编辑Hoạt động
      * POST /app/admin/api/activity/edit
      */
     public function activityEdit(Request $request)
     {
         $id = $request->post('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $item = Db::table('caipiao_huodong')->where('id', $id)->first();
         if (!$item) {
-            return json(['code' => 1, 'msg' => '活动不存在']);
+            return json(['code' => 1, 'msg' => 'Hoạt độngkhông tồn tại']);
         }
 
         $data = ['updated_at' => time()];
@@ -538,11 +538,11 @@ class MarketingController extends Base
 
         Db::table('caipiao_huodong')->where('id', $id)->update($data);
 
-        return json(['code' => 0, 'msg' => '修改成功']);
+        return json(['code' => 0, 'msg' => 'SửaThành công']);
     }
 
     /**
-     * 删除活动
+     * XóaHoạt động
      * POST /app/admin/api/activity/delete
      */
     public function activityDelete(Request $request)
@@ -551,18 +551,18 @@ class MarketingController extends Base
         $ids = $request->post('ids', []);
 
         if (!$id && empty($ids)) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $deleteIds = $id ? [$id] : $ids;
         
         Db::table('caipiao_huodong')->whereIn('id', $deleteIds)->delete();
 
-        return json(['code' => 0, 'msg' => '删除成功']);
+        return json(['code' => 0, 'msg' => 'XóaThành công']);
     }
 
     /**
-     * 更新活动状态
+     * 更新Hoạt động状态
      * POST /app/admin/api/activity/status
      */
     public function activityStatus(Request $request)
@@ -571,7 +571,7 @@ class MarketingController extends Base
         $status = $request->post('status');
 
         if (!$id || $status === null) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         Db::table('caipiao_huodong')->where('id', $id)->update([
@@ -579,16 +579,16 @@ class MarketingController extends Base
             'updated_at' => time(),
         ]);
 
-        return json(['code' => 0, 'msg' => '状态更新成功']);
+        return json(['code' => 0, 'msg' => '状态更新Thành công']);
     }
 
     /**
-     * 活动类型选项（下拉框用）
+     * Hoạt động类型选项（下拉框用）
      * GET /app/admin/api/activity/type-options
      */
     public function activityTypeOptions(Request $request)
     {
-        // 返回所有活动类型（活动分类已独立到 caipiao_activity_category 表）
+        // 返回所有Hoạt động类型（Hoạt động分类已独立到 caipiao_activity_category 表）
         $types = Db::table('caipiao_activity_type')
             ->where('status', 1)
             ->orderBy('sort', 'desc')
@@ -600,12 +600,12 @@ class MarketingController extends Base
 
     /**
      * ============================================
-     * 活动类型管理 API
+     * Hoạt động类型管理 API
      * ============================================
      */
 
     /**
-     * 活动类型列表
+     * Hoạt động类型列表
      * GET /app/admin/api/activity/type-list
      */
     public function activityTypeList(Request $request)
@@ -652,7 +652,7 @@ class MarketingController extends Base
     }
 
     /**
-     * 添加活动类型
+     * ThêmHoạt động类型
      * POST /app/admin/api/activity/type-add
      */
     public function activityTypeAdd(Request $request)
@@ -665,17 +665,17 @@ class MarketingController extends Base
         $remark = $request->post('remark', '');
 
         if (!$name) {
-            return json(['code' => 1, 'msg' => '类型名称不能为空']);
+            return json(['code' => 1, 'msg' => '类型名称không được để trống']);
         }
 
         if (!$code) {
-            return json(['code' => 1, 'msg' => '类型代码不能为空']);
+            return json(['code' => 1, 'msg' => '类型代码không được để trống']);
         }
 
-        // 检查代码是否已存在
+        // 检查代码是否đã tồn tại
         $exists = Db::table('caipiao_activity_type')->where('code', $code)->exists();
         if ($exists) {
-            return json(['code' => 1, 'msg' => '类型代码已存在']);
+            return json(['code' => 1, 'msg' => '类型代码đã tồn tại']);
         }
 
         $now = time();
@@ -690,23 +690,23 @@ class MarketingController extends Base
             'updated_at' => $now,
         ]);
 
-        return json(['code' => 0, 'msg' => '添加成功', 'data' => ['id' => $id]]);
+        return json(['code' => 0, 'msg' => 'ThêmThành công', 'data' => ['id' => $id]]);
     }
 
     /**
-     * 编辑活动类型
+     * 编辑Hoạt động类型
      * POST /app/admin/api/activity/type-edit
      */
     public function activityTypeEdit(Request $request)
     {
         $id = $request->post('id');
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $item = Db::table('caipiao_activity_type')->where('id', $id)->first();
         if (!$item) {
-            return json(['code' => 1, 'msg' => '类型不存在']);
+            return json(['code' => 1, 'msg' => '类型không tồn tại']);
         }
 
         $data = ['updated_at' => time()];
@@ -716,7 +716,7 @@ class MarketingController extends Base
 
         $code = $request->post('code');
         if ($code !== null) {
-            // 检查代码是否被其他记录使用
+            // 检查代码是否被其他lịch sử使用
             $exists = Db::table('caipiao_activity_type')
                 ->where('code', $code)
                 ->where('id', '!=', $id)
@@ -741,11 +741,11 @@ class MarketingController extends Base
 
         Db::table('caipiao_activity_type')->where('id', $id)->update($data);
 
-        return json(['code' => 0, 'msg' => '修改成功']);
+        return json(['code' => 0, 'msg' => 'SửaThành công']);
     }
 
     /**
-     * 删除活动类型
+     * XóaHoạt động类型
      * POST /app/admin/api/activity/type-delete
      */
     public function activityTypeDelete(Request $request)
@@ -754,12 +754,12 @@ class MarketingController extends Base
         $ids = $request->post('ids', []);
 
         if (!$id && empty($ids)) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $deleteIds = $id ? [$id] : $ids;
 
-        // 检查是否有活动使用该类型
+        // 检查是否有Hoạt động使用该类型
         $types = Db::table('caipiao_activity_type')
             ->whereIn('id', $deleteIds)
             ->pluck('code')
@@ -770,16 +770,16 @@ class MarketingController extends Base
             ->count();
 
         if ($usedCount > 0) {
-            return json(['code' => 1, 'msg' => '该类型下有活动，无法删除']);
+            return json(['code' => 1, 'msg' => '该类型下有Hoạt động，无法Xóa']);
         }
 
         Db::table('caipiao_activity_type')->whereIn('id', $deleteIds)->delete();
 
-        return json(['code' => 0, 'msg' => '删除成功']);
+        return json(['code' => 0, 'msg' => 'XóaThành công']);
     }
 
     /**
-     * 更新活动类型状态
+     * 更新Hoạt động类型状态
      * POST /app/admin/api/activity/type-status
      */
     public function activityTypeStatus(Request $request)
@@ -788,7 +788,7 @@ class MarketingController extends Base
         $status = $request->post('status');
 
         if (!$id || $status === null) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         Db::table('caipiao_activity_type')->where('id', $id)->update([
@@ -796,25 +796,25 @@ class MarketingController extends Base
             'updated_at' => time(),
         ]);
 
-        return json(['code' => 0, 'msg' => '状态更新成功']);
+        return json(['code' => 0, 'msg' => '状态更新Thành công']);
     }
 
     /**
      * ============================================
-     * 赠送活动设置 API
+     * 赠送Hoạt độngCài đặt API
      * ============================================
      */
 
     /**
-     * 获取赠送活动配置
+     * Lấy赠送Hoạt động配置
      * GET /app/admin/api/gift/config
      */
     public function giftConfig(Request $request)
     {
-        // 获取所有设置
+        // Lấy所有Cài đặt
         $settings = Db::table('caipiao_setting')->pluck('value', 'name')->toArray();
 
-        // 充值活动配置（5档）
+        // Nạp tiềnHoạt động配置（5档）
         $rechargeConfig = [];
         for ($i = 0; $i <= 4; $i++) {
             $rechargeConfig[] = [
@@ -824,7 +824,7 @@ class MarketingController extends Base
             ];
         }
 
-        // 日消费活动配置（3档）
+        // 日消费Hoạt động配置（3档）
         $dailyConsumeConfig = [];
         for ($i = 0; $i <= 2; $i++) {
             $dailyConsumeConfig[] = [
@@ -835,7 +835,7 @@ class MarketingController extends Base
             ];
         }
 
-        // 月消费活动配置（3档）
+        // 月消费Hoạt động配置（3档）
         $monthlyConsumeConfig = [];
         for ($i = 0; $i <= 2; $i++) {
             $monthlyConsumeConfig[] = [
@@ -846,7 +846,7 @@ class MarketingController extends Base
             ];
         }
 
-        // 日亏损活动配置（3档）
+        // 日亏损Hoạt động配置（3档）
         $dailyLossConfig = [];
         for ($i = 0; $i <= 2; $i++) {
             $dailyLossConfig[] = [
@@ -857,7 +857,7 @@ class MarketingController extends Base
             ];
         }
 
-        // 月亏损活动配置（3档）
+        // 月亏损Hoạt động配置（3档）
         $monthlyLossConfig = [];
         for ($i = 0; $i <= 2; $i++) {
             $monthlyLossConfig[] = [
@@ -868,7 +868,7 @@ class MarketingController extends Base
             ];
         }
 
-        // 代理分红配置（4档）
+        // Đại lý分红配置（4档）
         $agentBonusConfig = [];
         for ($i = 0; $i <= 3; $i++) {
             $agentBonusConfig[] = [
@@ -887,19 +887,19 @@ class MarketingController extends Base
             'code' => 0,
             'msg' => 'ok',
             'data' => [
-                'recharge' => $rechargeConfig,           // 充值活动
-                'daily_consume' => $dailyConsumeConfig,   // 日消费活动
-                'monthly_consume' => $monthlyConsumeConfig, // 月消费活动
-                'daily_loss' => $dailyLossConfig,         // 日亏损活动
-                'monthly_loss' => $monthlyLossConfig,     // 月亏损活动
-                'agent_bonus' => $agentBonusConfig,       // 代理分红
+                'recharge' => $rechargeConfig,           // Nạp tiềnHoạt động
+                'daily_consume' => $dailyConsumeConfig,   // 日消费Hoạt động
+                'monthly_consume' => $monthlyConsumeConfig, // 月消费Hoạt động
+                'daily_loss' => $dailyLossConfig,         // 日亏损Hoạt động
+                'monthly_loss' => $monthlyLossConfig,     // 月亏损Hoạt động
+                'agent_bonus' => $agentBonusConfig,       // Đại lý分红
                 'other' => $otherConfig,                  // 其他
             ]
         ]);
     }
 
     /**
-     * 保存赠送活动配置
+     * Lưu赠送Hoạt động配置
      * POST /app/admin/api/gift/save
      */
     public function giftSave(Request $request)
@@ -907,7 +907,7 @@ class MarketingController extends Base
         $data = $request->post();
         $updates = [];
 
-        // 充值活动
+        // Nạp tiềnHoạt động
         if (isset($data['recharge']) && is_array($data['recharge'])) {
             foreach ($data['recharge'] as $item) {
                 $i = $item['level'] ?? 0;
@@ -920,7 +920,7 @@ class MarketingController extends Base
             }
         }
 
-        // 日消费活动
+        // 日消费Hoạt động
         if (isset($data['daily_consume']) && is_array($data['daily_consume'])) {
             foreach ($data['daily_consume'] as $item) {
                 $i = $item['level'] ?? 0;
@@ -936,7 +936,7 @@ class MarketingController extends Base
             }
         }
 
-        // 月消费活动
+        // 月消费Hoạt động
         if (isset($data['monthly_consume']) && is_array($data['monthly_consume'])) {
             foreach ($data['monthly_consume'] as $item) {
                 $i = $item['level'] ?? 0;
@@ -952,7 +952,7 @@ class MarketingController extends Base
             }
         }
 
-        // 日亏损活动
+        // 日亏损Hoạt động
         if (isset($data['daily_loss']) && is_array($data['daily_loss'])) {
             foreach ($data['daily_loss'] as $item) {
                 $i = $item['level'] ?? 0;
@@ -968,7 +968,7 @@ class MarketingController extends Base
             }
         }
 
-        // 月亏损活动
+        // 月亏损Hoạt động
         if (isset($data['monthly_loss']) && is_array($data['monthly_loss'])) {
             foreach ($data['monthly_loss'] as $item) {
                 $i = $item['level'] ?? 0;
@@ -984,7 +984,7 @@ class MarketingController extends Base
             }
         }
 
-        // 代理分红
+        // Đại lý分红
         if (isset($data['agent_bonus']) && is_array($data['agent_bonus'])) {
             foreach ($data['agent_bonus'] as $item) {
                 $i = $item['level'] ?? 0;
@@ -1004,7 +1004,7 @@ class MarketingController extends Base
             }
         }
 
-        // 批量更新设置
+        // 批量更新Cài đặt
         foreach ($updates as $name => $value) {
             Db::table('caipiao_setting')->updateOrInsert(
                 ['name' => $name],
@@ -1012,12 +1012,12 @@ class MarketingController extends Base
             );
         }
 
-        return json(['code' => 0, 'msg' => '保存成功']);
+        return json(['code' => 0, 'msg' => 'LưuThành công']);
     }
 
     /**
      * ============================================
-     * 人工赠送（给会员加款）
+     * 人工赠送（给Thành viên加款）
      * ============================================
      */
 
@@ -1033,38 +1033,38 @@ class MarketingController extends Base
         $remark = $request->post('remark', '');
 
         if (!$username) {
-            return json(['code' => 1, 'msg' => '请输入用户名']);
+            return json(['code' => 1, 'msg' => '请输入Tên người dùng']);
         }
 
         $amount = floatval($amount);
         if ($amount <= 0) {
-            return json(['code' => 1, 'msg' => '金额必须大于0']);
+            return json(['code' => 1, 'msg' => 'Số tiền必须大于0']);
         }
 
-        // 查找用户
+        // 查找Người dùng
         $member = Db::table('caipiao_member')->where('username', $username)->first();
         if (!$member) {
-            return json(['code' => 1, 'msg' => '用户不存在']);
+            return json(['code' => 1, 'msg' => 'Người dùng không tồn tại']);
         }
 
         $beforeBalance = $member->balance;
         $afterBalance = $type === 'adminsub' ? $beforeBalance - $amount : $beforeBalance + $amount;
 
         if ($afterBalance < 0) {
-            return json(['code' => 1, 'msg' => '余额不足']);
+            return json(['code' => 1, 'msg' => 'Số dư không đủ']);
         }
 
-        // 生成流水号
+        // 生成Vòng cược号
         $trano = 'GF' . date('YmdHis') . rand(1000, 9999);
 
         Db::beginTransaction();
         try {
-            // 更新余额
+            // 更新Số dư
             Db::table('caipiao_member')
                 ->where('id', $member->id)
                 ->update(['balance' => $afterBalance]);
 
-            // 记录账变
+            // lịch sử账变
             Db::table('caipiao_fuddetail')->insert([
                 'trano' => $trano,
                 'uid' => $member->id,
@@ -1082,7 +1082,7 @@ class MarketingController extends Base
 
             return json([
                 'code' => 0,
-                'msg' => '操作成功',
+                'msg' => 'Thao tác thành công',
                 'data' => [
                     'username' => $username,
                     'amount' => $amount,
@@ -1093,7 +1093,7 @@ class MarketingController extends Base
             ]);
         } catch (\Exception $e) {
             Db::rollBack();
-            return json(['code' => 1, 'msg' => '操作失败：' . $e->getMessage()]);
+            return json(['code' => 1, 'msg' => 'Thao tác thất bại：' . $e->getMessage()]);
         }
     }
 
@@ -1103,17 +1103,17 @@ class MarketingController extends Base
      */
     public function giftBatchSend(Request $request)
     {
-        $usernames = $request->post('usernames', []); // 用户名数组
+        $usernames = $request->post('usernames', []); // Tên người dùng数组
         $amount = $request->post('amount');
         $remark = $request->post('remark', '批量赠送彩金');
 
         if (empty($usernames)) {
-            return json(['code' => 1, 'msg' => '请选择用户']);
+            return json(['code' => 1, 'msg' => 'Vui lòng chọnNgười dùng']);
         }
 
         $amount = floatval($amount);
         if ($amount <= 0) {
-            return json(['code' => 1, 'msg' => '金额必须大于0']);
+            return json(['code' => 1, 'msg' => 'Số tiền必须大于0']);
         }
 
         $success = 0;
@@ -1124,7 +1124,7 @@ class MarketingController extends Base
             $member = Db::table('caipiao_member')->where('username', $username)->first();
             if (!$member) {
                 $failed++;
-                $errors[] = "{$username}: 用户不存在";
+                $errors[] = "{$username}: Người dùng không tồn tại";
                 continue;
             }
 
@@ -1159,7 +1159,7 @@ class MarketingController extends Base
 
         return json([
             'code' => 0,
-            'msg' => "成功 {$success} 个，失败 {$failed} 个",
+            'msg' => "Thành công {$success} 个，Thất bại {$failed} 个",
             'data' => [
                 'success' => $success,
                 'failed' => $failed,
@@ -1169,7 +1169,7 @@ class MarketingController extends Base
     }
 
     /**
-     * 赠送记录列表
+     * 赠送lịch sử列表
      * GET /app/admin/api/gift/records
      */
     public function giftRecords(Request $request)
@@ -1213,14 +1213,14 @@ class MarketingController extends Base
         $typeMap = [
             'adminadd' => '管理员加款',
             'adminsub' => '管理员扣款',
-            'activity_cz' => '充值活动',
-            'activity_czzs' => '充值赠送',
+            'activity_cz' => 'Nạp tiềnHoạt động',
+            'activity_czzs' => 'Nạp tiền赠送',
             'activity_bindcard' => '绑卡赠送',
             'activity_rxf' => '日洗返',
             'activity_rks' => '日快送',
             'activity_yxf' => '月洗返',
             'activity_yks' => '月快送',
-            'jinjishenhe' => '晋级奖励',
+            'jinjishenhe' => 'Thăng cấp奖励',
         ];
 
         $result = [];
@@ -1248,14 +1248,14 @@ class MarketingController extends Base
         $types = [
             ['value' => 'adminadd', 'label' => '管理员加款'],
             ['value' => 'adminsub', 'label' => '管理员扣款'],
-            ['value' => 'activity_cz', 'label' => '充值活动'],
-            ['value' => 'activity_czzs', 'label' => '充值赠送'],
+            ['value' => 'activity_cz', 'label' => 'Nạp tiềnHoạt động'],
+            ['value' => 'activity_czzs', 'label' => 'Nạp tiền赠送'],
             ['value' => 'activity_bindcard', 'label' => '绑卡赠送'],
             ['value' => 'activity_rxf', 'label' => '日洗返'],
             ['value' => 'activity_rks', 'label' => '日快送'],
             ['value' => 'activity_yxf', 'label' => '月洗返'],
             ['value' => 'activity_yks', 'label' => '月快送'],
-            ['value' => 'jinjishenhe', 'label' => '晋级奖励'],
+            ['value' => 'jinjishenhe', 'label' => 'Thăng cấp奖励'],
         ];
 
         return json(['code' => 0, 'msg' => 'ok', 'data' => $types]);

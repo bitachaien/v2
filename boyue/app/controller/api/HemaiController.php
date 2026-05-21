@@ -33,15 +33,15 @@ class HemaiController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => $result
             ]);
             
         } catch (\Exception $e) {
-            Log::error('获取合买列表失败: ' . $e->getMessage());
+            Log::error('Lấy合买列表Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -56,22 +56,22 @@ class HemaiController
             if (!$detail) {
                 return json([
                     'code' => 404,
-                    'message' => '合买方案不存在',
+                    'message' => '合买方案không tồn tại',
                     'data' => null
                 ]);
             }
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => $detail
             ]);
             
         } catch (\Exception $e) {
-            Log::error('获取合买详情失败: ' . $e->getMessage());
+            Log::error('Lấy合买Chi tiếtThất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -85,15 +85,15 @@ class HemaiController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => $result
             ]);
             
         } catch (\Exception $e) {
-            Log::error('获取参与用户列表失败: ' . $e->getMessage());
+            Log::error('Lấy参与Người dùng列表Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -108,7 +108,7 @@ class HemaiController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '请先登录',
+                'message' => 'Vui lòng đăng nhập',
                 'data' => null
             ]);
         }
@@ -141,12 +141,12 @@ class HemaiController
             
             return json([
                 'code' => 0,
-                'message' => '认购成功',
+                'message' => '认购Thành công',
                 'data' => $result
             ]);
             
         } catch (\Exception $e) {
-            Log::error('认购合买失败: ' . $e->getMessage());
+            Log::error('认购合买Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'message' => $e->getMessage(),
@@ -176,17 +176,17 @@ class HemaiController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'list' => $data
                 ]
             ]);
             
         } catch (\Exception $e) {
-            Log::error('获取彩种列表失败: ' . $e->getMessage());
+            Log::error('Lấy彩种列表Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -201,7 +201,7 @@ class HemaiController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '请先登录',
+                'message' => 'Vui lòng đăng nhập',
                 'data' => null
             ]);
         }
@@ -242,14 +242,14 @@ class HemaiController
             
             return json([
                 'code' => 0,
-                'message' => '发起成功',
+                'message' => '发起Thành công',
                 'data' => [
                     'id' => $hemaiId
                 ]
             ]);
             
         } catch (\Exception $e) {
-            Log::error('发起合买失败: ' . $e->getMessage());
+            Log::error('发起合买Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'message' => $e->getMessage(),
@@ -266,7 +266,7 @@ class HemaiController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '请先登录',
+                'message' => 'Vui lòng đăng nhập',
                 'data' => null
             ]);
         }
@@ -280,15 +280,15 @@ class HemaiController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => $result
             ]);
             
         } catch (\Exception $e) {
-            Log::error('获取我的合买记录失败: ' . $e->getMessage());
+            Log::error('Lấy我的合买lịch sử thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -302,7 +302,7 @@ class HemaiController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '请先登录',
+                'message' => 'Vui lòng đăng nhập',
                 'data' => null
             ]);
         }
@@ -312,12 +312,12 @@ class HemaiController
             
             return json([
                 'code' => 0,
-                'message' => '取消成功',
+                'message' => 'HủyThành công',
                 'data' => null
             ]);
             
         } catch (\Exception $e) {
-            Log::error('取消合买失败: ' . $e->getMessage());
+            Log::error('Hủy合买Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'message' => $e->getMessage(),
@@ -334,7 +334,7 @@ class HemaiController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '请先登录',
+                'message' => 'Vui lòng đăng nhập',
                 'data' => null
             ]);
         }
@@ -355,12 +355,12 @@ class HemaiController
             
             return json([
                 'code' => 0,
-                'message' => '撤资成功',
+                'message' => '撤资Thành công',
                 'data' => null
             ]);
             
         } catch (\Exception $e) {
-            Log::error('撤资失败: ' . $e->getMessage());
+            Log::error('撤资Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'message' => $e->getMessage(),
@@ -379,7 +379,7 @@ class HemaiController
             if (!$detail) {
                 return json([
                     'code' => 404,
-                    'message' => '合买方案不存在',
+                    'message' => '合买方案không tồn tại',
                     'data' => null
                 ]);
             }
@@ -390,12 +390,12 @@ class HemaiController
             
             
             $shareText = "【合买推荐】{$detail['cptitle']} {$detail['expect']}期\n" .
-                        "{$detail['playtitle']} 总金额{$detail['amount']}元\n" .
+                        "{$detail['playtitle']} 总Số tiền{$detail['amount']}元\n" .
                         "进度{$detail['progress']}% 快来跟单吧！";
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'shareUrl' => $shareUrl,
                     'shareText' => $shareText,
@@ -404,10 +404,10 @@ class HemaiController
             ]);
             
         } catch (\Exception $e) {
-            Log::error('获取分享信息失败: ' . $e->getMessage());
+            Log::error('Lấy分享信息Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }

@@ -21,19 +21,19 @@ class StatisticsController extends Base
             return view('statistics/overview');
         }
         
-        // 获取查询参数
+        // LấyTra cứu参数
         $username = $request->get('username', '');
         $sDate = $request->get('sDate', '');
         $eDate = $request->get('eDate', '');
         $typeid = $request->get('typeid', '');
         
-        // 排除内部会员
+        // 排除内部Thành viên
         $testUsers = Db::table('caipiao_member')
             ->where('isnb', 1)
             ->pluck('id')
             ->toArray();
         
-        // 构建基础查询条件
+        // 构建基础Tra cứu条件
         $baseWhere = function ($query) use ($testUsers, $username, $sDate, $eDate) {
             if (!empty($testUsers)) {
                 $query->whereNotIn('uid', $testUsers);
@@ -51,14 +51,14 @@ class StatisticsController extends Base
         
         // ==================== 盈亏统计 ====================
         
-        // 自动充值
+        // 自动Nạp tiền
         $zidchongzhiall = Db::table('caipiao_recharge')
             ->where('state', 1)
             ->where('isauto', 1)
             ->where($baseWhere)
             ->sum('amount') ?? 0;
         
-        // 手动充值加
+        // 手动Nạp tiền加
         $sdjiachongzhiall = Db::table('caipiao_recharge')
             ->where('state', 1)
             ->where('isauto', 2)
@@ -66,7 +66,7 @@ class StatisticsController extends Base
             ->where($baseWhere)
             ->sum('amount') ?? 0;
         
-        // 手动充值减
+        // 手动Nạp tiền减
         $sdjianchongzhiall = Db::table('caipiao_recharge')
             ->where('state', 1)
             ->where('isauto', 2)
@@ -74,27 +74,27 @@ class StatisticsController extends Base
             ->where($baseWhere)
             ->sum('amount') ?? 0;
         
-        // 提款
+        // Rút tiền
         $tikuanall = Db::table('caipiao_withdraw')
             ->where('state', 1)
             ->where($baseWhere)
             ->sum('amount') ?? 0;
         
-        // 投注（排除机器人投注）
+        // Đặt cược（排除机器人Đặt cược）
         $touzhuall = Db::table('caipiao_touzhu')
             ->whereIn('isdraw', [1, -1])
             ->where($baseWhere)
             ->where(function($q) { $q->whereNull('source')->orWhere('source', '!=', 'robot'); })
             ->sum('amount') ?? 0;
         
-        // 中奖（排除机器人投注）
+        // Trúng thưởng（排除机器人Đặt cược）
         $zhongjiangall = Db::table('caipiao_touzhu')
             ->where('isdraw', 1)
             ->where($baseWhere)
             ->where(function($q) { $q->whereNull('source')->orWhere('source', '!=', 'robot'); })
             ->sum('okamount') ?? 0;
         
-        // 活动
+        // Hoạt động
         $huodongall = Db::table('caipiao_fuddetail')
             ->whereIn('type', ['pointexchange', 'activity_bindcard', 'activity_czzs', 
                               'activity_rxf', 'activity_rks', 'activity_yxf', 'activity_yks'])
@@ -113,7 +113,7 @@ class StatisticsController extends Base
             'tzyingkui' => $touzhuall - $zhongjiangall,
         ];
         
-        // ==================== 用户统计 ====================
+        // ==================== Người dùng统计 ====================
         
         $memberBaseWhere = function ($query) use ($testUsers) {
             if (!empty($testUsers)) {
@@ -121,27 +121,27 @@ class StatisticsController extends Base
             }
         };
         
-        // 所有用户
+        // 所有Người dùng
         $usercountall = Db::table('caipiao_member')
             ->where($memberBaseWhere)
             ->count();
         
-        // 代理数
+        // Đại lý数
         $userdailiall = Db::table('caipiao_member')
             ->where($memberBaseWhere)
             ->where('proxy', 1)
             ->count();
         
-        // 普通用户
+        // 普通Người dùng
         $userputongall = $usercountall - $userdailiall;
         
-        // 在线数（最近30分钟登录）
+        // 在线数（最近30分钟Đăng nhập）
         $useronlineall = Db::table('caipiao_member')
             ->where($memberBaseWhere)
             ->where('onlinetime', '>=', time() - 1800)
             ->count();
         
-        // 可用余额
+        // 可用Số dư
         $userbalanceall = Db::table('caipiao_member')
             ->where($memberBaseWhere)
             ->sum('balance') ?? 0;
@@ -154,7 +154,7 @@ class StatisticsController extends Base
             'userbalanceall' => $userbalanceall,
         ];
         
-        // ==================== 彩票统计 ====================
+        // ==================== Xổ số统计 ====================
         
         $cpQuery = Db::table('caipiao_caipiao')->where('isopen', 1);
         
@@ -168,7 +168,7 @@ class StatisticsController extends Base
         $cpxiaoji = ['touzhuall' => 0, 'zhongjiangall' => 0];
         
         foreach ($cplist as $key => $cp) {
-            // 投注统计（排除机器人投注）
+            // Đặt cược统计（排除机器人Đặt cược）
             $touzhu = Db::table('caipiao_touzhu')
                 ->where('cpname', $cp->name)
                 ->whereIn('isdraw', [1, -1])
@@ -176,7 +176,7 @@ class StatisticsController extends Base
                 ->where(function($q) { $q->whereNull('source')->orWhere('source', '!=', 'robot'); })
                 ->sum('amount') ?? 0;
             
-            // 中奖统计（排除机器人投注）
+            // Trúng thưởng统计（排除机器人Đặt cược）
             $zhongjiang = Db::table('caipiao_touzhu')
                 ->where('cpname', $cp->name)
                 ->where('isdraw', 1)
@@ -215,19 +215,19 @@ class StatisticsController extends Base
             return view('statistics/profit');
         }
         
-        // 获取参数
+        // Lấy参数
         $sDate = $request->get('sDate', date('Ymd', strtotime('-6 days')));
         $eDate = $request->get('eDate', date('Ymd'));
         $page = $request->get('page', 1);
         $limit = $request->get('limit', 20);
         
-        // 排除内部会员
+        // 排除内部Thành viên
         $testUsers = Db::table('caipiao_member')
             ->where('isnb', 1)
             ->pluck('id')
             ->toArray();
         
-        // 计算日期范围
+        // 计算Ngày范围
         $startTime = strtotime($sDate);
         $endTime = strtotime($eDate);
         $days = ceil(($endTime - $startTime) / 86400);
@@ -240,7 +240,7 @@ class StatisticsController extends Base
             $dayStart = strtotime($datetime);
             $dayEnd = $dayStart + 86400 - 1;
             
-            // 自动充值
+            // 自动Nạp tiền
             $zdchongzhiall = Db::table('caipiao_recharge')
                 ->where('state', 1)
                 ->where('isauto', 1)
@@ -251,7 +251,7 @@ class StatisticsController extends Base
                 })
                 ->sum('amount') ?? 0;
             
-            // 手动充值加
+            // 手动Nạp tiền加
             $sdjiachongzhiall = Db::table('caipiao_recharge')
                 ->where('state', 1)
                 ->where('isauto', 2)
@@ -263,7 +263,7 @@ class StatisticsController extends Base
                 })
                 ->sum('amount') ?? 0;
             
-            // 手动充值减
+            // 手动Nạp tiền减
             $sdjianchongzhiall = Db::table('caipiao_recharge')
                 ->where('state', 1)
                 ->where('isauto', 2)
@@ -275,7 +275,7 @@ class StatisticsController extends Base
                 })
                 ->sum('amount') ?? 0;
             
-            // 提款
+            // Rút tiền
             $tikuanall = Db::table('caipiao_withdraw')
                 ->where('state', 1)
                 ->where('oddtime', '>=', $dayStart)
@@ -285,7 +285,7 @@ class StatisticsController extends Base
                 })
                 ->sum('amount') ?? 0;
             
-            // 投注（排除机器人投注）
+            // Đặt cược（排除机器人Đặt cược）
             $touzhuall = Db::table('caipiao_touzhu')
                 ->whereIn('isdraw', [1, -1])
                 ->where('oddtime', '>=', $dayStart)
@@ -296,7 +296,7 @@ class StatisticsController extends Base
                 ->where(function($q) { $q->whereNull('source')->orWhere('source', '!=', 'robot'); })
                 ->sum('amount') ?? 0;
             
-            // 中奖（排除机器人投注）
+            // Trúng thưởng（排除机器人Đặt cược）
             $zhongjiangall = Db::table('caipiao_touzhu')
                 ->where('isdraw', 1)
                 ->where('oddtime', '>=', $dayStart)
@@ -307,7 +307,7 @@ class StatisticsController extends Base
                 ->where(function($q) { $q->whereNull('source')->orWhere('source', '!=', 'robot'); })
                 ->sum('okamount') ?? 0;
             
-            // 活动
+            // Hoạt động
             $huodongall = Db::table('caipiao_fuddetail')
                 ->whereIn('type', ['pointexchange', 'fanshui', 'yongjinshenhe', 'jinjishenhe', 
                                   'activity_bindcard', 'activity_czzs', 'activity_rxf', 
@@ -346,7 +346,7 @@ class StatisticsController extends Base
     }
     
     /**
-     * 用户统计
+     * Người dùng统计
      */
     public function user(Request $request)
     {
@@ -355,21 +355,21 @@ class StatisticsController extends Base
             return view('statistics/user');
         }
         
-        // 获取参数
+        // Lấy参数
         $sDate = $request->get('sDate', date('Ymd', strtotime('-1 days')));
         $eDate = $request->get('eDate', date('Ymd'));
         $username = $request->get('username', '');
         $page = $request->get('page', 1);
         $limit = $request->get('limit', 20);
         
-        // 查询条件
+        // Tra cứu条件
         $query = Db::table('caipiao_member')->where('isnb', 0);
         
         if (!empty($username)) {
             $query->where('username', $username);
         }
         
-        // 获取会员列表
+        // LấyThành viên列表
         $total = $query->count();
         $offset = ($page - 1) * $limit;
         $members = $query->orderBy('id', 'desc')
@@ -385,7 +385,7 @@ class StatisticsController extends Base
         $endTime = strtotime($eDate) + 86400 - 1;
         
         foreach ($members as $member) {
-            // 自动充值
+            // 自动Nạp tiền
             $zdchongzhiall = Db::table('caipiao_recharge')
                 ->where('uid', $member->id)
                 ->where('state', 1)
@@ -414,7 +414,7 @@ class StatisticsController extends Base
                 ->where('oddtime', '<=', $endTime)
                 ->sum('amount') ?? 0;
             
-            // 提款
+            // Rút tiền
             $tikuanall = Db::table('caipiao_withdraw')
                 ->where('uid', $member->id)
                 ->where('state', 1)
@@ -422,7 +422,7 @@ class StatisticsController extends Base
                 ->where('oddtime', '<=', $endTime)
                 ->sum('amount') ?? 0;
             
-            // 投注（排除机器人投注）
+            // Đặt cược（排除机器人Đặt cược）
             $touzhuall = Db::table('caipiao_touzhu')
                 ->where('uid', $member->id)
                 ->whereIn('isdraw', [1, -1])
@@ -431,7 +431,7 @@ class StatisticsController extends Base
                 ->where(function($q) { $q->whereNull('source')->orWhere('source', '!=', 'robot'); })
                 ->sum('amount') ?? 0;
             
-            // 中奖（排除机器人投注）
+            // Trúng thưởng（排除机器人Đặt cược）
             $zhongjiangall = Db::table('caipiao_touzhu')
                 ->where('uid', $member->id)
                 ->where('isdraw', 1)
@@ -440,7 +440,7 @@ class StatisticsController extends Base
                 ->where(function($q) { $q->whereNull('source')->orWhere('source', '!=', 'robot'); })
                 ->sum('okamount') ?? 0;
             
-            // 活动
+            // Hoạt động
             $huodongall = Db::table('caipiao_fuddetail')
                 ->where('uid', $member->id)
                 ->whereIn('type', ['pointexchange', 'fanshui', 'yongjinshenhe', 'jinjishenhe',
@@ -472,7 +472,7 @@ class StatisticsController extends Base
     }
     
     /**
-     * 团队概况
+     * Đội nhóm概况
      */
     public function team(Request $request)
     {
@@ -481,7 +481,7 @@ class StatisticsController extends Base
             return view('statistics/team');
         }
         
-        // 获取参数
+        // Lấy参数
         $sDate = $request->get('sDate', '');
         $eDate = $request->get('eDate', '');
         $username = $request->get('username', '');
@@ -489,20 +489,20 @@ class StatisticsController extends Base
         $limit = $request->get('limit', 20);
         $pid = $request->get('pid', 0);
         
-        // 查询条件
+        // Tra cứu条件
         $query = Db::table('caipiao_member')->where('isnb', 0);
         
         if (!empty($pid)) {
             $query->where('parentid', $pid);
         } else {
-            $query->where('proxy', 1); // 只查代理
+            $query->where('proxy', 1); // 只查Đại lý
         }
         
         if (!empty($username)) {
             $query->where('username', $username);
         }
         
-        // 获取代理列表
+        // LấyĐại lý列表
         $total = $query->count();
         $offset = ($page - 1) * $limit;
         $agents = $query->orderBy('id', 'desc')
@@ -517,21 +517,21 @@ class StatisticsController extends Base
         $endTime = !empty($eDate) ? strtotime($eDate) + 86400 - 1 : time();
         
         foreach ($agents as $agent) {
-            // 获取所有下线用户ID
+            // Lấy所有下线Người dùngID
             $downlineIds = $this->getDownlineIds($agent->id);
             $downlineIds[] = $agent->id; // 包含自己
             
-            // 团队总数
+            // Đội nhóm总数
             $totalcount = count($downlineIds) - 1; // 不包含自己
             
-            // 团队代理数
+            // Đội nhómĐại lý数
             $agentcount = Db::table('caipiao_member')
                 ->whereIn('id', $downlineIds)
                 ->where('id', '!=', $agent->id)
                 ->where('proxy', 1)
                 ->count();
             
-            // 普通用户数
+            // 普通Người dùng数
             $usercount = $totalcount - $agentcount;
             
             // 在线数（最近30分钟）
@@ -540,7 +540,7 @@ class StatisticsController extends Base
                 ->where('onlinetime', '>=', time() - 1800)
                 ->count();
             
-            // 自动充值
+            // 自动Nạp tiền
             $zdrecharge = Db::table('caipiao_recharge')
                 ->whereIn('uid', $downlineIds)
                 ->where('state', 1)
@@ -581,7 +581,7 @@ class StatisticsController extends Base
                 })
                 ->sum('amount') ?? 0;
             
-            // 提款
+            // Rút tiền
             $withdraw = Db::table('caipiao_withdraw')
                 ->whereIn('uid', $downlineIds)
                 ->where('state', 1)
@@ -593,7 +593,7 @@ class StatisticsController extends Base
                 })
                 ->sum('amount') ?? 0;
             
-            // 投注（排除机器人投注）
+            // Đặt cược（排除机器人Đặt cược）
             $touzhu = Db::table('caipiao_touzhu')
                 ->whereIn('uid', $downlineIds)
                 ->whereIn('isdraw', [1, -1])
@@ -606,7 +606,7 @@ class StatisticsController extends Base
                 ->where(function($q) { $q->whereNull('source')->orWhere('source', '!=', 'robot'); })
                 ->sum('amount') ?? 0;
             
-            // 中奖（排除机器人投注）
+            // Trúng thưởng（排除机器人Đặt cược）
             $zhongjiang = Db::table('caipiao_touzhu')
                 ->whereIn('uid', $downlineIds)
                 ->where('isdraw', 1)
@@ -619,7 +619,7 @@ class StatisticsController extends Base
                 ->where(function($q) { $q->whereNull('source')->orWhere('source', '!=', 'robot'); })
                 ->sum('okamount') ?? 0;
             
-            // 活动
+            // Hoạt động
             $huodong = Db::table('caipiao_fuddetail')
                 ->whereIn('uid', $downlineIds)
                 ->whereIn('type', ['pointexchange', 'fanshui', 'yongjinshenhe', 'jinjishenhe',
@@ -658,7 +658,7 @@ class StatisticsController extends Base
     }
     
     /**
-     * 递归获取所有下级ID
+     * 递归Lấy所有Cấp dướiID
      */
     private function getDownlineIds($parentId, &$result = [])
     {
@@ -677,7 +677,7 @@ class StatisticsController extends Base
     }
     
     /**
-     * 彩种投注统计
+     * 彩种Đặt cược统计
      */
     public function lottery_bet(Request $request)
     {
@@ -686,7 +686,7 @@ class StatisticsController extends Base
             return view('statistics/lottery_bet');
         }
         
-        // 获取参数
+        // Lấy参数
         $sDate = $request->get('sDate', '');
         $eDate = $request->get('eDate', '');
         $username = $request->get('username', '');
@@ -694,7 +694,7 @@ class StatisticsController extends Base
         $startTime = !empty($sDate) ? strtotime($sDate) : 0;
         $endTime = !empty($eDate) ? strtotime($eDate) + 86400 - 1 : time();
         
-        // 构建查询条件（排除机器人投注）
+        // 构建Tra cứu条件（排除机器人Đặt cược）
         $query = Db::table('caipiao_touzhu as t')
             ->leftJoin('caipiao_caipiao as c', 't.cpname', '=', 'c.name')
             ->leftJoin('caipiao_member as m', 't.uid', '=', 'm.id')
@@ -763,7 +763,7 @@ class StatisticsController extends Base
     }
     
     /**
-     * 充值提款统计
+     * Nạp tiềnRút tiền统计
      */
     public function recharge(Request $request)
     {
@@ -772,7 +772,7 @@ class StatisticsController extends Base
             return view('statistics/recharge');
         }
         
-        // 获取参数
+        // Lấy参数
         $sDate = $request->get('sDate', date('Ymd', strtotime('-6 days')));
         $eDate = $request->get('eDate', date('Ymd'));
         $username = $request->get('username', '');
@@ -781,7 +781,7 @@ class StatisticsController extends Base
         $endTime = strtotime($eDate) + 86400 - 1;
         $days = ceil(($endTime - $startTime) / 86400);
         
-        // 按日期分组统计
+        // 按Ngày分组统计
         $list = [];
         $summary = [
             'totalRecharge' => 0,
@@ -799,7 +799,7 @@ class StatisticsController extends Base
             $dayStart = strtotime($date);
             $dayEnd = $dayStart + 86400 - 1;
             
-            // 构建基础查询
+            // 构建基础Tra cứu
             $baseQuery = Db::table('caipiao_member')->where('isnb', 0);
             if (!empty($username)) {
                 $baseQuery->where('username', $username);
@@ -810,7 +810,7 @@ class StatisticsController extends Base
                 continue;
             }
             
-            // 自动充值
+            // 自动Nạp tiền
             $autoRecharge = Db::table('caipiao_recharge')
                 ->whereIn('uid', $memberIds)
                 ->where('state', 1)
@@ -839,7 +839,7 @@ class StatisticsController extends Base
                 ->where('oddtime', '<=', $dayEnd)
                 ->sum('amount') ?? 0;
             
-            // 提款
+            // Rút tiền
             $withdraw = Db::table('caipiao_withdraw')
                 ->whereIn('uid', $memberIds)
                 ->where('state', 1)
@@ -869,7 +869,7 @@ class StatisticsController extends Base
             $summary['totalProfit'] += $profit;
         }
         
-        // 统计充值人数（有充值记录的用户数）
+        // 统计Nạp tiền人数（有Nạp tiềnlịch sử的Người dùng数）
         $rechargeQuery = Db::table('caipiao_recharge as r')
             ->join('caipiao_member as m', 'r.uid', '=', 'm.id')
             ->where('m.isnb', 0)
@@ -883,7 +883,7 @@ class StatisticsController extends Base
         
         $summary['rechargeUsers'] = $rechargeQuery->distinct()->count('r.uid');
         
-        // 统计提款人数
+        // 统计Rút tiền人数
         $withdrawQuery = Db::table('caipiao_withdraw as w')
             ->join('caipiao_member as m', 'w.uid', '=', 'm.id')
             ->where('m.isnb', 0)

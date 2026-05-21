@@ -56,7 +56,7 @@ class UploadController extends Crud
     }
 
     /**
-     * 查询附件
+     * Tra cứu附件
      * @param Request $request
      * @return Response
      * @throws BusinessException
@@ -89,7 +89,7 @@ class UploadController extends Crud
     }
 
     /**
-     * 添加附件
+     * Thêm附件
      * @param Request $request
      * @return Response
      * @throws Exception|Throwable
@@ -119,7 +119,7 @@ class UploadController extends Crud
         ] = array_values($data);
         $upload->category = $request->post('category');
         $upload->save();
-        return $this->json(0, '上传成功', [
+        return $this->json(0, '上传Thành công', [
             'url' => $data['url'],
             'name' => $data['name'],
             'size' => $data['size'],
@@ -150,7 +150,7 @@ class UploadController extends Crud
             return $this->image($request);
         }
         $data = $this->base($request, '/upload/files/' . date('Ymd'));
-        return $this->json(0, '上传成功', [
+        return $this->json(0, '上传Thành công', [
             'url' => $data['url'],
             'name' => $data['name'],
             'size' => $data['size'],
@@ -171,7 +171,7 @@ class UploadController extends Crud
         
         // avif 和 webp 格式跳过压缩处理（GD 库可能不支持）
         if (!in_array($ext, ['avif', 'webp'])) {
-            // 设置项目内临时目录（解决 Windows/Linux tempnam() 问题）
+            // Cài đặt项目内临时目录（解决 Windows/Linux tempnam() 问题）
             $tempDir = base_path() . '/runtime/temp';
             if (!is_dir($tempDir)) {
                 @mkdir($tempDir, 0777, true);
@@ -192,14 +192,14 @@ class UploadController extends Crud
                 }
                 $img->resize($width * $ratio, $height * $ratio)->save($realpath);
             } catch (Exception $e) {
-                // 压缩失败不删除文件，直接使用原图
+                // 压缩Thất bại不Xóa文件，直接使用原图
                 // @unlink($realpath);
             }
         }
         
         return json([
             'code' => 0,
-            'msg' => '上传成功',
+            'msg' => '上传Thành công',
             'data' => [
                 'url' => $data['url'],
                 'name' => $data['name'],
@@ -252,7 +252,7 @@ class UploadController extends Crud
 
             return json([
                 'code' => 0,
-                'msg' => '上传成功',
+                'msg' => '上传Thành công',
                 'data' => [
                     'url' => "/app/admin/$relative_path/$name.md.$ext"
                 ]
@@ -262,7 +262,7 @@ class UploadController extends Crud
     }
 
     /**
-     * 删除附件
+     * Xóa附件
      * @param Request $request
      * @return Response
      * @throws BusinessException
@@ -293,7 +293,7 @@ class UploadController extends Crud
     }
 
     /**
-     * 获取上传数据
+     * Lấy上传dữ liệu
      * @param Request $request
      * @param $relative_dir
      * @return array

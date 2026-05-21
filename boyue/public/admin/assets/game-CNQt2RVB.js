@@ -1,0 +1,1 @@
+import{aS as a}from"./index-Dm78grH4.js";function r(r){return a.get({url:"/app/admin/game/record-list",params:r})}function n(r){return a.post({url:"/app/admin/game/cancel",data:r})}function t(r){return a.get({url:"/app/admin/game/check-anomaly-list",params:r})}export{r as a,n as b,t as f};

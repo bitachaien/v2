@@ -12,7 +12,7 @@ class UserController
         $userId = $request->userId ?? 0;
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '未登录或登录已过期', 'data' => null]);
+            return json(['code' => 401, 'message' => '未Đăng nhậphoặcĐăng nhập已过期', 'data' => null]);
         }
         
         try {
@@ -60,7 +60,7 @@ class UserController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'profit' => number_format($profit, 2, '.', ''),
                     'fanshui' => number_format($fanshui, 2, '.', ''),
@@ -73,7 +73,7 @@ class UserController
             ]);
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '获取数据失败', 'data' => null]);
+            return json(['code' => 500, 'message' => 'Lấy dữ liệuThất bại', 'data' => null]);
         }
     }
     
@@ -82,7 +82,7 @@ class UserController
         $userId = $request->userId ?? 0;
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '未登录或登录已过期', 'data' => null]);
+            return json(['code' => 401, 'message' => '未Đăng nhậphoặcĐăng nhập已过期', 'data' => null]);
         }
         
         try {
@@ -94,7 +94,7 @@ class UserController
             
             $user = Db::table('caipiao_member')->where('id', $userId)->first();
             if (!$user) {
-                return json(['code' => 404, 'message' => '用户不存在', 'data' => null]);
+                return json(['code' => 404, 'message' => 'Người dùng không tồn tại', 'data' => null]);
             }
             
             $betStats = Db::table('caipiao_touzhu')
@@ -155,7 +155,7 @@ class UserController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'date' => $date,
                     'wallet' => $wallet,
@@ -176,7 +176,7 @@ class UserController
             ]);
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '获取数据失败', 'data' => null]);
+            return json(['code' => 500, 'message' => 'Lấy dữ liệuThất bại', 'data' => null]);
         }
     }
 
@@ -185,7 +185,7 @@ class UserController
         $userId = $request->userId ?? 0;
         
         if (!$userId) {
-            return json(['code' => 401, 'message' => '未登录', 'data' => null]);
+            return json(['code' => 401, 'message' => '未Đăng nhập', 'data' => null]);
         }
         
         try {
@@ -217,7 +217,7 @@ class UserController
             return json(['code' => 0, 'message' => 'success', 'data' => ['list' => $list]]);
             
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '获取失败']);
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại']);
         }
     }
 

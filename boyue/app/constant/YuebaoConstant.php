@@ -53,8 +53,8 @@ class YuebaoConstant
     public const HOLDING_STATUS_MAP = [
         self::HOLDING_STATUS_RUNNING  => '运行中',
         self::HOLDING_STATUS_SETTLED  => '已结算',
-        self::HOLDING_STATUS_DONE     => '已完成',
-        self::HOLDING_STATUS_CANCELED => '已取消',
+        self::HOLDING_STATUS_DONE     => 'Đã hoàn thành',
+        self::HOLDING_STATUS_CANCELED => 'Đã hủy',
     ];
 
     
@@ -100,9 +100,9 @@ class YuebaoConstant
 
     
     public const RECORD_STATUS_MAP = [
-        self::RECORD_STATUS_SUCCESS => '成功',
-        self::RECORD_STATUS_FAILED  => '失败',
-        self::RECORD_STATUS_PENDING => '处理中',
+        self::RECORD_STATUS_SUCCESS => 'Thành công',
+        self::RECORD_STATUS_FAILED  => 'Thất bại',
+        self::RECORD_STATUS_PENDING => 'Đang xử lý',
     ];
 
     

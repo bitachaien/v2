@@ -48,7 +48,7 @@ class RuleController extends Crud
     }
 
     /**
-     * 查询
+     * Tra cứu
      * @param Request $request
      * @return Response
      * @throws BusinessException
@@ -60,7 +60,7 @@ class RuleController extends Crud
     }
 
     /**
-     * 获取菜单
+     * Lấy菜单
      * @param Request $request
      * @return Response
      * @throws Exception
@@ -111,7 +111,7 @@ class RuleController extends Crud
     }
 
     /**
-     * 获取权限
+     * Lấy权限
      * @param Request $request
      * @return Response
      * @throws Exception
@@ -136,7 +136,7 @@ class RuleController extends Crud
     }
 
     /**
-     * 根据类同步规则到数据库
+     * 根据类同步Quy tắc到dữ liệu库
      * @return void
      */
     protected function syncRules()
@@ -182,7 +182,7 @@ class RuleController extends Crud
                 }
             }
         }
-        // 从数据库中删除已经不存在的方法
+        // 从dữ liệu库中Xóa已经không tồn tại的方法
         $menu_names_to_del = array_diff($methods_in_db, $methods_in_files);
         if ($menu_names_to_del) {
             //Rule::whereIn('key', $menu_names_to_del)->delete();
@@ -190,7 +190,7 @@ class RuleController extends Crud
     }
 
     /**
-     * 查询前置方法
+     * Tra cứu前置方法
      * @param Request $request
      * @return array
      * @throws BusinessException
@@ -212,7 +212,7 @@ class RuleController extends Crud
     }
 
     /**
-     * 添加
+     * Thêm
      * @param Request $request
      * @return Response
      * @throws BusinessException|Throwable
@@ -249,12 +249,12 @@ class RuleController extends Crud
         }
         [$id, $data] = $this->updateInput($request);
         if (!$row = $this->model->find($id)) {
-            return $this->json(2, '记录不存在');
+            return $this->json(2, 'lịch sửkhông tồn tại');
         }
         if (isset($data['pid'])) {
             $data['pid'] = $data['pid'] ?: 0;
             if ($data['pid'] == $row['id']) {
-                return $this->json(2, '不能将自己设置为上级菜单');
+                return $this->json(2, '不能将自己Cài đặt为上级菜单');
             }
         }
         if (isset($data['key'])) {
@@ -265,14 +265,14 @@ class RuleController extends Crud
     }
     
     /**
-     * 删除
+     * Xóa
      * @param Request $request
      * @return Response
      */
     public function delete(Request $request): Response
     {
         $ids = $this->deleteInput($request);
-        // 子规则一起删除
+        // 子Quy tắc一起Xóa
         $delete_ids = $children_ids = $ids;
         while($children_ids) {
             $children_ids = $this->model->whereIn('pid', $children_ids)->pluck('id')->toArray();
@@ -283,7 +283,7 @@ class RuleController extends Crud
     }
 
     /**
-     * 移除不包含某些数据的数组
+     * 移除不包含某些dữ liệu的数组
      * @param $array
      * @param $key
      * @param $values
@@ -307,7 +307,7 @@ class RuleController extends Crud
     }
 
     /**
-     * 判断数组是否包含某些数据
+     * 判断数组是否包含某些dữ liệu
      * @param $array
      * @param $key
      * @param $values
@@ -333,7 +333,7 @@ class RuleController extends Crud
     }
 
     /**
-     * 获取权限规则
+     * Lấy权限Quy tắc
      * @param $roles
      * @return array
      */

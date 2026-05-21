@@ -47,11 +47,11 @@ class AccountController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取余额失败: ' . $e->getMessage());
+            \support\Log::error('Lấy số dư thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '获取余额失败：' . $e->getMessage(),
+                'message' => 'Lấy số dư thất bại: ' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -94,11 +94,11 @@ class AccountController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('刷新余额失败: ' . $e->getMessage());
+            \support\Log::error('Làm mớiSố dưThất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '刷新失败',
+                'message' => 'Làm mớiThất bại',
                 'data' => '0.00'
             ]);
         }
@@ -273,11 +273,11 @@ class AccountController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取投注记录失败: ' . $e->getMessage());
+            \support\Log::error('LấyĐặt cượclịch sử thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -395,11 +395,11 @@ class AccountController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取投注统计失败: ' . $e->getMessage());
+            \support\Log::error('LấyĐặt cược统计Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -490,9 +490,9 @@ class AccountController
                 
                 $categoryList[] = [
                     'category' => 'lottery',
-                    'category_name' => '彩票',
+                    'category_name' => 'Xổ số',
                     'platform' => 'boyue',
-                    'platform_name' => '博悦彩票',
+                    'platform_name' => '博悦Xổ số',
                     'game' => $game->cpname,
                     'game_name' => $game->cptitle ?: $game->cpname,
                     'bet_amount' => number_format($bet, 2, '.', ''),
@@ -541,11 +541,11 @@ class AccountController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取盈亏报表失败: ' . $e->getMessage());
+            \support\Log::error('Lấy盈亏报表Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
                 'sign' => false,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -576,7 +576,7 @@ class AccountController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -641,7 +641,7 @@ class AccountController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'list' => $data,
                     'total' => $total,
@@ -656,10 +656,10 @@ class AccountController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取交易明细失败: ' . $e->getMessage());
+            \support\Log::error('Lấy交易明细Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -673,7 +673,7 @@ class AccountController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -738,13 +738,13 @@ class AccountController
                 $statusText = '';
                 switch ($item->state) {
                     case 0:
-                        $statusText = '待审核';
+                        $statusText = 'Chờ duyệt';
                         break;
                     case 1:
-                        $statusText = '充值成功';
+                        $statusText = 'Nạp tiềnThành công';
                         break;
                     case -1:
-                        $statusText = '充值失败';
+                        $statusText = 'Nạp tiềnThất bại';
                         break;
                 }
                 
@@ -771,7 +771,7 @@ class AccountController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'total' => $total,
                     'page' => (int)$page,
@@ -786,10 +786,10 @@ class AccountController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取充值记录失败: ' . $e->getMessage());
+            \support\Log::error('Lấy nạp tiềnlịch sử thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -803,7 +803,7 @@ class AccountController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -874,13 +874,13 @@ class AccountController
                 $statusText = '';
                 switch ($item->state) {
                     case 0:
-                        $statusText = '待审核';
+                        $statusText = 'Chờ duyệt';
                         break;
                     case 1:
-                        $statusText = '提现成功';
+                        $statusText = 'Rút tiềnThành công';
                         break;
                     case -1:
-                        $statusText = '提现失败';
+                        $statusText = 'Rút tiềnThất bại';
                         break;
                 }
                 
@@ -923,7 +923,7 @@ class AccountController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'total' => $total,
                     'page' => (int)$page,
@@ -939,10 +939,10 @@ class AccountController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取提现记录失败: ' . $e->getMessage());
+            \support\Log::error('Lấy rút tiềnlịch sử thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -956,7 +956,7 @@ class AccountController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -1028,13 +1028,13 @@ class AccountController
                         'rebateAmount' => number_format($item->rebate_amount ?? 0, 2, '.', ''),
                         'status' => $item->status,
                         'settledAt' => $item->settled_at ? date('Y-m-d H:i:s', $item->settled_at) : '',
-                        'remark' => $item->remark ?? '每日返水'
+                        'remark' => $item->remark ?? '每日Hoàn trả'
                     ];
                 }
                 
                 return json([
                     'code' => 0,
-                    'message' => '获取成功',
+                    'message' => 'Lấy dữ liệu thành công',
                     'data' => [
                         'total' => $total,
                         'page' => (int)$page,
@@ -1053,7 +1053,7 @@ class AccountController
                 
                 return json([
                     'code' => 0,
-                    'message' => '获取成功',
+                    'message' => 'Lấy dữ liệu thành công',
                     'data' => [
                         'total' => 0,
                         'page' => (int)$page,
@@ -1070,10 +1070,10 @@ class AccountController
             }
             
         } catch (\Exception $e) {
-            \support\Log::error('获取反水记录失败: ' . $e->getMessage());
+            \support\Log::error('Lấy反水lịch sử thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -1084,34 +1084,34 @@ class AccountController
     {
         $channelMap = [
             
-            'alipay' => '支付宝充值',
-            'zhifubao' => '支付宝充值',
-            'zfb' => '支付宝充值',
+            'alipay' => 'AlipayNạp tiền',
+            'zhifubao' => 'AlipayNạp tiền',
+            'zfb' => 'AlipayNạp tiền',
             
             
-            'wechat' => '微信充值',
-            'weixin' => '微信充值',
-            'wx' => '微信充值',
+            'wechat' => 'WeChatNạp tiền',
+            'weixin' => 'WeChatNạp tiền',
+            'wx' => 'WeChatNạp tiền',
             
             
-            'bank' => '银行卡充值',
-            'bankcard' => '银行卡充值',
-            'yinhangka' => '银行卡充值',
+            'bank' => 'Thẻ ngân hàngNạp tiền',
+            'bankcard' => 'Thẻ ngân hàngNạp tiền',
+            'yinhangka' => 'Thẻ ngân hàngNạp tiền',
             
             
-            'usdt' => 'USDT充值',
-            'usdt-trc20' => 'USDT充值(TRC20)',
-            'usdt-erc20' => 'USDT充值(ERC20)',
+            'usdt' => 'USDTNạp tiền',
+            'usdt-trc20' => 'USDTNạp tiền(TRC20)',
+            'usdt-erc20' => 'USDTNạp tiền(ERC20)',
             
             
-            'online' => '在线支付',
-            'offline' => '线下转账',
+            'online' => '在线Thanh toán',
+            'offline' => '线下Chuyển khoản',
             'admin' => '管理员操作',
             'admin_add' => '管理员加款',
             'admin_sub' => '管理员减款'
         ];
         
-        return $channelMap[$channel] ?? $channel . '充值';
+        return $channelMap[$channel] ?? $channel . 'Nạp tiền';
     }
     
     
@@ -1119,31 +1119,31 @@ class AccountController
     {
         $channelMap = [
             
-            'alipay' => '支付宝提现',
-            'zhifubao' => '支付宝提现',
-            'zfb' => '支付宝提现',
+            'alipay' => 'AlipayRút tiền',
+            'zhifubao' => 'AlipayRút tiền',
+            'zfb' => 'AlipayRút tiền',
             
             
-            'wechat' => '微信提现',
-            'weixin' => '微信提现',
-            'wx' => '微信提现',
+            'wechat' => 'WeChatRút tiền',
+            'weixin' => 'WeChatRút tiền',
+            'wx' => 'WeChatRút tiền',
             
             
-            'bank' => '银行卡提现',
-            'bankcard' => '银行卡提现',
-            'yinhangka' => '银行卡提现',
+            'bank' => 'Thẻ ngân hàngRút tiền',
+            'bankcard' => 'Thẻ ngân hàngRút tiền',
+            'yinhangka' => 'Thẻ ngân hàngRút tiền',
             
             
-            'usdt' => 'USDT提现',
-            'usdt-trc20' => 'USDT提现(TRC20)',
-            'usdt-erc20' => 'USDT提现(ERC20)',
+            'usdt' => 'USDTRút tiền',
+            'usdt-trc20' => 'USDTRút tiền(TRC20)',
+            'usdt-erc20' => 'USDTRút tiền(ERC20)',
             
             
-            'online' => '在线提现',
-            'offline' => '线下提现'
+            'online' => '在线Rút tiền',
+            'offline' => '线下Rút tiền'
         ];
         
-        return $channelMap[$channel] ?? $channel . '提现';
+        return $channelMap[$channel] ?? $channel . 'Rút tiền';
     }
     
     
@@ -1169,7 +1169,7 @@ class AccountController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -1194,13 +1194,13 @@ class AccountController
                 if ($type === 'withdraw') {
                     $query->where(function($q) use ($status) {
                         if ($status == -1) {
-                            $q->where('remark', 'like', '%拒绝%')->orWhere('remark', 'like', '%失败%');
+                            $q->where('remark', 'like', '%拒绝%')->orWhere('remark', 'like', '%Thất bại%');
                         } elseif ($status == 1) {
-                            $q->where('remark', 'like', '%成功%');
+                            $q->where('remark', 'like', '%Thành công%');
                         } elseif ($status == 2) {
                             $q->where('remark', 'like', '%解冻%');
                         } elseif ($status == 0) {
-                            $q->where('remark', 'like', '%出款中%')->orWhere('remark', 'like', '%处理中%');
+                            $q->where('remark', 'like', '%出款中%')->orWhere('remark', 'like', '%Đang xử lý%');
                         }
                     });
                 } elseif ($type === 'recharge') {
@@ -1290,7 +1290,7 @@ class AccountController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'total' => $total,
                     'page' => (int)$page,
@@ -1300,10 +1300,10 @@ class AccountController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取资金记录失败: ' . $e->getMessage());
+            \support\Log::error('Lấy资金lịch sử thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -1320,44 +1320,44 @@ class AccountController
             'rollback' => '后台撤单',
             
             
-            'yeb_dq' => '余额宝定期',
-            'yeb_lixi' => '余额宝利息',
-            'yeb_hq' => '余额宝活期',
+            'yeb_dq' => 'Số dư宝定期',
+            'yeb_lixi' => 'Số dư宝利息',
+            'yeb_hq' => 'Số dư宝活期',
             
             
             'fanshui' => '每日加奖',
-            'jinjishenhe' => '晋级奖励',
-            'yongjinshenhe' => '代理返点',
+            'jinjishenhe' => 'Thăng cấp奖励',
+            'yongjinshenhe' => 'Đại lý返点',
             'xima' => '洗码',
             'point' => '积分',
-            '返水' => '返水',
+            'Hoàn trả' => 'Hoàn trả',
             
             
-            'activity_bindcard' => '绑定银行赠送活动',
-            'activity_cz' => '充值活动',
-            'activity_czzs' => '充值赠送活动',
-            'activity_rxf' => '日消费赠送活动',
-            'activity_rks' => '日亏损赠送活动',
-            'activity_yxf' => '月消费赠送活动',
-            'activity_yks' => '月亏损赠送活动',
-            '活动奖励' => '活动奖励',
+            'activity_bindcard' => 'Liên kết银行赠送Hoạt động',
+            'activity_cz' => 'Nạp tiềnHoạt động',
+            'activity_czzs' => 'Nạp tiền赠送Hoạt động',
+            'activity_rxf' => '日消费赠送Hoạt động',
+            'activity_rks' => '日亏损赠送Hoạt động',
+            'activity_yxf' => '月消费赠送Hoạt động',
+            'activity_yks' => '月亏损赠送Hoạt động',
+            'Hoạt động奖励' => 'Hoạt động奖励',
             '签到奖励' => '签到奖励',
             
             
-            'withdraw' => '提现',
-            'withdraw_return' => '提款退回',
-            'withdraw_reject' => '提现退回',
-            'withdraw_cancel' => '提现取消',
+            'withdraw' => 'Rút tiền',
+            'withdraw_return' => 'Rút tiền退回',
+            'withdraw_reject' => 'Rút tiền退回',
+            'withdraw_cancel' => 'Rút tiềnHủy',
             'adminadd' => '管理员加',
             'adminjian' => '管理员减',
-            'recharge' => '充值',
-            'transfer_in' => '转账入款',
-            'transfer_out' => '转账出款',
+            'recharge' => 'Nạp tiền',
+            'transfer_in' => 'Chuyển khoản入款',
+            'transfer_out' => 'Chuyển khoản出款',
             'yuebao_claim' => '利息宝收益领取',
             
             
-            '代理佣金' => '代理佣金',
-            '晋级奖励' => '晋级奖励'
+            'Đại lýHoa hồng' => 'Đại lýHoa hồng',
+            'Thăng cấp奖励' => 'Thăng cấp奖励'
         ];
         
         return $typeMap[$type] ?? $type;
@@ -1384,34 +1384,34 @@ class AccountController
     {
         return json([
             'code' => 0,
-            'message' => '获取成功',
+            'message' => 'Lấy dữ liệu thành công',
             'data' => [
                 ['value' => '', 'label' => '全部类型'],
                 ['value' => 'order', 'label' => '代购'],
                 ['value' => 'cancel', 'label' => '撤单'],
                 ['value' => 'reward', 'label' => '返奖'],
                 ['value' => 'fanshui', 'label' => '每日加奖'],
-                ['value' => 'jinjishenhe', 'label' => '晋级奖励'],
-                ['value' => 'yongjinshenhe', 'label' => '代理返点'],
-                ['value' => '代理佣金', 'label' => '代理佣金'],
+                ['value' => 'jinjishenhe', 'label' => 'Thăng cấp奖励'],
+                ['value' => 'yongjinshenhe', 'label' => 'Đại lý返点'],
+                ['value' => 'Đại lýHoa hồng', 'label' => 'Đại lýHoa hồng'],
                 ['value' => 'xima', 'label' => '洗码'],
-                ['value' => '返水', 'label' => '返水'],
-                ['value' => 'yeb_lixi', 'label' => '余额宝利息'],
-                ['value' => 'yeb_dq', 'label' => '余额宝定期'],
-                ['value' => 'yeb_hq', 'label' => '余额宝活期'],
+                ['value' => 'Hoàn trả', 'label' => 'Hoàn trả'],
+                ['value' => 'yeb_lixi', 'label' => 'Số dư宝利息'],
+                ['value' => 'yeb_dq', 'label' => 'Số dư宝定期'],
+                ['value' => 'yeb_hq', 'label' => 'Số dư宝活期'],
                 ['value' => 'yuebao_claim', 'label' => '利息宝收益'],
-                ['value' => 'withdraw', 'label' => '提现'],
-                ['value' => 'withdraw_reject', 'label' => '提现退回'],
-                ['value' => 'withdraw_cancel', 'label' => '提现取消'],
-                ['value' => 'recharge', 'label' => '充值'],
+                ['value' => 'withdraw', 'label' => 'Rút tiền'],
+                ['value' => 'withdraw_reject', 'label' => 'Rút tiền退回'],
+                ['value' => 'withdraw_cancel', 'label' => 'Rút tiềnHủy'],
+                ['value' => 'recharge', 'label' => 'Nạp tiền'],
                 ['value' => 'adminadd', 'label' => '管理员加'],
                 ['value' => 'adminjian', 'label' => '管理员减'],
                 ['value' => 'rollback', 'label' => '后台撤单'],
                 ['value' => 'point', 'label' => '积分'],
-                ['value' => 'activity_cz', 'label' => '充值活动'],
-                ['value' => 'activity_czzs', 'label' => '充值赠送'],
+                ['value' => 'activity_cz', 'label' => 'Nạp tiềnHoạt động'],
+                ['value' => 'activity_czzs', 'label' => 'Nạp tiền赠送'],
                 ['value' => 'activity_bindcard', 'label' => '绑卡赠送'],
-                ['value' => '活动奖励', 'label' => '活动奖励'],
+                ['value' => 'Hoạt động奖励', 'label' => 'Hoạt động奖励'],
                 ['value' => '签到奖励', 'label' => '签到奖励']
             ]
         ]);
@@ -1427,7 +1427,7 @@ class AccountController
             
             $platformsByType = [
                 '' => [['text' => '全部平台', 'value' => '']],
-                'lottery' => [['text' => '全部平台', 'value' => ''], ['text' => '博悦彩票', 'value' => 'boyue']]
+                'lottery' => [['text' => '全部平台', 'value' => ''], ['text' => '博悦Xổ số', 'value' => 'boyue']]
             ];
             
             foreach ($platforms as $p) {
@@ -1445,11 +1445,11 @@ class AccountController
             
             $categoryOptions = [['text' => '全部类型', 'value' => '']];
             $defaultCategories = [
-                ['code' => 'lottery', 'name' => '彩票'],
-                ['code' => 'live', 'name' => '真人视讯'],
-                ['code' => 'slot', 'name' => '电子游戏'],
-                ['code' => 'sport', 'name' => '体育'],
-                ['code' => 'chess', 'name' => '棋牌']
+                ['code' => 'lottery', 'name' => 'Xổ số'],
+                ['code' => 'live', 'name' => 'Live Casino视讯'],
+                ['code' => 'slot', 'name' => 'Điện tửTrò chơi'],
+                ['code' => 'sport', 'name' => 'Thể thao'],
+                ['code' => 'chess', 'name' => 'Bài']
             ];
             
             if ($categories && count($categories) > 0) {
@@ -1466,7 +1466,7 @@ class AccountController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'betStatusOptions' => [
                         ['text' => '全部状态', 'value' => ''],
@@ -1481,28 +1481,28 @@ class AccountController
                         '' => [['text' => '小类明细', 'value' => '']],
                         'withdraw' => [
                             ['text' => '小类明细', 'value' => ''],
-                            ['text' => '提现拒绝', 'value' => -1],
-                            ['text' => '提现成功', 'value' => 1],
-                            ['text' => '提现解冻', 'value' => 2],
+                            ['text' => 'Rút tiền拒绝', 'value' => -1],
+                            ['text' => 'Rút tiềnThành công', 'value' => 1],
+                            ['text' => 'Rút tiền解冻', 'value' => 2],
                             ['text' => '出款中', 'value' => 0]
                         ],
                         'recharge' => [
                             ['text' => '小类明细', 'value' => ''],
-                            ['text' => '待审核', 'value' => 0],
-                            ['text' => '充值成功', 'value' => 1],
-                            ['text' => '充值失败', 'value' => -1]
+                            ['text' => 'Chờ duyệt', 'value' => 0],
+                            ['text' => 'Nạp tiềnThành công', 'value' => 1],
+                            ['text' => 'Nạp tiềnThất bại', 'value' => -1]
                         ],
                         'order' => [
                             ['text' => '全部状态', 'value' => ''],
-                            ['text' => '待开奖', 'value' => 0],
-                            ['text' => '已中奖', 'value' => 1],
-                            ['text' => '未中奖', 'value' => 2]
+                            ['text' => '待Mở thưởng', 'value' => 0],
+                            ['text' => '已Trúng thưởng', 'value' => 1],
+                            ['text' => '未Trúng thưởng', 'value' => 2]
                         ]
                     ]
                 ]
             ]);
         } catch (\Exception $e) {
-            return json(['code' => 500, 'message' => '获取失败']);
+            return json(['code' => 500, 'message' => 'Lấy dữ liệu thất bại']);
         }
     }
     
@@ -1514,7 +1514,7 @@ class AccountController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -1567,17 +1567,17 @@ class AccountController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'totalReceive' => number_format($totalReceive, 2, '.', '')
                 ]
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取领取统计失败: ' . $e->getMessage());
+            \support\Log::error('Lấy领取统计Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败',
+                'message' => 'Lấy dữ liệuThất bại',
                 'data' => null
             ]);
         }
@@ -1688,7 +1688,7 @@ class AccountController
         } catch (\Exception $e) {
             return json([
                 'code' => 500,
-                'msg' => '查询失败：' . $e->getMessage(),
+                'msg' => 'Tra cứuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -1778,7 +1778,7 @@ class AccountController
         } catch (\Exception $e) {
             return json([
                 'code' => 500,
-                'msg' => '查询失败：' . $e->getMessage(),
+                'msg' => 'Tra cứuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }

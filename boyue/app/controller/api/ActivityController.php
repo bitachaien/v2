@@ -21,14 +21,14 @@ class ActivityController
 
             return json([
                 'code' => 0,
-                'msg' => '获取成功',
+                'msg' => 'Lấy dữ liệu thành công',
                 'data' => $list
             ]);
         } catch (\Exception $e) {
-            \support\Log::error('获取活动分类失败: ' . $e->getMessage());
+            \support\Log::error('LấyHoạt động分类Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'msg' => '获取数据失败：' . $e->getMessage(),
+                'msg' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => []
             ]);
         }
@@ -96,17 +96,17 @@ class ActivityController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'list' => $list
                 ]
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取活动列表失败: ' . $e->getMessage());
+            \support\Log::error('LấyHoạt động列表Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -120,7 +120,7 @@ class ActivityController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -136,7 +136,7 @@ class ActivityController
             if (!$user) {
                 return json([
                     'code' => 404,
-                    'message' => '用户不存在',
+                    'message' => 'Người dùng không tồn tại',
                     'data' => null
                 ]);
             }
@@ -167,7 +167,7 @@ class ActivityController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'countamount' => number_format($betAmount, 2, '.', ''),
                     'fanshuibili' => (string)$fanshuibili,
@@ -179,10 +179,10 @@ class ActivityController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取每日加奖信息失败: ' . $e->getMessage());
+            \support\Log::error('Lấy每日加奖信息Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -196,7 +196,7 @@ class ActivityController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -212,7 +212,7 @@ class ActivityController
             if (!$user) {
                 return json([
                     'code' => 404,
-                    'message' => '用户不存在',
+                    'message' => 'Người dùng không tồn tại',
                     'data' => null
                 ]);
             }
@@ -247,7 +247,7 @@ class ActivityController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'currentLevel' => $currentLevel,
                     'currentLevelId' => $currentLevelId,
@@ -259,10 +259,10 @@ class ActivityController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取晋级奖励信息失败: ' . $e->getMessage());
+            \support\Log::error('LấyThăng cấp奖励信息Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -276,7 +276,7 @@ class ActivityController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -292,7 +292,7 @@ class ActivityController
             if (!$user) {
                 return json([
                     'code' => 404,
-                    'message' => '用户不存在',
+                    'message' => 'Người dùng không tồn tại',
                     'data' => null
                 ]);
             }
@@ -310,7 +310,7 @@ class ActivityController
             if ($betAmount <= 0) {
                 return json([
                     'code' => 400,
-                    'message' => '昨日无投注，无法领取加奖',
+                    'message' => 'Hôm qua无Đặt cược，无法领取加奖',
                     'data' => null
                 ]);
             }
@@ -324,7 +324,7 @@ class ActivityController
             if ($todayRecord) {
                 return json([
                     'code' => 400,
-                    'message' => '今日已领取，请明日再来',
+                    'message' => 'Hôm nay已领取，请明日再来',
                     'data' => null
                 ]);
             }
@@ -336,7 +336,7 @@ class ActivityController
             if ($amount <= 0) {
                 return json([
                     'code' => 400,
-                    'message' => '加奖金额不足，无法领取',
+                    'message' => '加奖Số tiền不足，无法领取',
                     'data' => null
                 ]);
             }
@@ -375,12 +375,12 @@ class ActivityController
                 'before' => $user->balance,
                 'after' => $user->balance + $amount,
                 'oddtime' => time(),
-                'remark' => "昨日投注{$betAmount}元，加奖比例{$fanshuibili}%"
+                'remark' => "Hôm quaĐặt cược{$betAmount}元，加奖比例{$fanshuibili}%"
             ]);
             
             return json([
                 'code' => 0,
-                'message' => '领取成功',
+                'message' => '领取Thành công',
                 'data' => [
                     'amount' => number_format($amount, 2, '.', ''),
                     'orderId' => $orderId
@@ -388,10 +388,10 @@ class ActivityController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('领取每日加奖失败: ' . $e->getMessage());
+            \support\Log::error('领取每日加奖Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '领取失败：' . $e->getMessage(),
+                'message' => '领取Thất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -405,7 +405,7 @@ class ActivityController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -421,7 +421,7 @@ class ActivityController
             if (!$user) {
                 return json([
                     'code' => 404,
-                    'message' => '用户不存在',
+                    'message' => 'Người dùng không tồn tại',
                     'data' => null
                 ]);
             }
@@ -430,7 +430,7 @@ class ActivityController
             if (!$user->jinjijilu || $user->jinjijilu <= 0) {
                 return json([
                     'code' => 400,
-                    'message' => '暂无可领取的晋级奖励',
+                    'message' => '暂无可领取的Thăng cấp奖励',
                     'data' => null
                 ]);
             }
@@ -454,18 +454,18 @@ class ActivityController
                 'uid' => $userId,
                 'username' => $user->username,
                 'type' => 'jinjishenhe',
-                'typename' => '晋级奖励',
+                'typename' => 'Thăng cấp奖励',
                 'trano' => $orderId,
                 'amount' => $amount,
                 'before' => $user->balance,
                 'after' => $user->balance + $amount,
                 'oddtime' => time(),
-                'remark' => "晋级至{$user->groupname}奖励"
+                'remark' => "Thăng cấp至{$user->groupname}奖励"
             ]);
             
             return json([
                 'code' => 0,
-                'message' => '领取成功',
+                'message' => '领取Thành công',
                 'data' => [
                     'amount' => number_format($amount, 2, '.', ''),
                     'orderId' => $orderId
@@ -473,10 +473,10 @@ class ActivityController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('领取晋级奖励失败: ' . $e->getMessage());
+            \support\Log::error('领取Thăng cấp奖励Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '领取失败：' . $e->getMessage(),
+                'message' => '领取Thất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -490,7 +490,7 @@ class ActivityController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -524,7 +524,7 @@ class ActivityController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'total' => $total,
                     'page' => (int)$page,
@@ -534,10 +534,10 @@ class ActivityController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取加奖记录失败: ' . $e->getMessage());
+            \support\Log::error('Lấy加奖lịch sử thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -555,7 +555,7 @@ class ActivityController
             if (!$activity) {
                 return json([
                     'code' => 404,
-                    'message' => '活动不存在',
+                    'message' => 'Hoạt độngkhông tồn tại',
                     'data' => null
                 ]);
             }
@@ -649,15 +649,15 @@ class ActivityController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => $activityData
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取活动详情失败: ' . $e->getMessage());
+            \support\Log::error('LấyHoạt độngChi tiếtThất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -712,7 +712,7 @@ class ActivityController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -728,7 +728,7 @@ class ActivityController
             if (!$user) {
                 return json([
                     'code' => 404,
-                    'message' => '用户不存在',
+                    'message' => 'Người dùng không tồn tại',
                     'data' => null
                 ]);
             }
@@ -840,7 +840,7 @@ class ActivityController
             
             return json([
                 'code' => 0,
-                'message' => '获取成功',
+                'message' => 'Lấy dữ liệu thành công',
                 'data' => [
                     'totalClaimable' => round($totalClaimable, 2),
                     'userLevel' => $user->groupname ?? 'VIP0',
@@ -849,10 +849,10 @@ class ActivityController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('获取游戏商反水数据失败: ' . $e->getMessage());
+            \support\Log::error('Lấy trò chơi商反水dữ liệuThất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '获取数据失败：' . $e->getMessage(),
+                'message' => 'Lấy dữ liệuThất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }
@@ -866,7 +866,7 @@ class ActivityController
         if (!$userId) {
             return json([
                 'code' => 401,
-                'message' => '未登录或登录已过期',
+                'message' => '未Đăng nhậphoặcĐăng nhập已过期',
                 'data' => null
             ]);
         }
@@ -886,7 +886,7 @@ class ActivityController
             if (!$user) {
                 return json([
                     'code' => 404,
-                    'message' => '用户不存在',
+                    'message' => 'Người dùng không tồn tại',
                     'data' => null
                 ]);
             }
@@ -959,7 +959,7 @@ class ActivityController
                 if (empty($categoryCode) || empty($vendorCode)) {
                     return json([
                         'code' => 400,
-                        'message' => '请指定游戏分类和游戏商',
+                        'message' => '请指定Trò chơi分类和Trò chơi商',
                         'data' => null
                     ]);
                 }
@@ -976,7 +976,7 @@ class ActivityController
                 if ($exists) {
                     return json([
                         'code' => 400,
-                        'message' => '今日已领取该游戏商反水',
+                        'message' => 'Hôm nay已领取该Trò chơi商反水',
                         'data' => null
                     ]);
                 }
@@ -993,7 +993,7 @@ class ActivityController
                 if ($validBet <= 0) {
                     return json([
                         'code' => 400,
-                        'message' => '今日无有效投注，无法领取',
+                        'message' => 'Hôm nay无有效Đặt cược，无法领取',
                         'data' => null
                     ]);
                 }
@@ -1004,7 +1004,7 @@ class ActivityController
                 if ($amount <= 0) {
                     return json([
                         'code' => 400,
-                        'message' => '反水金额不足，无法领取',
+                        'message' => '反水Số tiền不足，无法领取',
                         'data' => null
                     ]);
                 }
@@ -1047,19 +1047,19 @@ class ActivityController
                     'uid' => $userId,
                     'username' => $user->username,
                     'type' => 'fanshui',
-                    'typename' => '游戏商返水',
+                    'typename' => 'Trò chơi商Hoàn trả',
                     'trano' => $orderId ?? 'VR' . date('YmdHis') . rand(1000, 9999),
                     'amount' => $totalClaimed,
                     'before' => $user->balance,
                     'after' => $user->balance + $totalClaimed,
                     'oddtime' => time(),
-                    'remark' => $claimAll ? '一键领取游戏商返水' : "领取{$categoryCode}_{$vendorCode}返水"
+                    'remark' => $claimAll ? '一键领取Trò chơi商Hoàn trả' : "领取{$categoryCode}_{$vendorCode}Hoàn trả"
                 ]);
             }
             
             return json([
                 'code' => 0,
-                'message' => $totalClaimed > 0 ? '领取成功' : '暂无可领取的返水',
+                'message' => $totalClaimed > 0 ? '领取Thành công' : '暂无可领取的Hoàn trả',
                 'data' => [
                     'totalClaimed' => round($totalClaimed, 2),
                     'items' => $claimedItems
@@ -1067,10 +1067,10 @@ class ActivityController
             ]);
             
         } catch (\Exception $e) {
-            \support\Log::error('领取游戏商反水失败: ' . $e->getMessage());
+            \support\Log::error('领取Trò chơi商反水Thất bại: ' . $e->getMessage());
             return json([
                 'code' => 500,
-                'message' => '领取失败：' . $e->getMessage(),
+                'message' => '领取Thất bại：' . $e->getMessage(),
                 'data' => null
             ]);
         }

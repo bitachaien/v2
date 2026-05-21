@@ -95,7 +95,7 @@ class AnimalLotteryCollector
                          (isset($result['code']) && $result['code'] === 'success');
             
             if (!$isSuccess) {
-                Log::warning("动物彩API返回失败: " . json_encode($result));
+                Log::warning("动物彩API返回Thất bại: " . json_encode($result));
                 return;
             }
             
@@ -151,12 +151,12 @@ class AnimalLotteryCollector
                     ]);
                     
                     $newCount++;
-                    Log::info("{$title} 采集成功: 期号 {$issueNo}, 开奖号码 {$opencode}");
+                    Log::info("{$title} 采集Thành công: 期号 {$issueNo}, Mở thưởng号码 {$opencode}");
                     
                 } catch (\Exception $e) {
                     
                     if (strpos($e->getMessage(), 'Duplicate entry') === false) {
-                        Log::error("{$title} 插入失败: " . $e->getMessage());
+                        Log::error("{$title} 插入Thất bại: " . $e->getMessage());
                     }
                 }
             }
@@ -166,7 +166,7 @@ class AnimalLotteryCollector
             }
             
         } catch (\Exception $e) {
-            Log::error("采集 {$name} 最新开奖失败: " . $e->getMessage());
+            Log::error("采集 {$name} 最新Mở thưởngThất bại: " . $e->getMessage());
         }
     }
     
@@ -198,7 +198,7 @@ class AnimalLotteryCollector
             return $response->getBody()->getContents();
             
         } catch (\Exception $e) {
-            Log::warning("动物彩API请求失败: {$url}, 错误: " . $e->getMessage());
+            Log::warning("动物彩APIYêu cầu thất bại: {$url}, Lỗi: " . $e->getMessage());
             return false;
         }
     }

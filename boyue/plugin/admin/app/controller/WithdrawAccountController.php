@@ -8,7 +8,7 @@ use support\Response;
 use support\Db;
 
 /**
- * 提现账户管理
+ * 提现tài khoản管理
  */
 class WithdrawAccountController
 {
@@ -25,7 +25,7 @@ class WithdrawAccountController
     protected $noNeedAuth = [];
 
     /**
-     * 提现账户列表
+     * 提现tài khoản列表
      * @param Request $request
      * @return Response
      */
@@ -35,7 +35,7 @@ class WithdrawAccountController
     }
 
     /**
-     * 查询
+     * Tra cứu
      * @param Request $request
      * @return Response
      */
@@ -55,22 +55,22 @@ class WithdrawAccountController
                 'caipiao_member.username'
             );
 
-        // 用户ID筛选
+        // Người dùngID筛选
         if ($uid !== null && $uid !== '') {
             $query->where('caipiao_withdraw_account.uid', (int)$uid);
         }
 
-        // 用户名搜索
+        // Tên người dùngTìm kiếm
         if (!empty($username)) {
             $query->where('caipiao_member.username', 'like', '%' . $username . '%');
         }
 
-        // 账户类型筛选
+        // tài khoản类型筛选
         if (!empty($type)) {
             $query->where('caipiao_withdraw_account.type', $type);
         }
 
-        // 状态筛选（默认只显示启用的账户）
+        // 状态筛选（默认只显示启用的tài khoản）
         if ($status !== '') {
             $query->where('caipiao_withdraw_account.status', $status);
         } else {
@@ -83,14 +83,14 @@ class WithdrawAccountController
         
         $records = $query->offset(($page - 1) * $limit)->limit($limit)->get();
 
-        // 格式化数据
+        // 格式化dữ liệu
         foreach ($records as &$record) {
             $record->type_text = $this->getTypeText($record->type);
             $record->status_text = $record->status == 1 ? '启用' : '禁用';
             $record->is_default_text = $record->is_default == 1 ? '是' : '否';
             $record->created_at_text = date('Y-m-d H:i:s', $record->created_at);
             
-            // 根据类型显示不同的账户信息
+            // 根据类型显示不同的tài khoản信息
             switch ($record->type) {
                 case 'bank':
                     $record->account_info = $record->bank_name . ' - ' . $record->bank_account;
@@ -111,7 +111,7 @@ class WithdrawAccountController
     }
 
     /**
-     * 添加
+     * Thêm
      * @param Request $request
      * @return Response
      */
@@ -122,17 +122,17 @@ class WithdrawAccountController
             
             // 验证必填字段
             if (empty($data['uid'])) {
-                return json(['code' => 1, 'msg' => '请选择用户']);
+                return json(['code' => 1, 'msg' => 'Vui lòng chọnNgười dùng']);
             }
             if (empty($data['type'])) {
-                return json(['code' => 1, 'msg' => '请选择账户类型']);
+                return json(['code' => 1, 'msg' => 'Vui lòng chọntài khoản类型']);
             }
 
             // 根据类型验证不同字段
             switch ($data['type']) {
                 case 'bank':
                     if (empty($data['bank_name']) || empty($data['bank_account']) || empty($data['account_name'])) {
-                        return json(['code' => 1, 'msg' => '请填写完整的银行卡信息']);
+                        return json(['code' => 1, 'msg' => '请填写完整的Thẻ ngân hàng信息']);
                     }
                     break;
                 case 'usdt':
@@ -143,12 +143,12 @@ class WithdrawAccountController
                 case 'alipay':
                 case 'wechat':
                     if (empty($data['bank_account']) || empty($data['account_name'])) {
-                        return json(['code' => 1, 'msg' => '请填写完整的账户信息']);
+                        return json(['code' => 1, 'msg' => '请填写完整的tài khoản信息']);
                     }
                     break;
             }
 
-            // 检查是否已存在
+            // 检查是否đã tồn tại
             $exists = false;
             if ($data['type'] === 'bank') {
                 $exists = Db::table('caipiao_withdraw_account')
@@ -174,10 +174,10 @@ class WithdrawAccountController
             }
 
             if ($exists) {
-                return json(['code' => 1, 'msg' => '该账户已存在']);
+                return json(['code' => 1, 'msg' => '该tài khoảnđã tồn tại']);
             }
 
-            // 如果设置为默认，取消该用户其他默认账户
+            // 如果Cài đặt为默认，Hủy该Người dùng其他默认tài khoản
             if (!empty($data['is_default'])) {
                 Db::table('caipiao_withdraw_account')
                     ->where('uid', $data['uid'])
@@ -203,7 +203,7 @@ class WithdrawAccountController
 
             Db::table('caipiao_withdraw_account')->insert($insertData);
 
-            return json(['code' => 0, 'msg' => '添加成功']);
+            return json(['code' => 0, 'msg' => 'ThêmThành công']);
         }
 
         return raw_view('withdraw-account/insert');
@@ -220,7 +220,7 @@ class WithdrawAccountController
             $id = $request->get('id');
             $account = Db::table('caipiao_withdraw_account')->where('id', $id)->first();
             if (!$account) {
-                return json(['code' => 1, 'msg' => '账户不存在']);
+                return json(['code' => 1, 'msg' => 'tài khoảnkhông tồn tại']);
             }
             return raw_view('withdraw-account/update', ['account' => $account]);
         }
@@ -229,15 +229,15 @@ class WithdrawAccountController
         $data = $request->post();
 
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $account = Db::table('caipiao_withdraw_account')->where('id', $id)->first();
         if (!$account) {
-            return json(['code' => 1, 'msg' => '账户不存在']);
+            return json(['code' => 1, 'msg' => 'tài khoảnkhông tồn tại']);
         }
 
-        // 如果设置为默认，取消该用户其他默认账户
+        // 如果Cài đặt为默认，Hủy该Người dùng其他默认tài khoản
         if (!empty($data['is_default']) && $data['is_default'] != $account->is_default) {
             Db::table('caipiao_withdraw_account')
                 ->where('uid', $account->uid)
@@ -260,7 +260,7 @@ class WithdrawAccountController
 
         Db::table('caipiao_withdraw_account')->where('id', $id)->update($updateData);
 
-        return json(['code' => 0, 'msg' => '更新成功']);
+        return json(['code' => 0, 'msg' => '更新Thành công']);
     }
 
     /**
@@ -273,20 +273,20 @@ class WithdrawAccountController
         $ids = (array)$request->post('ids', []);
         
         if (empty($ids)) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
-        // 检查是否有默认账户
+        // 检查是否有默认tài khoản
         $hasDefault = Db::table('caipiao_withdraw_account')
             ->whereIn('id', $ids)
             ->where('is_default', 1)
             ->exists();
 
         if ($hasDefault) {
-            return json(['code' => 1, 'msg' => '不能删除默认账户']);
+            return json(['code' => 1, 'msg' => '不能Xóa默认tài khoản']);
         }
 
-        // 软删除
+        // 软Xóa
         Db::table('caipiao_withdraw_account')
             ->whereIn('id', $ids)
             ->update([
@@ -294,11 +294,11 @@ class WithdrawAccountController
                 'updated_at' => time()
             ]);
 
-        return json(['code' => 0, 'msg' => '删除成功']);
+        return json(['code' => 0, 'msg' => 'XóaThành công']);
     }
 
     /**
-     * 设置默认账户
+     * Cài đặt默认tài khoản
      * @param Request $request
      * @return Response
      */
@@ -307,20 +307,20 @@ class WithdrawAccountController
         $id = $request->post('id');
         
         if (!$id) {
-            return json(['code' => 1, 'msg' => '参数错误']);
+            return json(['code' => 1, 'msg' => 'Tham số không hợp lệ']);
         }
 
         $account = Db::table('caipiao_withdraw_account')->where('id', $id)->first();
         if (!$account) {
-            return json(['code' => 1, 'msg' => '账户不存在']);
+            return json(['code' => 1, 'msg' => 'tài khoảnkhông tồn tại']);
         }
 
-        // 取消该用户其他默认账户
+        // Hủy该Người dùng其他默认tài khoản
         Db::table('caipiao_withdraw_account')
             ->where('uid', $account->uid)
             ->update(['is_default' => 0]);
 
-        // 设置当前账户为默认
+        // Cài đặt当前tài khoản为默认
         Db::table('caipiao_withdraw_account')
             ->where('id', $id)
             ->update([
@@ -328,19 +328,19 @@ class WithdrawAccountController
                 'updated_at' => time()
             ]);
 
-        return json(['code' => 0, 'msg' => '设置成功']);
+        return json(['code' => 0, 'msg' => 'Cài đặtThành công']);
     }
 
     /**
-     * 获取账户类型文本
+     * Lấytài khoản类型文本
      */
     private function getTypeText($type)
     {
         $map = [
-            'bank' => '银行卡',
+            'bank' => 'Thẻ ngân hàng',
             'usdt' => 'USDT',
-            'alipay' => '支付宝',
-            'wechat' => '微信'
+            'alipay' => 'Alipay',
+            'wechat' => 'WeChat'
         ];
         return $map[$type] ?? $type;
     }

@@ -74,7 +74,7 @@ class BannerService
         } catch (BannerException $e) {
             return $e->toResult()->toArray();
         } catch (\Throwable $e) {
-            Log::error('轮播图获取失败', [
+            Log::error('轮播图Lấy dữ liệu thất bại', [
                 'error'    => $e->getMessage(),
                 'platform' => $platform,
                 'limit'    => $limit,
@@ -117,7 +117,7 @@ class BannerService
         } catch (BannerException $e) {
             return $e->toResult()->toArray();
         } catch (\Throwable $e) {
-            Log::error('轮播图详情获取失败', [
+            Log::error('轮播图Chi tiếtLấy dữ liệu thất bại', [
                 'error' => $e->getMessage(),
                 'id'    => $id,
             ]);
@@ -165,7 +165,7 @@ class BannerService
             return Result::page($result, $count)->toArray();
 
         } catch (\Throwable $e) {
-            Log::error('后台轮播图列表获取失败', [
+            Log::error('后台轮播图列表Lấy dữ liệu thất bại', [
                 'error'  => $e->getMessage(),
                 'params' => $params,
             ]);
@@ -193,18 +193,18 @@ class BannerService
             
             BannerCache::refresh();
 
-            Log::info('轮播图创建成功', ['id' => $id, 'title' => $dto->title]);
+            Log::info('轮播图创建Thành công', ['id' => $id, 'title' => $dto->title]);
 
-            return Result::success(['id' => $id], '添加成功')->toArray();
+            return Result::success(['id' => $id], 'ThêmThành công')->toArray();
 
         } catch (BannerException $e) {
             return $e->toResult()->toArray();
         } catch (\Throwable $e) {
-            Log::error('轮播图创建失败', [
+            Log::error('轮播图创建Thất bại', [
                 'error' => $e->getMessage(),
                 'data'  => $data,
             ]);
-            return Result::fail('添加失败: ' . $e->getMessage())->toArray();
+            return Result::fail('ThêmThất bại: ' . $e->getMessage())->toArray();
         }
     }
 
@@ -254,19 +254,19 @@ class BannerService
             
             BannerCache::refresh($id);
 
-            Log::info('轮播图更新成功', ['id' => $id]);
+            Log::info('轮播图更新Thành công', ['id' => $id]);
 
-            return Result::success(null, '修改成功')->toArray();
+            return Result::success(null, 'SửaThành công')->toArray();
 
         } catch (BannerException $e) {
             return $e->toResult()->toArray();
         } catch (\Throwable $e) {
-            Log::error('轮播图更新失败', [
+            Log::error('轮播图更新Thất bại', [
                 'error' => $e->getMessage(),
                 'id'    => $id,
                 'data'  => $data,
             ]);
-            return Result::fail('修改失败')->toArray();
+            return Result::fail('SửaThất bại')->toArray();
         }
     }
 
@@ -285,18 +285,18 @@ class BannerService
             
             BannerCache::refresh($id);
 
-            Log::info('轮播图删除成功', ['id' => $id]);
+            Log::info('轮播图XóaThành công', ['id' => $id]);
 
-            return Result::success(null, '删除成功')->toArray();
+            return Result::success(null, 'XóaThành công')->toArray();
 
         } catch (BannerException $e) {
             return $e->toResult()->toArray();
         } catch (\Throwable $e) {
-            Log::error('轮播图删除失败', [
+            Log::error('轮播图XóaThất bại', [
                 'error' => $e->getMessage(),
                 'id'    => $id,
             ]);
-            return Result::fail('删除失败')->toArray();
+            return Result::fail('XóaThất bại')->toArray();
         }
     }
 
@@ -316,18 +316,18 @@ class BannerService
             
             BannerCache::refresh();
 
-            Log::info('轮播图批量删除成功', ['ids' => $ids, 'count' => count($ids)]);
+            Log::info('轮播图批量XóaThành công', ['ids' => $ids, 'count' => count($ids)]);
 
-            return Result::success(null, '删除成功')->toArray();
+            return Result::success(null, 'XóaThành công')->toArray();
 
         } catch (BannerException $e) {
             return $e->toResult()->toArray();
         } catch (\Throwable $e) {
-            Log::error('轮播图批量删除失败', [
+            Log::error('轮播图批量XóaThất bại', [
                 'error' => $e->getMessage(),
                 'ids'   => $ids,
             ]);
-            return Result::fail('删除失败')->toArray();
+            return Result::fail('XóaThất bại')->toArray();
         }
     }
 
@@ -353,19 +353,19 @@ class BannerService
             BannerCache::refresh($id);
 
             $statusText = BannerConstant::getStatusText($status);
-            Log::info('轮播图状态更新成功', ['id' => $id, 'status' => $statusText]);
+            Log::info('轮播图状态更新Thành công', ['id' => $id, 'status' => $statusText]);
 
-            return Result::success(null, '状态更新成功')->toArray();
+            return Result::success(null, '状态更新Thành công')->toArray();
 
         } catch (BannerException $e) {
             return $e->toResult()->toArray();
         } catch (\Throwable $e) {
-            Log::error('轮播图状态更新失败', [
+            Log::error('轮播图状态更新Thất bại', [
                 'error'  => $e->getMessage(),
                 'id'     => $id,
                 'status' => $status,
             ]);
-            return Result::fail('状态更新失败')->toArray();
+            return Result::fail('状态更新Thất bại')->toArray();
         }
     }
 
@@ -388,7 +388,7 @@ class BannerService
             return $dto->toDetailArray();
 
         } catch (\Throwable $e) {
-            Log::error('获取轮播图详情失败', [
+            Log::error('Lấy轮播图Chi tiếtThất bại', [
                 'error' => $e->getMessage(),
                 'id'    => $id,
             ]);

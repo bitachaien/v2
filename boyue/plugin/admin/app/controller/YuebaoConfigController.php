@@ -34,7 +34,7 @@ class YuebaoConfigController extends Base
     }
 
     /**
-     * 获取配置
+     * Lấy配置
      * @return Response
      */
     public function get(): Response
@@ -44,7 +44,7 @@ class YuebaoConfigController extends Base
     }
 
     /**
-     * 保存配置
+     * Lưu配置
      * @param Request $request
      * @return Response
      */
@@ -52,7 +52,7 @@ class YuebaoConfigController extends Base
     {
         $data = $request->post();
         
-        // 验证并格式化数据
+        // 验证并格式化dữ liệu
         $config = [
             'settle_cycle'       => $data['settle_cycle'] ?? '1小时',
             'settle_cycle_hours' => (int)($data['settle_cycle_hours'] ?? 1),

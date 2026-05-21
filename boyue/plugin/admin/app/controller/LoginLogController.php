@@ -16,7 +16,7 @@ class LoginLogController extends Base
     }
     
     /**
-     * 获取登录日志列表数据
+     * LấyĐăng nhập日志列表dữ liệu
      */
     public function list(Request $request)
     {
@@ -45,7 +45,7 @@ class LoginLogController extends Base
             $query->where('time', '<=', strtotime($eDate) + 86400);
         }
         
-        // 获取总数
+        // Lấy总数
         $count = $query->count();
         
         // 分页
@@ -55,12 +55,12 @@ class LoginLogController extends Base
                      ->limit($limit)
                      ->get();
         
-        // 处理数据
+        // 处理dữ liệu
         $result = [];
         foreach ($list as $item) {
             $row = (array)$item;
             
-            // 格式化时间
+            // 格式化Thời gian
             if (isset($row['time']) && is_numeric($row['time'])) {
                 $row['time_text'] = date('Y-m-d H:i:s', $row['time']);
             } else {

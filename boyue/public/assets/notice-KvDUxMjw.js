@@ -1,1 +1,0 @@
-import{e as t}from"./index-Yfp5IzwS.js";const e={getNoticeList:e=>t({url:"/v1/notice/list",method:"get",params:e}),getNoticeDetail:e=>t({url:`/v1/notice/detail/${e}`,method:"get"}),markRead:e=>t({url:"/v1/notice/mark-read",method:"post",data:e}),getUnreadCount:()=>t({url:"/v1/notice/unread-count",method:"get"})};export{e as n};

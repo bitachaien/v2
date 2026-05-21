@@ -81,7 +81,7 @@ class RobotAutoBet
     
     public function onWorkerStart()
     {
-        Log::info('[RobotAutoBet] 机器人自动下注进程启动');
+        Log::info('[RobotAutoBet] 机器人自动Đặt cược进程启动');
         
         
         $this->loadRobots();
@@ -108,9 +108,9 @@ class RobotAutoBet
                 ->get()
                 ->toArray();
             
-            Log::info('[RobotAutoBet] 加载 ' . count($this->robots) . ' 个机器人用户');
+            Log::info('[RobotAutoBet] 加载 ' . count($this->robots) . ' 个机器人Người dùng');
         } catch (\Exception $e) {
-            Log::error('[RobotAutoBet] 加载机器人用户失败: ' . $e->getMessage());
+            Log::error('[RobotAutoBet] 加载机器人Người dùngThất bại: ' . $e->getMessage());
             $this->robots = [];
         }
     }
@@ -124,12 +124,12 @@ class RobotAutoBet
                 ->first();
             
             if ($this->config) {
-                Log::info('[RobotAutoBet] 配置加载成功: ' . $this->config->name);
+                Log::info('[RobotAutoBet] 配置加载Thành công: ' . $this->config->name);
             } else {
                 Log::warning('[RobotAutoBet] 没有启用的机器人配置');
             }
         } catch (\Exception $e) {
-            Log::error('[RobotAutoBet] 加载配置失败: ' . $e->getMessage());
+            Log::error('[RobotAutoBet] 加载cấu hình thất bại: ' . $e->getMessage());
             $this->config = null;
         }
     }
@@ -249,7 +249,7 @@ class RobotAutoBet
             $this->bettedRobots[$issueKey][] = $robot->id;
             
         } catch (\Exception $e) {
-            Log::error("[RobotAutoBet] 处理彩种 {$lotteryCode} 下注失败: " . $e->getMessage());
+            Log::error("[RobotAutoBet] 处理彩种 {$lotteryCode} Đặt cượcThất bại: " . $e->getMessage());
         }
     }
 
@@ -296,7 +296,7 @@ class RobotAutoBet
             
             
             if ($robot->balance < $totalAmount) {
-                Log::warning("[RobotAutoBet] 机器人 {$robot->nickname} 余额不足");
+                Log::warning("[RobotAutoBet] 机器人 {$robot->nickname} Số dư không đủ");
                 return;
             }
             
@@ -331,7 +331,7 @@ class RobotAutoBet
                     'cptitle' => $caipiao->title ?? $lotteryCode,
                     'expect' => $issue,
                     'playid' => 'xy28_combined',
-                    'playtitle' => '组合投注',
+                    'playtitle' => '组合Đặt cược',
                     'tzcode' => json_encode($betItems),
                     'amount' => $totalAmount,
                     'amountbefor' => $balanceBefore,
@@ -412,7 +412,7 @@ class RobotAutoBet
                 
                 $this->pushBetStatsUpdate($lotteryCode, $issue);
                 
-                Log::info("[RobotAutoBet] 机器人 {$robot->nickname} 下注成功: {$lotteryCode} {$issue} {$betText} 总额:{$totalAmount}");
+                Log::info("[RobotAutoBet] 机器人 {$robot->nickname} Đặt cượcThành công: {$lotteryCode} {$issue} {$betText} 总额:{$totalAmount}");
                 
             } catch (\Exception $e) {
                 Db::rollBack();
@@ -420,7 +420,7 @@ class RobotAutoBet
             }
             
         } catch (\Exception $e) {
-            Log::error("[RobotAutoBet] 机器人 {$robot->nickname} 下注失败: " . $e->getMessage() . " at " . $e->getFile() . ":" . $e->getLine());
+            Log::error("[RobotAutoBet] 机器人 {$robot->nickname} Đặt cượcThất bại: " . $e->getMessage() . " at " . $e->getFile() . ":" . $e->getLine());
         }
     }
 
@@ -441,7 +441,7 @@ class RobotAutoBet
             $redis->rPush('websocket_push_queue', json_encode($broadcastMsg));
             $redis->close();
         } catch (\Exception $e) {
-            Log::warning('[RobotAutoBet] 推送聊天消息失败: ' . $e->getMessage());
+            Log::warning('[RobotAutoBet] 推送聊天Tin nhắnThất bại: ' . $e->getMessage());
         }
     }
 
@@ -469,7 +469,7 @@ class RobotAutoBet
             $redis->rPush('websocket_push_queue', json_encode($statsMsg));
             $redis->close();
         } catch (\Exception $e) {
-            Log::warning('[RobotAutoBet] 推送统计更新失败: ' . $e->getMessage());
+            Log::warning('[RobotAutoBet] 推送统计更新Thất bại: ' . $e->getMessage());
         }
     }
 
@@ -657,7 +657,7 @@ class RobotAutoBet
             ];
             
         } catch (\Exception $e) {
-            Log::error("[RobotAutoBet] 获取期号信息失败 {$lotteryCode}: " . $e->getMessage());
+            Log::error("[RobotAutoBet] Lấy期号信息Thất bại {$lotteryCode}: " . $e->getMessage());
             return null;
         }
     }
@@ -675,7 +675,7 @@ class RobotAutoBet
                 ->update(['balance' => rand(50000, 100000) / 10]);
             
             if ($affected > 0) {
-                Log::info("[RobotAutoBet] 恢复 {$affected} 个机器人余额");
+                Log::info("[RobotAutoBet] 恢复 {$affected} 个机器人Số dư");
                 
                 $this->loadRobots();
             }

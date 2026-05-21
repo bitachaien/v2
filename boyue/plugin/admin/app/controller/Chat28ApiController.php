@@ -60,7 +60,7 @@ class Chat28ApiController extends Base
     }
 
     /**
-     * 获取机器人配置详情
+     * Lấy机器人配置Chi tiết
      * GET /app/admin/api/chat28/config/detail
      */
     public function configDetail(Request $request)
@@ -68,13 +68,13 @@ class Chat28ApiController extends Base
         $id = $request->get('id');
 
         if (empty($id)) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
         $config = Db::table('caipiao_robot_config')->where('id', $id)->first();
 
         if (!$config) {
-            return $this->json(1, '配置不存在');
+            return $this->json(1, '配置không tồn tại');
         }
 
         $config = (array)$config;
@@ -104,7 +104,7 @@ class Chat28ApiController extends Base
         $name = $request->post('name');
         
         if (empty($name)) {
-            return $this->json(1, '配置名称不能为空');
+            return $this->json(1, '配置名称không được để trống');
         }
 
         $lotteryCodes = $request->post('lottery_codes', '');
@@ -129,10 +129,10 @@ class Chat28ApiController extends Base
         $id = Db::table('caipiao_robot_config')->insertGetId($data);
 
         if ($id) {
-            return $this->json(0, '创建成功', ['id' => $id]);
+            return $this->json(0, '创建Thành công', ['id' => $id]);
         }
 
-        return $this->json(1, '创建失败');
+        return $this->json(1, '创建Thất bại');
     }
 
     /**
@@ -144,12 +144,12 @@ class Chat28ApiController extends Base
         $id = $request->post('id');
         
         if (empty($id)) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
         $config = Db::table('caipiao_robot_config')->where('id', $id)->first();
         if (!$config) {
-            return $this->json(1, '配置不存在');
+            return $this->json(1, '配置không tồn tại');
         }
 
         $lotteryCodes = $request->post('lottery_codes', '');
@@ -182,7 +182,7 @@ class Chat28ApiController extends Base
             ->where('id', $id)
             ->update($updateData);
 
-        return $this->json(0, '更新成功');
+        return $this->json(0, '更新Thành công');
     }
 
     /**
@@ -194,12 +194,12 @@ class Chat28ApiController extends Base
         $id = $request->post('id');
         
         if (empty($id)) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
         $config = Db::table('caipiao_robot_config')->where('id', $id)->first();
         if (!$config) {
-            return $this->json(1, '配置不存在');
+            return $this->json(1, '配置không tồn tại');
         }
 
         // 如果要启用，先禁用其他配置（只允许一个配置启用）
@@ -211,11 +211,11 @@ class Chat28ApiController extends Base
             ->where('id', $id)
             ->update(['is_enabled' => $config->is_enabled == 1 ? 0 : 1]);
 
-        return $this->json(0, '操作成功');
+        return $this->json(0, 'Thao tác thành công');
     }
 
     /**
-     * 删除配置
+     * Xóa配置
      * POST /app/admin/api/chat28/config/delete
      */
     public function configDelete(Request $request)
@@ -223,22 +223,22 @@ class Chat28ApiController extends Base
         $id = $request->post('id');
         
         if (empty($id)) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
         Db::table('caipiao_robot_config')->where('id', $id)->delete();
 
-        return $this->json(0, '删除成功');
+        return $this->json(0, 'XóaThành công');
     }
 
     /**
      * ============================================
-     * 机器人会员管理
+     * 机器人Thành viên管理
      * ============================================
      */
 
     /**
-     * 获取机器人列表
+     * Lấy机器人列表
      * GET /app/admin/api/chat28/robot/list
      */
     public function robotList(Request $request)
@@ -282,7 +282,7 @@ class Chat28ApiController extends Base
                 'islock_text' => ($item['islock'] ?? 0) == 1 ? '禁用' : '正常',
                 'regtime' => isset($item['regtime']) ? date('Y-m-d H:i:s', $item['regtime']) : '',
                 'logintime' => isset($item['logintime']) && $item['logintime'] > 0 
-                    ? date('Y-m-d H:i:s', $item['logintime']) : '从未登录',
+                    ? date('Y-m-d H:i:s', $item['logintime']) : '从未Đăng nhập',
             ];
         }
 
@@ -303,13 +303,13 @@ class Chat28ApiController extends Base
         $balance = floatval($request->post('balance', 10000));
 
         if (empty($username)) {
-            return $this->json(1, '用户名不能为空');
+            return $this->json(1, 'Tên người dùngkhông được để trống');
         }
 
-        // 检查用户名是否存在
+        // 检查Tên người dùng是否存在
         $exists = Db::table('caipiao_member')->where('username', $username)->exists();
         if ($exists) {
-            return $this->json(1, '用户名已存在');
+            return $this->json(1, 'Tên người dùngđã tồn tại');
         }
 
         $now = time();
@@ -331,10 +331,10 @@ class Chat28ApiController extends Base
         $id = Db::table('caipiao_member')->insertGetId($data);
 
         if ($id) {
-            return $this->json(0, '创建成功', ['id' => $id]);
+            return $this->json(0, '创建Thành công', ['id' => $id]);
         }
 
-        return $this->json(1, '创建失败');
+        return $this->json(1, '创建Thất bại');
     }
 
     /**
@@ -361,7 +361,7 @@ class Chat28ApiController extends Base
 
             $data = [
                 'username' => $username,
-                'nickname' => '用户' . mt_rand(10000, 99999),
+                'nickname' => 'Người dùng' . mt_rand(10000, 99999),
                 'password' => md5('robot123456'),
                 'is_robot' => 1,
                 'balance' => $balance + mt_rand(-2000, 5000),
@@ -382,7 +382,7 @@ class Chat28ApiController extends Base
             }
         }
 
-        return $this->json(0, "成功创建 {$created} 个机器人");
+        return $this->json(0, "Thành công创建 {$created} 个机器人");
     }
 
     /**
@@ -394,7 +394,7 @@ class Chat28ApiController extends Base
         $id = $request->post('id');
         
         if (empty($id)) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
         $robot = Db::table('caipiao_member')
@@ -403,7 +403,7 @@ class Chat28ApiController extends Base
             ->first();
 
         if (!$robot) {
-            return $this->json(1, '机器人不存在');
+            return $this->json(1, '机器人không tồn tại');
         }
 
         $updateData = [];
@@ -426,11 +426,11 @@ class Chat28ApiController extends Base
             ->where('id', $id)
             ->update($updateData);
 
-        return $this->json(0, '更新成功');
+        return $this->json(0, '更新Thành công');
     }
 
     /**
-     * 删除机器人
+     * Xóa机器人
      * POST /app/admin/api/chat28/robot/delete
      */
     public function robotDelete(Request $request)
@@ -438,24 +438,24 @@ class Chat28ApiController extends Base
         $id = $request->post('id');
         
         if (empty($id)) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
-        // 只能删除机器人
+        // 只能Xóa机器人
         $affected = Db::table('caipiao_member')
             ->where('id', $id)
             ->where('is_robot', 1)
             ->delete();
 
         if ($affected) {
-            return $this->json(0, '删除成功');
+            return $this->json(0, 'XóaThành công');
         }
 
-        return $this->json(1, '机器人不存在或删除失败');
+        return $this->json(1, '机器人không tồn tạihoặcXóaThất bại');
     }
 
     /**
-     * 批量充值
+     * 批量Nạp tiền
      * POST /app/admin/api/chat28/robot/batch-recharge
      */
     public function robotBatchRecharge(Request $request)
@@ -463,23 +463,23 @@ class Chat28ApiController extends Base
         $amount = floatval($request->post('amount', 10000));
         $minBalance = floatval($request->post('min_balance', 1000));
 
-        // 给余额低于阈值的机器人充值
+        // 给Số dư低于阈值的机器人Nạp tiền
         $affected = Db::table('caipiao_member')
             ->where('is_robot', 1)
             ->where('balance', '<', $minBalance)
             ->update(['balance' => Db::raw("balance + {$amount}")]);
 
-        return $this->json(0, "成功为 {$affected} 个机器人充值");
+        return $this->json(0, "Thành công为 {$affected} 个机器人Nạp tiền");
     }
 
     /**
      * ============================================
-     * 聊天消息管理
+     * 聊天Tin nhắn管理
      * ============================================
      */
 
     /**
-     * 获取聊天消息列表
+     * Lấy聊天Tin nhắn列表
      * GET /app/admin/api/chat28/message/list
      */
     public function messageList(Request $request)
@@ -547,7 +547,7 @@ class Chat28ApiController extends Base
     }
 
     /**
-     * 删除消息
+     * XóaTin nhắn
      * POST /app/admin/api/chat28/message/delete
      */
     public function messageDelete(Request $request)
@@ -555,17 +555,17 @@ class Chat28ApiController extends Base
         $id = $request->post('id');
         
         if (empty($id)) {
-            return $this->json(1, '参数错误');
+            return $this->json(1, 'Tham số không hợp lệ');
         }
 
-        // 获取消息详情用于推送撤回
+        // LấyTin nhắnChi tiết用于推送撤回
         $message = Db::table('caipiao_lottery_chat')->where('id', $id)->first();
         
         if ($message) {
-            // 删除消息
+            // XóaTin nhắn
             Db::table('caipiao_lottery_chat')->where('id', $id)->delete();
             
-            // 推送消息撤回通知到 WebSocket
+            // 推送Tin nhắn撤回Thông báo到 WebSocket
             try {
                 $redis = Redis::connection('default')->client();
                 $recallMsg = [
@@ -579,7 +579,7 @@ class Chat28ApiController extends Base
                 ];
                 $redis->rPush('websocket_push_queue', json_encode($recallMsg));
             } catch (\Exception $e) {
-                // 忽略推送失败
+                // 忽略推送Thất bại
             }
         }
 
@@ -587,7 +587,7 @@ class Chat28ApiController extends Base
     }
 
     /**
-     * 发送系统消息
+     * 发送系统Tin nhắn
      * POST /app/admin/api/chat28/message/send-system
      */
     public function sendSystemMessage(Request $request)
@@ -599,7 +599,7 @@ class Chat28ApiController extends Base
             return $this->json(1, '参数不完整');
         }
 
-        // 获取当前期号
+        // Lấy当前期号
         $currentIssue = Db::table('caipiao_kaijiang')
             ->where('name', $lotteryCode)
             ->where('isdraw', 0)
@@ -608,7 +608,7 @@ class Chat28ApiController extends Base
 
         $now = date('Y-m-d H:i:s');
         
-        // 保存到数据库
+        // Lưu到dữ liệu库
         $data = [
             'lottery_code' => $lotteryCode,
             'issue' => $currentIssue,
@@ -644,7 +644,7 @@ class Chat28ApiController extends Base
             ];
             $redis->rPush('websocket_push_queue', json_encode($chatMsg));
         } catch (\Exception $e) {
-            // 忽略推送失败
+            // 忽略推送Thất bại
         }
 
         return $this->json(0, '发送成功', ['id' => $id]);
@@ -652,12 +652,12 @@ class Chat28ApiController extends Base
 
     /**
      * ============================================
-     * 统计数据
+     * 统计dữ liệu
      * ============================================
      */
 
     /**
-     * 获取聊天室统计
+     * Lấy聊天室统计
      * GET /app/admin/api/chat28/stats
      */
     public function stats(Request $request)
@@ -670,19 +670,19 @@ class Chat28ApiController extends Base
             ->where('islock', 0)
             ->count();
 
-        // 今日消息数
+        // Hôm nayTin nhắn数
         $todayMessages = Db::table('caipiao_lottery_chat')
             ->where('lottery_code', $lotteryCode)
             ->where('created_at', '>=', date('Y-m-d 00:00:00'))
             ->count();
 
-        // 今日投注数
+        // Hôm nayĐặt cược数
         $todayBets = Db::table('caipiao_touzhu')
             ->where('cpname', $lotteryCode)
             ->where('oddtime', '>=', strtotime(date('Y-m-d')))
             ->count();
 
-        // 今日投注金额
+        // Hôm nayĐặt cượcSố tiền
         $todayAmount = Db::table('caipiao_touzhu')
             ->where('cpname', $lotteryCode)
             ->where('oddtime', '>=', strtotime(date('Y-m-d')))
@@ -703,7 +703,7 @@ class Chat28ApiController extends Base
     }
 
     /**
-     * 获取彩种选项
+     * Lấy彩种选项
      * GET /app/admin/api/chat28/lottery-options
      */
     public function lotteryOptions(Request $request)
@@ -728,7 +728,7 @@ class Chat28ApiController extends Base
     }
 
     /**
-     * 获取机器人聊天配置
+     * Lấy机器人聊天配置
      * GET /app/admin/api/chat28/bot-config
      */
     public function botConfig(Request $request)
@@ -751,10 +751,10 @@ class Chat28ApiController extends Base
             'result_enabled' => (int)($config['result_enabled'] ?? 1),
             'sealed_notice_enabled' => (int)($config['sealed_notice_enabled'] ?? 1),
             'draw_notice_enabled' => (int)($config['draw_notice_enabled'] ?? 1),
-            'msg_pre_sealed' => $config['msg_pre_sealed'] ?? '即将封盘，请抓紧时间投注',
-            'msg_sealed_line' => $config['msg_sealed_line'] ?? '已封盘，停止下注',
-            'msg_no_talk' => $config['msg_no_talk'] ?? '开奖期间禁止发言',
-            'msg_draw_coming' => $config['msg_draw_coming'] ?? '开奖结果即将揭晓'
+            'msg_pre_sealed' => $config['msg_pre_sealed'] ?? '即将封盘，请抓紧Thời gianĐặt cược',
+            'msg_sealed_line' => $config['msg_sealed_line'] ?? '已封盘，停止Đặt cược',
+            'msg_no_talk' => $config['msg_no_talk'] ?? 'Mở thưởng期间禁止发言',
+            'msg_draw_coming' => $config['msg_draw_coming'] ?? 'Mở thưởng结果即将揭晓'
         ]);
     }
 
@@ -795,17 +795,17 @@ class Chat28ApiController extends Base
             }
         }
 
-        return $this->json(0, '保存成功');
+        return $this->json(0, 'LưuThành công');
     }
 
     /**
-     * 获取消息类型文本
+     * LấyTin nhắn类型文本
      */
     private function getMessageTypeText(string $type): string
     {
         return match($type) {
-            'bet' => '投注',
-            'result' => '开奖',
+            'bet' => 'Đặt cược',
+            'result' => 'Mở thưởng',
             'system' => '系统',
             'text' => '文字',
             default => $type

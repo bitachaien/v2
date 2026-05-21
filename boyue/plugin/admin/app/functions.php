@@ -43,7 +43,7 @@ function admin($fields = null)
 
 
 /**
- * 刷新当前管理员session
+ * Làm mới当前管理员session
  * @param bool $force
  * @return void
  * @throws Exception
@@ -56,7 +56,7 @@ function refresh_admin_session(bool $force = false)
     }
     $admin_id = $admin_session['id'];
     $time_now = time();
-    // session在2秒内不刷新
+    // session在2秒内不Làm mới
     $session_ttl = 2;
     $session_last_update_time = session('admin.session_last_update_time', 0);
     if (!$force && $time_now - $session_last_update_time < $session_ttl) {
@@ -75,7 +75,7 @@ function refresh_admin_session(bool $force = false)
         $session->forget('admin');
         return null;
     }
-    // 账户被禁用
+    // tài khoản被禁用
     if ($admin['status'] != 0) {
         $session->forget('admin');
         return;

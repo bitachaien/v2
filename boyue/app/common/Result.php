@@ -50,13 +50,13 @@ class Result
     }
 
     
-    public static function success($data = null, string $msg = '操作成功', ?int $count = null): self
+    public static function success($data = null, string $msg = 'Thao tác thành công', ?int $count = null): self
     {
         return new self(self::CODE_SUCCESS, $msg, $data, $count);
     }
 
     
-    public static function page(array $list, int $count, string $msg = '获取成功'): self
+    public static function page(array $list, int $count, string $msg = 'Lấy dữ liệu thành công'): self
     {
         return new self(self::CODE_SUCCESS, $msg, $list, $count);
     }
@@ -68,19 +68,19 @@ class Result
     }
 
     
-    public static function paramError(string $msg = '参数错误'): self
+    public static function paramError(string $msg = 'Tham số không hợp lệ'): self
     {
         return new self(self::CODE_PARAM_ERROR, $msg);
     }
 
     
-    public static function notFound(string $msg = '资源不存在'): self
+    public static function notFound(string $msg = '资源không tồn tại'): self
     {
         return new self(self::CODE_NOT_FOUND, $msg);
     }
 
     
-    public static function serverError(string $msg = '服务器错误'): self
+    public static function serverError(string $msg = 'Lỗi máy chủ'): self
     {
         return new self(self::CODE_SERVER_ERROR, $msg, []);
     }

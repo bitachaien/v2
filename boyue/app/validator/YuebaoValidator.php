@@ -215,7 +215,7 @@ class YuebaoValidator
         
         if (!empty($storedPassword)) {
             if (empty($inputPassword)) {
-                throw YuebaoException::paramRequired('资金密码');
+                throw YuebaoException::paramRequired('资金Mật khẩu');
             }
 
             

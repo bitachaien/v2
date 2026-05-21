@@ -87,7 +87,7 @@ class AdminWebSocketServer
                 }
                 
             } catch (\Exception $e) {
-                Log::error("[AdminWS] Redis 轮询错误: " . $e->getMessage());
+                Log::error("[AdminWS] Redis 轮询Lỗi: " . $e->getMessage());
                 $redis = null;
             }
         });
@@ -125,7 +125,7 @@ class AdminWebSocketServer
             }
             
         } catch (\Exception $e) {
-            Log::error("[AdminWS] 处理推送失败: " . $e->getMessage());
+            Log::error("[AdminWS] 处理推送Thất bại: " . $e->getMessage());
         }
     }
     
@@ -158,7 +158,7 @@ class AdminWebSocketServer
             
             $connection->send(json_encode([
                 'type' => 'connected',
-                'payload' => ['message' => '请发送认证信息'],
+                'payload' => ['message' => '请发送Xác thực信息'],
                 'timestamp' => time() * 1000,
             ]));
         }
@@ -172,7 +172,7 @@ class AdminWebSocketServer
         try {
             $message = json_decode($data, true);
             if (!$message || !isset($message['type'])) {
-                $this->sendError($connection, '无效的消息格式');
+                $this->sendError($connection, '无效的Tin nhắn格式');
                 return;
             }
             
@@ -202,12 +202,12 @@ class AdminWebSocketServer
                     break;
                     
                 default:
-                    $this->sendError($connection, '未知的消息类型');
+                    $this->sendError($connection, '未知的Tin nhắn类型');
             }
             
         } catch (\Exception $e) {
-            Log::error("[AdminWS] 消息处理错误: " . $e->getMessage());
-            $this->sendError($connection, '服务器错误');
+            Log::error("[AdminWS] Tin nhắn处理Lỗi: " . $e->getMessage());
+            $this->sendError($connection, 'Lỗi máy chủ');
         }
     }
     
@@ -243,7 +243,7 @@ class AdminWebSocketServer
         $connectionId = $connection->id;
         
         if (empty($token)) {
-            $this->sendError($connection, 'Token不能为空', 'auth_failed');
+            $this->sendError($connection, 'Tokenkhông được để trống', 'auth_failed');
             return;
         }
         
@@ -270,7 +270,7 @@ class AdminWebSocketServer
             }
             self::$adminConnections[$adminId][$connectionId] = $connection;
             
-            Log::info("[AdminWS] 认证成功: adminId={$adminId}, username={$username}");
+            Log::info("[AdminWS] Xác thựcThành công: adminId={$adminId}, username={$username}");
             
             $connection->send(json_encode([
                 'type' => 'auth_success',
@@ -284,8 +284,8 @@ class AdminWebSocketServer
         } catch (\Firebase\JWT\ExpiredException $e) {
             $this->sendError($connection, 'Token已过期', 'auth_failed');
         } catch (\Exception $e) {
-            Log::warning("[AdminWS] 认证失败: " . $e->getMessage());
-            $this->sendError($connection, '认证失败: ' . $e->getMessage(), 'auth_failed');
+            Log::warning("[AdminWS] Xác thựcThất bại: " . $e->getMessage());
+            $this->sendError($connection, 'Xác thựcThất bại: ' . $e->getMessage(), 'auth_failed');
         }
     }
     
@@ -296,7 +296,7 @@ class AdminWebSocketServer
         $adminId = self::$clients[$connectionId]['admin_id'] ?? 0;
         
         if (!$adminId) {
-            $this->sendError($connection, '请先认证');
+            $this->sendError($connection, '请先Xác thực');
             return;
         }
         
@@ -343,10 +343,10 @@ class AdminWebSocketServer
                 'timestamp' => time() * 1000,
             ]));
             
-            Log::info("[AdminWS] 已推送 statistics 初始化数据");
+            Log::info("[AdminWS] 已推送 statistics 初始化dữ liệu");
             
         } catch (\Exception $e) {
-            Log::error("[AdminWS] 推送初始化数据失败: " . $e->getMessage());
+            Log::error("[AdminWS] 推送初始化dữ liệuThất bại: " . $e->getMessage());
         }
     }
     

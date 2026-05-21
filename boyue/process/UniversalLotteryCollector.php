@@ -110,7 +110,7 @@ class UniversalLotteryCollector
     
     public function onWorkerStart($worker)
     {
-        Log::info('通用彩票采集进程启动');
+        Log::info('通用Xổ số采集进程启动');
         
         
         self::collectAllLotteries();
@@ -133,7 +133,7 @@ class UniversalLotteryCollector
     private static function collectAllLotteries()
     {
         try {
-            Log::info('开始采集所有彩种开奖数据...');
+            Log::info('开始采集所有彩种Mở thưởngdữ liệu...');
             
             $successCount = 0;
             $skipCount = 0;
@@ -144,9 +144,9 @@ class UniversalLotteryCollector
             $ajaxSuccess = self::collectByAjaxApi($collectedNames, $successCount, $skipCount, $errorCount);
             
             if ($ajaxSuccess) {
-                Log::info("新API采集成功");
+                Log::info("新API采集Thành công");
             } else {
-                Log::warning("新API失败，使用老API逐个采集");
+                Log::warning("新APIThất bại，使用老API逐个采集");
             }
             
             
@@ -235,11 +235,11 @@ class UniversalLotteryCollector
                     ]);
                     
                     $successCount++;
-                    Log::info("{$lottery->title} 采集成功: 期号 {$expect}, 号码 {$opencode}");
+                    Log::info("{$lottery->title} 采集Thành công: 期号 {$expect}, 号码 {$opencode}");
                     
                 } catch (\Exception $e) {
                     if (strpos($e->getMessage(), 'Duplicate entry') === false) {
-                        Log::error("{$lottery->title} 插入失败: " . $e->getMessage());
+                        Log::error("{$lottery->title} 插入Thất bại: " . $e->getMessage());
                         $errorCount++;
                     } else {
                         $skipCount++;
@@ -247,7 +247,7 @@ class UniversalLotteryCollector
                 }
             }
             
-            Log::info("采集完成 - 成功: {$successCount}, 跳过: {$skipCount}, 失败: {$errorCount}");
+            Log::info("采集完成 - Thành công: {$successCount}, 跳过: {$skipCount}, Thất bại: {$errorCount}");
             
         } catch (\Exception $e) {
             Log::error('采集异常: ' . $e->getMessage());
@@ -351,7 +351,7 @@ class UniversalLotteryCollector
                     ]);
                     
                     $successCount++;
-                    Log::info("{$lottery->title} 采集成功(新API): 期号 {$expect}");
+                    Log::info("{$lottery->title} 采集Thành công(新API): 期号 {$expect}");
                     
                 } catch (\Exception $e) {
                     if (strpos($e->getMessage(), 'Duplicate entry') === false) {
@@ -409,7 +409,7 @@ class UniversalLotteryCollector
             }
         }
         
-        Log::warning("HTTP请求失败 URL={$url}, 重试{$maxRetries}次后放弃, 错误: {$lastError}");
+        Log::warning("HTTPYêu cầu thất bại URL={$url}, 重试{$maxRetries}次后放弃, Lỗi: {$lastError}");
         return false;
     }
     
@@ -423,7 +423,7 @@ class UniversalLotteryCollector
                 ->delete();
             
             if ($deleted > 0) {
-                Log::info("清理了 {$deleted} 条60天前的开奖数据");
+                Log::info("清理了 {$deleted} 条60天前的Mở thưởngdữ liệu");
             }
         } catch (\Exception $e) {
             Log::error('清理旧数据失败: ' . $e->getMessage());

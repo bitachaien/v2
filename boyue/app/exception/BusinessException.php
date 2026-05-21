@@ -47,13 +47,13 @@ class BusinessException extends \RuntimeException
     }
 
     
-    public static function paramError(string $message = '参数错误'): self
+    public static function paramError(string $message = 'Tham số không hợp lệ'): self
     {
         return new static($message, Result::CODE_PARAM_ERROR);
     }
 
     
-    public static function notFound(string $message = '资源不存在'): self
+    public static function notFound(string $message = '资源không tồn tại'): self
     {
         return new static($message, Result::CODE_NOT_FOUND);
     }

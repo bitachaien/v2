@@ -10,11 +10,11 @@ use support\Db;
 class AgentSettlementCommand extends Command
 {
     protected static $defaultName = 'agent:settlement';
-    protected static $defaultDescription = '代理佣金自动结算';
+    protected static $defaultDescription = 'Đại lýHoa hồng自动结算';
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->writeln('[' . date('Y-m-d H:i:s') . '] 开始执行代理佣金结算...');
+        $output->writeln('[' . date('Y-m-d H:i:s') . '] 开始执行Đại lýHoa hồng结算...');
         
         try {
             $today = date('Y-m-d');
@@ -26,14 +26,14 @@ class AgentSettlementCommand extends Command
                 ->where('name', 'agent_mode')
                 ->value('value') ?? '一级净盈利';
             
-            $output->writeln("代理模式: {$agentMode}");
+            $output->writeln("Đại lý模式: {$agentMode}");
             
             
             $agents = Db::table('caipiao_member')
                 ->where('proxy', 1)
                 ->get();
             
-            $output->writeln("代理总数: " . count($agents));
+            $output->writeln("Đại lý总数: " . count($agents));
             
             $successCount = 0;
             $skipCount = 0;
@@ -64,7 +64,7 @@ class AgentSettlementCommand extends Command
                     }
                     
                     
-                    if ($agentMode === '有效投注') {
+                    if ($agentMode === '有效Đặt cược') {
                         $performance = Db::table('caipiao_touzhu')
                             ->whereIn('uid', $subIds)
                             ->where('oddtime', '>=', $lastMonth)
@@ -153,21 +153,21 @@ class AgentSettlementCommand extends Command
                     Db::commit();
                     $successCount++;
                     
-                    $output->writeln("  代理{$agent->id}({$agent->username}): 业绩={$performance}, 比例={$rate}%, 佣金={$commission}");
+                    $output->writeln("  Đại lý{$agent->id}({$agent->username}): 业绩={$performance}, 比例={$rate}%, Hoa hồng={$commission}");
                     
                 } catch (\Exception $e) {
                     Db::rollBack();
                     $errorCount++;
-                    $output->writeln("  代理{$agent->id}错误: " . $e->getMessage());
+                    $output->writeln("  Đại lý{$agent->id}Lỗi: " . $e->getMessage());
                 }
             }
             
             $output->writeln("\n结算完成:");
-            $output->writeln("  成功: {$successCount}");
+            $output->writeln("  Thành công: {$successCount}");
             $output->writeln("  跳过: {$skipCount}");
-            $output->writeln("  失败: {$errorCount}");
+            $output->writeln("  Thất bại: {$errorCount}");
             
-            \support\Log::info("代理佣金自动结算完成", [
+            \support\Log::info("Đại lýHoa hồng自动结算完成", [
                 'success' => $successCount,
                 'skip' => $skipCount,
                 'error' => $errorCount,
@@ -177,8 +177,8 @@ class AgentSettlementCommand extends Command
             return self::SUCCESS;
             
         } catch (\Exception $e) {
-            $output->writeln('结算失败: ' . $e->getMessage());
-            \support\Log::error('代理佣金自动结算失败: ' . $e->getMessage());
+            $output->writeln('结算Thất bại: ' . $e->getMessage());
+            \support\Log::error('Đại lýHoa hồng自动结算Thất bại: ' . $e->getMessage());
             return self::FAILURE;
         }
     }
